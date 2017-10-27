@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+<!doctype html>
+{% block content %}
+{% block page_content %}
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content width88">
+				<div class="container-fluid">
+					<h3 class="page-title">Tables</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<!-- BORDERED TABLE -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">用户权限管理列表</h3>
+								</div>
+								<div class="panel-body">
+										{% for message in get_flashed_messages(with_categories=True) %}
+										<div class="alert alert-{{ message[0] }}">
+											<button type="button" class="close" data-dismiss="alert">&times;</button>
+										   {{ message[1] }}
+										</div>
+										{% endfor %}
+
+										<div class="col-md-12 col-md-offset-9"><a type="button" class="btn btn-info" href="{{ url_for('main.register') }}">添加新用户</a></div>
+										<br/><br/><br/>
+									<table class="table table-bordered manage-user">
+										<thead>
+											<tr>
+												<th>用户名</th>
+												<th>邮箱</th>
+												<th>注册时间</th>
+												<th>角色</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+												{% for user in users %}
+											<tr>
+												<td>{{user.user_name}}</td>
+												<td>{{user.user_email}}</td>
+												<td>{{user.reg_dateTime}}</td>
+												<td>
+													{% if user.role_id==1 %}
+													管理员
+													{% endif %}
+													{% if user.role_id==2 %}
+													专家
+													{% endif %}
+													{% if user.role_id==3 %}
+													用户
+													{% endif %}
+												</td>
+												<td>
+													<a type="button" class="btn btn-success" href="{{ url_for('main.edit_user', id=user.id) }}"><i class="fa fa-pencil-square-o"></i> 修改权限</a>
+													<a type="button" class="btn btn-danger" href="{{ url_for('main.delete_user', id=user.id) }}"><i class="fa fa-trash-o"></i> 删除用户</a>
+												</td>
+											</tr>
+											{% endfor %}
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- END BORDERED TABLE -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+	{% endblock %}
+	{% endblock %}
+

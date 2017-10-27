@@ -1,0 +1,441 @@
+# -*- coding: utf-8 -*-
+# from models import CoalCHPConstant, CoalCHPComponent,\
+#                    CoalCHPNeedsQuestionnaire, Role, User, Company
+
+from app.gasPowerGeneration_models import GasPowerGenerationConstant, \
+                                    GasPowerGenerationNeedsQuestionnaire
+
+# 煤气发电需求调查表
+questionnaire_data = [{
+    "module_name": "GPG_questionnaire",
+    "name_eng": "surplus_gas_bfg",
+    "name": u"富余的煤气流量_BFG",
+    "symbol": u"",
+    "unit": u"Nm³/h",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "surplus_gas_ldg",
+    "name": u"富余的煤气流量_LDG",
+    "symbol": u"",
+    "unit": u"Nm³/h",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "surplus_gas_cog",
+    "name": u"富余的煤气流量_COG",
+    "symbol": u"",
+    "unit": u"Nm³/h",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "gas_temperature",
+    "name": u"煤气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "gas_pressure",
+    "name": u"煤气压力",
+    "symbol": u"",
+    "unit": u"kPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "gas_calorific_value",
+    "name": u"煤气热值",
+    "symbol": u"",
+    "unit": u"kJ/Nm³",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "provide_steam_amount",
+    "name": u"对外供蒸汽量",
+    "symbol": u"",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": u"无则不需要填写"
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "provide_steam_pressure",
+    "name": u"对外供蒸汽压",
+    "symbol": u"",
+    "unit": u"MPa",
+    "calculate": u"",
+    "remark": u"无则不需要填写"
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "h2_content",
+    "name": u"H2",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "co_content",
+    "name": u"CO",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "ch4_content",
+    "name": u"CH4",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "c2h4_content",
+    "name": u"C2H4",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "c3h8_content",
+    "name": u"C3H8",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "c4h10_content",
+    "name": u"C4H10",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "n2_content",
+    "name": u"N2",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "o2_content",
+    "name": u"O2",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "co2_content",
+    "name": u"CO2",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "h2s_content",
+    "name": u"H2S",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "cmhn_content",
+    "name": u"CmHn",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "atmosphere_temperature_h",
+    "name": u"最高大气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "atmosphere_temperature_a",
+    "name": u"平均大气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "atmosphere_temperature_l",
+    "name": u"最低大气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "atmosphere_pressure_h",
+    "name": u"最高大气压力",
+    "symbol": u"",
+    "unit": u"kPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "atmosphere_pressure_a",
+    "name": u"平均大气压力",
+    "symbol": u"",
+    "unit": u"kPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "atmosphere_pressure_l",
+    "name": u"最低大气压力",
+    "symbol": u"",
+    "unit": u"kPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "relative_humidity_h",
+    "name": u"最高相对湿度",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "relative_humidity_a",
+    "name": u"平均相对湿度",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "relative_humidity_l",
+    "name": u"最低相对湿度",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "outside_wind_speed_h",
+    "name": u"最高室外风速",
+    "symbol": u"",
+    "unit": u"m/s",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "outside_wind_speed_a",
+    "name": u"平均室外风速",
+    "symbol": u"",
+    "unit": u"m/s",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "outside_wind_speed_l",
+    "name": u"最低室外风速",
+    "symbol": u"",
+    "unit": u"m/s",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "seismic_fortification_intensity_h",
+    "name": u"最高抗震设防烈度",
+    "symbol": u"",
+    "unit": u"度",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "seismic_fortification_intensity_a",
+    "name": u"平均抗震设防烈度",
+    "symbol": u"",
+    "unit": u"度",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "seismic_fortification_intensity_l",
+    "name": u"最低抗震设防烈度",
+    "symbol": u"",
+    "unit": u"度",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "water_pressure",
+    "name": u"水压力",
+    "symbol": u"",
+    "unit": u"MPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "water_temperature",
+    "name": u"水温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "water_ph",
+    "name": u"PH值",
+    "symbol": u"",
+    "unit": u"MPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "water_suspended_matter",
+    "name": u"悬浮物",
+    "symbol": u"",
+    "unit": u"mg/L",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "water_cl",
+    "name": u"氯离子",
+    "symbol": u"",
+    "unit": u"mg/L",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "nitrogen_purity",
+    "name": u"氮气纯度",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "nitrogen_pressure",
+    "name": u"氮气压力范围",
+    "symbol": u"",
+    "unit": u"MPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "nitrogen_temperature",
+    "name": u"氮气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "compressed_air_pressure",
+    "name": u"压缩空气压力范围",
+    "symbol": u"",
+    "unit": u"MPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "compressed_air_temperature",
+    "name": u"压缩空气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "grid_voltage",
+    "name": u"并网电压",
+    "symbol": u"",
+    "unit": u"kV",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "max_short_circuit_capacity",
+    "name": u"最大短路容量",
+    "symbol": u"",
+    "unit": u"kVA",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "factory_location_elevation",
+    "name": u"拟建厂区坐标点和高程的地形图",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"CAD版，含风玫瑰"
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "dielectric_position_height_caliber_route",
+    "name": u"能源介质接点位置、标高、管径、路由",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "water_quality_analysis_report",
+    "name": u"全水质分析报告",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"尽可能提供"
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "cooling_tower",
+    "name": u"冷却方式及冷却塔形式",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "project_approval_eia",
+    "name": u"项目立项及环评手续",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u""
+}]
+
+
+class AddGPG():
+    # 初始化数据
+    @staticmethod
+    def init_data():
+        data = [questionnaire_data]
+        for index in range(len(data)):
+            AddGPG.insert_constant(data[index])
+
+    # 表中插入常量数据
+    @staticmethod
+    def insert_constant(data):
+        module_name = data[0]["module_name"]
+        for index in range(len(data)):
+            name_eng = data[index]["name_eng"]
+            name = data[index]["name"]
+            symbol = data[index]["symbol"]
+            unit = data[index]["unit"]
+            calculate = data[index]["calculate"]
+            remark = data[index]["remark"]
+            gasPowerGenerationConstant = GasPowerGenerationConstant.create_gasPowerGenerationConstant(
+                module_name, name_eng, name, symbol, unit, calculate, remark)
+            GasPowerGenerationConstant.insert_gasPowerGenerationConstant(gasPowerGenerationConstant)

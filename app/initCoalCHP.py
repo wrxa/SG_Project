@@ -1,0 +1,2024 @@
+# -*- coding: utf-8 -*-
+from app.models import CoalCHPConstant, CoalCHPComponent,\
+                   CoalCHPNeedsQuestionnaire, Role, User, Company
+
+# 燃煤热电联产需求调查表
+questionnaire_data = [{
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_carbon",
+    "name": u"收到基碳含量",
+    "symbol": u"Car",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_hydrogen",
+    "name": u"收到基氢含量",
+    "symbol": u"Har",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_oxygen",
+    "name": u"收到基氧含量",
+    "symbol": u"Oar",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_nitrogen",
+    "name": u"收到基氮含量",
+    "symbol": u"Nar",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_sulfur",
+    "name": u"收到基硫含量",
+    "symbol": u"Sar",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_water",
+    "name": u"收到基水份",
+    "symbol": u"Mar",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_grey",
+    "name": u"收到基灰份",
+    "symbol": u"Aar",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_daf",
+    "name": u"干燥无灰基挥发分",
+    "symbol": u"Vdaf",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_grindability",
+    "name": u"可磨系数",
+    "symbol": u"KVTI",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "s_low",
+    "name": u"收到基低位发热量",
+    "symbol": u"Qnet，ar",
+    "unit": u"MJ/kg",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_altitude",
+    "name": u"当地平均海拔",
+    "symbol": u"A",
+    "unit": u"m",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_mean_annual_temperature",
+    "name": u"多年平均温度",
+    "symbol": u"T",
+    "unit": u"℃",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_mean_summer_temperature",
+    "name": u"最热月平均温度",
+    "symbol": u"T1",
+    "unit": u"℃",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_mean_winter_temperature",
+    "name": u"最冷月平均温度",
+    "symbol": u"T2",
+    "unit": u"℃",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_mean_annual_barometric",
+    "name": u"多年平均大气压力",
+    "symbol": u"Pb",
+    "unit": u"mmHg",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_mean_summer_barometric",
+    "name": u"夏季大气压力",
+    "symbol": u"Pb1",
+    "unit": u"mmHg",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_mean_winter_barometric",
+    "name": u"冬季大气压力",
+    "symbol": u"Pb2",
+    "unit": u"mmHg",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "w_annual_average_relative_humidity",
+    "name": u"多年平均相对湿度",
+    "symbol": u"φ",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_steam_pressure_level",
+    "name": u"蒸汽压力等级",
+    "symbol": u"P",
+    "unit": u"MPa",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_steam_temperature_level",
+    "name": u"蒸汽温度等级",
+    "symbol": u"T",
+    "unit": u"℃",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_steam_time",
+    "name": u"用汽时段",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_recent_steam_flow_range",
+    "name": u"近期蒸汽流量范围",
+    "symbol": u"Qjq",
+    "unit": u"t/h",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_forward_steam_flow_range",
+    "name": u"远期蒸汽流量范围",
+    "symbol": u"Qyq",
+    "unit": u"t/h",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_condensate_water_iron",
+    "name": u"凝结水含铁量",
+    "symbol": u"CFe",
+    "unit": u"mg/m3",
+    "calculate": "",
+    "remark": "考虑回水是否受主工艺污染"
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "ihl_condensate_water_recovery_rate",
+    "name": u"凝结水回收率",
+    "symbol": u"Φ",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "hhl_heating_occasions_type",
+    "name": u"采暖场合类型",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "hhl_year_heating_days",
+    "name": u"全年采暖天数",
+    "symbol": u"--",
+    "unit": u"d/a",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "hhl_recent_heating_area",
+    "name": u"近期采暖面积",
+    "symbol": u"--",
+    "unit": u"万m3",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "hhl_forward_heating_area",
+    "name": u"远期采暖面积",
+    "symbol": u"--",
+    "unit": u"万m3",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "os_planning_area",
+    "name": u"规划占地面积",
+    "symbol": u"--",
+    "unit": u"亩",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "os_planned_expansion_capacity",
+    "name": u"规划扩建容量",
+    "symbol": u"--",
+    "unit": u"MW",
+    "calculate": "",
+    "remark": "是否扩建"
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "os_local_water_condition",
+    "name": u"当地水源条件",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "oe_electrical_load_demand",
+    "name": u"电负荷需求",
+    "symbol": u"--",
+    "unit": u"KW",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "oe_higher_voltage_level",
+    "name": u"上级变电压等级",
+    "symbol": u"--",
+    "unit": u"kV",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "oe_plant_distance_higher_change",
+    "name": u"厂区距上级变距离",
+    "symbol": u"--",
+    "unit": u"km",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "oe_is_internet_access",
+    "name": u"是否上网",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "oe_is_isolated_network",
+    "name": u"是否孤网运行",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "op_flue_gas_sox_limits",
+    "name": u"烟气SOX排放限值",
+    "symbol": u"--",
+    "unit": u"mg/Nm3",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "op_flue_gas_nox_limits",
+    "name": u"烟气NOX排放限值",
+    "symbol": u"--",
+    "unit": u"mg/Nm3",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "op_flue_gas_dust_limits",
+    "name": u"烟气烟尘排放限值",
+    "symbol": u"--",
+    "unit": u"mg/Nm3",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "od_use_desulfurization_form",
+    "name": u"拟采用脱硫形式",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "od_use_denitration_form",
+    "name": u"拟采用脱硝形式",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "od_limestone_supply",
+    "name": u"石灰石供应情况",
+    "symbol": u"--",
+    "unit": u"mg/Nm3",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_questionnaire",
+    "name_eng": "od_urea_or_ammonia_water_supply",
+    "name": u"尿素/氨水供应情况",
+    "symbol": u"--",
+    "unit": u"--",
+    "calculate": "",
+    "remark": ""
+}]
+
+# 燃煤热电联产计算_输煤系统sheet
+coalHandingSystem_data = [{
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "boiler_rated_coal_capacity",
+    "name": u"锅炉额定耗煤量",
+    "symbol": u"Bj",
+    "unit": u"t/h",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "boiler_daily_utilization_hours",
+    "name": u"锅炉日利用小时数",
+    "symbol": u"Hd",
+    "unit": u"h",
+    "calculate": "",
+    "remark": u"20~22"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_daily_consumption",
+    "name": u"日耗煤量",
+    "symbol": u"Qd",
+    "unit": u"t/d",
+    "calculate": "Bj*Hd",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "boiler_annual_utilization_hours",
+    "name": u"锅炉年利用小时数",
+    "symbol": u"Ha",
+    "unit": u"h",
+    "calculate": "",
+    "remark": u"7260"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_annual_consumption",
+    "name": u"年耗煤量",
+    "symbol": u"Qa",
+    "unit": u"万t/a",
+    "calculate": "Bj*Ha",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "daily_coal_unbalanced_coefficient",
+    "name": u"日来煤不均衡系数",
+    "symbol": u"Kb",
+    "unit": "",
+    "calculate": "",
+    "remark": u"1.1~1.3"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "daily_rail_coal_amount",
+    "name": u"铁路来煤日计算煤量",
+    "symbol": u"Md",
+    "unit": u"t/d",
+    "calculate": u"Kb*Qd",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "daily_vehicle_coal_amount",
+    "name": u"汽车来煤日计算煤量",
+    "symbol": u"Md",
+    "unit": u"t/d",
+    "calculate": u"Kb*Qa*Hd/Ha",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "boiler_perhour_coal_max_capacity",
+    "name": u"锅炉每小时最大耗煤量",
+    "symbol": u"Q",
+    "unit": u"t",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "boiler_daily_working_hours",
+    "name": u"锅炉每日运行时数",
+    "symbol": u"T",
+    "unit": u"h",
+    "calculate": "",
+    "remark": u"22"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_store_days",
+    "name": u"煤的储备日数",
+    "symbol": u"n",
+    "unit": u"d",
+    "calculate": u"",
+    "remark": u"汽车5~10，火车10~25"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coalyard_store_amount",
+    "name": u"煤场存储量",
+    "symbol": u"B",
+    "unit": u"t",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_channel_occupy_coefficient",
+    "name": u"煤堆通道占用系数",
+    "symbol": u"N",
+    "unit": u"-",
+    "calculate": u"",
+    "remark": u"汽车1.5，火车1.3"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_shape_coefficient",
+    "name": u"煤堆形状系数",
+    "symbol": u"K",
+    "unit": u"-",
+    "calculate": u"",
+    "remark": u"0.6~0.9"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_height",
+    "name": u"煤堆高度",
+    "symbol": u"H",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": u"装载机2~3 推煤机≤6"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_bulk_density",
+    "name": u"煤的堆密度",
+    "symbol": u"p",
+    "unit": u"t/m³",
+    "calculate": u"",
+    "remark": u"0.8~1"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coalyard_area",
+    "name": u"煤场面积",
+    "symbol": u"F",
+    "unit": u"m²",
+    "calculate": u"QTNn/KHp",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "height",
+    "name": u"长",
+    "symbol": u"L",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "width",
+    "name": u"宽",
+    "symbol": u"B",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "effective_cubage_calculated",
+    "name": u"有效容积-计算",
+    "symbol": u"V",
+    "unit": u"m³",
+    "calculate": u"",
+    "remark": u"二班 10~12"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "coal_bunker_counts",
+    "name": u"煤仓个数",
+    "symbol": u"n",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"2运1备"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "effective_cubage_selected",
+    "name": u"有效容积-选定",
+    "symbol": u"V",
+    "unit": u"m³",
+    "calculate": u"",
+    "remark": u"根据计算容积"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "backstep_consumption_hours",
+    "name": u"反推消耗小时",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "transport_unbalanced_coefficient",
+    "name": u"运输不平衡系数",
+    "symbol": u"K",
+    "unit": u"-",
+    "calculate": u"",
+    "remark": u"1.2~1.5"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "transportsystem_effective_working_hours",
+    "name": u"运煤系统有效作业时间",
+    "symbol": u"t",
+    "unit": u"h",
+    "calculate": u"",
+    "remark": u"三班≤16h"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "transportsystem_amount",
+    "name": u"运煤系统运输量",
+    "symbol": u"Q",
+    "unit": u"t/h",
+    "calculate": u"22*Bj*K/t",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "vehicle_capacity_tonnage",
+    "name": u"车辆名义载重量",
+    "symbol": u"Qa",
+    "unit": u"t",
+    "calculate": u"",
+    "remark": u"17"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "daily_working_hours",
+    "name": u"每昼夜小时",
+    "symbol": u"T",
+    "unit": u"h",
+    "calculate": u"",
+    "remark": u"6"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "daily_received_coal_amount",
+    "name": u"日计算受煤量",
+    "symbol": u"Qd",
+    "unit": u"t/d",
+    "calculate": u"单台",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "vehicle_daily_incoming_times",
+    "name": u"每天进厂车次",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "vehicle_perhour_incoming_times",
+    "name": u"每小时进场车次",
+    "symbol": u"Ct",
+    "unit": u"次/h",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "mutil_boiler_rated_coal_capacity",
+    "name": u"多锅炉额定耗煤量",
+    "symbol": u"Bzj",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "mutil_boiler_rated_coal_amount",
+    "name": u"多锅炉日额定耗煤总量",
+    "symbol": u"Bzj",
+    "unit": u"t/h",
+    "calculate": u"多锅炉额定耗煤量×小时",
+    "remark": u"22"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "transportsystem_output",
+    "name": u"输煤系统选定出力",
+    "symbol": u"Qxcl",
+    "unit": u"t/h",
+    "calculate": u"选取",
+    "remark": u""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "transportsystem_working_hours",
+    "name": u"输煤系统运行小时",
+    "symbol": u"t",
+    "unit": u"h",
+    "calculate": u"双路 三班",
+    "remark": u""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "shift_working_hours",
+    "name": u"每班运行小时",
+    "symbol": u"tn",
+    "unit": u"h",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "belt_width",
+    "name": u"带宽",
+    "symbol": u"B",
+    "unit": u"",
+    "calculate": u"500/650/800",
+    "remark": u"参考表10-9"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "section_coefficient",
+    "name": u"断面系数",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"选取",
+    "remark": u"参考表10.2.4"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "belt_speed",
+    "name": u"带速",
+    "symbol": u"V",
+    "unit": u"m/s",
+    "calculate": u"",
+    "remark": u"1.25/1.6/2（参考表10.2.4）"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "material_bulk_density",
+    "name": u"物料松散密度",
+    "symbol": u"p",
+    "unit": u"t/m³",
+    "calculate": u"",
+    "remark": u"0.8~1"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "belt_max_transport_capacity",
+    "name": u"皮带最大输送能力",
+    "symbol": u"Q",
+    "unit": u"t/h",
+    "calculate": u"KBBvp",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "equipment_sets",
+    "name": u"台数",
+    "symbol": u"n",
+    "unit": u"",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "surplus",
+    "name": u"富裕量",
+    "symbol": u"k",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": u"200%"
+}, {
+    "module_name": "coalCHP_CoalHandingSystem",
+    "name_eng": "single_coal_feeder_output",
+    "name": u"单台给煤机出力",
+    "symbol": u"Qgm",
+    "unit": u"t/h",
+    "calculate": u"Bj/n*k",
+    "remark": ""
+}]
+
+# 锅炉计算sheet
+furnaceCalculation_data = [{
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_carbon",
+    "name": u"收到基碳含量",
+    "symbol": u"Car",
+    "unit": u"%",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_hydrogen",
+    "name": u"收到基氢含量",
+    "symbol": u"Har",
+    "unit": u"%",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_oxygen",
+    "name": u"收到基氧含量",
+    "symbol": u"Oar",
+    "unit": u"%",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_nitrogen",
+    "name": u"收到基氮含量",
+    "symbol": u"Nar",
+    "unit": u"%",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_sulfur",
+    "name": u"收到基硫含量",
+    "symbol": u"Sar",
+    "unit": u"%",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_grey",
+    "name": u"收到基灰分",
+    "symbol": u"Aar",
+    "unit": u"%",
+    "calculate": "见需求调研表；一般＜10",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_water",
+    "name": u"收到基水含量",
+    "symbol": u"Mar",
+    "unit": u"%",
+    "calculate": "见需求调研表；设计燃料入炉条件≤30；校核燃料入炉条件≤40",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_sum",
+    "name": u"总和",
+    "symbol": u"100",
+    "unit": u"%",
+    "calculate": "",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_daf",
+    "name": u"干燥无灰基挥发分",
+    "symbol": u"Vdaf",
+    "unit": u"%",
+    "calculate": " 无烟煤≤10；贫煤10~20;烟煤20~37；褐煤＞37",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_grindability",
+    "name": u"哈氏可磨系数",
+    "symbol": u"HGI",
+    "unit": u"--",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_low_1",
+    "name": u"收到基低位发热量",
+    "symbol": u"Qnet.Ar",
+    "unit": u"Kj/kg",
+    "calculate": "见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_low_2",
+    "name": u"收到基低位发热量",
+    "symbol": u"Qnet.Ar",
+    "unit": u"Kcal/kg",
+    "calculate": "KJ=4.1868*Kcal",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_low_estimation",
+    "name": u"低位发热量估算",
+    "symbol": u"Qnet.Ar",
+    "unit": u"Kj/kg",
+    "calculate": "Qnet.ar=339xCar+1030*Har-25xMar-109(Oar-Sar)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_high_estimation",
+    "name": u"高位发热量估算",
+    "symbol": u"Qar.gt",
+    "unit": u"Kj/kg",
+    "calculate": "Qnet.gt=339xCar+1256*Har-109(Oar-Sar)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_steam_flow",
+    "name": u"过热蒸汽流量",
+    "symbol": u"Dgr",
+    "unit": u"t/h",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_steam_pressure",
+    "name": u"过热蒸汽出口压力",
+    "symbol": u"Pgr",
+    "unit": u"Mpa(g)",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_steam_temperature",
+    "name": u"过热蒸汽温度",
+    "symbol": u"Tgr",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_steam_enthalpy",
+    "name": u"过热蒸汽焓值",
+    "symbol": u"Igr",
+    "unit": u"Kj/kg",
+    "calculate": u"查表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_boiler_pressure",
+    "name": u"锅筒压力",
+    "symbol": u"Dgr",
+    "unit": u"Mpa(g)",
+    "calculate": u"锅炉厂资料-----过热蒸汽压力*1.1",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_saturated_water_enthalpy",
+    "name": u"汽包内饱和水焓值",
+    "symbol": u"Ibs",
+    "unit": u"Kj/kg",
+    "calculate": u"查表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_water_temperature",
+    "name": u"给水温度",
+    "symbol": u"Tgs",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_water_enthalpy",
+    "name": u"给水焓值",
+    "symbol": u"Igs",
+    "unit": u"Kj/kg",
+    "calculate": u"查表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_boiler_efficiency",
+    "name": u"锅炉效率",
+    "symbol": u"ηg",
+    "unit": u"%",
+    "calculate": u" 锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_unburned_loss",
+    "name": u"机械未燃烧损失",
+    "symbol": u"q4",
+    "unit": u"%",
+    "calculate": u"锅炉厂资料；一般为0.5~2% 取3%",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_blowdown_rate",
+    "name": u"锅炉排污率",
+    "symbol": u"ηpw",
+    "unit": u"%",
+    "calculate": u"锅炉厂资料 取2%",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_boiler_consumption",
+    "name": u"锅炉燃料消耗量",
+    "symbol": u"Bg",
+    "unit": u"kg/h",
+    "calculate": u"Dgr*1000*/ηg((Igr-Igs)+ηpw(ibs-igs))/Qnet.ar",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "f_calculation _consumption",
+    "name": u"计算燃料消耗量",
+    "symbol": u"Bj",
+    "unit": u"kg/h",
+    "calculate": u"Bg*(1-q4)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_total",
+    "name": u"灰渣总量",
+    "symbol": u"Gzhb",
+    "unit": u"kg/h",
+    "calculate": u"Bg(Aar/100+Qnet,ar*q4/3387000)   P209",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_boiler_total",
+    "name": u"炉内喷钙灰渣总量",
+    "symbol": u"G'zhb",
+    "unit": u"kg/h",
+    "calculate": u"生物质热电项目脱硫系统一般采用炉内喷钙工艺",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_ash_share",
+    "name": u"飞灰份额",
+    "symbol": u"k1",
+    "unit": u"--",
+    "calculate": u"CFB锅炉和ICFB锅炉取0.9；联合炉排炉和水冷振动炉排炉取0.6",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_dust_share",
+    "name": u"底渣份额",
+    "symbol": u"k2",
+    "unit": u"--",
+    "calculate": u"1-k1",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_ash_total",
+    "name": u"灰量",
+    "symbol": u"Gh",
+    "unit": u"t/h",
+    "calculate": u"Gznb*k1",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_dust_total",
+    "name": u"渣量",
+    "symbol": u"Gz",
+    "unit": u"t/h",
+    "calculate": u"Gznb*k2",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_air_volumn",
+    "name": u"理论干空气量",
+    "symbol": u"Vo",
+    "unit": u"Nm3/kg",
+    "calculate": u"0.0889(Car+0.375St,ar)+0.265Har-0.0333Oar",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_hot_temperature",
+    "name": u"最热月平均气温",
+    "symbol": u"Trp",
+    "unit": u"℃",
+    "calculate": u"见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_humidity",
+    "name": u"多年平均相对湿度",
+    "symbol": u"φ",
+    "unit": u"%",
+    "calculate": u"见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_pressure",
+    "name": u"多年平均气压",
+    "symbol": u"Pb",
+    "unit": u"kPa",
+    "calculate": u"见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_temperature",
+    "name": u"多年平均气温",
+    "symbol": u"t",
+    "unit": u"℃",
+    "calculate": u"见需求调研表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_saturation_pressure",
+    "name": u"多年平均气温下的饱和压力",
+    "symbol": u"Ps",
+    "unit": u"kPa",
+    "calculate": u"查水蒸汽表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_steam_perssure",
+    "name": u"水蒸气分压力",
+    "symbol": u"Pv",
+    "unit": u"kPa",
+    "calculate": u"φ*Ps/100",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_air_humidity",
+    "name": u"空气的绝对湿度(含湿量)",
+    "symbol": u"d",
+    "unit": u"g水/kg空气",
+    "calculate": u"d=622*Pv/(Pb-Pv)，如无气象资料，可取d=10(经验值)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_standard_air_humidity",
+    "name": u"标况下湿空气密度",
+    "symbol": u"ρao",
+    "unit": u"kg/Nm3空气",
+    "calculate": u"(1+0.001d)/(1/1.293+0.001d/0.804)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_wet_air_volumn",
+    "name": u"理论湿空气量",
+    "symbol": u"Vo'",
+    "unit": u"Nm3/kg燃料",
+    "calculate": u"(1+0.0016d)Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_nitrogen_volume",
+    "name": u"理论氮气容积",
+    "symbol": u"V1N2",
+    "unit": u"Nm3/kg",
+    "calculate": u"0.79Vo+0.008*Nar",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_dioxide_volume",
+    "name": u"理论二氧化物容积",
+    "symbol": u"VoRO2",
+    "unit": u"Nm3/kg",
+    "calculate": u"1.866(Car+0.375Sar)/100",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_steam_volume",
+    "name": u"理论水蒸汽容积",
+    "symbol": u"VoH2O",
+    "unit": u"Nm3/kg",
+    "calculate": u"0.111Har+0.0124Mar+1.293*d*Vo/0.804/1000",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_smoke_volume",
+    "name": u"理论烟气容积",
+    "symbol": u"Vyo",
+    "unit": u"Nm3/kg",
+    "calculate": u"V1N2+VoRO2+VoH2O",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_1kg_weight",
+    "name": u"1kg燃料生成理论湿烟气的重量",
+    "symbol": u"Gyo",
+    "unit": u"kg/kg燃料",
+    "calculate": u"1-Aar/100+(1+d/1000)*1.293*α*Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_wet_smoke_density",
+    "name": u"标况下理论湿烟气密度",
+    "symbol": u"ρyo",
+    "unit": u"kg/Nm3",
+    "calculate": u"Gyo/Vyo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_boiler_air",
+    "name": u"炉膛出口过剩空气系数",
+    "symbol": u"αl",
+    "unit": u"--",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_wind",
+    "name": u"旋风分离器漏风系数",
+    "symbol": u"ΔαfL",
+    "unit": u"--",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_wind_air",
+    "name": u"旋风分离器出口过剩空气系数",
+    "symbol": u"αfL",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_high",
+    "name": u"高过漏风系数",
+    "symbol": u"Δαgr",
+    "unit": u"--",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_hign_air",
+    "name": u"高过出口过剩空气系数",
+    "symbol": u"αgr",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_low",
+    "name": u"低过漏风系数",
+    "symbol": u"Δαdr",
+    "unit": u"--",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_low_air",
+    "name": u"低过出口过剩空气系数",
+    "symbol": u"αdr",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_fule",
+    "name": u"省燃料器漏风系数",
+    "symbol": u"Δαsm",
+    "unit": u"--",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_fule_air",
+    "name": u"省燃料器出口过剩空气系数",
+    "symbol": u"αsm",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater",
+    "name": u"空预器漏风系数",
+    "symbol": u"Δαky",
+    "unit": u"--",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater_air",
+    "name": u"空预器出口过剩空气系数",
+    "symbol": u"αky",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_plus_air",
+    "name": u"空予器至除尘器烟道漏风系数",
+    "symbol": u"Δαcj",
+    "unit": u"--",
+    "calculate": u"L(烟道长度)*0.001",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_dust_exit",
+    "name": u"除尘器进口过剩空气系数",
+    "symbol": u"αcj",
+    "unit": u"--",
+    "calculate": u"αky+Δαcj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_dust",
+    "name": u"除尘器漏风系数",
+    "symbol": u"Δαcc",
+    "unit": u"--",
+    "calculate": u"厂家资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_dust_entry",
+    "name": u"除尘器出口过剩空气系数",
+    "symbol": u"αcc",
+    "unit": u"--",
+    "calculate": u"αcj+Δαcc",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_plus_dust",
+    "name": u"除尘器出口至引风机烟道漏风系数",
+    "symbol": u"Δαyd2",
+    "unit": u"--",
+    "calculate": u"L(烟道长度)*0.001",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_fans_air",
+    "name": u"引风机入口过剩空气系数",
+    "symbol": u"αxf",
+    "unit": u"--",
+    "calculate": u"αcc+Δαyd2",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_1kg_volume",
+    "name": u"1Kg燃料产生的空预器出口湿烟气容积",
+    "symbol": u"Vy",
+    "unit": u"Nm3/kg",
+    "calculate": u"Vyo+(αky-1)Vo+0.0161(αky-1)Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_1kg_quality",
+    "name": u"1Kg燃料产生的空预器出口湿烟气质量",
+    "symbol": u"Gy",
+    "unit": u"kg/kg",
+    "calculate": u"1-Aar/100+(1+d/1000)*1.293*αky*Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater_type",
+    "name": u"空预器",
+    "symbol": u"",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater_first_entry",
+    "name": u"空预器一次风进口温度",
+    "symbol": u"T'ky.p",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater_second_entry",
+    "name": u"空预器二次风进口温度",
+    "symbol": u"T'ky.s",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater_first_exit",
+    "name": u"空预器一次风出口温度",
+    "symbol": u"T'ky.p",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_heater_second_exit",
+    "name": u"空预器二次风出口温度",
+    "symbol": u"T'ky.s",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "p_smoke_temperature",
+    "name": u"锅炉排烟温度",
+    "symbol": u"T'y",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_theory_air_quality",
+    "name": u"理论空气量(体积,湿)",
+    "symbol": u"Vo'",
+    "unit": u"Nm3/kg燃料",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_boiler_air",
+    "name": u"炉膛出口过剩空气系数",
+    "symbol": u"αl",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_actual_air",
+    "name": u"实际空气量(体积,湿)",
+    "symbol": u"Voks",
+    "unit": u"Nm3/kg",
+    "calculate": u"αl*Vo'",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_calculation_consumption",
+    "name": u"计算燃料消耗量",
+    "symbol": u"Bj",
+    "unit": u"kg/h",
+    "calculate": u"燃料灰渣量计算表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_actual_air_total",
+    "name": u"实际空气总量(体积，湿)",
+    "symbol": u"Vok",
+    "unit": u"Nm3/h",
+    "calculate": u"Bj*Voks",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_wind_volume",
+    "name": u"一次风份额",
+    "symbol": u"β1",
+    "unit": u"%",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_cwind_temperature_calculation",
+    "name": u"冷风温度(计算温度)",
+    "symbol": u"T'ky.p",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_local_pressure",
+    "name": u"当地年平均气压",
+    "symbol": u"Pb",
+    "unit": u"kPa",
+    "calculate": u"已知",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_cwind_standard",
+    "name": u"冷一次风量(湿-标准态)",
+    "symbol": u"VNLf 1",
+    "unit": u"Nm3/h",
+    "calculate": u"β1*Vok",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_cwind_actual",
+    "name": u"冷一次风量(湿-实态)",
+    "symbol": u"VLf 1",
+    "unit": u"m3/h",
+    "calculate": u"VNLf 1*(273+T ' ky.p)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_standard_air_density",
+    "name": u"标况下湿空气密度",
+    "symbol": u"ρao",
+    "unit": u"kg/Nm3",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_cwind_flow",
+    "name": u"冷一次风量(质量流量)",
+    "symbol": u"GLf 1",
+    "unit": u"kg/h",
+    "calculate": u"ρao*VNLf 1",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_cwind_density",
+    "name": u"冷一次风湿空气密度(湿-实态)",
+    "symbol": u"ρa1",
+    "unit": u"kg/m3",
+    "calculate": u"GLf 1/VLf 1",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_check",
+    "name": u"校核",
+    "symbol": u"ρa1",
+    "unit": u"kg/m3",
+    "calculate": u"ρao*273/(273+T'ky.p)*Pb/101.325(校核)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_hwind_temperatue",
+    "name": u"热一次风温度",
+    "symbol": u"T'ky.p",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_hwind_flow",
+    "name": u"热一次风量(湿-实态)",
+    "symbol": u"VRf 1",
+    "unit": u"m3/h",
+    "calculate": u"VNLf 1*(273+T'ky.s)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_first_wet_air_density",
+    "name": u"湿空气密度(湿-实态)",
+    "symbol": u"ρ'a1",
+    "unit": u"kg/m3",
+    "calculate": u"GLf 1/VRf 1",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_wind_volume",
+    "name": u"二次风份额",
+    "symbol": u"β2",
+    "unit": u"%",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_cwind_temperature",
+    "name": u"冷风温度",
+    "symbol": u"T'ky.s",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_cwind_standard",
+    "name": u"冷二次风量(湿-标准态)",
+    "symbol": u"VNLf 2",
+    "unit": u"Nm3/h",
+    "calculate": u"β2*Vok",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_cwind_actual",
+    "name": u"冷二次风量(湿-实态)",
+    "symbol": u"VLf 2",
+    "unit": u"m3/h",
+    "calculate": u"VNLf 2*(273+T'ky.s)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_standard_air_density",
+    "name": u"标况下湿空气密度",
+    "symbol": u"ρao",
+    "unit": u"kg/Nm3",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_cwind_flow",
+    "name": u"冷二次风量(质量流量)",
+    "symbol": u"GLf 2",
+    "unit": u"kg/h",
+    "calculate": u"ρao*VNLf2",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_cwind_density",
+    "name": u"冷二次风湿空气密度(湿-实态)",
+    "symbol": u"ρa2",
+    "unit": u"kg/m3",
+    "calculate": u"GLf2/VLf2",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_hwind_temperatue",
+    "name": u"热二次风温度",
+    "symbol": u"T'ky.s",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_hwind_flow",
+    "name": u"热二次风量(湿-实态)",
+    "symbol": u"VRf 2",
+    "unit": u"m3/h",
+    "calculate": u"VNLf 2*(273+T'ky.s)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "a_second_wet_air_density",
+    "name": u"湿空气密度(湿-实态)",
+    "symbol": u"ρ'a2",
+    "unit": u"kg/m3",
+    "calculate": u"GLf 2/VRf 2",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_1kg_volume",
+    "name": u"标况下空预器出口1Kg燃料湿烟气容积",
+    "symbol": u"Vy",
+    "unit": u"Nm3/kg",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_1kg_quality",
+    "name": u"空预器出口1Kg燃料产生的湿烟气质量",
+    "symbol": u"Gy",
+    "unit": u"kg/kg",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_calculation_consumption",
+    "name": u"计算燃料消耗量",
+    "symbol": u"Bj",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_standard_smoke_flow",
+    "name": u"标况下空预器出口烟气容积流量",
+    "symbol": u"VNyk",
+    "unit": u"Nm3/h",
+    "calculate": u"Vy*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_smoke_flow",
+    "name": u"空预器出口烟气质量流量",
+    "symbol": u"Gyk",
+    "unit": u"kg/h",
+    "calculate": u"Gy*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_smoke_temperature",
+    "name": u"锅炉空预器出口排烟温度",
+    "symbol": u"T'y",
+    "unit": u"℃",
+    "calculate": u"锅炉厂资料",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_smoke_volume",
+    "name": u"空预器出口烟气容积量(实态)",
+    "symbol": u"Vyk",
+    "unit": u"m3/h",
+    "calculate": u"VNyk*(273+T'y)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "h_smoke_density",
+    "name": u"烟气密度(实态)",
+    "symbol": u"ρyk",
+    "unit": u"kg/m3",
+    "calculate": u"Gyk/Vyk",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_exit_air",
+    "name": u"空预器出口过剩空气系数",
+    "symbol": u"αky",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_wind_parameter",
+    "name": u"空预器至除尘器烟道漏风系数",
+    "symbol": u"Δαcj",
+    "unit": u"--",
+    "calculate": u"L(烟道长度)*0.001",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_entry_air",
+    "name": u"除尘器进口过剩空气系数",
+    "symbol": u"αcj",
+    "unit": u"--",
+    "calculate": u"αky+Δαcj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_cold_air_temperature",
+    "name": u"冷空气温度",
+    "symbol": u"Tlk",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_entry_somke_temperature",
+    "name": u"除尘器进口处烟气温度",
+    "symbol": u"Tcj",
+    "unit": u"℃",
+    "calculate": u"(αkyT'y+△αcj*Tlk)/(αky+△αcj)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_standard_1kg_volume",
+    "name": u"标况下除尘器进口处1kg燃料湿烟气容积",
+    "symbol": u"V'ycj",
+    "unit": u"Nm3/kg",
+    "calculate": u"Vy+△αcj*VO'+0.0161*VO'",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_entry_1kg_quality",
+    "name": u"除尘器进口处1kg燃料湿烟气质量",
+    "symbol": u"G'ycj",
+    "unit": u"kg/kg",
+    "calculate": u"1-Aar/100+1.293*(1+d/1000)*αcj*Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_standard_smoke_flow",
+    "name": u"标况下除尘器进口烟气容积流量",
+    "symbol": u"VNycj",
+    "unit": u"Nm3/h",
+    "calculate": u"V'ycj*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_entry_somke_flow",
+    "name": u"除尘器进口处烟气质量流量",
+    "symbol": u"Gycj",
+    "unit": u"kg/h",
+    "calculate": u"G'ycj*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "d_entry_smoke_actual_flow",
+    "name": u"除尘器进口处烟气容积流量(实态)",
+    "symbol": u"Vycj",
+    "unit": u"m3/h",
+    "calculate": u"VNycj*(273+Tcj)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_wind_parameter",
+    "name": u"除尘器漏风系数",
+    "symbol": u"Δαcc",
+    "unit": u"--",
+    "calculate": u"",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_air_parameter",
+    "name": u"除尘器出口过剩空气系数",
+    "symbol": u"αcc",
+    "unit": u"--",
+    "calculate": u"αcj+△αcc",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_smoke_temperature",
+    "name": u"除尘器出口烟气温度",
+    "symbol": u"Tcc",
+    "unit": u"℃",
+    "calculate": u"湿法脱硫，给定",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_standard_1kg_volume",
+    "name": u"标况下除尘器出口处1kg燃料湿烟气容积",
+    "symbol": u"V'ycc",
+    "unit": u"Nm3/kg",
+    "calculate": u"V'ycj+△αcc*VO'+0.0161*△αcc*VO'",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_1kg_quality",
+    "name": u"除尘器出口处1kg燃料湿烟气质量",
+    "symbol": u"G'ycc",
+    "unit": u"kg/kg",
+    "calculate": u"1-Aar/100+1.293*(1+d/1000)*αcc*Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_standard_smoke_flow",
+    "name": u"标况下除尘器出口湿烟气容积流量",
+    "symbol": u"VNycc",
+    "unit": u"Nm3/h",
+    "calculate": u"V'ycc*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_smoke_flow",
+    "name": u"除尘器出口处湿烟气质量流量",
+    "symbol": u"Gycc",
+    "unit": u"kg/h",
+    "calculate": u"G'ycc*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_smoke_actual_flow",
+    "name": u"除尘器出口处湿烟气容积流量(实态)",
+    "symbol": u"Vycc",
+    "unit": u"m3/h",
+    "calculate": u"VNycc*(273+Tcc)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "e_smoke_actual_density",
+    "name": u"烟气密度(实态)",
+    "symbol": u"ρycc",
+    "unit": u"kg/m3",
+    "calculate": u"Gycc/Vycc",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_wind_parameter",
+    "name": u"除尘器出口至引风机烟道漏风系数",
+    "symbol": u"Δαxj",
+    "unit": u"--",
+    "calculate": u"L(烟道长度)*0.001",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_air_parameter",
+    "name": u"引风机入口过剩空气系数",
+    "symbol": u"αxf",
+    "unit": u"--",
+    "calculate": u"αcc+Δαxj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_smoke_temperature",
+    "name": u"引风机入口烟气温度",
+    "symbol": u"Txf",
+    "unit": u"℃",
+    "calculate": u"(αcc*Tcc+△αxj*Tlk)/(αcc+△αxj)",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_standard_1kg_volume",
+    "name": u"标况下引风机进口处1kg燃料湿烟气容积",
+    "symbol": u"V'xf",
+    "unit": u"Nm3/kg",
+    "calculate": u"V'ycc+△αxj*Vo'+0.0161*△αxj*Vo'",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_1kg_quality",
+    "name": u"引风机进口处1kg燃料湿烟气质量",
+    "symbol": u"G'xf",
+    "unit": u"kg/kg",
+    "calculate": u"1-Aar/100+1.293*(1+d/1000)*αxf*Vo",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_standard_smoke_flow1",
+    "name": u"标况下引风机进口湿烟气容积流量",
+    "symbol": u"VNxf",
+    "unit": u"Nm3/h",
+    "calculate": u"V'xf*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_standard_smoke_flow2",
+    "name": u"标况下引风机进口湿烟气容积流量",
+    "symbol": u"",
+    "unit": u"Nm3/s",
+    "calculate": u"V'xf*Bj/3600",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_smoke_flow",
+    "name": u"引风机进口处湿烟气质量流量",
+    "symbol": u"Gxf",
+    "unit": u"kg/h",
+    "calculate": u"G'xf*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_smoke_actual_flow1",
+    "name": u"引风机进口处湿烟气容积流量(实态)",
+    "symbol": u"Vxf",
+    "unit": u"m3/h",
+    "calculate": u"VNxf*(273+Txf)/273*101.325/Pb",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_smoke_actual_flow2",
+    "name": u"引风机进口处湿烟气容积流量(实态)",
+    "symbol": u"Vxfc",
+    "unit": u"m3/s",
+    "calculate": u"Vxf/3600",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_smoke_actual_density",
+    "name": u"烟气密度(实态)",
+    "symbol": u"ρyxf",
+    "unit": u"kg/m3",
+    "calculate": u"Gyxf/Vyxf",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "i_wet_smoke_actual_density",
+    "name": u"引风机处计算湿烟气密度(标况)",
+    "symbol": u"ρyo",
+    "unit": u"kg/Nm3",
+    "calculate": u"Gxf/VNxf",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_oxygen_vol",
+    "name": u"烟气中的氧量",
+    "symbol": u"VO2'",
+    "unit": u"Nm3/kg燃料",
+    "calculate": u"0.21(axf-1)V0",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_theoretica_vol",
+    "name": u"理论干烟气容积",
+    "symbol": u"Vgyo",
+    "unit": u"Nm3/kg燃料",
+    "calculate": u"VoN2+VoRO2",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_theoretica_flow",
+    "name": u"理论干空气量",
+    "symbol": u"Vo",
+    "unit": u"Nm3/kg燃料",
+    "calculate": u"0.0889(Car+0.375St,ar)+0.265Har-0.0333Oar",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_calculation_consumption",
+    "name": u"计算燃料消耗量",
+    "symbol": u"Bj",
+    "unit": u"kg/h",
+    "calculate": u"燃料灰渣量计算表",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_air_parameter",
+    "name": u"引风机入口过剩空气系数",
+    "symbol": u"αxf",
+    "unit": u"--",
+    "calculate": u"αcc+Δαxj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_standard_1kg_volume",
+    "name": u"1Kg燃料产生的引风机进口干烟气容积",
+    "symbol": u"V'gy",
+    "unit": u"Nm3/kg燃料",
+    "calculate": u"Vgyo+(axf-1)V0",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_smoke_flow",
+    "name": u"引风机进口干烟气容积流量",
+    "symbol": u"Vgy",
+    "unit": u"Nm3/h",
+    "calculate": u"V'gy*Bj",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_drygas_oxygen_vol",
+    "name": u"干烟气中含氧量",
+    "symbol": u"ngo2",
+    "unit": u"%",
+    "calculate": u"VO2'/Vgy'",
+    "remark": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "go_total_combustion_product_vol",
+    "name": u"总燃烧产物6%O2干体积",
+    "symbol": u"Vgy-O2",
+    "unit": u"Nm3/h",
+    "calculate": u"Vgy*(21-ngo2')/(21-6)",
+    "remark": ""
+}]
+
+coal_data = [(
+    u'阳泉混煤', '67.1', '3.1', '4.7', '1.0', '0.7', '6.0', '16.8', '8', '1.4',
+    '26250'
+), (
+    u'焦作原煤', '59.6', '2.0', '0.8', '0.8', '0.5', '10.0', '26.3', '8.2', '1.2',
+    '22154'
+), (
+    u'西山混煤', '55.3', '3.7', '5.2', '0.4', '0.4', '10.0', '24.6', '14', '1.7',
+    '21903'
+), (
+    u'鹤壁原煤', '72.3', '4.0', '2.0', '1.4', '0.3', '5.0', '15.0', '12', '2.0',
+    '28340'
+), (
+    u'铜川混煤', '64.7', '3.4', '1.8', '1.0', '5.3', '405', '19.3', '14.2', '1.4',
+    '26083'
+), (
+    u'淄博混煤', '67.8', '3.0', '2.4', '1.3', '2.4', '3.9', '19.2', '15', '1.6',
+    '25958'
+), (
+    u'义马混煤', '43.4', '3.4', '11.4', '1.1', '1.5', '17.7', '21.5', '41', '1.5',
+    '16720'
+), (
+    u'大同混煤', '70.5', '4.2', '8.3', '0.9', '1.1', '6.0', '9.0', '30', '1.1',
+    '27839'
+), (
+    u'鹤岗四号原煤', '48.4', '3.6', '10.2', '0.6', '0.3', '10.1', '26.8', '36',
+    '1.3', '19312'
+), (
+    u'六道湾原煤', '59.6', '3.5', '9.2', '0.7', '0.7', '9.2', '17.1', '37', '1.6',
+    '22823'
+), (
+    u'淮南原煤', '56.8', '4.13', '11.51', '1.09', '1.1', '10.6', '14.87', '32.1',
+    '1.5', '21983'
+), (
+    u'萍乡安源低质煤', '39.9', '2.7', '4.6', '0.6', '0.2', '7.0', '45.0', '36', '1.6',
+    '15884'
+), (
+    u'平顶山原煤', '47.2', '3.3', '6.5', '0.6', '0.8', '5.6', '36.0', '37', '1.3',
+    '18308'
+), (
+    u'资兴低质煤', '34.2', '3.4', '5.7', '0.8', '0.5', '8.6', '46.8', '37.1', '',
+    '14128'
+), (
+    u'开滦洗三号', '39.8', '2.6', '3.8', '0.8', '1.0', '7.0', '45.0', '37', '',
+    '15675'
+), (
+    u'平顶山洗中煤', '36.7', '3.0', '9.2', '0.7', '0.4', '12.0', '38.0', '45.5',
+    '1.5', '14003'
+), (
+    u'淮南望峰岗洗二中煤', '36.6', '2.4', '5.5', '0.9', '1.6', '15.0', '38.0', '40', '',
+    '16093'
+), (
+    u'徐州烟煤', '62.9', '4.13', '6.7', '1.45', '1.224', '10.0', '13.5', '37',
+    '1.6', '24720'
+), (
+    u'金竹山无烟煤', '64.8', '2.2', '1.82', '1.56', '0.64', '7.0', '22.3', '8',
+    '1.7', '22210'
+)]
+
+
+class AddCoalCHP():
+    # 初始化数据
+    @staticmethod
+    def init_data():
+        Company.insert_company()
+        Role.insert_roles()
+        User.insert_admin()
+        data = [
+            questionnaire_data, coalHandingSystem_data, furnaceCalculation_data
+        ]
+        for index in range(len(data)):
+            AddCoalCHP.insert_constant(data[index])
+        AddCoalCHP.insert_component(coal_data)
+
+    # 表中插入常量数据
+    @staticmethod
+    def insert_constant(data):
+        module_name = data[0]["module_name"]
+        for index in range(len(data)):
+            name_eng = data[index]["name_eng"]
+            name = data[index]["name"]
+            symbol = data[index]["symbol"]
+            unit = data[index]["unit"]
+            calculate = data[index]["calculate"]
+            remark = data[index]["remark"]
+            coalCHPConstant = CoalCHPConstant.create_coalCHPConstant(
+                module_name, name_eng, name, symbol, unit, calculate, remark)
+            CoalCHPConstant.insert_coalCHPConstant(coalCHPConstant)
+
+    # 表中插入煤炭分析数据
+    @staticmethod
+    def insert_component(coal_data):
+        for index in range(len(coal_data)):
+            name = coal_data[index][0]
+            carbon = coal_data[index][1]
+            hydrogen = coal_data[index][2]
+            oxygen = coal_data[index][3]
+            nitrogen = coal_data[index][4]
+            sulfur = coal_data[index][5]
+            water = coal_data[index][6]
+            grey = coal_data[index][7]
+            daf = coal_data[index][8]
+            grindability = coal_data[index][9]
+            low = coal_data[index][10]
+            coalCHPComponent = CoalCHPComponent.create_coalCHPComponent(
+                name, carbon, hydrogen, oxygen, nitrogen, sulfur, water, grey,
+                daf, grindability, low)
+            coalCHPComponent.insert_coalCHPComponent(coalCHPComponent)
+
+    @staticmethod
+    def test():
+        # questionnaire = CoalCHPNeedsQuestionnaire()
+        # questionnaire.s_fuel_design = 'huhuh'
+        # CoalCHPNeedsQuestionnaire.insert_questionnaire(questionnaire)
+        print(CoalCHPNeedsQuestionnaire.search_questionnaire(1).s_fuel_design)
