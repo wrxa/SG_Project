@@ -45,6 +45,18 @@ class Company(db.Model):
         db.session.add(company)
         db.session.commit()
 
+    # 查询当前用户的所有方案
+    @staticmethod
+    def search_company():
+        result = Company.query.all()
+        return result
+
+    # 通过companyId查询公司信息
+    @staticmethod
+    def search_companyById(companyId):
+        result = Company.query.filter_by(id=companyId).one_or_none()
+        return result
+
 
 # 公司方案表
 class Plan(db.Model):
@@ -68,6 +80,18 @@ class Plan(db.Model):
     def insert_plan(plan):
         db.session.add(plan)
         db.session.commit()
+
+    # 查询当前用户的所有方案
+    @staticmethod
+    def search_plan(userId):
+        result = Plan.query.filter_by(user_id=userId).all()
+        return result
+
+    # 通过planId查询方案
+    @staticmethod
+    def search_planById(planId):
+        result = Plan.query.filter_by(id=planId).one_or_none()
+        return result
 
 
 class Role(db.Model):
@@ -629,8 +653,9 @@ class CoalCHPNeedsQuestionnaire(db.Model):
 
     # 根据id查找实体
     @staticmethod
-    def search_questionnaire(id):
-        result = CoalCHPNeedsQuestionnaire.query.filter_by(id=id).one_or_none()
+    def search_questionnaire(plan_id):
+        result = CoalCHPNeedsQuestionnaire.query.filter_by(
+            plan_id=plan_id).one_or_none()
         return result
 
 

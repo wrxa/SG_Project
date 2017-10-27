@@ -8,7 +8,7 @@ from .forms import EditProfileForm, EditProfileAdminForm, ChangePasswordForm,\
     ChangeEmailForm, UpdateUserForm, RegistrationForm
 from .. import db
 from ..models import User, CoalCHPComponent, CoalCHPConstant,\
-    CoalCHPNeedsQuestionnaire
+    CoalCHPNeedsQuestionnaire, Plan, Company
 from ..decorators import admin_required
 from coalService import ToCoalCHP
 
@@ -218,29 +218,23 @@ def coalQuestionnaire():
     coalCHPComponent = CoalCHPComponent.search_coalCHPComponent()
     coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
         "coalCHP_questionnaire")
+    # 查询已有方案
+    plans = Plan.search_plan(current_user.id)
+    companys = Company.search_company()
     return render_template(
         'page/coalCHP/coalQuestionnaire.html',
         menuSelect='coalQuestionnaire',
         coalsort=coalCHPComponent,
-        constants=coalCHPConstant)
+        constants=coalCHPConstant,
+        plans=plans,
+        companys=companys)
 
 
 @main.route('/coalSort', methods=['POST'])
 @login_required
 def coalSort():
     id = request.values.get('id')
-    datas = {}
-    coalCHPComponent = CoalCHPComponent.search_coalCHPSort(id)
-    datas['carbon'] = coalCHPComponent.carbon
-    datas['hydrogen'] = coalCHPComponent.hydrogen
-    datas['oxygen'] = coalCHPComponent.oxygen
-    datas['nitrogen'] = coalCHPComponent.nitrogen
-    datas['sulfur'] = coalCHPComponent.sulfur
-    datas['water'] = coalCHPComponent.water
-    datas['grey'] = coalCHPComponent.grey
-    datas['daf'] = coalCHPComponent.daf
-    datas['grindability'] = coalCHPComponent.grindability
-    datas['low'] = coalCHPComponent.low
+    datas = ToCoalCHP.to_coalCHPComponentJson(id)
 
     return jsonify({'coalSort': datas})
 
@@ -258,9 +252,18 @@ def formData():
     CoalCHPNeedsQuestionnaire.insert_questionnaire(questionnaire)
 
     datas = {}
-    datas['carbon'] = "77777"
+    datas['flag'] = "success"
 
     return jsonify({'coalSort': datas})
+
+
+@main.route('/findPlan', methods=['POST'])
+@login_required
+def findPlan():
+    planId = request.values.get('planId')
+    questionnaire = CoalCHPNeedsQuestionnaire.search_questionnaire(planId)
+    questionnaireData = ToCoalCHP.to_questionnaireJson(questionnaire)
+    return jsonify({'questionnaire': questionnaireData})
 
 
 @main.route('/coalFurnace')

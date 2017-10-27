@@ -35,7 +35,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<select class="form-control" id="coalDesign">
+												<select class="form-control" id="coalDesign" name="s_fuel_design">
 														{% for sort in coalsort %} 
 														<option value="{{ sort.id }}">{{ sort.name }}</option>
 														{% endfor %}
@@ -46,7 +46,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<select class="form-control" id="coalCheck">
+												<select class="form-control" id="coalCheck" name="s_fuel_check">
 														{% for sort in coalsort %} 
 														<option value="{{ sort.id }}">{{ sort.name }}</option>
 														{% endfor %}
@@ -230,8 +230,17 @@
 									</div>
 									<div class="col-md-6">
 										<div class="input-group">
-											<span class="input-group-addon show-primary width-size">   设计单位   </span>
-											<input class="form-control" type="text">
+											<span class="input-group-addon show-primary width-size">选择已有方案</span>
+											<!-- <input class="form-control" type="text"> -->
+											<select class="form-control" id="knownPlan">
+												{% for plan in plans %} 
+												{% for company in companys %} 
+												{% if plan.company_id==company.id  %}
+												<option value="{{ plan.id }}">{{ company.company_name }}</option>
+												{% endif %}
+												{% endfor %}
+												{% endfor %}
+											</select>
 										</div>
 									</div>
 									<div class="col-md-12 margin-top-20">
@@ -268,7 +277,7 @@
 										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
 										<div class="col-md-8">
 											<div class="input-group">
-												<input class="form-control" type="text" name="{{ constant.name }}_value">
+												<input class="form-control" type="text" name="{{ constant.name_eng }}_value">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -302,7 +311,7 @@
 										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
 										<div class="col-md-8">
 											<div class="input-group">
-												<input class="form-control" type="text" name="{{ constant.name }}_value">
+												<input class="form-control" type="text" name="{{ constant.name_eng }}_value">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -329,7 +338,7 @@
 										<div class="col-md-3">{{ constant.name }}</div>
 										<div class="col-md-8">
 											<div class="input-group">
-												<input class="form-control" type="text" name="{{ constant.name }}_value">
+												<input class="form-control" type="text" name="{{ constant.name_eng }}_value">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
