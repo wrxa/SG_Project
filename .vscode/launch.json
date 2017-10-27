@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "Flask",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            //"pythonPath": "${config:python.pythonPath}",
+            "pythonPath": "D:\\Python\\ShaanGu\\energyIslandEnv\\Scripts\\python.exe",
+            "cwd": "${workspaceRoot}",
+            "program": "${workspaceRoot}\\manage.py",
+            // "env": {
+            //     "FLASK_APP": "${workspaceRoot}/quickstart/app.py"
+            // },
+            "args": [
+                "runserver"
+                //"--debug"
+                // "--no-debugger",
+                // "--no-reload"
+            ],
+            //"envFile": "${workspaceRoot}/.env",
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput"
+            ]
+        }
+    ]
+}
