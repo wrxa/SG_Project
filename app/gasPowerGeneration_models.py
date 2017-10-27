@@ -137,6 +137,78 @@ class CoalCHPComponent(db.Model):
     def __repr__(self):
         return '<CoalCHPComponent %r>' % self.name
 '''
+# 煤气发电 原则性热力系统锅炉部分 (boiler of Principle Thermodynamic System)
+class GPGBoilerOfPTS(db.Model):
+     # 表名
+    __tablename__ = 'gaspowergeneration_boiler_of_pts'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
+
+    # 富余的煤气流量_BFG
+    surplus_gas_bfg = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 富余的煤气流量_LDG
+    surplus_gas_ldg = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 富余的煤气流量_COG
+    surplus_gas_cog = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # BFG煤气热值
+    bdg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # LDG煤气热值
+    ldg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # COG煤气热值
+    cog_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 锅炉热效率
+    boiler_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 过热蒸汽出口压力
+    superheated_steam_outlet_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 过热蒸汽温度
+    superheated_steam_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 过热蒸汽焓值
+    superheated_steam_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 过量空气系数
+    excess_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 空气温度
+    air_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 空气焓值
+    air_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 燃烧所需空气量
+    air_need_for_combustion = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 锅炉给水温度
+    boiler_feed_water_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 给水焓值
+    feedwater_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 排污率
+    rate_of_blowdown = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 饱和水温度
+    saturation_water_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 饱和水焓值
+    saturation_water_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+    
+    # 产汽量
+    steam_output = db.Column(db.NUMERIC(precision=15, scale=5))
+
+
 
 # 煤气发电需求调查表
 class GasPowerGenerationNeedsQuestionnaire(db.Model):
@@ -158,14 +230,32 @@ class GasPowerGenerationNeedsQuestionnaire(db.Model):
     # 富余的煤气流量_COG
     surplus_gas_cog = db.Column(db.NUMERIC(precision=15, scale=5))
 
-    # 煤气温度
-    gas_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # BFG煤气温度
+    bfg_gas_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
 
-    # 煤气压力
-    gas_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # LDG煤气温度
+    ldg_gas_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
 
-    # 煤气热值
-    gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+    # COG煤气温度
+    cog_gas_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # BFG煤气压力
+    bfg_gas_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # LDG煤气压力
+    ldg_gas_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # COG煤气压力
+    cog_gas_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # BFG煤气热值
+    bdg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # LDG煤气热值
+    ldg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # COG煤气热值
+    cog_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
 
     # 对外供蒸汽量
     provide_steam_amount = db.Column(db.NUMERIC(precision=15, scale=5))

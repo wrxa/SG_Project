@@ -57,7 +57,7 @@ $(document).ready(function() {
 		'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem',
 		'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine',
 		'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',
-		'GPG_Questionnaire'
+		'GPG_Questionnaire', 'GPG_BoilerOfPTS'
 		];
 		// 不走后台时菜单清除除下拉菜单以外的选中状态
 		var thisClass = "";

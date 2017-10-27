@@ -7,7 +7,9 @@ from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 from app.initCoalCHP import AddCoalCHP
 from app.initGPG import AddGPG
-from app.gasPowerGeneration_models import GasPowerGenerationConstant, GasPowerGenerationNeedsQuestionnaire
+from app.gasPowerGeneration_models import GasPowerGenerationConstant, \
+                                            GasPowerGenerationNeedsQuestionnaire,\
+                                            GPGBoilerOfPTS
 
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')

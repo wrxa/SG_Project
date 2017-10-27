@@ -330,6 +330,7 @@ def ccppSteamTurbine():
 # ########################ccpp end#################################
 
 # ###################### 煤气发电 start ####################
+
 @main.route('/GPG_Questionnaire')
 @login_required
 def GPG_Questionnaire():
@@ -337,6 +338,15 @@ def GPG_Questionnaire():
         "GPG_questionnaire")
     return render_template(
         'page/GasPowerGeneration/GPG_Questionnaire.html', menuSelect='GPG_Questionnaire', constants=GPGConstant)
+
+@main.route('/GPG_BoilerOfPTS')
+@login_required
+def GPG_BoilerOfPTS():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_BoilerOfPTS")
+    return render_template(
+        'page/GasPowerGeneration/GPG_Boiler_of_PTS.html', menuSelect='GPG_BoilerOfPTS', constants=GPGConstant)
+
 # ###################### 煤气发电 end ####################
 
 @main.route('/subPages3')

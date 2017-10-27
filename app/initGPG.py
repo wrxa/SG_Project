@@ -4,6 +4,168 @@
 
 from app.gasPowerGeneration_models import GasPowerGenerationConstant, \
                                     GasPowerGenerationNeedsQuestionnaire
+# 煤气发电 原则性热力系统锅炉部分
+GPGBoilerOfPTS_data = [{
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "surplus_gas_bfg",
+    "name": u"煤气流量_BFG",
+    "symbol": u"Vg",
+    "unit": u"Nm³/h",
+    "calculate": u"由余热资源确定",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "surplus_gas_ldg",
+    "name": u"煤气流量_LDG",
+    "symbol": u"Vg",
+    "unit": u"Nm³/h",
+    "calculate": u"由余热资源确定",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "surplus_gas_cog",
+    "name": u"煤气流量_COG",
+    "symbol": u"Vg",
+    "unit": u"Nm³/h",
+    "calculate": u"由余热资源确定",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "bfg_gas_calorific_value",
+    "name": u"BFG 煤气热值",
+    "symbol": u"Qar.net.p",
+    "unit": u"kJ/Nm³",
+    "calculate": u"给定",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "ldg_gas_calorific_value",
+    "name": u"LDG 煤气热值",
+    "symbol": u"Qar.net.p",
+    "unit": u"kJ/Nm³",
+    "calculate": u"给定",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "cog_gas_calorific_value",
+    "name": u"COG 煤气热值",
+    "symbol": u"Qar.net.p",
+    "unit": u"kJ/Nm³",
+    "calculate": u"给定",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "boiler_efficiency",
+    "name": u"锅炉热效率",
+    "symbol": u"η",
+    "unit": u"%",
+    "calculate": u"设计参数",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "superheated_steam_outlet_pressure",
+    "name": u"过热蒸汽出口压力",
+    "symbol": u"P1",
+    "unit": u"Mpa",
+    "calculate": u"设计参数，绝压",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "superheated_steam_temperature",
+    "name": u"过热蒸汽温度",
+    "symbol": u"two",
+    "unit": u"℃",
+    "calculate": u"设计参数",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "superheated_steam_enthalpy",
+    "name": u"过热蒸汽焓值",
+    "symbol": u"Izo",
+    "unit": u"kJ/kg",
+    "calculate": u"查表",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "excess_air_coefficient",
+    "name": u"过量空气系数",
+    "symbol": u"α",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"1.1~1.2"
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "air_temperature",
+    "name": u"空气温度",
+    "symbol": u"t",
+    "unit": u"℃",
+    "calculate": u"设计参数",
+    "remark": u"20"
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "air_enthalpy",
+    "name": u"空气焓值",
+    "symbol": u"hkq",
+    "unit": u"kj/Nm³",
+    "calculate": u"查表",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "air_need_for_combustion",
+    "name": u"燃烧所需空气量",
+    "symbol": u"Vn",
+    "unit": u"Nm³/h",
+    "calculate": u"0.209*Qar.net.p*Vg*α",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "boiler_feed_water_temperature",
+    "name": u"锅炉给水温度",
+    "symbol": u"tgs",
+    "unit": u"℃",
+    "calculate": u"设计参数",
+    "remark": u"有高加为150℃或215℃，没高加为104℃"
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "feedwater_enthalpy",
+    "name": u"给水焓值",
+    "symbol": u"hgs",
+    "unit": u"kJ/kg",
+    "calculate": u"查表",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "rate_of_blowdown",
+    "name": u"排污率",
+    "symbol": u"φ",
+    "unit": u"%",
+    "calculate": u"设定",
+    "remark": u"2%"
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "saturation_water_temperature",
+    "name": u"饱和水温度",
+    "symbol": u"tbh",
+    "unit": u"℃",
+    "calculate": u"查水蒸汽表",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "saturation_water_enthalpy",
+    "name": u"饱和水焓值",
+    "symbol": u"hbh",
+    "unit": u"kj/Nm³",
+    "calculate": u"查水蒸汽表",
+    "remark": u""
+}, {
+    "module_name": "GPG_BoilerOfPTS",
+    "name_eng": "steam_output",
+    "name": u"产汽量",
+    "symbol": u"G1",
+    "unit": u"t/h",
+    "calculate": u"(Vn*hkq+Vg*Qar.net.p）*η/1000/((Izo-hgs)+φ(hbh-hgs))",
+    "remark": u""
+}]
 
 # 煤气发电需求调查表
 questionnaire_data = [{
@@ -32,24 +194,72 @@ questionnaire_data = [{
     "remark": u""
 }, {
     "module_name": "GPG_questionnaire",
-    "name_eng": "gas_temperature",
-    "name": u"煤气温度",
+    "name_eng": "bfg_gas_temperature",
+    "name": u"BFG 煤气温度",
     "symbol": u"",
     "unit": u"℃",
     "calculate": u"",
     "remark": u""
 }, {
     "module_name": "GPG_questionnaire",
-    "name_eng": "gas_pressure",
-    "name": u"煤气压力",
+    "name_eng": "ldg_gas_temperature",
+    "name": u"LDG 煤气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "cog_gas_temperature",
+    "name": u"COG 煤气温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "bfg_gas_pressure",
+    "name": u"BFG 煤气压力",
     "symbol": u"",
     "unit": u"kPa",
     "calculate": u"",
     "remark": u""
 }, {
     "module_name": "GPG_questionnaire",
-    "name_eng": "gas_calorific_value",
-    "name": u"煤气热值",
+    "name_eng": "ldg_gas_pressure",
+    "name": u"LDG 煤气压力",
+    "symbol": u"",
+    "unit": u"kPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "cog_gas_pressure",
+    "name": u"COG 煤气压力",
+    "symbol": u"",
+    "unit": u"kPa",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "bfg_gas_calorific_value",
+    "name": u"BFG 煤气热值",
+    "symbol": u"",
+    "unit": u"kJ/Nm³",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "ldg_gas_calorific_value",
+    "name": u"LDG 煤气热值",
+    "symbol": u"",
+    "unit": u"kJ/Nm³",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_questionnaire",
+    "name_eng": "cog_gas_calorific_value",
+    "name": u"COG 煤气热值",
     "symbol": u"",
     "unit": u"kJ/Nm³",
     "calculate": u"",
@@ -421,7 +631,7 @@ class AddGPG():
     # 初始化数据
     @staticmethod
     def init_data():
-        data = [questionnaire_data]
+        data = [questionnaire_data, GPGBoilerOfPTS_data]
         for index in range(len(data)):
             AddGPG.insert_constant(data[index])
 

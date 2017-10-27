@@ -5,7 +5,7 @@ $(document).ready(function() {
                     'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem',
                     'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine',
                     'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',
-                    'GPG_Questionnaire'
+                    'GPG_Questionnaire', 'GPG_BoilerOfPTS'
                     ];
     var menuSelect = $("#menuSelect").val();
 
@@ -38,7 +38,7 @@ $(document).ready(function() {
                     $('#ccppMean').attr('class', 'collapsed index');
                 }
             }
-            if(menuSelect == 'GPG_Questionnaire') {
+            if(menuSelect == 'GPG_Questionnaire'|| menuSelect == 'GPG_BoilerOfPTS') {
                 // alert()
                 if($('.sidebar a[data-toggle="collapse"]').hasClass('collapsed')) {
                     $('#gaspowerMean').attr('class', 'index active');

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃气发电-原则性热力系统锅炉部分</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">原则性热力系统锅炉部分</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-md-8">
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 产气量计算 
+									<i class="fa fa-question-circle-o"  title="备注："  
+										data-container="body" data-toggle="popover" data-placement="right" 
+										data-content="以锅炉热效率为基础">
+									</i>
+								</div>
+
+								<div class="col-md-12 third-title" style="text-align:center"> 
+									<div class="col-md-3"> 名称
+									</div>
+									<div class="col-md-4"> 公式及计算	
+									</div>
+									<div class="col-md-5"> 结果 										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['surplus_gas_bfg', 'surplus_gas_ldg', 
+								'surplus_gas_cog', 'bfg_gas_calorific_value', 'ldg_gas_calorific_value', 
+								'cog_gas_calorific_value'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-4">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-5">
+												<div class="input-group">
+													<span class="input-group-addon show-success">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" readonly="true"/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}	
+								
+								
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['boiler_efficiency', 'superheated_steam_outlet_pressure', 
+								'superheated_steam_temperature', 'superheated_steam_enthalpy', 'excess_air_coefficient', 
+								'air_temperature', 'air_enthalpy', 'air_need_for_combustion', 'boiler_feed_water_temperature',
+								'feedwater_enthalpy', 'rate_of_blowdown', 'saturation_water_temperature', 'saturation_water_enthalpy',
+								'steam_output'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})										
+											</div>
+
+											<div class="col-md-4">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-5">
+												<div class="input-group">
+													<span class="input-group-addon show-success">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" 
+													{% if constant.name_eng in ['superheated_steam_enthalpy', 
+													'air_enthalpy', 'air_need_for_combustion', 'feedwater_enthalpy', 
+													'saturation_water_temperature','saturation_water_enthalpy', 'steam_output'] %} 
+													readonly="true"
+													{% endif %}/>
+
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+											<!--{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="计算公式："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}-->
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel margin-right30">
+							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+							<div class="row text-center">
+								<br><br>
+								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+
+								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+							</div>
+							<br> <br>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

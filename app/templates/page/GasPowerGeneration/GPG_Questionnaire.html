@@ -66,8 +66,10 @@
 								<div class="second-title"> 煤气参数</div>
 
 								{% for constant in constants %} 
-								{% if constant.name_eng in ['surplus_gas_bfg', 'surplus_gas_ldg', 'surplus_gas_cog', 
-								'gas_temperature', 'gas_pressure', 'gas_calorific_value', 'provide_steam_amount', 'provide_steam_pressure'] %}
+								{% if constant.name_eng in ['surplus_gas_bfg', 'bfg_gas_temperature', 'bfg_gas_pressure', 'bfg_gas_calorific_value', 
+								'surplus_gas_ldg', 'ldg_gas_temperature', 'ldg_gas_pressure', 'ldg_gas_calorific_value',
+								'surplus_gas_cog', 'cog_gas_temperature', 'cog_gas_pressure', 'cog_gas_calorific_value',
+								'provide_steam_amount', 'provide_steam_pressure'] %}
 								<div class="row">
 									<div class="panel-body">
 										<div class="col-md-12">
@@ -282,9 +284,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
-	
-									
+									</div>									
 	
 								</div>
 	
@@ -412,8 +412,7 @@
 									</div>
 									{% endif %}
 									{% endfor %}
-									
-									
+																		
 								</div>
 	
 							</div>
@@ -431,19 +430,35 @@
 										<div class="second-title"> 其他资料需求</div>
 										
 										<div class="panel-body">
-											<table width="100%" border="2" style="text-align:center;">
+											<table class="table table-bordered">
 												<tbody>
-													<tr>
+													<tr class="success">
 														<td class="third-title">名称</td>
 														<td class="third-title">备注</td>
-													</tr>
+													</tr class="success">
 													{% for constant in constants %} 
 													{% if constant.name_eng in ['factory_location_elevation', 
 													'dielectric_position_height_caliber_route', 'water_quality_analysis_report',
 													'cooling_tower'] %}
-													<tr>
+													<tr class="success">
 														<td>{{ constant.name }}</td>
 														<td>{{ constant.remark }}</td>
+													</tr>
+													{% endif %}
+
+													{% if constant.name_eng in ['project_approval_eia'] %}
+													<tr class="success">
+														<td>{{ constant.name }}</td>
+														<td>
+															<label class="radio-inline">
+																<input name="project_approval_eia" value="yes" type="radio">
+																<span><i></i>有</span>
+															</label>
+															<label class="radio-inline">
+																<input name="project_approval_eia" value="no" type="radio" checked>
+																<span><i></i>无</span>
+															</label>
+														</td>
 													</tr>
 													{% endif %}
 													{% endfor %}
