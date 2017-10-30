@@ -137,6 +137,231 @@ class CoalCHPComponent(db.Model):
     def __repr__(self):
         return '<CoalCHPComponent %r>' % self.name
 '''
+# 煤气发电 烟风系统
+class GPGFlueGasAirSystem(db.model):
+     # 表名
+    __tablename__ = 'gaspowergeneration_boiler_of_pts'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    '''工况--标况'''
+    # 工况温度
+    c2s_condition_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量
+    c2s_condition_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压
+    c2s_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况温度
+    c2s_standard_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力
+    c2s_standard_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量
+    c2s_standard_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''标况--工况'''
+    # 标况温度
+    s2c_standard_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力
+    s2c_standard_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量
+    s2c_standard_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况温度
+    s2c_condition_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压
+    s2c_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量
+    s2c_condition_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''送风机'''
+    # 空气温度
+    blower_air_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风阻力
+    blower_wind_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压
+    blower_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟风流量（工况）
+    blower_condition_smoke_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机温度
+    blower_fan_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机全压
+    blower_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机选用全压
+    blower_fan_selected_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机选用流量
+    blower_fan_selected_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机全压头效率
+    blower_fan_pressure_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 机械传动效率
+    blower_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机效率
+    blower_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机轴功率
+    blower_fan_shaft_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电机安全裕量
+    blower_motor_safe_margin = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电机功率
+    blower_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格功率
+    blower_specification_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格流量
+    blower_specification_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''引风机'''
+    # 烟风温度
+    Induced_smoke_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 全压
+    Induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压
+    Induced_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟风流量（工况）
+    Induced_condition_smoke_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机温度
+    Induced_fan_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟气密度
+    Induced_smoke_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机全压
+    Induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机选用流量
+    Induced_fan_selected_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机效率
+    Induced_fan_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 机械传动效率
+    Induced_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机效率
+    Induced_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机轴功率
+    Induced_fan_shaft_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电机安全裕量
+    Induced_motor_safe_margin = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电机功率
+    Induced_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格功率
+    Induced_specification_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格流量
+    Induced_specification_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''煤气总管道计算'''
+    # 介质流量
+    gas_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    gas_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    gas_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    gas_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算管道直径
+    gas_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取直径
+    gas_tube_selected_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取壁厚
+    gas_tube_selected_thickness = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''冷风管道计算'''
+    # 介质流量
+    coldwind_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    coldwind_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    coldwind_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    coldwind_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算当量管道直径
+    coldwind_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    coldwind_tube_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    coldwind_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格
+    coldwind_tube_specification = db.Column(db.db.Text())
+
+    '''热风管道计算-空预器出口方管'''
+    # 介质流量
+    hotwind_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    hotwind_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    hotwind_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    hotwind_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算当量管道直径
+    hotwind_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    hotwind_tube_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    hotwind_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格
+    hotwind_tube_specification = db.Column(db.db.Text())
+
+    '''烟管道计算-总'''
+    # 介质流量
+    total_smoke_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    total_smoke_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    total_smoke_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    total_smoke_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算当量管道直径
+    total_smoke_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    total_smoke_tube_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    total_smoke_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格
+    total_smoke_tube_specification = db.Column(db.db.Text())
+
+    '''烟管道计算-支'''
+    # 介质流量
+    branch_smoke_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    branch_smoke_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    branch_smoke_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    branch_smoke_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算当量管道直径
+    branch_smoke_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    branch_smoke_tube_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    branch_smoke_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格
+    branch_smoke_tube_specification = db.Column(db.db.Text())
+
+    '''热风管道计算-母管'''
+    # 介质流量
+    main_hotwind_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    main_hotwind_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    main_hotwind_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    main_hotwind_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算管道直径
+    main_hotwind_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取直径
+    main_hotwind_tube_selected_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取壁厚
+    main_hotwind_tube_selected_thickness = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''热风管道计算-入口支管'''
+    # 介质流量
+    branch_hotwind_tube_medium_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 介质温度
+    branch_hotwind_tube_medium_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    branch_hotwind_tube_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算截面积
+    branch_hotwind_tube_calculated_cross_sectional_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算管道直径
+    branch_hotwind_tube_calculated_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取直径
+    branch_hotwind_tube_selected_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取壁厚
+    branch_hotwind_tube_selected_thickness = db.Column(db.NUMERIC(precision=15, scale=5))
+
+
 # 煤气发电 原则性热力系统锅炉部分 (boiler of Principle Thermodynamic System)
 class GPGBoilerOfPTS(db.Model):
      # 表名
@@ -204,7 +429,7 @@ class GPGBoilerOfPTS(db.Model):
 
     # 饱和水焓值
     saturation_water_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
-    
+
     # 产汽量
     steam_output = db.Column(db.NUMERIC(precision=15, scale=5))
 
