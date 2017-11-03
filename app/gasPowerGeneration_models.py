@@ -137,41 +137,489 @@ class CoalCHPComponent(db.Model):
     def __repr__(self):
         return '<CoalCHPComponent %r>' % self.name
 '''
-# 煤气发电 烟风系统
-class GPGFlueGasAirSystem(db.model):
-     # 表名
-    __tablename__ = 'gaspowergeneration_boiler_of_pts'
+
+# 煤气发电 循环水系统 circulating_water_system
+class GPGCirculatingWaterSystem(db.Model):
+    # 表名
+    __tablename__ = 'gaspowergeneration_circulating_water_system'
 
     # 表ID,自动生成（主键）
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
+
+    # 乏汽流量
+    steam_exhaust_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+
+# 煤气发电 风阻力
+class GPGWindResistance(db.Model):
+    # 表名
+    __tablename__ = 'gaspowergeneration_wind_resistance'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
+
+    # 推荐流速(送风机进出口冷风道)
+    recommend_velocity_coldwind = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 推荐流速(热风道)
+    recommend_velocity_hotwind = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''冷风道(吸风口至空预器）'''
+    # 计算温度
+    intake_to_preheater_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风量
+    intake_to_preheater_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 密度
+    intake_to_preheater_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    intake_to_preheater_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 动压头
+    intake_to_preheater_dynamic_pressure_head = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''风机进口'''
+    # 风管截面积
+    fan_inlet_duct_section_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    fan_inlet_duct_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    fan_inlet_duct_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管周长
+    fan_inlet_duct_perimeter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道当量直径
+    fan_inlet_duct_equivalent_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 气体运动粘度
+    fan_inlet_gas_kinetic_viscosity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 雷诺数
+    fan_inlet_reynolds_number = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁绝对粗糙度
+    fan_inlet_absolute_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁相对粗糙度
+    fan_inlet_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 560/△1
+    fan_inlet_560_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 判别式
+    fan_inlet_discriminant = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 摩擦阻力
+    fan_inlet_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 摩擦阻力系数
+    fan_inlet_frictional_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 单位长度摩擦阻力
+    fan_inlet_unit_length_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管长度
+    fan_inlet_ducting_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力
+    fan_inlet_local_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力系数
+    fan_inlet_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个吸风口局部阻力系数
+    fan_inlet_single_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个风机进口风箱
+    fan_inlet_single_bellows = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个进口挡板门
+    fan_inlet_single_damper = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机进口段总阻力
+    fan_inlet_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''风机出口至空预器'''
+    # 摩擦阻力
+    fan_outlet_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 单位长度摩擦阻力
+    fan_outlet_unit_length_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管长度
+    fan_outlet_ducting_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力
+    fan_outlet_local_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力系数
+    fan_outlet_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1只出口渐扩管
+    fan_outlet_single_increase_pipe = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1只90度等截面急转弯头/（二次风2只）
+    fan_outlet_90_section_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 空预器接头扩散管
+    fan_outlet_preheater_diffuser_pipe = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机出口至空预器总阻力
+    fan_outlet_to_preheater_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''热风道（空预器出口至锅炉风室）'''
+    # 计算温度
+    preheater_to_boiler_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风量
+    preheater_to_boiler_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 密度
+    preheater_to_boiler_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    preheater_to_boiler_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 动压头
+    preheater_to_boiler_dynamic_pressure_head = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管截面积（热风管分两路进入风室）
+    preheater_outlet_duct_section_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 圆管直径(一、二次热风为圆管）
+    preheater_outlet_duct_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    preheater_outlet_duct_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    preheater_outlet_duct_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管周长
+    preheater_outlet_duct_perimeter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道当量直径
+    preheater_outlet_duct_equivalent_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 气体运动粘度
+    preheater_outlet_gas_kinetic_viscosity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 雷诺数
+    preheater_outlet_reynolds_number = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁绝对粗糙度
+    preheater_outlet_absolute_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁相对粗糙度
+    preheater_outlet_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 560/△1
+    preheater_outlet_560_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 判别式
+    preheater_outlet_discriminant = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 摩擦阻力
+    preheater_outlet_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 摩擦阻力系数
+    preheater_outlet_frictional_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 单位长度摩擦阻力
+    preheater_outlet_unit_length_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管长度
+    preheater_outlet_ducting_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力
+    preheater_outlet_local_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力系数
+    preheater_outlet_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 1个空预器出口收缩管
+    preheater_outlet_shrink_pipe = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 6只90度等截面急转弯头
+    preheater_outlet_90_sharp_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 弯头数量
+    preheater_outlet_90_sharp_turn_elbow_count = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 弯头局部阻力系统(焊接圆管）
+    preheater_outlet_90_sharp_turn_elbow_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 1个热一次风进风室风门
+    preheater_outlet_air_intake_gate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个热一次风进燃烧室风门
+    preheater_outlet_combustor_gate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 空预器出口至锅炉风室总阻力
+    preheater_outlet_to_boiler_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风道总阻力
+    windhole_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+# 煤气发电 烟阻力
+class GPGSmokeResistance(db.Model):
+    # 表名
+    __tablename__ = 'gaspowergeneration_smoke_resistance'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
+
+    # 推荐流速
+    recommend_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''空预器出口至除尘器入口'''
+    # 计算温度(空预器出口)
+    air_preheater_outlet_calculated_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟量(空预器出口)
+    air_preheater_outlet_smoke_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 密度
+    air_preheater_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    air_preheater_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 动压头
+    air_preheater_dynamic_pressure_head = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟管截面积
+    air_preheater_smoke_tube_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    air_preheater_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    air_preheater_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管周长
+    air_preheater_duct_perimeter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道当量直径
+    air_preheater_tube_equivalent_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 气体运动粘度
+    air_preheater_gas_kinetic_viscosity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 雷诺数
+    air_preheater_reynolds_number = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁绝对粗糙度
+    air_preheater_absolute_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁相对粗糙度
+    air_preheater_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 560/△1
+    air_preheater_560_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 判别式
+    air_preheater_discriminant = db.Column(db.Text())
+
+    # 摩擦阻力
+    air_preheater_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 摩擦阻力系数
+    air_preheater_frictional_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 单位长度摩擦阻力
+    air_preheater_unit_length_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管长度
+    air_preheater_ducting_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力
+    air_preheater_local_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力系数
+    air_preheater_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''90度空预器出口变径急转弯头'''
+    # 1个90度空预器出口变径急转弯头
+    air_preheater_90_outlet_sharp_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉气体局部阻力系数
+    air_preheater_sharp_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 纯空气弯头局部阻力系数
+    air_preheater_sharp_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉浓度修正系数
+    air_preheater_sharp_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''90度等截面缓转弯头'''
+    # 1个90度等截面缓转弯头
+    air_preheater_90_section_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉气体局部阻力系数
+    air_preheater_slow_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 纯空气弯头局部阻力系数
+    air_preheater_slow_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉浓度修正系数
+    air_preheater_slow_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个渐缩管
+    air_preheater_reducer_tube = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 空预器出口至除尘器入口总阻力
+    air_preheater_to_deduster_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''除尘器出口至引风机入口'''
+    # 计算温度(除尘器出口)
+    deduster_outlet_calculated_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟量(除尘器出口)
+    deduster_outlet_smoke_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 密度
+    deduster_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    deduster_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 动压头
+    deduster_dynamic_pressure_head = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟管截面积
+    deduster_smoke_tube_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 长
+    deduster_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 宽
+    deduster_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管周长
+    deduster_duct_perimeter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道当量直径
+    deduster_tube_equivalent_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 气体运动粘度
+    deduster_gas_kinetic_viscosity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 雷诺数
+    deduster_reynolds_number = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁绝对粗糙度
+    deduster_absolute_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁相对粗糙度
+    deduster_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 560/△1
+    deduster_560_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 判别式
+    deduster_discriminant = db.Column(db.Text())
+
+    # 摩擦阻力
+    deduster_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 摩擦阻力系数
+    deduster_frictional_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 单位长度摩擦阻力
+    deduster_unit_length_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管长度
+    deduster_ducting_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力
+    deduster_local_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力系数
+    deduster_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''90度除尘器出口缓转弯头'''
+    # 1个90度除尘器出口缓转弯头
+    deduster_90_outlet_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉气体局部阻力系数
+    deduster_slow_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 纯空气弯头局部阻力系数
+    deduster_slow_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉浓度修正系数
+    deduster_slow_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    ''' 90度等截面缓转弯头 '''
+    # 1个90度等截面缓转弯头
+    deduster_90_section_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉气体局部阻力系数
+    deduster_section_slow_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 纯空气弯头局部阻力系数
+    deduster_section_slow_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 转弯角度修正系数
+    deduster_corrected_turning_angle_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 截面高宽比修正系数
+    deduster_section_corrected_height_width_ratio_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 包含管壁粗糙度影响的纯空气下的转弯原始阻力系数
+    deduster_section_original_resistance_coefficient_with_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉浓度修正系数
+    deduster_section_slow_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个进口风箱
+    deduster_inlet_bellows = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 除尘器出口至引风机入口总阻力
+    deduster_to_induced_draft_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''引风机出口至烟囱'''
+    # 计算温度(引风机进口)
+    induced_draft_inlet_calculated_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟量(引风机进口)
+    induced_draft_inlet_smoke_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 密度
+    induced_draft_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流速
+    induced_draft_flow_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 动压头
+    induced_draft_dynamic_pressure_head = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟管截面积
+    induced_draft_smoke_tube_area = db.Column(db.NUMERIC(precision=15, scale=5)) 
+    # 宽
+    induced_draft_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 高
+    induced_draft_height = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管周长
+    induced_draft_duct_perimeter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道当量直径
+    induced_draft_tube_equivalent_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 气体运动粘度
+    induced_draft_gas_kinetic_viscosity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 雷诺数
+    induced_draft_reynolds_number = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁绝对粗糙度
+    induced_draft_absolute_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道内壁相对粗糙度
+    induced_draft_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 560/△1
+    induced_draft_560_relative_tube_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 判别式
+    induced_draft_discriminant = db.Column(db.Text())
+
+    # 摩擦阻力
+    induced_draft_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 摩擦阻力系数
+    induced_draft_frictional_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 单位长度摩擦阻力
+    induced_draft_unit_length_frictional_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风管长度
+    induced_draft_ducting_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力
+    induced_draft_local_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 局部阻力系数
+    induced_draft_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 1个出口插板门
+    induced_draft_outlet_plate_gate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个出口扩散管
+    induced_draft_outlet_diffuser_tube = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 1个45度缓转弯头（钢烟道）/1个90度缓转弯头（砖烟道）
+    induced_draft_45_90_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉气体局部阻力系数
+    induced_draft_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 纯空气局部阻力系数
+    induced_draft_air_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 转弯角度修正系数
+    induced_draft_corrected_turning_angle_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 截面高宽比修正系数
+    induced_draft_corrected_height_width_ratio_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 包含管壁粗糙度影响的纯空气下的转弯原始阻力系数
+    induced_draft_original_resistance_coefficient_with_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 含粉浓度修正系数
+    induced_draft_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 砖烟道烟囱入口
+    brick_chimney_inlet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 引风机出口至烟囱入口总阻力
+    induced_draft_to_chimney_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟道总阻力
+    smoke_chimney_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+
+# 煤气发电 烟风系统
+class GPGFlueGasAirSystem(db.Model):
+     # 表名
+    __tablename__ = 'gaspowergeneration_gas_air_system'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
 
     '''工况--标况'''
-    # 工况温度
-    c2s_condition_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 工况流量
-    c2s_condition_flux = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 当地大气压
-    c2s_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 标况温度
-    c2s_standard_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 标况压力
-    c2s_standard_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 标况流量
-    c2s_standard_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况温度-风
+    c2s_condition_temperature_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量-风
+    c2s_condition_flux_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压-风
+    c2s_local_atmosphere_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况温度-风
+    c2s_standard_temperature_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力-风
+    c2s_standard_pressure_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量-风
+    c2s_standard_flux_air = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 工况温度-烟
+    c2s_condition_temperature_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量-烟
+    c2s_condition_flux_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压-烟
+    c2s_local_atmosphere_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况温度-烟
+    c2s_standard_temperature_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力-烟
+    c2s_standard_pressure_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量-烟
+    c2s_standard_flux_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
 
     '''标况--工况'''
-    # 标况温度
-    s2c_standard_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 标况压力
-    s2c_standard_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 标况流量
-    s2c_standard_flux = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 工况温度
-    s2c_condition_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 当地大气压
-    s2c_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
-    # 工况流量
-    s2c_condition_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况温度-风
+    s2c_standard_temperature_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力-风
+    s2c_standard_pressure_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量-风
+    s2c_standard_flux_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况温度-风
+    s2c_condition_temperature_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压-风
+    s2c_local_atmosphere_air = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量-风
+    s2c_condition_flux_air = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 标况温度-烟
+    s2c_standard_temperature_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力-烟
+    s2c_standard_pressure_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量-烟
+    s2c_standard_flux_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况温度-烟
+    s2c_condition_temperature_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压-烟
+    s2c_local_atmosphere_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量-烟
+    s2c_condition_flux_smoke = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 标况温度-煤气
+    s2c_standard_temperature_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况压力-煤气
+    s2c_standard_pressure_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标况流量-煤气
+    s2c_standard_flux_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况温度-煤气
+    s2c_condition_temperature_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压-煤气
+    s2c_local_atmosphere_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 工况流量-煤气
+    s2c_condition_flux_gas = db.Column(db.NUMERIC(precision=15, scale=5))
 
     '''送风机'''
     # 空气温度
@@ -222,6 +670,8 @@ class GPGFlueGasAirSystem(db.model):
     Induced_smoke_density = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机全压
     Induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风机选用全压
+    Induced_fan_selected_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机选用流量
     Induced_fan_selected_flux = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机效率
@@ -273,7 +723,7 @@ class GPGFlueGasAirSystem(db.model):
     # 宽
     coldwind_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选用规格
-    coldwind_tube_specification = db.Column(db.db.Text())
+    coldwind_tube_specification = db.Column(db.Text())
 
     '''热风管道计算-空预器出口方管'''
     # 介质流量
@@ -291,7 +741,7 @@ class GPGFlueGasAirSystem(db.model):
     # 宽
     hotwind_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选用规格
-    hotwind_tube_specification = db.Column(db.db.Text())
+    hotwind_tube_specification = db.Column(db.Text())
 
     '''烟管道计算-总'''
     # 介质流量
@@ -309,7 +759,7 @@ class GPGFlueGasAirSystem(db.model):
     # 宽
     total_smoke_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选用规格
-    total_smoke_tube_specification = db.Column(db.db.Text())
+    total_smoke_tube_specification = db.Column(db.Text())
 
     '''烟管道计算-支'''
     # 介质流量
@@ -327,7 +777,7 @@ class GPGFlueGasAirSystem(db.model):
     # 宽
     branch_smoke_tube_width = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选用规格
-    branch_smoke_tube_specification = db.Column(db.db.Text())
+    branch_smoke_tube_specification = db.Column(db.Text())
 
     '''热风管道计算-母管'''
     # 介质流量
@@ -360,6 +810,64 @@ class GPGFlueGasAirSystem(db.model):
     branch_hotwind_tube_selected_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选取壁厚
     branch_hotwind_tube_selected_thickness = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''烟囱抽力计算'''
+    # 烟囱高度
+    chimney_height = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 当地大气压
+    local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下空气密度
+    standard_air_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下平均烟气密度
+    standard_average_smoke_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下计算烟气密度
+    standard_calculated_smoke_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 室外空气温度
+    outdoor_air_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱进口处烟温
+    chimney_inlet_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱每米高度的温度降
+    chimney_temperature_drop_per_meter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱内平均温度
+    chimney_average_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱抽力
+    chimney_draft = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''烟囱出口内径计算及低负荷校核'''
+    # 烟气量
+    smoke_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱出口温度
+    chimney_outlet_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱出口流速
+    chimney_outlet_flow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱出口内径
+    chimney_outlet_inner_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选取烟囱出口内径
+    chimney_outlet_selected_inner_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验烟囱基础内径
+    chimney_experience_base_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 低负荷下烟气量
+    low_load_smoke_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 低负荷下排烟温度
+    low_load_smoke_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 30%低负荷校核流速
+    low_load_flow_30_percent = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    '''烟囱阻力计算'''
+    # 烟囱阻力系数
+    chimney_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱内平均流速
+    chimney_average_velocity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱平均直径
+    chimney_average_diameter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱摩擦阻力
+    chimney_friction_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱出口阻力系数
+    chimney_outlet_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱出口阻力
+    chimney_outlet_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟囱总阻力
+    chimney_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
 
 
 # 煤气发电 原则性热力系统锅炉部分 (boiler of Principle Thermodynamic System)

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
-<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<script src="{{ url_for('static', filename='js/coalCHP/furnace.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
 <!-- MAIN -->
 <div class="main">
@@ -17,6 +17,7 @@
 					</div>
 				</div>
 			</div>
+			<form id="coalFurnaceForm">
 			<div class="row">
 				<div class="row col-md-6">
 					<!-- 煤质资料 -->
@@ -25,7 +26,7 @@
 						<div class="panel">
 							<div class="first-title"><i class="fa fa-fire" aria-hidden="true"></i><span class="margin-left15">煤质资料</span></div>
 							{% for constant in constants %} {% if constant.name_eng in ['s_carbon', 's_hydrogen', 's_oxygen', 's_nitrogen', 's_sulfur',
-							's_water', 's_grey', 's_daf', 's_grindability', 's_sum', 's_low_1', 's_low_2', 's_low_estimation', 's_high_estimation']
+							's_water', 's_grey', 's_daf', 's_grindability', 's_sum', 's_low', 's_low_1', 's_low_2', 's_low_estimation', 's_high_estimation']
 							%}
 							<div class="row">
 								<div class="panel-body">
@@ -34,7 +35,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -42,7 +43,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -77,7 +78,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -85,7 +86,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -118,7 +119,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -126,7 +127,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -150,7 +151,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -158,7 +159,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -183,7 +184,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -191,7 +192,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -215,14 +216,14 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -247,7 +248,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -255,7 +256,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -289,7 +290,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-primary">设计</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 
@@ -297,7 +298,7 @@
 										<div class="col-md-4">
 											<div class="input-group">
 												<span class="input-group-addon show-success">校核</span>
-												<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 											</div>
 										</div>
@@ -317,12 +318,12 @@
 					<div class="col-md-12">
 							<!-- INPUT GROUPS -->
 							<div class="panel">
-								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存调查表信息</span></div>
+								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存锅炉计算信息</span></div>
 								<div class="row text-center">
 									<br><br>
-									<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+									<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i> 保存</button>
 
-									<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+									<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
 								</div>
 								<br> <br>
 							</div>
@@ -348,7 +349,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -356,7 +357,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -387,7 +388,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -395,7 +396,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -426,7 +427,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -434,7 +435,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -455,7 +456,7 @@
 								<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">燃料耗量</span></div>
 								{% for constant in constants %} {% if constant.name_eng in ['f_steam_flow', 'f_steam_pressure', 'f_steam_temperature', 'f_steam_enthalpy',
 								'f_boiler_pressure', 'f_saturated_water_enthalpy', 'f_water_temperature', 'f_water_enthalpy', 'f_boiler_efficiency',
-								'f_unburned_loss', 'f_blowdown_rate', 'f_boiler_consumption', 'f_calculation _consumption'] %}
+								'f_unburned_loss', 'f_blowdown_rate', 'f_boiler_consumption', 'f_calculation_consumption'] %}
 								<div class="row">
 									<div class="panel-body">
 										<div class="col-md-12">
@@ -463,7 +464,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -471,7 +472,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -503,7 +504,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -511,7 +512,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -535,7 +536,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -543,7 +544,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -566,7 +567,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -574,7 +575,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -598,7 +599,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -606,7 +607,7 @@
 											<div class="col-md-4">
 												<div class="input-group">
 													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -634,7 +635,7 @@
 					</div>
 				</div>
 
-
+			</form>
 			</div>
 		</div>
 		<!-- END MAIN CONTENT -->

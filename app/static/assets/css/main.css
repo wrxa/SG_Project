@@ -417,6 +417,10 @@ ul.notifications > li {
         .sidebar .nav .nav > li > a.active a {
           color: #fff; }
 
+          .unselect{
+            color: #676a6d!important;
+            cursor: no-drop;
+        }
 /********************
  * TYPOGRAPHY
  ********************/

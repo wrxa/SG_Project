@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/biomassCHP/biomassDesulDenit.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/biomassCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">生物质热电联产-脱硫脱硝系统</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">脱硫脱硝系统</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-md-6">	
+					<!-- 脱硫前烟气SO2含量 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"><i class="fa fa-free-code-camp" aria-hidden="true"></i><span class="margin-left15">脱硫前烟气SO2含量</span></div>
+							<div class="panel-body">
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['s_sulfur_content_received', 's_feed_consumption', 's_fuel_so2', 's_before_so2', 's_input_smoke', 's_no_before_so2', 's_desulfurization_efficiency', 's_after_so2', 's_env_after_so2', 's_after_so2_discharge'] %}
+								<div class="row">
+									<div class="col-md-12">
+									<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										<div class="col-md-8">
+											<div class="input-group">
+												{% if  constant.default_value != "" %}
+													<input class="form-control" value="{{ constant.default_value }}" type="text">
+												{% else %}
+													<input class="form-control" type="text">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+					<!-- 炉内喷钙脱硫 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"><i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">炉内喷钙脱硫</span></div>
+							<div class="panel-body">
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['c_desulfurization_percentage', 'c_after_so2', 'c_so2_quality', 'c_so2_molar', 'c_sulfur_molar', 'c_caco3_molar', 'c_caco3_quality_require', 'c_caco3_quality_reaction', 'c_caso4_quality_generation', 'c_after_quality_add', 'c_limestone_purity', 'c_limestone_consumption', 'c_ash', 'c_limestone_storage_time', 'c_limestone_output', 'c_limestone_density', 'c_limestone_fullness', 'c_limestone_volumn', 'c_limestone_height', 'c_limestone_diameter'] %}
+								<div class="row">
+									<div class="col-md-12">
+										{% if constant.symbol != "" %}
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										{% else %}
+											<div class="col-md-3">{{ constant.name }}</div>
+										{% endif %}
+										<div class="col-md-8">
+											<div class="input-group">
+												{% if  constant.default_value != "" %}
+													<input class="form-control" value="{{ constant.default_value }}" type="text">
+												{% else %}
+													<input class="form-control" type="text">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="row">
+						<!-- 脱硝前烟气Nox -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-fire" aria-hidden="true"></i><span class="margin-left15">脱硝前烟气Nox</span></div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									{% if constant.name_eng in ['n_before_nox_concentration', 'n_input_smoke', 'n_desulfurization_efficiency', 'n_before_nox_discharge', 'n_after_nox_concentration', 'n_env_after_nox_concentration', 'n_after_nox_discharge'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-8">
+												<div class="input-group">
+													{% if  constant.default_value != "" %}
+														<input class="form-control" value="{{ constant.default_value }}" type="text">
+													{% else %}
+														<input class="form-control" type="text">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											{% if constant.calculate != "" %}
+												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}
+										</div>
+									</div>
+									<br>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 炉内脱硝SNCR -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">炉内脱硝SNCR</span></div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									{% if constant.name_eng in ['d_denitration_percentage', 'd_denitration_quality', 'd_after_nox_discharge', 'd_denitration_molar', 'd_escape_rate', 'd_escape_quality', 'd_escape_quality_urea', 'd_nh3nox_molar', 'd_urea_nox_molar', 'd_urea_nox_quality', 'd_theory_urea', 'd_use_urea', 'd_days_urea', 'd_capacity_urea'] %}
+									<div class="row">
+										<div class="col-md-12">
+											{% if constant.symbol != "" %}
+												<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+											{% else %}
+												<div class="col-md-3">{{ constant.name }}</div>
+											{% endif %}
+											<div class="col-md-8">
+												<div class="input-group">
+													{% if  constant.default_value != "" %}
+														<input class="form-control" value="{{ constant.default_value }}" type="text">
+													{% else %}
+														<input class="form-control" type="text">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											{% if constant.calculate != "" %}
+												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}
+										</div>
+									</div>
+									<br>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+						<!-- 参考信息 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-file" aria-hidden="true"></i><span class="margin-left15">参考信息</span></div>
+								<div class="panel-body">
+									<div>
+										<span class="second-title">国内生物质发电项目现行烟气排放标准：</span><br><br>
+										<span class="flow-text">1、SO2的排放浓度＜100mg/Nm3；</span><br>
+										<span class="flow-text">2、NOx排放浓度＜100mg/Nm3。</span><br><br>
+										<span class="second-title">脱硫系统工艺选择原则：</span><br><br>
+										<div class="flow-text">
+											<span>由于生物质燃料的含硫量很低，一般低于0.10%，因而即使不设脱硫设施，也可满足现行排放标准，但考虑到环保要求日益严苛，中小型CFB锅炉脱硫系统一般采用干法脱硫工艺，即炉内喷钙法，同时可以考虑预留炉后半干法或湿法脱硫的场地及空间。在计算软件界面上，脱硫系统默认为炉内喷钙工艺。</span><br>
+										</div><br>
+										<span class="second-title">脱硝系统工艺选择原则：</span><br><br>
+										<div class="flow-text">
+											<span>脱硝系统主要有SNCR炉内脱硝法和SCR炉外脱硝法两种，综合考虑占地面积、系统复杂度、建设投资、脱硝效率、氨逃逸率、催化剂中毒、运营维护费用等多方面因素，对于中小型生物质锅炉，SNCR炉内脱硝法相比SCR炉外脱硝法具有更好的技术和经济性能，因而在计算软件界面上，脱硝系统默认为SNCR炉内脱硝法。</span><br>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel margin-right30">
+								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存页面信息</span></div>
+								<div class="row text-center">
+									<button type="button" id="submitData" class="btn btn-success btn-lg"><i class="fa fa-check-circle"></i>保存</button>
+									<button type="button" class="btn btn-danger  btn-lg"><i class="fa fa-trash-o"></i>清空</button>
+								</div>
+								<br> <br>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

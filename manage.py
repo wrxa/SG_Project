@@ -6,10 +6,12 @@ from app.models import Permission
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 from app.initCoalCHP import AddCoalCHP
+from app.initBiomassCHP import AddBiomassCHP
 from app.initGPG import AddGPG
 from app.gasPowerGeneration_models import GasPowerGenerationConstant, \
                                             GasPowerGenerationNeedsQuestionnaire,\
-                                            GPGBoilerOfPTS
+                                            GPGBoilerOfPTS, GPGFlueGasAirSystem, \
+                                            GPGSmokeResistance, GPGWindResistance
 
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
@@ -20,7 +22,12 @@ migrate = Migrate(app, db)
 # 为shell命令添加上下文
 def make_shell_context():
     return dict(
-        app=app, db=db, addCoalCHP=AddCoalCHP, Permission=Permission, addGPG=AddGPG)
+        app=app,
+        db=db,
+        addCoalCHP=AddCoalCHP,
+        addBiomassCHP=AddBiomassCHP,
+        Permission=Permission,
+		addGPG=AddGPG)
 
 
 manager.add_command("shell", Shell(make_context=make_shell_context))

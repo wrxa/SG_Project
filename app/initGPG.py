@@ -2,8 +2,2739 @@
 # from models import CoalCHPConstant, CoalCHPComponent,\
 #                    CoalCHPNeedsQuestionnaire, Role, User, Company
 
-from app.gasPowerGeneration_models import GasPowerGenerationConstant, \
-                                    GasPowerGenerationNeedsQuestionnaire
+from gasPowerGeneration_models import GasPowerGenerationConstant, \
+                                    GasPowerGenerationNeedsQuestionnaire, \
+                                    GPGBoilerOfPTS, GPGFlueGasAirSystem, \
+                                    GPGSmokeResistance, GPGWindResistance
+
+# 煤气发电 风阻力
+GPGWindResistance_data = [
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "recommend_velocity_coldwind",
+        "name": u"推荐流速",
+        "symbol": u"",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"（8)P6"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "recommend_velocity_hotwind",
+        "name": u"推荐流速",
+        "symbol": u"",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"（8)P6"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "intake_to_preheater_temperature",
+        "name": u"计算温度",
+        "symbol": u"T",
+        "unit": u"℃",
+        "calculate": u"给定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "intake_to_preheater_amount",
+        "name": u"风量",
+        "symbol": u"V",
+        "unit": u"m³/h",
+        "calculate": u"燃烧计算",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "intake_to_preheater_density",
+        "name": u"密度",
+        "symbol": u"ρ",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "intake_to_preheater_flow_velocity",
+        "name": u"流速",
+        "symbol": u"W",
+        "unit": u"m/s",
+        "calculate": u"取定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "intake_to_preheater_dynamic_pressure_head",
+        "name": u"动压头",
+        "symbol": u"Hd",
+        "unit": u"Pa",
+        "calculate": u"W2*ρ/2",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_duct_section_area",
+        "name": u"风管截面积",
+        "symbol": u"F",
+        "unit": u"m2",
+        "calculate": u"V/W/3600",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_duct_length",
+        "name": u"长",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"取定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_duct_width",
+        "name": u"宽",
+        "symbol": u"B",
+        "unit": u"m",
+        "calculate": u"F/A",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_duct_perimeter",
+        "name": u"风管周长",
+        "symbol": u"Lc",
+        "unit": u"m",
+        "calculate": u"2*(A+B)",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_duct_equivalent_diameter",
+        "name": u"管道当量直径",
+        "symbol": u"De",
+        "unit": u"m",
+        "calculate": u"4*F/Lc",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_gas_kinetic_viscosity",
+        "name": u"气体运动粘度",
+        "symbol": u"υ",
+        "unit": u"m2/s",
+        "calculate": u"",
+        "remark": u"（2）P288"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_reynolds_number",
+        "name": u"雷诺数",
+        "symbol": u"Re",
+        "unit": u"",
+        "calculate": u"W*De/υ",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_absolute_tube_roughness",
+        "name": u"管道内壁绝对粗糙度",
+        "symbol": u"△",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u"（2）P109"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_relative_tube_roughness",
+        "name": u"管道内壁相对粗糙度",
+        "symbol": u"△1",
+        "unit": u"m",
+        "calculate": u"△/De",
+        "remark": u"（2）P107"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_560_relative_tube_roughness",
+        "name": u"560/△1",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_discriminant",
+        "name": u"判别式",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"4000 <Re< 560/△1",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_frictional_resistance",
+        "name": u"摩擦阻力",
+        "symbol": u"△Pm1",
+        "unit": u"Pa",
+        "calculate": u"△Pd*L1",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_frictional_resistance_coefficient",
+        "name": u"摩擦阻力系数",
+        "symbol": u"λ",
+        "unit": u"",
+        "calculate": u"图7.2.2",
+        "remark": u"（2）P108"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_unit_length_frictional_resistance",
+        "name": u"单位长度摩擦阻力",
+        "symbol": u"△Pd",
+        "unit": u"Pa/m",
+        "calculate": u"λ*Hd/De",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_ducting_length",
+        "name": u"风管长度",
+        "symbol": u"L1",
+        "unit": u"m",
+        "calculate": u"布置图",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_local_resistance",
+        "name": u"局部阻力",
+        "symbol": u"△Pj1",
+        "unit": u"",
+        "calculate": u"ζ*Hd",
+        "remark": u"（2）P109"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_local_resistance_coefficient",
+        "name": u"局部阻力系数",
+        "symbol": u"ζ",
+        "unit": u"",
+        "calculate": u"ζ1+ζ2+ζ3",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_single_local_resistance_coefficient",
+        "name": u"1个吸风口局部阻力系数",
+        "symbol": u"ζ1",
+        "unit": u"",
+        "calculate": u"有档板门",
+        "remark": u"（2）P140"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_single_bellows",
+        "name": u"1个风机进口风箱",
+        "symbol": u"ζ2",
+        "unit": u"",
+        "calculate": u"改进式进风箱",
+        "remark": u"（2）P144"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_single_damper",
+        "name": u"1个进口挡板门",
+        "symbol": u"ζ3",
+        "unit": u"",
+        "calculate": u"假定θ=15°",
+        "remark": u"（2）P130"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_inlet_total_pressure",
+        "name": u"风机进口段总阻力",
+        "symbol": u"△Pz1",
+        "unit": u"",
+        "calculate": u"△Pm1+△Pj1",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_frictional_resistance",
+        "name": u"摩擦阻力",
+        "symbol": u"△Pm2",
+        "unit": u"Pa",
+        "calculate": u"△Pd*L2",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_unit_length_frictional_resistance",
+        "name": u"单位长度摩擦阻力",
+        "symbol": u"△Pd",
+        "unit": u"Pa/m",
+        "calculate": u"约同进口",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_ducting_length",
+        "name": u"风管长度",
+        "symbol": u"L2",
+        "unit": u"m",
+        "calculate": u"布置图估计",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_local_resistance",
+        "name": u"局部阻力",
+        "symbol": u"△Pj2",
+        "unit": u"",
+        "calculate": u"ζ*Hd",
+        "remark": u"（2）P109"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_local_resistance_coefficient",
+        "name": u"局部阻力系数",
+        "symbol": u"ζ",
+        "unit": u"",
+        "calculate": u"ζ1+ζ2+ζ3",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_single_increase_pipe",
+        "name": u"1只出口渐扩管",
+        "symbol": u"ζ1",
+        "unit": u"",
+        "calculate": u"假定",
+        "remark": u"（2）P136"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_90_section_slow_turn_elbow",
+        "name": u"1只90度等截面急转弯头/（二次风2只）",
+        "symbol": u"ζ2",
+        "unit": u"",
+        "calculate": u"ζ2",
+        "remark": u"（2）P136"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_preheater_diffuser_pipe",
+        "name": u"空预器接头扩散管",
+        "symbol": u"ζ3",
+        "unit": u"",
+        "calculate": u"假定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "fan_outlet_to_preheater_total_pressure",
+        "name": u"风机出口至空预器总阻力",
+        "symbol": u"△Pz2",
+        "unit": u"",
+        "calculate": u"△Pm2+△Pj2",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_to_boiler_temperature",
+        "name": u"计算温度",
+        "symbol": u"T",
+        "unit": u"℃",
+        "calculate": u"烟风量计算表",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_to_boiler_amount",
+        "name": u"风量",
+        "symbol": u"V",
+        "unit": u"m³/h",
+        "calculate": u"烟风量计算表",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_to_boiler_density",
+        "name": u"密度",
+        "symbol": u"ρ",
+        "unit": u"kg/m³",
+        "calculate": u"烟风量计算表",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_to_boiler_flow_velocity",
+        "name": u"流速",
+        "symbol": u"W",
+        "unit": u"m/s",
+        "calculate": u"取定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_to_boiler_dynamic_pressure_head",
+        "name": u"动压头",
+        "symbol": u"Hd",
+        "unit": u"Pa",
+        "calculate": u"W2*ρ/2",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_duct_section_area",
+        "name": u"风管截面积（热风管分两路进入风室）",
+        "symbol": u"F",
+        "unit": u"m2",
+        "calculate": u"V/W/3600/2",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_duct_diameter",
+        "name": u"圆管直径(一、二次热风为圆管）",
+        "symbol": u"D(De)",
+        "unit": u"m",
+        "calculate": u"F=0.785*D2",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_duct_length",
+        "name": u"长",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"取定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_duct_width",
+        "name": u"宽",
+        "symbol": u"B",
+        "unit": u"m",
+        "calculate": u"F/A",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_duct_perimeter",
+        "name": u"风管周长",
+        "symbol": u"Lc",
+        "unit": u"m",
+        "calculate": u"2*(A+B)",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_duct_equivalent_diameter",
+        "name": u"管道当量直径",
+        "symbol": u"De",
+        "unit": u"m",
+        "calculate": u"4*F/Lc",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_gas_kinetic_viscosity",
+        "name": u"气体运动粘度",
+        "symbol": u"υ",
+        "unit": u"m2/s",
+        "calculate": u"",
+        "remark": u"（2）P288"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_reynolds_number",
+        "name": u"雷诺数",
+        "symbol": u"Re",
+        "unit": u"",
+        "calculate": u"W*De/υ",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_absolute_tube_roughness",
+        "name": u"管道内壁绝对粗糙度",
+        "symbol": u"△",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u"（2）P109"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_relative_tube_roughness",
+        "name": u"管道内壁相对粗糙度",
+        "symbol": u"△1",
+        "unit": u"m",
+        "calculate": u"△/De",
+        "remark": u"（2）P107"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_560_relative_tube_roughness",
+        "name": u"560/△1",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_discriminant",
+        "name": u"判别式",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"4000 <Re< 560/△1",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_frictional_resistance",
+        "name": u"摩擦阻力",
+        "symbol": u"△Pm3",
+        "unit": u"Pa",
+        "calculate": u"△Pd*L3",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_frictional_resistance_coefficient",
+        "name": u"摩擦阻力系数",
+        "symbol": u"λ",
+        "unit": u"",
+        "calculate": u"图7.2.2",
+        "remark": u"（2）P108"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_unit_length_frictional_resistance",
+        "name": u"单位长度摩擦阻力",
+        "symbol": u"△Pd",
+        "unit": u"Pa/m",
+        "calculate": u"λ*Hd/De",
+        "remark": u"（2）P106"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_ducting_length",
+        "name": u"风管长度",
+        "symbol": u"L3",
+        "unit": u"m",
+        "calculate": u"布置图",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_local_resistance",
+        "name": u"局部阻力",
+        "symbol": u"△Pj3",
+        "unit": u"",
+        "calculate": u"ζ*Hd",
+        "remark": u"（2）P109"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_local_resistance_coefficient",
+        "name": u"局部阻力系数",
+        "symbol": u"ζ",
+        "unit": u"",
+        "calculate": u"ζ1+ζ2+ζ3+ζ4",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_shrink_pipe",
+        "name": u"1个空预器出口收缩管",
+        "symbol": u"ζ1",
+        "unit": u"",
+        "calculate": u"假定",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_90_sharp_turn_elbow",
+        "name": u"6只90度等截面急转弯头",
+        "symbol": u"ζ2",
+        "unit": u"",
+        "calculate": u"ζ2=n*ζo",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_90_sharp_turn_elbow_count",
+        "name": u"弯头数量",
+        "symbol": u"n",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_90_sharp_turn_elbow_resistance",
+        "name": u"弯头局部阻力系统(焊接圆管）",
+        "symbol": u"ζo",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"（12）P？"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_air_intake_gate",
+        "name": u"1个热一次风进风室风门",
+        "symbol": u"ζ3",
+        "unit": u"",
+        "calculate": u"假定θ=10°",
+        "remark": u"（2）P130"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_combustor_gate",
+        "name": u"1个热一次风进燃烧室风门",
+        "symbol": u"ζ4",
+        "unit": u"",
+        "calculate": u"假定θ=10°",
+        "remark": u"（2）P130"
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "preheater_outlet_to_boiler_total_pressure",
+        "name": u"空预器出口至锅炉风室总阻力",
+        "symbol": u"△Pz3",
+        "unit": u"",
+        "calculate": u"△Pm3+△Pj3",
+        "remark": u""
+    },
+    {
+        "module_name": "GPG_WindResistance",
+        "name_eng": "windhole_total_pressure",
+        "name": u"风道总阻力",
+        "symbol": u"△Pz",
+        "unit": u"",
+        "calculate": u"△Pz1+△Pz2+△Pz3",
+        "remark": u""
+    },
+]
+
+# 煤气发电 烟阻力
+GPGSmokeResistance_data = [{
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "recommend_velocity",
+    "name": u"推荐流速",
+    "symbol": u"",
+    "unit": u"m/s",
+    "calculate": u"",
+    "remark": u"（8)P6"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_outlet_calculated_temperature",
+    "name":
+    u"计算温度(空预器出口)",
+    "symbol":
+    u"T'y",
+    "unit":
+    u"℃",
+    "calculate":
+    u"锅炉计算",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_outlet_smoke_amount",
+    "name": u"烟量(空预器出口)",
+    "symbol": u"Vyk",
+    "unit": u"m³/h",
+    "calculate": u"燃烧计算",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_density",
+    "name": u"密度",
+    "symbol": u"ρyk",
+    "unit": u"kg/m³",
+    "calculate": u"平均值",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_flow_velocity",
+    "name": u"流速",
+    "symbol": u"W",
+    "unit": u"m/s",
+    "calculate": u"取定",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_dynamic_pressure_head",
+    "name": u"动压头",
+    "symbol": u"Hd",
+    "unit": u"Pa",
+    "calculate": u"W2*ρ/2",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_smoke_tube_area",
+    "name": u"烟管截面积",
+    "symbol": u"F",
+    "unit": u"m2",
+    "calculate": u"V/W/3600",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_length",
+    "name": u"长",
+    "symbol": u"A",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_width",
+    "name": u"宽",
+    "symbol": u"B",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_duct_perimeter",
+    "name": u"风管周长",
+    "symbol": u"Lc",
+    "unit": u"m",
+    "calculate": u"2*(A+B)",
+    "remark": u""
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_tube_equivalent_diameter",
+    "name":
+    u"管道当量直径",
+    "symbol":
+    u"De",
+    "unit":
+    u"m",
+    "calculate":
+    u"4*F/Lc",
+    "remark":
+    u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_gas_kinetic_viscosity",
+    "name": u"气体运动粘度",
+    "symbol": u"υ",
+    "unit": u"m2/s",
+    "calculate": u"",
+    "remark": u"（2）P288"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_reynolds_number",
+    "name": u"雷诺数",
+    "symbol": u"Re",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"（2）P106"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_absolute_tube_roughness",
+    "name":
+    u"管道内壁绝对粗糙度",
+    "symbol":
+    u"△",
+    "unit":
+    u"m",
+    "calculate":
+    u"",
+    "remark":
+    u"（2）P109"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_relative_tube_roughness",
+    "name":
+    u"管道内壁相对粗糙度",
+    "symbol":
+    u"△1",
+    "unit":
+    u"m",
+    "calculate":
+    u"△/De",
+    "remark":
+    u"（2）P107"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_560_relative_tube_roughness",
+    "name":
+    u"560/△1",
+    "symbol":
+    u"",
+    "unit":
+    u"",
+    "calculate":
+    u"",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_discriminant",
+    "name": u"判别式",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"4000 <Re< 560/△1",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_frictional_resistance",
+    "name": u"摩擦阻力",
+    "symbol": u"△Pm1",
+    "unit": u"Pa",
+    "calculate": u"△Pd*L1",
+    "remark": u"（2）P106"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_frictional_resistance_coefficient",
+    "name":
+    u"摩擦阻力系数",
+    "symbol":
+    u"λ",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.2.2",
+    "remark":
+    u"（2）P108"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_unit_length_frictional_resistance",
+    "name":
+    u"单位长度摩擦阻力",
+    "symbol":
+    u"△Pd",
+    "unit":
+    u"Pa/m",
+    "calculate":
+    u"λ*Hd/De",
+    "remark":
+    u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_ducting_length",
+    "name": u"风管长度",
+    "symbol": u"L1",
+    "unit": u"m",
+    "calculate": u"布置图",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_local_resistance",
+    "name": u"局部阻力",
+    "symbol": u"△Pj1",
+    "unit": u"",
+    "calculate": u"ζ*Hd",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng":"air_preheater_local_resistance_coefficient",
+    "name": u"局部阻力系数",
+    "symbol": u"ζ",
+    "unit": u"",
+    "calculate": u"ζ1+ζ2+ζ3",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_90_outlet_sharp_turn_elbow",
+    "name": u"1个90度空预器出口变径急转弯头",
+    "symbol": u"ζ1",
+    "unit": u"",
+    "calculate": u"ζ1=ζu1",
+    "remark": u"（2）P111"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_sharp_turn_elbow_powder_local_resistance_coefficient",
+    "name": u"含粉气体局部阻力系数",
+    "symbol": u"ζu1",
+    "unit": u"",
+    "calculate": u"ζo（1+Ku）",
+    "remark": u"（2）P110"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_sharp_turn_elbow_air_elbow_local_resistance_coefficient",
+    "name": u"纯空气弯头局部阻力系数",
+    "symbol": u"ζo",
+    "unit": u"",
+    "calculate": u"假定",
+    "remark":  u"（12）P？"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_sharp_turn_elbow_powder_concentration_corrected_coefficient",
+    "name":
+    u"含粉浓度修正系数",
+    "symbol":
+    u"Ku",
+    "unit":
+    u"",
+    "calculate":
+    u"表7.3.2-2",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_90_section_slow_turn_elbow",
+    "name":
+    u"1个90度等截面缓转弯头",
+    "symbol":
+    u"ζ2",
+    "unit":
+    u"",
+    "calculate":
+    u"",
+    "remark":
+    u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_slow_turn_elbow_powder_local_resistance_coefficient",
+    "name":
+    u"含粉气体局部阻力系数",
+    "symbol":
+    u"ζu2",
+    "unit":
+    u"",
+    "calculate":
+    u"ζo（1+Ku）",
+    "remark":
+    u"（2）P110"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_slow_turn_elbow_air_elbow_local_resistance_coefficient",
+    "name":
+    u"纯空气弯头局部阻力系数",
+    "symbol":
+    u"ζo",
+    "unit":
+    u"",
+    "calculate":
+    u"假定",
+    "remark":
+    u"（12）P？"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_slow_turn_elbow_powder_concentration_corrected_coefficient",
+    "name":
+    u"含粉浓度修正系数",
+    "symbol":
+    u"Ku",
+    "unit":
+    u"",
+    "calculate":
+    u"表7.3.2-2",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "air_preheater_reducer_tube",
+    "name": u"1个渐缩管",
+    "symbol": u"ζ3",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"（2）P137"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "air_preheater_to_deduster_total_resistance",
+    "name":
+    u"空预器出口至除尘器入口总阻力",
+    "symbol":
+    u"△Pz1",
+    "unit":
+    u"",
+    "calculate":
+    u"△Pm1+△Pj1",
+    "remark":
+    u""
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_outlet_calculated_temperature",
+    "name":
+    u"计算温度",
+    "symbol":
+    u"Tcc",
+    "unit":
+    u"℃",
+    "calculate":
+    u"烟风量计算表",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_outlet_smoke_amount",
+    "name": u"烟量(除尘器出口)",
+    "symbol": u"Vycc",
+    "unit": u"m³/h",
+    "calculate": u"烟风量计算表",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_density",
+    "name": u"密度",
+    "symbol": u"ρycc",
+    "unit": u"kg/m³",
+    "calculate": u"烟风量计算表",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_flow_velocity",
+    "name": u"流速",
+    "symbol": u"W",
+    "unit": u"m/s",
+    "calculate": u"取定",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_dynamic_pressure_head",
+    "name": u"动压头",
+    "symbol": u"Hd",
+    "unit": u"Pa",
+    "calculate": u"W2*ρ/2",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_smoke_tube_area",
+    "name": u"烟管截面积",
+    "symbol": u"F",
+    "unit": u"m2",
+    "calculate": u"V/W/3600",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_length",
+    "name": u"长",
+    "symbol": u"A",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_width",
+    "name": u"宽",
+    "symbol": u"B",
+    "unit": u"m",
+    "calculate": u"F/A",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_duct_perimeter",
+    "name": u"风管周长",
+    "symbol": u"Lc",
+    "unit": u"m",
+    "calculate": u"2*(A+B)",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_tube_equivalent_diameter",
+    "name": u"管道当量直径",
+    "symbol": u"De",
+    "unit": u"m",
+    "calculate": u"4*F/Lc",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_gas_kinetic_viscosity",
+    "name": u"气体运动粘度",
+    "symbol": u"υ",
+    "unit": u"m2/s",
+    "calculate": u"",
+    "remark": u"（2）P288"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_reynolds_number",
+    "name": u"雷诺数",
+    "symbol": u"Re",
+    "unit": u"",
+    "calculate": u"W*De/υ",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_absolute_tube_roughness",
+    "name": u"管道内壁绝对粗糙度",
+    "symbol": u"△",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": u"（2）P109"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_relative_tube_roughness",
+    "name": u"管道内壁相对粗糙度",
+    "symbol": u"△1",
+    "unit": u"m",
+    "calculate": u"△/De",
+    "remark": u"（2）P107"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_560_relative_tube_roughness",
+    "name": u"560/△1",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_discriminant",
+    "name": u"判别式",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"4000 <Re< 560/△1",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_frictional_resistance",
+    "name": u"摩擦阻力",
+    "symbol": u"△Pm2",
+    "unit": u"Pa",
+    "calculate": u"△Pd*L3",
+    "remark": u"（2）P106"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_frictional_resistance_coefficient",
+    "name":
+    u"摩擦阻力系数",
+    "symbol":
+    u"λ",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.2.2",
+    "remark":
+    u"（2）P108"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_unit_length_frictional_resistance",
+    "name":
+    u"单位长度摩擦阻力",
+    "symbol":
+    u"△Pd",
+    "unit":
+    u"Pa/m",
+    "calculate":
+    u"λ*Hd/De",
+    "remark":
+    u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_ducting_length",
+    "name": u"风管长度",
+    "symbol": u"L2",
+    "unit": u"m",
+    "calculate": u"布置图",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_local_resistance",
+    "name": u"局部阻力",
+    "symbol": u"△Pj2",
+    "unit": u"",
+    "calculate": u"ζ*Hd",
+    "remark": u""
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_local_resistance_coefficient",
+    "name":
+    u"局部阻力系数",
+    "symbol":
+    u"ζ",
+    "unit":
+    u"",
+    "calculate":
+    u"ζ1+ζ2+ζ3",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_90_outlet_slow_turn_elbow",
+    "name": u"1个90度除尘器出口缓转弯头",
+    "symbol": u"ζ1",
+    "unit": u"",
+    "calculate": u"ζ1=ζu1",
+    "remark": u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_slow_turn_elbow_powder_local_resistance_coefficient",
+    "name":
+    u"含粉气体局部阻力系数",
+    "symbol":
+    u"ζu1",
+    "unit":
+    u"",
+    "calculate":
+    u"ζo（1+Ku）",
+    "remark":
+    u"（2）P110"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_slow_turn_elbow_air_elbow_local_resistance_coefficient",
+    "name":
+    u"纯空气弯头局部阻力系数",
+    "symbol":
+    u"ζo",
+    "unit":
+    u"",
+    "calculate":
+    u"假定",
+    "remark":
+    u"（12）？"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_slow_turn_elbow_powder_concentration_corrected_coefficient",
+    "name":
+    u"含粉浓度修正系数",
+    "symbol":
+    u"Ku",
+    "unit":
+    u"",
+    "calculate":
+    u"表7.3.2-2",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_90_section_slow_turn_elbow",
+    "name": u"1个90度等截面缓转弯头",
+    "symbol": u"ζ2",
+    "unit": u"",
+    "calculate": u"ζ2=ζu2",
+    "remark": u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_section_slow_turn_elbow_powder_local_resistance_coefficient",
+    "name":
+    u"含粉气体局部阻力系数",
+    "symbol":
+    u"ζu2",
+    "unit":
+    u"",
+    "calculate":
+    u"ζo（1+Ku）",
+    "remark":
+    u"（2）P110"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_section_slow_turn_elbow_air_elbow_local_resistance_coefficient",
+    "name":
+    u"纯空气局部阻力系数",
+    "symbol":
+    u"ζo",
+    "unit":
+    u"",
+    "calculate":
+    u"Kθ*Kc*ζ△0",
+    "remark":
+    u"（2）P110"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_corrected_turning_angle_coefficient",
+    "name":
+    u"转弯角度修正系数",
+    "symbol":
+    u"Kθ",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-1",
+    "remark":
+    u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_section_corrected_height_width_ratio_coefficient",
+    "name":
+    u"截面高宽比修正系数",
+    "symbol":
+    u"Kc",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-2",
+    "remark":
+    u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_section_original_resistance_coefficient_with_roughness",
+    "name":
+    u"包含管壁粗糙度影响的纯空气下的转弯原始阻力系数",
+    "symbol":
+    u"ζ△0",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-5",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_section_slow_turn_elbow_powder_concentration_corrected_coefficient",
+    "name":
+    u"含粉浓度修正系数",
+    "symbol":
+    u"Ku",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-2",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "deduster_inlet_bellows",
+    "name": u"1个进口风箱",
+    "symbol": u"ζ3",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"（2）P144"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "deduster_to_induced_draft_total_resistance",
+    "name":
+    u"除尘器出口至引风机入口总阻力",
+    "symbol":
+    u"△Pz2",
+    "unit":
+    u"",
+    "calculate":
+    u"△Pm2+△Pj2",
+    "remark":
+    u""
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_inlet_calculated_temperature",
+    "name":
+    u"计算温度",
+    "symbol":
+    u"Txf",
+    "unit":
+    u"℃",
+    "calculate":
+    u"烟风量计算表",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_inlet_smoke_amount",
+    "name": u"烟量(引风机进口)",
+    "symbol": u"Vyxf",
+    "unit": u"m3/h",
+    "calculate": u"烟风量计算表",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_density",
+    "name": u"密度",
+    "symbol": u"ρyxf",
+    "unit": u"kg/m3",
+    "calculate": u"烟风量计算表",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_flow_velocity",
+    "name": u"流速",
+    "symbol": u"W",
+    "unit": u"m/s",
+    "calculate": u"取定",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_dynamic_pressure_head",
+    "name": u"动压头",
+    "symbol": u"Hd",
+    "unit": u"Pa",
+    "calculate": u"W2*ρ/2",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_smoke_tube_area",
+    "name": u"烟管截面积",
+    "symbol": u"F",
+    "unit": u"m2",
+    "calculate": u"V/W/3600",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_width",
+    "name": u"宽",
+    "symbol": u"A",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_height",
+    "name": u"高",
+    "symbol": u"B",
+    "unit": u"m",
+    "calculate": u"F/A",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_duct_perimeter",
+    "name": u"风管周长",
+    "symbol": u"Lc",
+    "unit": u"m",
+    "calculate": u"2*(A+B)",
+    "remark": u""
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_tube_equivalent_diameter",
+    "name":
+    u"管道当量直径",
+    "symbol":
+    u"De",
+    "unit":
+    u"m",
+    "calculate":
+    u"4*F/Lc",
+    "remark":
+    u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_gas_kinetic_viscosity",
+    "name": u"气体运动粘度",
+    "symbol": u"υ",
+    "unit": u"m2/s",
+    "calculate": u"",
+    "remark": u"（2）P288"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_reynolds_number",
+    "name": u"雷诺数",
+    "symbol": u"Re",
+    "unit": u"",
+    "calculate": u"W*De/υ",
+    "remark": u"（2）P106"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_absolute_tube_roughness",
+    "name":
+    u"管道内壁绝对粗糙度",
+    "symbol":
+    u"△",
+    "unit":
+    u"m",
+    "calculate":
+    u"",
+    "remark":
+    u"（2）P109"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_relative_tube_roughness",
+    "name":
+    u"管道内壁相对粗糙度",
+    "symbol":
+    u"△1",
+    "unit":
+    u"m",
+    "calculate":
+    u"△/De",
+    "remark":
+    u"（2）P107"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_560_relative_tube_roughness",
+    "name":
+    u"560/△1",
+    "symbol":
+    u"",
+    "unit":
+    u"",
+    "calculate":
+    u"",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_discriminant",
+    "name": u"判别式",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"4000 <Re< 560/△1",
+    "remark": u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_frictional_resistance",
+    "name": u"摩擦阻力",
+    "symbol": u"△Pm3",
+    "unit": u"Pa",
+    "calculate": u"△Pd*L3",
+    "remark": u"（2）P106"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_frictional_resistance_coefficient",
+    "name":
+    u"摩擦阻力系数",
+    "symbol":
+    u"λ",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.2.2",
+    "remark":
+    u"（2）P108"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_unit_length_frictional_resistance",
+    "name":
+    u"单位长度摩擦阻力",
+    "symbol":
+    u"△Pd",
+    "unit":
+    u"Pa/m",
+    "calculate":
+    u"λ*Hd/De",
+    "remark":
+    u"（2）P106"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_ducting_length",
+    "name": u"风管长度",
+    "symbol": u"L3",
+    "unit": u"m",
+    "calculate": u"布置图",
+    "remark": u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_local_resistance",
+    "name": u"局部阻力",
+    "symbol": u"△Pj3",
+    "unit": u"Pa",
+    "calculate": u"ζ*Hd",
+    "remark": u""
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_local_resistance_coefficient",
+    "name":
+    u"局部阻力系数",
+    "symbol":
+    u"ζ",
+    "unit":
+    u"",
+    "calculate":
+    u"ζ1+ζ2+ζ3+ζ4",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_outlet_plate_gate",
+    "name": u"1个出口插板门",
+    "symbol": u"ζ1",
+    "unit": u"",
+    "calculate": u"图7.3.10-1",
+    "remark": u"（2）P130"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_outlet_diffuser_tube",
+    "name": u"1个出口扩散管",
+    "symbol": u"ζ2",
+    "unit": u"",
+    "calculate": u"",
+    "remark": u"（2）P136"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "induced_draft_45_90_slow_turn_elbow",
+    "name": u"1个45度缓转弯头（钢烟道）/1个90度缓转弯头（砖烟道）",
+    "symbol": u"ζ3",
+    "unit": u"",
+    "calculate": u"ζ3=ζu",
+    "remark": u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_powder_local_resistance_coefficient",
+    "name":
+    u"含粉气体局部阻力系数",
+    "symbol":
+    u"ζu",
+    "unit":
+    u"",
+    "calculate":
+    u"ζo（1+Ku）",
+    "remark":
+    u"（2）P110"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_air_local_resistance_coefficient",
+    "name":
+    u"纯空气局部阻力系数",
+    "symbol":
+    u"ζo",
+    "unit":
+    u"",
+    "calculate":
+    u"Kθ*Kc*ζ△0",
+    "remark":
+    u"（2）P110"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_corrected_turning_angle_coefficient",
+    "name":
+    u"转弯角度修正系数",
+    "symbol":
+    u"Kθ",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-1",
+    "remark":
+    u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_corrected_height_width_ratio_coefficient",
+    "name":
+    u"截面高宽比修正系数",
+    "symbol":
+    u"Kc",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-2",
+    "remark":
+    u"（2）P111"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_original_resistance_coefficient_with_roughness",
+    "name":
+    u"包含管壁粗糙度影响的纯空气下的转弯原始阻力系数",
+    "symbol":
+    u"ζ△0",
+    "unit":
+    u"",
+    "calculate":
+    u"图7.3.2-5",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_powder_concentration_corrected_coefficient",
+    "name":
+    u"含粉浓度修正系数",
+    "symbol":
+    u"Ku",
+    "unit":
+    u"",
+    "calculate":
+    u"表7.3.2-2",
+    "remark":
+    u"（2）P113"
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "brick_chimney_inlet",
+    "name": u"砖烟道烟囱入口",
+    "symbol": u"ζ4",
+    "unit": u"",
+    "calculate": u"表7.4.1",
+    "remark": u"（2）P147"
+}, {
+    "module_name":
+    "GPG_SmokeResistance",
+    "name_eng":
+    "induced_draft_to_chimney_total_resistance",
+    "name":
+    u"引风机出口至烟囱入口总阻力",
+    "symbol":
+    u"△Pz3",
+    "unit":
+    u"Pa",
+    "calculate":
+    u"△Pm3+△Pj3",
+    "remark":
+    u""
+}, {
+    "module_name": "GPG_SmokeResistance",
+    "name_eng": "smoke_chimney_total_resistance",
+    "name": u"烟道总阻力",
+    "symbol": u"△Pz",
+    "unit": u"Pa",
+    "calculate": u"△Pz1+△Pz2+△Pz3",
+    "remark": u""
+}]
+
+# 煤气发电 烟风系统
+GPGGasAirSys_data = [{
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "c2s_condition_temperature",
+        "name": u"工况温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "c2s_condition_flux",
+        "name": u"工况流量",
+        "symbol": u"qv",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "c2s_local_atmosphere",
+        "name": u"当地大气压",
+        "symbol": u"p",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "c2s_standard_temperature",
+        "name": u"标况温度",
+        "symbol": u"t0",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "c2s_standard_pressure",
+        "name": u"标况压力",
+        "symbol": u"p0",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "c2s_standard_flux",
+        "name": u"标况流量",
+        "symbol": u"qv0",
+        "unit": u"Nm³/h",
+        "calculate": u"qv0=qv*(p/p0)*((t0+273)/(t+273))",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "s2c_standard_temperature",
+        "name": u"标况温度",
+        "symbol": u"t0",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "s2c_standard_pressure",
+        "name": u"标况压力",
+        "symbol": u"p0",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "s2c_standard_flux",
+        "name": u"标况流量",
+        "symbol": u"qv0",
+        "unit": u"Nm³/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "s2c_condition_temperature",
+        "name": u"工况温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "s2c_local_atmosphere",
+        "name": u"当地大气压",
+        "symbol": u"p",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "s2c_condition_flux",
+        "name": u"工况流量",
+        "symbol": u"qv",
+        "unit": u"m³/h",
+        "calculate": u"qv=qv0*(p0/p)*((t+273)/(t0+273))",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_air_temperature",
+        "name": u"空气温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"设计值"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_wind_resistance",
+        "name": u"风阻力",
+        "symbol": u"p",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u"设计值"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_local_atmosphere",
+        "name": u"当地大气压",
+        "symbol": u"p0",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_condition_smoke_flux",
+        "name": u"烟风流量（工况）",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"注意锅炉厂是否含有储备系数"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_fan_temperature",
+        "name": u"风机温度",
+        "symbol": u"t1",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_fan_total_pressure",
+        "name": u"风机全压",
+        "symbol": u"p1",
+        "unit": u"pa",
+        "calculate": u"p1=p*(101325/p0)*((t+273)/(t1+273))",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_fan_selected_total_pressure",
+        "name": u"风机选用全压",
+        "symbol": u"p2",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"1.10~1.15"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_fan_selected_flux",
+        "name": u"风机选用流量",
+        "symbol": u"q2",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"1.05~1.2"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_fan_pressure_efficiency",
+        "name": u"风机全压头效率",
+        "symbol": u"η",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"0.9"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_transmission_efficiency",
+        "name": u"机械传动效率",
+        "symbol": u"η1",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"直联时1.0，联轴器连接时0.95~0.98，三角皮带传动0.9~0.95，平皮带传动时0.8"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_motor_efficiency",
+        "name": u"电动机效率",
+        "symbol": u"ηd",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"0.9"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_fan_shaft_power",
+        "name": u"风机轴功率",
+        "symbol": u"P'",
+        "unit": u"kw",
+        "calculate": u"P'=p2*q2/η",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_motor_safe_margin",
+        "name": u"电机安全裕量",
+        "symbol": u"K",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"1.1"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_motor_power",
+        "name": u"电机功率",
+        "symbol": u"P",
+        "unit": u"kw",
+        "calculate": u"P=K*P'/ηd",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_specification_power",
+        "name": u"选用规格-功率",
+        "symbol": u"50%定频",
+        "unit": u"一个",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "blower_specification_flux",
+        "name": u"选用规格-流量",
+        "symbol": u"50%定频",
+        "unit": u"一个",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_smoke_temperature",
+        "name": u"烟风温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"设计值"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_total_pressure",
+        "name": u"全压",
+        "symbol": u"p",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u"烟道总阻力"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_local_atmosphere",
+        "name": u"当地大气压",
+        "symbol": u"p0",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u"根据当地海拔按表选取"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_condition_smoke_flux",
+        "name": u"烟风流量（工况）",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"标---工况之间转换"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_temperature",
+        "name": u"风机温度",
+        "symbol": u"t1",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"风机铭牌标定温度，一般为165/200℃"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_smoke_density",
+        "name": u"烟气密度",
+        "symbol": u"ρ0",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u"取一般烟气平均密度"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_total_pressure",
+        "name": u"风机全压",
+        "symbol": u"p1",
+        "unit": u"pa’",
+        "calculate": u"p1=p*(101325/p0)*((t+273)/(t1+273))",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_selected_total_pressure",
+        "name": u"风机选用全压",
+        "symbol": u"p2",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"选用系数：1.10~1.15"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_selected_flux",
+        "name": u"风机选用流量",
+        "symbol": u"q2",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"选用系数：1.05~1.2"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_efficiency",
+        "name": u"风机效率",
+        "symbol": u"η",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"全压头时效率，一般风机0.6，高效风机为0.9"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_transmission_efficiency",
+        "name":  u"机械传动效率",
+        "symbol": u"η1",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"直联时1.0，联轴器连接时0.95~0.98，三角皮带传动0.9~0.95，平皮带传动时0.8"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_motor_efficiency",
+        "name": u"电机效率",
+        "symbol": u"ηd",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"电动机效率0.9"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_fan_shaft_power",
+        "name": u"风机轴功率",
+        "symbol": u"P'",
+        "unit": u"kw",
+        "calculate": u"P'=p2*q2/η",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_motor_safe_margin",
+        "name": u"电机安全裕量",
+        "symbol": u"K",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"1.1"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_motor_power",
+        "name": u"电机功率",
+        "symbol": u"P",
+        "unit": u"kw",
+        "calculate": u"P=K*P'/ηd",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_specification_power",
+        "name": u"选用规格-功率",
+        "symbol": u"50%定频",
+        "unit": u"一个",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "Induced_specification_flux",
+        "name": u"选用规格-流量",
+        "symbol": u"50%定频",
+        "unit": u"一个",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"煤气管道15-20"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_calculated_cross_sectional_area",
+        "name": u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_calculated_diameter",
+        "name": u"计算管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_selected_diameter",
+        "name": u"选取直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "gas_tube_selected_thickness",
+        "name": u"选取壁厚",
+        "symbol": u"t",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"冷风道流速10-12"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_calculated_cross_sectional_area",
+        "name": u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_calculated_diameter",
+        "name": u"计算当量管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_length",
+        "name": u"长",
+        "symbol": u"L",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_width",
+        "name": u"宽",
+        "symbol": u"B",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "coldwind_tube_specification",
+        "name": u"选用规格",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"热风道流速15-25"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_calculated_cross_sectional_area",
+        "name": u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_calculated_diameter",
+        "name": u"计算当量管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_length",
+        "name": u"长",
+        "symbol": u"L",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_width",
+        "name": u"宽",
+        "symbol": u"B",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "hotwind_tube_specification",
+        "name": u"选用规格",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"烟道流速10-15"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_calculated_cross_sectional_area",
+        "name": u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_calculated_diameter",
+        "name": u"计算当量管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_length",
+        "name": u"长",
+        "symbol": u"L",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_width",
+        "name": u"宽",
+        "symbol": u"B",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "total_smoke_tube_specification",
+        "name": u"选用规格",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"烟道流速10-15"
+    }, {
+        "module_name":
+        "GPG_GasAirSystem",
+        "name_eng":
+        "branch_smoke_tube_calculated_cross_sectional_area",
+        "name":
+        u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_calculated_diameter",
+        "name": u"计算当量管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_length",
+        "name": u"长",
+        "symbol": u"L",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_width",
+        "name": u"宽",
+        "symbol": u"B",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_smoke_tube_specification",
+        "name": u"选用规格",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"热风道流速15-25"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_calculated_cross_sectional_area",
+        "name": u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_calculated_diameter",
+        "name": u"计算管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_selected_diameter",
+        "name": u"选取直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "main_hotwind_tube_selected_thickness",
+        "name": u"选取壁厚",
+        "symbol": u"t",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_medium_flux",
+        "name": u"介质流量",
+        "symbol": u"q",
+        "unit": u"m³/h",
+        "calculate": u"",
+        "remark": u"计算书"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_medium_temperature",
+        "name": u"介质温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_flow_velocity",
+        "name": u"流速",
+        "symbol": u"v",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"热风道流速15-25"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_calculated_cross_sectional_area",
+        "name": u"计算截面积",
+        "symbol": u"A",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_calculated_diameter",
+        "name": u"计算管道直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_selected_diameter",
+        "name": u"选取直径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "branch_hotwind_tube_selected_thickness",
+        "name": u"选取壁厚",
+        "symbol": u"t",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_height",
+        "name": u"烟囱高度",
+        "symbol": u"H",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u"假定30、45、60、80、100、120、150、180"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "local_atmosphere",
+        "name": u"当地大气压",
+        "symbol": u"p",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "standard_air_density",
+        "name": u"标态下空气密度",
+        "symbol": u"ρ0",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u"平均值"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "standard_average_smoke_density",
+        "name": u"标态下平均烟气密度",
+        "symbol": u"ρ1",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u"平均值"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "standard_calculated_smoke_density",
+        "name": u"标态下计算烟气密度",
+        "symbol": u"ρ2",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u"计算值"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "outdoor_air_temperature",
+        "name": u"室外空气温度",
+        "symbol": u"t1",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"给定"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_inlet_temperature",
+        "name": u"烟囱进口处烟温",
+        "symbol": u"t0",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"锅炉排烟温度"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_temperature_drop_per_meter",
+        "name": u"烟囱每米高度的温度降",
+        "symbol": u"t'",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"砖砌温降0.1℃/m；钢板0.5℃/m"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_average_temperature",
+        "name": u"烟囱内平均温度",
+        "symbol": u"t2",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_draft",
+        "name": u"烟囱抽力",
+        "symbol": u"S",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "smoke_amount",
+        "name": u"烟气量",
+        "symbol": u"q",
+        "unit": u"Nm³/h",
+        "calculate": u"",
+        "remark": u"燃烧计算"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_outlet_temperature",
+        "name": u"烟囱出口温度",
+        "symbol": u"t",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"抽力计算"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_outlet_flow",
+        "name": u"烟囱出口流速",
+        "symbol": u"Wo",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u"根据温度和烟囱高度选取12-20，低负荷时2.5-3"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_outlet_inner_diameter",
+        "name": u"烟囱出口内径",
+        "symbol": u"d",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_outlet_selected_inner_diameter",
+        "name": u"选取烟囱出口内径",
+        "symbol": u"d'",
+        "unit": u"mm",
+        "calculate": u"",
+        "remark": u"选取"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_experience_base_diameter",
+        "name": u"经验烟囱基础内径",
+        "symbol": u"d'’",
+        "unit": u"mm",
+        "calculate": u"",
+        "remark": u"坡度小于2%"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "low_load_smoke_amount",
+        "name": u"低负荷下烟气量",
+        "symbol": u"q1",
+        "unit": u"Nm³/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "low_load_smoke_temperature",
+        "name": u"低负荷下烟气量",
+        "symbol": u"t1",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "low_load_flow_30_percent",
+        "name": u"30%低负荷校核流速",
+        "symbol": u"t1",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u"不低于2.5"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_resistance_coefficient",
+        "name": u"烟囱阻力系数",
+        "symbol": u"r",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"一般0.04"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_average_velocity",
+        "name": u"烟囱内平均流速",
+        "symbol": u"Wo",
+        "unit": u"m/s",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_average_diameter",
+        "name": u"烟囱平均直径",
+        "symbol": u"d'’",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_friction_resistance",
+        "name": u"烟囱摩擦阻力",
+        "symbol": u"△p1",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_outlet_resistance_coefficient",
+        "name": u"烟囱出口阻力系数",
+        "symbol": u"§",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u"一般取1"
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_outlet_resistance",
+        "name": u"烟囱出口阻力",
+        "symbol": u"△p2",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_GasAirSystem",
+        "name_eng": "chimney_total_resistance",
+        "name": u"烟囱总阻力",
+        "symbol": u"△p",
+        "unit": u"pa",
+        "calculate": u"",
+        "remark": u""
+    }
+]
+
 # 煤气发电 原则性热力系统锅炉部分
 GPGBoilerOfPTS_data = [{
     "module_name": "GPG_BoilerOfPTS",
@@ -631,7 +3362,8 @@ class AddGPG():
     # 初始化数据
     @staticmethod
     def init_data():
-        data = [questionnaire_data, GPGBoilerOfPTS_data]
+        data = [questionnaire_data, GPGBoilerOfPTS_data, GPGGasAirSys_data,
+                GPGSmokeResistance_data, GPGWindResistance_data]
         for index in range(len(data)):
             AddGPG.insert_constant(data[index])
 

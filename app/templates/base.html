@@ -108,32 +108,48 @@
                         <div id="coal" class="collapse ">
                             <ul class="nav">
                                 <li><a class="coalQuestionnaire" href="{{ url_for('main.coalQuestionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="coalFurnace" href="{{ url_for('main.coalFurnace') }}" class="">锅炉计算</a></li>
-                                <li><a class="coalSteamTurbine" href="{{ url_for('main.coalSteamTurbine') }}" class="">汽轮机计算</a></li>
-                                <li><a class="coalHandingSystem" href="{{ url_for('main.coalHandingSystem') }}" class="">输煤系统</a></li>
+                                <li><a class="coalFurnace unselect" onclick="return false;" href="{{ url_for('main.coalFurnace') }}" class="">锅炉计算</a></li>
+                                <li><a class="coalHandingSystem unselect" onclick="return false;" href="{{ url_for('main.coalHandingSystem') }}" class="">输煤系统</a></li>
+                                <!-- <li><a class="coalDesulfurization unselect" onclick="return false;" href="{{ url_for('main.coalDesulfurization') }}" class="">脱硫脱硝</a></li>
+                                <li><a class="coalBoilerAuxiliaries unselect" onclick="return false;" href="{{ url_for('main.coalBoilerAuxiliaries') }}" class="">锅炉辅机系统</a></li>
+                                <li><a class="coalRemovalAshSlag unselect" onclick="return false;" href="{{ url_for('main.coalRemovalAshSlag') }}" class="">除灰除渣系统</a></li>
+                                <li><a class="coalCirculatingWater unselect" onclick="return false;" href="{{ url_for('main.coalCirculatingWater') }}" class="">循环水系统</a></li>
+                                <li><a class="coalSmokeAirSystem unselect" onclick="return false;" href="{{ url_for('main.coalSmokeAirSystem') }}" class="">烟风系统</a></li>
+                             -->
+                                
+                                
+                                
+                                <!-- <li><a class="coalSteamTurbine unselect" onclick="return false;" href="{{ url_for('main.coalSteamTurbine') }}" class="">汽轮机计算</a></li> -->
                             </ul>
                         </div>
                     </li>
 
                     <li>
-                        <a href="#biomass" data-toggle="collapse" id="biomassMean" class="collapsed index"><i class="fa fa-child"></i> <span>生物质热电联产</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <a href="#biomass" data-toggle="collapse" id="biomassMean" class="collapsed index"><i class="fa fa-tree"></i> <span>生物质热电联产</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="biomass" class="collapse ">
                             <ul class="nav">
                                 <li><a class="biomassQuestionnaire" href="{{ url_for('main.biomassQuestionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="biomassSteamTurbine" href="{{ url_for('main.biomassSteamTurbine') }}" class="">汽轮机计算</a></li>
-                                <li><a class="biomassFurnace" href="{{ url_for('main.biomassFurnace') }}" class="">锅炉计算</a></li>
+                                <li><a class="biomassFurnace unselect" onclick="return false;" href="{{ url_for('main.biomassFurnace') }}" class="">锅炉计算</a></li>
+                                <li><a class="biomassFuelStorTran unselect" onclick="return false;" href="{{ url_for('main.biomassFuelStorTran') }}" class="">燃料存储及输送系统</a></li>
+                                <!-- <li><a class="biomassSteamTurbine" href="{{ url_for('main.biomassSteamTurbine') }}" class="">汽轮机计算</a></li> -->
+                                <li><a class="biomassDesulDenit unselect" onclick="return false;" href="{{ url_for('main.biomassDesulDenit') }}" class="">脱硫脱硝系统</a></li>
+                                <li><a class="biomassDASRemove unselect" onclick="return false;" href="{{ url_for('main.biomassDASRemove') }}" class="">除尘除灰除渣系统</a></li>
+                                <li><a class="biomassBoilerAuxiliaries unselect" onclick="return false;" href="{{ url_for('main.biomassBoilerAuxiliaries') }}" class="">锅炉辅机</a></li>
+                                <li><a class="biomassOfficialProcess unselect" onclick="return false;" href="{{ url_for('main.biomassOfficialProcess') }}" class="">公用工程</a></li>
                             </ul>
                         </div>
                     </li>
                     <li>
-                        <a href="#ccpp" data-toggle="collapse" id="ccppMean" class="collapsed index"><i class="fa fa-steam"></i> <span>CCPP</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="ccpp" class="collapse ">
+                        <a href="#ccpp" data-toggle="collapse" id="ccppMean" class="collapsed index"><i class="fa fa-steam"></i> <span>CCPP</span></a>
+                        
+                        <!-- <a href="#ccpp" data-toggle="collapse" id="ccppMean" class="collapsed index"><i class="fa fa-steam"></i> <span>CCPP</span><i class="icon-submenu lnr lnr-chevron-left"></i></a> -->
+                        <!-- <div id="ccpp" class="collapse ">
                             <ul class="nav">
                                 <li><a class="ccppQuestionnaire" href="{{ url_for('main.ccppQuestionnaire') }}" class="">需求调查表</a></li>
                                 <li><a class="ccppFurnace" href="{{ url_for('main.ccppFurnace') }}" class="">锅炉计算</a></li>
                                 <li><a class="ccppSteamTurbine" href="{{ url_for('main.ccppSteamTurbine') }}" class="">汽轮机计算</a></li>
                             </ul>
-                        </div>
+                        </div> -->
                     </li>
 
                     <li>
@@ -141,14 +157,17 @@
                         <div id="gaspower" class="collapse ">
                             <ul class="nav">
                                 <li><a class="GPG_Questionnaire" href="{{ url_for('main.GPG_Questionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="GPG_BoilerOfPTS" href="{{ url_for('main.GPG_BoilerOfPTS') }}" class="">原则性热力系统锅炉部分</a></li>                              
+                                <li><a class="GPG_BoilerOfPTS" href="{{ url_for('main.GPG_BoilerOfPTS') }}" class="">原则性热力系统锅炉部分</a></li> 
+                                <li><a class="GPG_GasAirSystem" href="{{ url_for('main.GPG_GasAirSystem') }}" class="">烟风系统</a></li>      
+                                <li><a class="GPG_SmokeResistance" href="{{ url_for('main.GPG_SmokeResistance') }}" class="">烟阻力</a></li>
+                                <li><a class="GPG_WindResistance" href="{{ url_for('main.GPG_WindResistance') }}" class="">风阻力</a></li>                      
                             </ul>
                         </div>
                     </li>
                     <!-- <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>Elements</span></a></li> -->
-                    <li><a href="{{ url_for('main.elements') }}" class="elements"><i class="lnr lnr-code"></i> <span>元素</span></a></li>
+                    <!-- <li><a href="{{ url_for('main.elements') }}" class="elements"><i class="lnr lnr-code"></i> <span>元素</span></a></li> -->
                     <!-- <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li> -->
-                    <li><a href="{{ url_for('main.charts') }}" class="charts"><i class="lnr lnr-chart-bars"></i> <span>图标</span></a></li>
+                    <!-- <li><a href="{{ url_for('main.charts') }}" class="charts"><i class="lnr lnr-chart-bars"></i> <span>图标</span></a></li> -->
                     <!-- <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li> -->
                     <!-- <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li> -->
                     <!-- <li>
@@ -161,15 +180,17 @@
                             </ul>
                         </div>
                     </li> -->
-                    <li><a href="{{ url_for('main.tables') }}" class="tables"><i class="lnr lnr-dice"></i> <span>表格</span></a></li>
+                    <!-- <li><a href="{{ url_for('main.tables') }}" class="tables"><i class="lnr lnr-dice"></i> <span>表格</span></a></li>
                     <li><a href="{{ url_for('main.typography') }}" class="typography"><i class="lnr lnr-text-format"></i> <span>排版</span></a></li>
-                    <li><a href="{{ url_for('main.icons') }}" class="icons"><i class="lnr lnr-linearicons"></i> <span>小图标</span></a></li>
+                    <li><a href="{{ url_for('main.icons') }}" class="icons"><i class="lnr lnr-linearicons"></i> <span>小图标</span></a></li> -->
                 </ul>
             </nav>
         </div>
     </div>
 
     <input type="hidden" id="menuSelect" value="{{menuSelect}}" />
+    <input type="hidden" value="{{session.coalCHPPlanId}}" id="coalCHPCurrentPlanId">
+    <input type="hidden" value="{{session.biomassCHPPlanId}}" id="biomassCHPCurrentPlanId">
     <div class="clearfix"></div>
     <footer>
         <div class="container-fluid">

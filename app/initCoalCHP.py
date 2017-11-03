@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from app.models import CoalCHPConstant, CoalCHPComponent,\
+from models import CoalCHPConstant, CoalCHPComponent,\
                    CoalCHPNeedsQuestionnaire, Role, User, Company
 
 # 燃煤热电联产需求调查表
@@ -10,7 +10,9 @@ questionnaire_data = [{
     "symbol": u"Car",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_hydrogen",
@@ -18,7 +20,9 @@ questionnaire_data = [{
     "symbol": u"Har",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_oxygen",
@@ -26,7 +30,9 @@ questionnaire_data = [{
     "symbol": u"Oar",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_nitrogen",
@@ -34,7 +40,9 @@ questionnaire_data = [{
     "symbol": u"Nar",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_sulfur",
@@ -42,7 +50,9 @@ questionnaire_data = [{
     "symbol": u"Sar",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_water",
@@ -50,7 +60,9 @@ questionnaire_data = [{
     "symbol": u"Mar",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_grey",
@@ -58,7 +70,9 @@ questionnaire_data = [{
     "symbol": u"Aar",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_daf",
@@ -66,7 +80,9 @@ questionnaire_data = [{
     "symbol": u"Vdaf",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_grindability",
@@ -74,7 +90,9 @@ questionnaire_data = [{
     "symbol": u"KVTI",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "s_low",
@@ -82,7 +100,9 @@ questionnaire_data = [{
     "symbol": u"Qnet，ar",
     "unit": u"MJ/kg",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_altitude",
@@ -90,7 +110,9 @@ questionnaire_data = [{
     "symbol": u"A",
     "unit": u"m",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_mean_annual_temperature",
@@ -98,7 +120,9 @@ questionnaire_data = [{
     "symbol": u"T",
     "unit": u"℃",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_mean_summer_temperature",
@@ -106,7 +130,9 @@ questionnaire_data = [{
     "symbol": u"T1",
     "unit": u"℃",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_mean_winter_temperature",
@@ -114,7 +140,9 @@ questionnaire_data = [{
     "symbol": u"T2",
     "unit": u"℃",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_mean_annual_barometric",
@@ -122,7 +150,9 @@ questionnaire_data = [{
     "symbol": u"Pb",
     "unit": u"mmHg",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_mean_summer_barometric",
@@ -130,7 +160,9 @@ questionnaire_data = [{
     "symbol": u"Pb1",
     "unit": u"mmHg",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_mean_winter_barometric",
@@ -138,7 +170,9 @@ questionnaire_data = [{
     "symbol": u"Pb2",
     "unit": u"mmHg",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "w_annual_average_relative_humidity",
@@ -146,7 +180,9 @@ questionnaire_data = [{
     "symbol": u"φ",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_steam_pressure_level",
@@ -154,7 +190,9 @@ questionnaire_data = [{
     "symbol": u"P",
     "unit": u"MPa",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_steam_temperature_level",
@@ -162,7 +200,9 @@ questionnaire_data = [{
     "symbol": u"T",
     "unit": u"℃",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_steam_time",
@@ -170,7 +210,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_recent_steam_flow_range",
@@ -178,7 +220,9 @@ questionnaire_data = [{
     "symbol": u"Qjq",
     "unit": u"t/h",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_forward_steam_flow_range",
@@ -186,7 +230,9 @@ questionnaire_data = [{
     "symbol": u"Qyq",
     "unit": u"t/h",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_condensate_water_iron",
@@ -194,7 +240,9 @@ questionnaire_data = [{
     "symbol": u"CFe",
     "unit": u"mg/m3",
     "calculate": "",
-    "remark": "考虑回水是否受主工艺污染"
+    "remark": "考虑回水是否受主工艺污染",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "ihl_condensate_water_recovery_rate",
@@ -202,7 +250,9 @@ questionnaire_data = [{
     "symbol": u"Φ",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "hhl_heating_occasions_type",
@@ -210,7 +260,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "hhl_year_heating_days",
@@ -218,7 +270,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"d/a",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "hhl_recent_heating_area",
@@ -226,7 +280,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"万m3",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "hhl_forward_heating_area",
@@ -234,7 +290,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"万m3",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "os_planning_area",
@@ -242,7 +300,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"亩",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "os_planned_expansion_capacity",
@@ -250,7 +310,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"MW",
     "calculate": "",
-    "remark": "是否扩建"
+    "remark": "是否扩建",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "os_local_water_condition",
@@ -258,7 +320,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "oe_electrical_load_demand",
@@ -266,7 +330,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"KW",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "oe_higher_voltage_level",
@@ -274,7 +340,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"kV",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "oe_plant_distance_higher_change",
@@ -282,7 +350,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"km",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "oe_is_internet_access",
@@ -290,7 +360,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "oe_is_isolated_network",
@@ -298,7 +370,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "op_flue_gas_sox_limits",
@@ -306,7 +380,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"mg/Nm3",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "op_flue_gas_nox_limits",
@@ -314,7 +390,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"mg/Nm3",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "op_flue_gas_dust_limits",
@@ -322,7 +400,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"mg/Nm3",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "od_use_desulfurization_form",
@@ -330,7 +410,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "od_use_denitration_form",
@@ -338,7 +420,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "od_limestone_supply",
@@ -346,7 +430,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"mg/Nm3",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_questionnaire",
     "name_eng": "od_urea_or_ammonia_water_supply",
@@ -354,7 +440,9 @@ questionnaire_data = [{
     "symbol": u"--",
     "unit": u"--",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }]
 
 # 燃煤热电联产计算_输煤系统sheet
@@ -365,7 +453,9 @@ coalHandingSystem_data = [{
     "symbol": u"Bj",
     "unit": u"t/h",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "boiler_daily_utilization_hours",
@@ -373,7 +463,9 @@ coalHandingSystem_data = [{
     "symbol": u"Hd",
     "unit": u"h",
     "calculate": "",
-    "remark": u"20~22"
+    "remark": u"20~22",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_daily_consumption",
@@ -381,7 +473,9 @@ coalHandingSystem_data = [{
     "symbol": u"Qd",
     "unit": u"t/d",
     "calculate": "Bj*Hd",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "boiler_annual_utilization_hours",
@@ -389,7 +483,9 @@ coalHandingSystem_data = [{
     "symbol": u"Ha",
     "unit": u"h",
     "calculate": "",
-    "remark": u"7260"
+    "remark": u"7260",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_annual_consumption",
@@ -397,7 +493,9 @@ coalHandingSystem_data = [{
     "symbol": u"Qa",
     "unit": u"万t/a",
     "calculate": "Bj*Ha",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "daily_coal_unbalanced_coefficient",
@@ -405,7 +503,9 @@ coalHandingSystem_data = [{
     "symbol": u"Kb",
     "unit": "",
     "calculate": "",
-    "remark": u"1.1~1.3"
+    "remark": u"1.1~1.3",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "daily_rail_coal_amount",
@@ -413,7 +513,9 @@ coalHandingSystem_data = [{
     "symbol": u"Md",
     "unit": u"t/d",
     "calculate": u"Kb*Qd",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "daily_vehicle_coal_amount",
@@ -421,7 +523,9 @@ coalHandingSystem_data = [{
     "symbol": u"Md",
     "unit": u"t/d",
     "calculate": u"Kb*Qa*Hd/Ha",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "boiler_perhour_coal_max_capacity",
@@ -429,7 +533,9 @@ coalHandingSystem_data = [{
     "symbol": u"Q",
     "unit": u"t",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "boiler_daily_working_hours",
@@ -437,7 +543,9 @@ coalHandingSystem_data = [{
     "symbol": u"T",
     "unit": u"h",
     "calculate": "",
-    "remark": u"22"
+    "remark": u"22",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_store_days",
@@ -445,7 +553,9 @@ coalHandingSystem_data = [{
     "symbol": u"n",
     "unit": u"d",
     "calculate": u"",
-    "remark": u"汽车5~10，火车10~25"
+    "remark": u"汽车5~10，火车10~25",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coalyard_store_amount",
@@ -453,7 +563,9 @@ coalHandingSystem_data = [{
     "symbol": u"B",
     "unit": u"t",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_channel_occupy_coefficient",
@@ -461,7 +573,9 @@ coalHandingSystem_data = [{
     "symbol": u"N",
     "unit": u"-",
     "calculate": u"",
-    "remark": u"汽车1.5，火车1.3"
+    "remark": u"汽车1.5，火车1.3",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_shape_coefficient",
@@ -469,7 +583,9 @@ coalHandingSystem_data = [{
     "symbol": u"K",
     "unit": u"-",
     "calculate": u"",
-    "remark": u"0.6~0.9"
+    "remark": u"0.6~0.9",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_height",
@@ -477,7 +593,9 @@ coalHandingSystem_data = [{
     "symbol": u"H",
     "unit": u"m",
     "calculate": u"",
-    "remark": u"装载机2~3 推煤机≤6"
+    "remark": u"装载机2~3 推煤机≤6",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_bulk_density",
@@ -485,7 +603,9 @@ coalHandingSystem_data = [{
     "symbol": u"p",
     "unit": u"t/m³",
     "calculate": u"",
-    "remark": u"0.8~1"
+    "remark": u"0.8~1",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coalyard_area",
@@ -493,7 +613,9 @@ coalHandingSystem_data = [{
     "symbol": u"F",
     "unit": u"m²",
     "calculate": u"QTNn/KHp",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "height",
@@ -501,7 +623,9 @@ coalHandingSystem_data = [{
     "symbol": u"L",
     "unit": u"m",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "width",
@@ -509,7 +633,9 @@ coalHandingSystem_data = [{
     "symbol": u"B",
     "unit": u"m",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "effective_cubage_calculated",
@@ -517,7 +643,9 @@ coalHandingSystem_data = [{
     "symbol": u"V",
     "unit": u"m³",
     "calculate": u"",
-    "remark": u"二班 10~12"
+    "remark": u"二班 10~12",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "coal_bunker_counts",
@@ -525,7 +653,9 @@ coalHandingSystem_data = [{
     "symbol": u"n",
     "unit": u"",
     "calculate": u"",
-    "remark": u"2运1备"
+    "remark": u"2运1备",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "effective_cubage_selected",
@@ -533,7 +663,9 @@ coalHandingSystem_data = [{
     "symbol": u"V",
     "unit": u"m³",
     "calculate": u"",
-    "remark": u"根据计算容积"
+    "remark": u"根据计算容积",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "backstep_consumption_hours",
@@ -541,7 +673,9 @@ coalHandingSystem_data = [{
     "symbol": u"",
     "unit": u"",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "transport_unbalanced_coefficient",
@@ -549,15 +683,28 @@ coalHandingSystem_data = [{
     "symbol": u"K",
     "unit": u"-",
     "calculate": u"",
-    "remark": u"1.2~1.5"
+    "remark": u"1.2~1.5",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_CoalHandingSystem",
-    "name_eng": "transportsystem_effective_working_hours",
-    "name": u"运煤系统有效作业时间",
-    "symbol": u"t",
-    "unit": u"h",
-    "calculate": u"",
-    "remark": u"三班≤16h"
+    "module_name":
+    "coalCHP_CoalHandingSystem",
+    "name_eng":
+    "transportsystem_effective_working_hours",
+    "name":
+    u"运煤系统有效作业时间",
+    "symbol":
+    u"t",
+    "unit":
+    u"h",
+    "calculate":
+    u"",
+    "remark":
+    u"三班≤16h",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "transportsystem_amount",
@@ -565,7 +712,9 @@ coalHandingSystem_data = [{
     "symbol": u"Q",
     "unit": u"t/h",
     "calculate": u"22*Bj*K/t",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "vehicle_capacity_tonnage",
@@ -573,7 +722,9 @@ coalHandingSystem_data = [{
     "symbol": u"Qa",
     "unit": u"t",
     "calculate": u"",
-    "remark": u"17"
+    "remark": u"17",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "daily_working_hours",
@@ -581,7 +732,9 @@ coalHandingSystem_data = [{
     "symbol": u"T",
     "unit": u"h",
     "calculate": u"",
-    "remark": u"6"
+    "remark": u"6",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "daily_received_coal_amount",
@@ -589,7 +742,9 @@ coalHandingSystem_data = [{
     "symbol": u"Qd",
     "unit": u"t/d",
     "calculate": u"单台",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "vehicle_daily_incoming_times",
@@ -597,7 +752,9 @@ coalHandingSystem_data = [{
     "symbol": u"",
     "unit": u"",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "vehicle_perhour_incoming_times",
@@ -605,7 +762,9 @@ coalHandingSystem_data = [{
     "symbol": u"Ct",
     "unit": u"次/h",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "mutil_boiler_rated_coal_capacity",
@@ -613,7 +772,9 @@ coalHandingSystem_data = [{
     "symbol": u"Bzj",
     "unit": u"t/h",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "mutil_boiler_rated_coal_amount",
@@ -621,7 +782,9 @@ coalHandingSystem_data = [{
     "symbol": u"Bzj",
     "unit": u"t/h",
     "calculate": u"多锅炉额定耗煤量×小时",
-    "remark": u"22"
+    "remark": u"22",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "transportsystem_output",
@@ -629,7 +792,9 @@ coalHandingSystem_data = [{
     "symbol": u"Qxcl",
     "unit": u"t/h",
     "calculate": u"选取",
-    "remark": u""
+    "remark": u"",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "transportsystem_working_hours",
@@ -637,7 +802,9 @@ coalHandingSystem_data = [{
     "symbol": u"t",
     "unit": u"h",
     "calculate": u"双路 三班",
-    "remark": u""
+    "remark": u"",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "shift_working_hours",
@@ -645,7 +812,9 @@ coalHandingSystem_data = [{
     "symbol": u"tn",
     "unit": u"h",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "belt_width",
@@ -653,7 +822,9 @@ coalHandingSystem_data = [{
     "symbol": u"B",
     "unit": u"",
     "calculate": u"500/650/800",
-    "remark": u"参考表10-9"
+    "remark": u"参考表10-9",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "section_coefficient",
@@ -661,7 +832,9 @@ coalHandingSystem_data = [{
     "symbol": u"K",
     "unit": u"",
     "calculate": u"选取",
-    "remark": u"参考表10.2.4"
+    "remark": u"参考表10.2.4",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "belt_speed",
@@ -669,7 +842,9 @@ coalHandingSystem_data = [{
     "symbol": u"V",
     "unit": u"m/s",
     "calculate": u"",
-    "remark": u"1.25/1.6/2（参考表10.2.4）"
+    "remark": u"1.25/1.6/2（参考表10.2.4）",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "material_bulk_density",
@@ -677,7 +852,9 @@ coalHandingSystem_data = [{
     "symbol": u"p",
     "unit": u"t/m³",
     "calculate": u"",
-    "remark": u"0.8~1"
+    "remark": u"0.8~1",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "belt_max_transport_capacity",
@@ -685,7 +862,9 @@ coalHandingSystem_data = [{
     "symbol": u"Q",
     "unit": u"t/h",
     "calculate": u"KBBvp",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "equipment_sets",
@@ -693,7 +872,9 @@ coalHandingSystem_data = [{
     "symbol": u"n",
     "unit": u"",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "surplus",
@@ -701,7 +882,9 @@ coalHandingSystem_data = [{
     "symbol": u"k",
     "unit": u"%",
     "calculate": u"",
-    "remark": u"200%"
+    "remark": u"200%",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_CoalHandingSystem",
     "name_eng": "single_coal_feeder_output",
@@ -709,7 +892,9 @@ coalHandingSystem_data = [{
     "symbol": u"Qgm",
     "unit": u"t/h",
     "calculate": u"Bj/n*k",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }]
 
 # 锅炉计算sheet
@@ -720,7 +905,9 @@ furnaceCalculation_data = [{
     "symbol": u"Car",
     "unit": u"%",
     "calculate": "见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_hydrogen",
@@ -728,7 +915,9 @@ furnaceCalculation_data = [{
     "symbol": u"Har",
     "unit": u"%",
     "calculate": "见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_oxygen",
@@ -736,7 +925,9 @@ furnaceCalculation_data = [{
     "symbol": u"Oar",
     "unit": u"%",
     "calculate": "见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_nitrogen",
@@ -744,7 +935,9 @@ furnaceCalculation_data = [{
     "symbol": u"Nar",
     "unit": u"%",
     "calculate": "见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_sulfur",
@@ -752,7 +945,9 @@ furnaceCalculation_data = [{
     "symbol": u"Sar",
     "unit": u"%",
     "calculate": "见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_grey",
@@ -760,7 +955,9 @@ furnaceCalculation_data = [{
     "symbol": u"Aar",
     "unit": u"%",
     "calculate": "见需求调研表；一般＜10",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_water",
@@ -768,7 +965,9 @@ furnaceCalculation_data = [{
     "symbol": u"Mar",
     "unit": u"%",
     "calculate": "见需求调研表；设计燃料入炉条件≤30；校核燃料入炉条件≤40",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_sum",
@@ -776,7 +975,9 @@ furnaceCalculation_data = [{
     "symbol": u"100",
     "unit": u"%",
     "calculate": "",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_daf",
@@ -784,7 +985,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vdaf",
     "unit": u"%",
     "calculate": " 无烟煤≤10；贫煤10~20;烟煤20~37；褐煤＞37",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_grindability",
@@ -792,39 +995,67 @@ furnaceCalculation_data = [{
     "symbol": u"HGI",
     "unit": u"--",
     "calculate": "见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_furnaceCalculation",
+    "name_eng": "s_low",
+    "name": u"收到基低位发热量",
+    "symbol": u"Qnet.Ar",
+    "unit": u"Kj/kg",
+    "calculate": "见需求调研表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_low_1",
     "name": u"收到基低位发热量",
     "symbol": u"Qnet.Ar",
-    "unit": u"Kj/kg",
-    "calculate": "见需求调研表",
-    "remark": ""
-}, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "s_low_2",
-    "name": u"收到基低位发热量",
-    "symbol": u"Qnet.Ar",
     "unit": u"Kcal/kg",
     "calculate": "KJ=4.1868*Kcal",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "s_low_estimation",
-    "name": u"低位发热量估算",
-    "symbol": u"Qnet.Ar",
-    "unit": u"Kj/kg",
-    "calculate": "Qnet.ar=339xCar+1030*Har-25xMar-109(Oar-Sar)",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "s_low_estimation",
+    "name":
+    u"低位发热量估算",
+    "symbol":
+    u"Qnet.Ar",
+    "unit":
+    u"Kj/kg",
+    "calculate":
+    "Qnet.ar=339xCar+1030*Har-25xMar-109(Oar-Sar)",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "s_high_estimation",
-    "name": u"高位发热量估算",
-    "symbol": u"Qar.gt",
-    "unit": u"Kj/kg",
-    "calculate": "Qnet.gt=339xCar+1256*Har-109(Oar-Sar)",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "s_high_estimation",
+    "name":
+    u"高位发热量估算",
+    "symbol":
+    u"Qar.gt",
+    "unit":
+    u"Kj/kg",
+    "calculate":
+    "Qnet.gt=339xCar+1256*Har-109(Oar-Sar)",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_steam_flow",
@@ -832,7 +1063,9 @@ furnaceCalculation_data = [{
     "symbol": u"Dgr",
     "unit": u"t/h",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_steam_pressure",
@@ -840,7 +1073,9 @@ furnaceCalculation_data = [{
     "symbol": u"Pgr",
     "unit": u"Mpa(g)",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_steam_temperature",
@@ -848,7 +1083,9 @@ furnaceCalculation_data = [{
     "symbol": u"Tgr",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_steam_enthalpy",
@@ -856,7 +1093,9 @@ furnaceCalculation_data = [{
     "symbol": u"Igr",
     "unit": u"Kj/kg",
     "calculate": u"查表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_boiler_pressure",
@@ -864,7 +1103,9 @@ furnaceCalculation_data = [{
     "symbol": u"Dgr",
     "unit": u"Mpa(g)",
     "calculate": u"锅炉厂资料-----过热蒸汽压力*1.1",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_saturated_water_enthalpy",
@@ -872,7 +1113,9 @@ furnaceCalculation_data = [{
     "symbol": u"Ibs",
     "unit": u"Kj/kg",
     "calculate": u"查表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_water_temperature",
@@ -880,7 +1123,9 @@ furnaceCalculation_data = [{
     "symbol": u"Tgs",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_water_enthalpy",
@@ -888,7 +1133,9 @@ furnaceCalculation_data = [{
     "symbol": u"Igs",
     "unit": u"Kj/kg",
     "calculate": u"查表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_boiler_efficiency",
@@ -896,7 +1143,9 @@ furnaceCalculation_data = [{
     "symbol": u"ηg",
     "unit": u"%",
     "calculate": u" 锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_unburned_loss",
@@ -904,7 +1153,9 @@ furnaceCalculation_data = [{
     "symbol": u"q4",
     "unit": u"%",
     "calculate": u"锅炉厂资料；一般为0.5~2% 取3%",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "f_blowdown_rate",
@@ -912,31 +1163,57 @@ furnaceCalculation_data = [{
     "symbol": u"ηpw",
     "unit": u"%",
     "calculate": u"锅炉厂资料 取2%",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "f_boiler_consumption",
+    "name":
+    u"锅炉燃料消耗量",
+    "symbol":
+    u"Bg",
+    "unit":
+    u"kg/h",
+    "calculate":
+    u"Dgr*1000*/ηg((Igr-Igs)+ηpw(ibs-igs))/Qnet.ar",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "f_boiler_consumption",
-    "name": u"锅炉燃料消耗量",
-    "symbol": u"Bg",
-    "unit": u"kg/h",
-    "calculate": u"Dgr*1000*/ηg((Igr-Igs)+ηpw(ibs-igs))/Qnet.ar",
-    "remark": ""
-}, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "f_calculation _consumption",
+    "name_eng": "f_calculation_consumption",
     "name": u"计算燃料消耗量",
     "symbol": u"Bj",
     "unit": u"kg/h",
     "calculate": u"Bg*(1-q4)",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "d_total",
-    "name": u"灰渣总量",
-    "symbol": u"Gzhb",
-    "unit": u"kg/h",
-    "calculate": u"Bg(Aar/100+Qnet,ar*q4/3387000)   P209",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "d_total",
+    "name":
+    u"灰渣总量",
+    "symbol":
+    u"Gzhb",
+    "unit":
+    u"kg/h",
+    "calculate":
+    u"Bg(Aar/100+Qnet,ar*q4/3387000)   P209",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_boiler_total",
@@ -944,7 +1221,9 @@ furnaceCalculation_data = [{
     "symbol": u"G'zhb",
     "unit": u"kg/h",
     "calculate": u"生物质热电项目脱硫系统一般采用炉内喷钙工艺",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_ash_share",
@@ -952,7 +1231,9 @@ furnaceCalculation_data = [{
     "symbol": u"k1",
     "unit": u"--",
     "calculate": u"CFB锅炉和ICFB锅炉取0.9；联合炉排炉和水冷振动炉排炉取0.6",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_dust_share",
@@ -960,7 +1241,9 @@ furnaceCalculation_data = [{
     "symbol": u"k2",
     "unit": u"--",
     "calculate": u"1-k1",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_ash_total",
@@ -968,7 +1251,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gh",
     "unit": u"t/h",
     "calculate": u"Gznb*k1",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_dust_total",
@@ -976,15 +1261,28 @@ furnaceCalculation_data = [{
     "symbol": u"Gz",
     "unit": u"t/h",
     "calculate": u"Gznb*k2",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "a_air_volumn",
-    "name": u"理论干空气量",
-    "symbol": u"Vo",
-    "unit": u"Nm3/kg",
-    "calculate": u"0.0889(Car+0.375St,ar)+0.265Har-0.0333Oar",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "a_air_volumn",
+    "name":
+    u"理论干空气量",
+    "symbol":
+    u"Vo",
+    "unit":
+    u"Nm3/kg",
+    "calculate":
+    u"0.0889(Car+0.375St,ar)+0.265Har-0.0333Oar",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_hot_temperature",
@@ -992,7 +1290,9 @@ furnaceCalculation_data = [{
     "symbol": u"Trp",
     "unit": u"℃",
     "calculate": u"见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_humidity",
@@ -1000,7 +1300,9 @@ furnaceCalculation_data = [{
     "symbol": u"φ",
     "unit": u"%",
     "calculate": u"见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_pressure",
@@ -1008,7 +1310,9 @@ furnaceCalculation_data = [{
     "symbol": u"Pb",
     "unit": u"kPa",
     "calculate": u"见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_temperature",
@@ -1016,7 +1320,9 @@ furnaceCalculation_data = [{
     "symbol": u"t",
     "unit": u"℃",
     "calculate": u"见需求调研表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_saturation_pressure",
@@ -1024,7 +1330,9 @@ furnaceCalculation_data = [{
     "symbol": u"Ps",
     "unit": u"kPa",
     "calculate": u"查水蒸汽表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_steam_perssure",
@@ -1032,15 +1340,28 @@ furnaceCalculation_data = [{
     "symbol": u"Pv",
     "unit": u"kPa",
     "calculate": u"φ*Ps/100",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "a_air_humidity",
-    "name": u"空气的绝对湿度(含湿量)",
-    "symbol": u"d",
-    "unit": u"g水/kg空气",
-    "calculate": u"d=622*Pv/(Pb-Pv)，如无气象资料，可取d=10(经验值)",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "a_air_humidity",
+    "name":
+    u"空气的绝对湿度(含湿量)",
+    "symbol":
+    u"d",
+    "unit":
+    u"g水/kg空气",
+    "calculate":
+    u"d=622*Pv/(Pb-Pv)，如无气象资料，可取d=10(经验值)",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_standard_air_humidity",
@@ -1048,7 +1369,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρao",
     "unit": u"kg/Nm3空气",
     "calculate": u"(1+0.001d)/(1/1.293+0.001d/0.804)",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_wet_air_volumn",
@@ -1056,7 +1379,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vo'",
     "unit": u"Nm3/kg燃料",
     "calculate": u"(1+0.0016d)Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_nitrogen_volume",
@@ -1064,7 +1389,9 @@ furnaceCalculation_data = [{
     "symbol": u"V1N2",
     "unit": u"Nm3/kg",
     "calculate": u"0.79Vo+0.008*Nar",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_dioxide_volume",
@@ -1072,15 +1399,28 @@ furnaceCalculation_data = [{
     "symbol": u"VoRO2",
     "unit": u"Nm3/kg",
     "calculate": u"1.866(Car+0.375Sar)/100",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "s_steam_volume",
-    "name": u"理论水蒸汽容积",
-    "symbol": u"VoH2O",
-    "unit": u"Nm3/kg",
-    "calculate": u"0.111Har+0.0124Mar+1.293*d*Vo/0.804/1000",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "s_steam_volume",
+    "name":
+    u"理论水蒸汽容积",
+    "symbol":
+    u"VoH2O",
+    "unit":
+    u"Nm3/kg",
+    "calculate":
+    u"0.111Har+0.0124Mar+1.293*d*Vo/0.804/1000",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_smoke_volume",
@@ -1088,7 +1428,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vyo",
     "unit": u"Nm3/kg",
     "calculate": u"V1N2+VoRO2+VoH2O",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_1kg_weight",
@@ -1096,7 +1438,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gyo",
     "unit": u"kg/kg燃料",
     "calculate": u"1-Aar/100+(1+d/1000)*1.293*α*Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "s_wet_smoke_density",
@@ -1104,7 +1448,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρyo",
     "unit": u"kg/Nm3",
     "calculate": u"Gyo/Vyo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_boiler_air",
@@ -1112,7 +1458,9 @@ furnaceCalculation_data = [{
     "symbol": u"αl",
     "unit": u"--",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_wind",
@@ -1120,7 +1468,9 @@ furnaceCalculation_data = [{
     "symbol": u"ΔαfL",
     "unit": u"--",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_wind_air",
@@ -1128,7 +1478,9 @@ furnaceCalculation_data = [{
     "symbol": u"αfL",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_high",
@@ -1136,7 +1488,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαgr",
     "unit": u"--",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_hign_air",
@@ -1144,7 +1498,9 @@ furnaceCalculation_data = [{
     "symbol": u"αgr",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_low",
@@ -1152,7 +1508,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαdr",
     "unit": u"--",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_low_air",
@@ -1160,7 +1518,9 @@ furnaceCalculation_data = [{
     "symbol": u"αdr",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_fule",
@@ -1168,7 +1528,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαsm",
     "unit": u"--",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_fule_air",
@@ -1176,7 +1538,9 @@ furnaceCalculation_data = [{
     "symbol": u"αsm",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater",
@@ -1184,7 +1548,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαky",
     "unit": u"--",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater_air",
@@ -1192,7 +1558,9 @@ furnaceCalculation_data = [{
     "symbol": u"αky",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_plus_air",
@@ -1200,7 +1568,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαcj",
     "unit": u"--",
     "calculate": u"L(烟道长度)*0.001",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_dust_exit",
@@ -1208,7 +1578,9 @@ furnaceCalculation_data = [{
     "symbol": u"αcj",
     "unit": u"--",
     "calculate": u"αky+Δαcj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_dust",
@@ -1216,7 +1588,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαcc",
     "unit": u"--",
     "calculate": u"厂家资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_dust_entry",
@@ -1224,7 +1598,9 @@ furnaceCalculation_data = [{
     "symbol": u"αcc",
     "unit": u"--",
     "calculate": u"αcj+Δαcc",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_plus_dust",
@@ -1232,7 +1608,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαyd2",
     "unit": u"--",
     "calculate": u"L(烟道长度)*0.001",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_fans_air",
@@ -1240,7 +1618,9 @@ furnaceCalculation_data = [{
     "symbol": u"αxf",
     "unit": u"--",
     "calculate": u"αcc+Δαyd2",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_1kg_volume",
@@ -1248,7 +1628,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vy",
     "unit": u"Nm3/kg",
     "calculate": u"Vyo+(αky-1)Vo+0.0161(αky-1)Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_1kg_quality",
@@ -1256,7 +1638,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gy",
     "unit": u"kg/kg",
     "calculate": u"1-Aar/100+(1+d/1000)*1.293*αky*Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater_type",
@@ -1264,7 +1648,9 @@ furnaceCalculation_data = [{
     "symbol": u"",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater_first_entry",
@@ -1272,7 +1658,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.p",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater_second_entry",
@@ -1280,7 +1668,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.s",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater_first_exit",
@@ -1288,7 +1678,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.p",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_heater_second_exit",
@@ -1296,7 +1688,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.s",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "p_smoke_temperature",
@@ -1304,7 +1698,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'y",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_theory_air_quality",
@@ -1312,7 +1708,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vo'",
     "unit": u"Nm3/kg燃料",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_boiler_air",
@@ -1320,7 +1718,9 @@ furnaceCalculation_data = [{
     "symbol": u"αl",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_actual_air",
@@ -1328,7 +1728,9 @@ furnaceCalculation_data = [{
     "symbol": u"Voks",
     "unit": u"Nm3/kg",
     "calculate": u"αl*Vo'",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_calculation_consumption",
@@ -1336,7 +1738,9 @@ furnaceCalculation_data = [{
     "symbol": u"Bj",
     "unit": u"kg/h",
     "calculate": u"燃料灰渣量计算表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_actual_air_total",
@@ -1344,7 +1748,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vok",
     "unit": u"Nm3/h",
     "calculate": u"Bj*Voks",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_wind_volume",
@@ -1352,7 +1758,9 @@ furnaceCalculation_data = [{
     "symbol": u"β1",
     "unit": u"%",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_cwind_temperature_calculation",
@@ -1360,7 +1768,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.p",
     "unit": u"℃",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_local_pressure",
@@ -1368,7 +1778,9 @@ furnaceCalculation_data = [{
     "symbol": u"Pb",
     "unit": u"kPa",
     "calculate": u"已知",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_cwind_standard",
@@ -1376,15 +1788,28 @@ furnaceCalculation_data = [{
     "symbol": u"VNLf 1",
     "unit": u"Nm3/h",
     "calculate": u"β1*Vok",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "a_first_cwind_actual",
-    "name": u"冷一次风量(湿-实态)",
-    "symbol": u"VLf 1",
-    "unit": u"m3/h",
-    "calculate": u"VNLf 1*(273+T ' ky.p)/273*101.325/Pb",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "a_first_cwind_actual",
+    "name":
+    u"冷一次风量(湿-实态)",
+    "symbol":
+    u"VLf 1",
+    "unit":
+    u"m3/h",
+    "calculate":
+    u"VNLf 1*(273+T ' ky.p)/273*101.325/Pb",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_standard_air_density",
@@ -1392,7 +1817,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρao",
     "unit": u"kg/Nm3",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_cwind_flow",
@@ -1400,7 +1827,9 @@ furnaceCalculation_data = [{
     "symbol": u"GLf 1",
     "unit": u"kg/h",
     "calculate": u"ρao*VNLf 1",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_cwind_density",
@@ -1408,15 +1837,28 @@ furnaceCalculation_data = [{
     "symbol": u"ρa1",
     "unit": u"kg/m3",
     "calculate": u"GLf 1/VLf 1",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "a_check",
-    "name": u"校核",
-    "symbol": u"ρa1",
-    "unit": u"kg/m3",
-    "calculate": u"ρao*273/(273+T'ky.p)*Pb/101.325(校核)",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "a_check",
+    "name":
+    u"校核",
+    "symbol":
+    u"ρa1",
+    "unit":
+    u"kg/m3",
+    "calculate":
+    u"ρao*273/(273+T'ky.p)*Pb/101.325(校核)",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_hwind_temperatue",
@@ -1424,7 +1866,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.p",
     "unit": u"℃",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_hwind_flow",
@@ -1432,7 +1876,9 @@ furnaceCalculation_data = [{
     "symbol": u"VRf 1",
     "unit": u"m3/h",
     "calculate": u"VNLf 1*(273+T'ky.s)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_first_wet_air_density",
@@ -1440,7 +1886,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρ'a1",
     "unit": u"kg/m3",
     "calculate": u"GLf 1/VRf 1",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_wind_volume",
@@ -1448,7 +1896,9 @@ furnaceCalculation_data = [{
     "symbol": u"β2",
     "unit": u"%",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_cwind_temperature",
@@ -1456,7 +1906,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.s",
     "unit": u"℃",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_cwind_standard",
@@ -1464,7 +1916,9 @@ furnaceCalculation_data = [{
     "symbol": u"VNLf 2",
     "unit": u"Nm3/h",
     "calculate": u"β2*Vok",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_cwind_actual",
@@ -1472,7 +1926,9 @@ furnaceCalculation_data = [{
     "symbol": u"VLf 2",
     "unit": u"m3/h",
     "calculate": u"VNLf 2*(273+T'ky.s)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_standard_air_density",
@@ -1480,7 +1936,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρao",
     "unit": u"kg/Nm3",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_cwind_flow",
@@ -1488,7 +1946,9 @@ furnaceCalculation_data = [{
     "symbol": u"GLf 2",
     "unit": u"kg/h",
     "calculate": u"ρao*VNLf2",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_cwind_density",
@@ -1496,7 +1956,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρa2",
     "unit": u"kg/m3",
     "calculate": u"GLf2/VLf2",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_hwind_temperatue",
@@ -1504,7 +1966,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'ky.s",
     "unit": u"℃",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_hwind_flow",
@@ -1512,7 +1976,9 @@ furnaceCalculation_data = [{
     "symbol": u"VRf 2",
     "unit": u"m3/h",
     "calculate": u"VNLf 2*(273+T'ky.s)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "a_second_wet_air_density",
@@ -1520,7 +1986,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρ'a2",
     "unit": u"kg/m3",
     "calculate": u"GLf 2/VRf 2",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_1kg_volume",
@@ -1528,7 +1996,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vy",
     "unit": u"Nm3/kg",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_1kg_quality",
@@ -1536,7 +2006,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gy",
     "unit": u"kg/kg",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_calculation_consumption",
@@ -1544,7 +2016,9 @@ furnaceCalculation_data = [{
     "symbol": u"Bj",
     "unit": u"kg/h",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_standard_smoke_flow",
@@ -1552,7 +2026,9 @@ furnaceCalculation_data = [{
     "symbol": u"VNyk",
     "unit": u"Nm3/h",
     "calculate": u"Vy*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_smoke_flow",
@@ -1560,7 +2036,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gyk",
     "unit": u"kg/h",
     "calculate": u"Gy*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_smoke_temperature",
@@ -1568,7 +2046,9 @@ furnaceCalculation_data = [{
     "symbol": u"T'y",
     "unit": u"℃",
     "calculate": u"锅炉厂资料",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_smoke_volume",
@@ -1576,7 +2056,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vyk",
     "unit": u"m3/h",
     "calculate": u"VNyk*(273+T'y)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "h_smoke_density",
@@ -1584,7 +2066,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρyk",
     "unit": u"kg/m3",
     "calculate": u"Gyk/Vyk",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_exit_air",
@@ -1592,7 +2076,9 @@ furnaceCalculation_data = [{
     "symbol": u"αky",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_wind_parameter",
@@ -1600,7 +2086,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαcj",
     "unit": u"--",
     "calculate": u"L(烟道长度)*0.001",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_entry_air",
@@ -1608,7 +2096,9 @@ furnaceCalculation_data = [{
     "symbol": u"αcj",
     "unit": u"--",
     "calculate": u"αky+Δαcj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_cold_air_temperature",
@@ -1616,7 +2106,9 @@ furnaceCalculation_data = [{
     "symbol": u"Tlk",
     "unit": u"℃",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_entry_somke_temperature",
@@ -1624,7 +2116,9 @@ furnaceCalculation_data = [{
     "symbol": u"Tcj",
     "unit": u"℃",
     "calculate": u"(αkyT'y+△αcj*Tlk)/(αky+△αcj)",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_standard_1kg_volume",
@@ -1632,7 +2126,9 @@ furnaceCalculation_data = [{
     "symbol": u"V'ycj",
     "unit": u"Nm3/kg",
     "calculate": u"Vy+△αcj*VO'+0.0161*VO'",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_entry_1kg_quality",
@@ -1640,7 +2136,9 @@ furnaceCalculation_data = [{
     "symbol": u"G'ycj",
     "unit": u"kg/kg",
     "calculate": u"1-Aar/100+1.293*(1+d/1000)*αcj*Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_standard_smoke_flow",
@@ -1648,7 +2146,9 @@ furnaceCalculation_data = [{
     "symbol": u"VNycj",
     "unit": u"Nm3/h",
     "calculate": u"V'ycj*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_entry_somke_flow",
@@ -1656,7 +2156,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gycj",
     "unit": u"kg/h",
     "calculate": u"G'ycj*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "d_entry_smoke_actual_flow",
@@ -1664,7 +2166,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vycj",
     "unit": u"m3/h",
     "calculate": u"VNycj*(273+Tcj)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_wind_parameter",
@@ -1672,7 +2176,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαcc",
     "unit": u"--",
     "calculate": u"",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_air_parameter",
@@ -1680,7 +2186,9 @@ furnaceCalculation_data = [{
     "symbol": u"αcc",
     "unit": u"--",
     "calculate": u"αcj+△αcc",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_smoke_temperature",
@@ -1688,7 +2196,9 @@ furnaceCalculation_data = [{
     "symbol": u"Tcc",
     "unit": u"℃",
     "calculate": u"湿法脱硫，给定",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_standard_1kg_volume",
@@ -1696,7 +2206,9 @@ furnaceCalculation_data = [{
     "symbol": u"V'ycc",
     "unit": u"Nm3/kg",
     "calculate": u"V'ycj+△αcc*VO'+0.0161*△αcc*VO'",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_1kg_quality",
@@ -1704,7 +2216,9 @@ furnaceCalculation_data = [{
     "symbol": u"G'ycc",
     "unit": u"kg/kg",
     "calculate": u"1-Aar/100+1.293*(1+d/1000)*αcc*Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_standard_smoke_flow",
@@ -1712,7 +2226,9 @@ furnaceCalculation_data = [{
     "symbol": u"VNycc",
     "unit": u"Nm3/h",
     "calculate": u"V'ycc*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_smoke_flow",
@@ -1720,7 +2236,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gycc",
     "unit": u"kg/h",
     "calculate": u"G'ycc*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_smoke_actual_flow",
@@ -1728,7 +2246,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vycc",
     "unit": u"m3/h",
     "calculate": u"VNycc*(273+Tcc)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "e_smoke_actual_density",
@@ -1736,7 +2256,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρycc",
     "unit": u"kg/m3",
     "calculate": u"Gycc/Vycc",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_wind_parameter",
@@ -1744,7 +2266,9 @@ furnaceCalculation_data = [{
     "symbol": u"Δαxj",
     "unit": u"--",
     "calculate": u"L(烟道长度)*0.001",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_air_parameter",
@@ -1752,7 +2276,9 @@ furnaceCalculation_data = [{
     "symbol": u"αxf",
     "unit": u"--",
     "calculate": u"αcc+Δαxj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_smoke_temperature",
@@ -1760,7 +2286,9 @@ furnaceCalculation_data = [{
     "symbol": u"Txf",
     "unit": u"℃",
     "calculate": u"(αcc*Tcc+△αxj*Tlk)/(αcc+△αxj)",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_standard_1kg_volume",
@@ -1768,7 +2296,9 @@ furnaceCalculation_data = [{
     "symbol": u"V'xf",
     "unit": u"Nm3/kg",
     "calculate": u"V'ycc+△αxj*Vo'+0.0161*△αxj*Vo'",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_1kg_quality",
@@ -1776,7 +2306,9 @@ furnaceCalculation_data = [{
     "symbol": u"G'xf",
     "unit": u"kg/kg",
     "calculate": u"1-Aar/100+1.293*(1+d/1000)*αxf*Vo",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_standard_smoke_flow1",
@@ -1784,7 +2316,9 @@ furnaceCalculation_data = [{
     "symbol": u"VNxf",
     "unit": u"Nm3/h",
     "calculate": u"V'xf*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_standard_smoke_flow2",
@@ -1792,7 +2326,9 @@ furnaceCalculation_data = [{
     "symbol": u"",
     "unit": u"Nm3/s",
     "calculate": u"V'xf*Bj/3600",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_smoke_flow",
@@ -1800,7 +2336,9 @@ furnaceCalculation_data = [{
     "symbol": u"Gxf",
     "unit": u"kg/h",
     "calculate": u"G'xf*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_smoke_actual_flow1",
@@ -1808,7 +2346,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vxf",
     "unit": u"m3/h",
     "calculate": u"VNxf*(273+Txf)/273*101.325/Pb",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_smoke_actual_flow2",
@@ -1816,7 +2356,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vxfc",
     "unit": u"m3/s",
     "calculate": u"Vxf/3600",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_smoke_actual_density",
@@ -1824,7 +2366,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρyxf",
     "unit": u"kg/m3",
     "calculate": u"Gyxf/Vyxf",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "i_wet_smoke_actual_density",
@@ -1832,7 +2376,9 @@ furnaceCalculation_data = [{
     "symbol": u"ρyo",
     "unit": u"kg/Nm3",
     "calculate": u"Gxf/VNxf",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_oxygen_vol",
@@ -1840,7 +2386,9 @@ furnaceCalculation_data = [{
     "symbol": u"VO2'",
     "unit": u"Nm3/kg燃料",
     "calculate": u"0.21(axf-1)V0",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_theoretica_vol",
@@ -1848,15 +2396,28 @@ furnaceCalculation_data = [{
     "symbol": u"Vgyo",
     "unit": u"Nm3/kg燃料",
     "calculate": u"VoN2+VoRO2",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
-    "module_name": "coalCHP_furnaceCalculation",
-    "name_eng": "go_theoretica_flow",
-    "name": u"理论干空气量",
-    "symbol": u"Vo",
-    "unit": u"Nm3/kg燃料",
-    "calculate": u"0.0889(Car+0.375St,ar)+0.265Har-0.0333Oar",
-    "remark": ""
+    "module_name":
+    "coalCHP_furnaceCalculation",
+    "name_eng":
+    "go_theoretica_flow",
+    "name":
+    u"理论干空气量",
+    "symbol":
+    u"Vo",
+    "unit":
+    u"Nm3/kg燃料",
+    "calculate":
+    u"0.0889(Car+0.375St,ar)+0.265Har-0.0333Oar",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_calculation_consumption",
@@ -1864,7 +2425,9 @@ furnaceCalculation_data = [{
     "symbol": u"Bj",
     "unit": u"kg/h",
     "calculate": u"燃料灰渣量计算表",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_air_parameter",
@@ -1872,7 +2435,9 @@ furnaceCalculation_data = [{
     "symbol": u"αxf",
     "unit": u"--",
     "calculate": u"αcc+Δαxj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_standard_1kg_volume",
@@ -1880,7 +2445,9 @@ furnaceCalculation_data = [{
     "symbol": u"V'gy",
     "unit": u"Nm3/kg燃料",
     "calculate": u"Vgyo+(axf-1)V0",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_smoke_flow",
@@ -1888,7 +2455,9 @@ furnaceCalculation_data = [{
     "symbol": u"Vgy",
     "unit": u"Nm3/h",
     "calculate": u"V'gy*Bj",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_drygas_oxygen_vol",
@@ -1896,7 +2465,9 @@ furnaceCalculation_data = [{
     "symbol": u"ngo2",
     "unit": u"%",
     "calculate": u"VO2'/Vgy'",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }, {
     "module_name": "coalCHP_furnaceCalculation",
     "name_eng": "go_total_combustion_product_vol",
@@ -1904,78 +2475,2947 @@ furnaceCalculation_data = [{
     "symbol": u"Vgy-O2",
     "unit": u"Nm3/h",
     "calculate": u"Vgy*(21-ngo2')/(21-6)",
-    "remark": ""
+    "remark": "",
+    "default_value": "",
+    "disable": ""
 }]
 
-coal_data = [(
-    u'阳泉混煤', '67.1', '3.1', '4.7', '1.0', '0.7', '6.0', '16.8', '8', '1.4',
-    '26250'
-), (
-    u'焦作原煤', '59.6', '2.0', '0.8', '0.8', '0.5', '10.0', '26.3', '8.2', '1.2',
-    '22154'
-), (
-    u'西山混煤', '55.3', '3.7', '5.2', '0.4', '0.4', '10.0', '24.6', '14', '1.7',
-    '21903'
-), (
-    u'鹤壁原煤', '72.3', '4.0', '2.0', '1.4', '0.3', '5.0', '15.0', '12', '2.0',
-    '28340'
-), (
-    u'铜川混煤', '64.7', '3.4', '1.8', '1.0', '5.3', '405', '19.3', '14.2', '1.4',
-    '26083'
-), (
-    u'淄博混煤', '67.8', '3.0', '2.4', '1.3', '2.4', '3.9', '19.2', '15', '1.6',
-    '25958'
-), (
-    u'义马混煤', '43.4', '3.4', '11.4', '1.1', '1.5', '17.7', '21.5', '41', '1.5',
-    '16720'
-), (
-    u'大同混煤', '70.5', '4.2', '8.3', '0.9', '1.1', '6.0', '9.0', '30', '1.1',
-    '27839'
-), (
-    u'鹤岗四号原煤', '48.4', '3.6', '10.2', '0.6', '0.3', '10.1', '26.8', '36',
-    '1.3', '19312'
-), (
-    u'六道湾原煤', '59.6', '3.5', '9.2', '0.7', '0.7', '9.2', '17.1', '37', '1.6',
-    '22823'
-), (
-    u'淮南原煤', '56.8', '4.13', '11.51', '1.09', '1.1', '10.6', '14.87', '32.1',
-    '1.5', '21983'
-), (
-    u'萍乡安源低质煤', '39.9', '2.7', '4.6', '0.6', '0.2', '7.0', '45.0', '36', '1.6',
-    '15884'
-), (
-    u'平顶山原煤', '47.2', '3.3', '6.5', '0.6', '0.8', '5.6', '36.0', '37', '1.3',
-    '18308'
-), (
-    u'资兴低质煤', '34.2', '3.4', '5.7', '0.8', '0.5', '8.6', '46.8', '37.1', '',
-    '14128'
-), (
-    u'开滦洗三号', '39.8', '2.6', '3.8', '0.8', '1.0', '7.0', '45.0', '37', '',
-    '15675'
-), (
-    u'平顶山洗中煤', '36.7', '3.0', '9.2', '0.7', '0.4', '12.0', '38.0', '45.5',
-    '1.5', '14003'
-), (
-    u'淮南望峰岗洗二中煤', '36.6', '2.4', '5.5', '0.9', '1.6', '15.0', '38.0', '40', '',
-    '16093'
-), (
-    u'徐州烟煤', '62.9', '4.13', '6.7', '1.45', '1.224', '10.0', '13.5', '37',
-    '1.6', '24720'
-), (
-    u'金竹山无烟煤', '64.8', '2.2', '1.82', '1.56', '0.64', '7.0', '22.3', '8',
-    '1.7', '22210'
-)]
+# 脱硫脱硝
+coalCHP_desulfurization_data = [{
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_sulfur_design",
+    "name": u"收到基硫份",
+    "symbol": u"St,ar",
+    "unit": u"%",
+    "calculate": u"已知",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_calcu_coal_consume",
+    "name": u"计算耗煤量",
+    "symbol": u"Bj",
+    "unit": u"kg/h",
+    "calculate": u"煤灰渣量计算表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_aflame_generate_so2",
+    "name": u"燃煤中的含硫量燃烧后氧化成SO2的份额",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"0.98",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_desulfrization_before_so2",
+    "name": u"脱硫前烟气中的SO2含量",
+    "symbol": u"Mso2",
+    "unit": u"kg/h",
+    "calculate": u"2*K*Bj*St,ar/100",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_fan_smoke_flow",
+    "name": u"引风机进口烟气容积流量（标况）",
+    "symbol": u"VNxf",
+    "unit": u"Nm3/h",
+    "calculate": u"烟风量计算表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_no_desulfurization_so2",
+    "name": u"未脱硫前SO2浓度（标态）",
+    "symbol": u"C'SO2",
+    "unit": u"mg/Nm3",
+    "calculate": u"Mso2/VNxf*106",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_desulfurization_efficiency",
+    "name": u"脱硫效率",
+    "symbol": u"η",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "s_desulfrization_after_so2",
+    "name": u"脱硫后SO2浓度（标态）",
+    "symbol": u"CSO2",
+    "unit": u"mg/Nm3",
+    "calculate": u"(1-η)C'SO2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name":
+    "coalCHP_desulfurization",
+    "name_eng":
+    "s_desulfrization_after_discharge_so2",
+    "name":
+    u"脱硫后SO2排放量（标态）",
+    "symbol":
+    u"",
+    "unit":
+    u"kg/h",
+    "calculate":
+    u"(1-η)MSO2 或 CSO2*VNxf",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_furnace_rate",
+    "name": u"炉内脱硫百分比",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"给定",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_furnace_concentration",
+    "name": u"炉内脱硫后SO2浓度",
+    "symbol": u"CSO2(炉内)",
+    "unit": u"mg/Nm3",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_others_mass",
+    "name": u"脱除SO2质量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_others_mole",
+    "name": u"脱除SO2摩尔量",
+    "symbol": u"",
+    "unit": u"kmol/h",
+    "calculate": u"SO2式量64",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_calcium_sulfur_rate",
+    "name": u"钙硫摩尔比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"钙硫比≥2，一般选2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_nees_caco3_mole",
+    "name": u"反应所需CaCO3摩尔量",
+    "symbol": u"",
+    "unit": u"kmol/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_nees_caco3_mass",
+    "name": u"反应所需CaCO3质量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"CaCO3式量100",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_use_caco3_mass",
+    "name": u"参加反应CaCO3质量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_generate_coco3_mass",
+    "name": u"反应生成CaSO4质量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"CaCO3-〉CaSO4",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_add_mass",
+    "name": u"反应后质量增加",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_caco3_pure",
+    "name": u"石灰石纯度",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_coco3_consume",
+    "name": u"石灰石耗量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"公式修改",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_generate_grey",
+    "name": u"炉内脱硫产生的灰渣量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_storage_time",
+    "name": u"石灰石粉仓储存时间",
+    "symbol": u"",
+    "unit": u"d",
+    "calculate": u"3d",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_storage_output",
+    "name": u"石灰石粉仓出力",
+    "symbol": u"",
+    "unit": u"kg",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_storage_density",
+    "name": u"石灰石粉堆积密度",
+    "symbol": u"Pa",
+    "unit": u"t/m³",
+    "calculate": u"0.7~0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_storage_fullness",
+    "name": u"石灰石粉库充满系数",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"0.7~0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_storage_volume",
+    "name": u"石灰石粉仓体积",
+    "symbol": u"V",
+    "unit": u"m³",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_height",
+    "name": u"高",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "r_diameter",
+    "name": u"直径",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_limestone_pure",
+    "name": u"石灰石纯度",
+    "symbol": u"β",
+    "unit": u"",
+    "calculate": u"可根据石灰石成分计算",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_proportion_ca_s",
+    "name": u"Ca/S（钙硫比）",
+    "symbol": u"m",
+    "unit": u"",
+    "calculate": u"1.05",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_desulfurization_efficiency",
+    "name": u"脱硫效率",
+    "symbol": u"η",
+    "unit": u"%",
+    "calculate": u"99.5",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_limestone_consume",
+    "name": u"石灰石消耗量",
+    "symbol": u"Gs",
+    "unit": u"kg/h",
+    "calculate": u"100/32*St,ar*Bj*η*m/β",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_gengrate_coca4",
+    "name": u"生成CaSO4量",
+    "symbol": u"Gzhs",
+    "unit": u"kg/h",
+    "calculate": u"136/32*St,ar*Bj*η*m/β",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_before_nox_concentration",
+    "name": u"脱硝前NOX浓度",
+    "symbol": u"C'NOX",
+    "unit": u"mg/Nm3",
+    "calculate": u"给定（锅炉低氮燃烧规定值）",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_input_smoke",
+    "name": u"引风机进口烟气容积流量（标况）",
+    "symbol": u"VNxf",
+    "unit": u"Nm3/h",
+    "calculate": u"烟风量计算表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_desulfurization_efficiency",
+    "name": u"脱硝效率(总效率)",
+    "symbol": u"η",
+    "unit": u"%",
+    "calculate": u"给定",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_before_nox_discharge",
+    "name": u"脱硝前NOX排放量",
+    "symbol": u"MNOX",
+    "unit": u"kg/h",
+    "calculate": u"C'NOX*VNxf*10-6",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_after_nox_concentration",
+    "name": u"脱硝后NOX浓度",
+    "symbol": u"CNOX",
+    "unit": u"mg/Nm3",
+    "calculate": u"(1-η)C'NOX",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_env_after_nox_concentration",
+    "name": u"环保要求NOX的排放浓度",
+    "symbol": u"C'NOX",
+    "unit": u"mg/Nm3",
+    "calculate": u"已知",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "n_after_nox_discharge",
+    "name": u"脱硝后NOX排放量",
+    "symbol": u"M'NOX",
+    "unit": u"kg/h",
+    "calculate": u"(1-η)MNOX",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_denitration_percentage",
+    "name": u"炉内脱硝百分比",
+    "symbol": u"η'",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_denitration_quality",
+    "name": u"炉内脱硝量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"(Mnox-M'nox)*η'",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_after_nox_discharge",
+    "name": u"炉内脱硝后NOX排放量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_denitration_molar",
+    "name": u"炉内脱硝摩尔量",
+    "symbol": u"",
+    "unit": u"kmol/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_escape_rate",
+    "name": u"氨逃逸率",
+    "symbol": u"",
+    "unit": u"mg/Nm3",
+    "calculate": u"取8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_escape_quality",
+    "name": u"氨逃逸量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_escape_quality_urea",
+    "name": u"逃逸氨折算尿素量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"(NH2 )2CO→2NH2 + CO",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_nh3nox_molar",
+    "name": u"NH3/NOX摩尔比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_urea_nox_molar",
+    "name": u"尿素/NOX摩尔比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"NH3/NOX摩尔比/2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_urea_nox_quality",
+    "name": u"尿素/NOX式量比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_theory_urea",
+    "name": u"理论尿素消耗量",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_use_urea",
+    "name": u"尿素用量(一台炉)",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"理论尿素消耗量+逃逸氨折算尿素量",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_water_urea",
+    "name": u"尿素溶液消耗水量(一台炉)",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_days_urea",
+    "name": u"尿素仓库天数",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"取5d",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_capacity_urea",
+    "name": u"尿素仓库容量",
+    "symbol": u"",
+    "unit": u"t",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "g_denitration_percentage",
+    "name": u"烟气脱硝百分比",
+    "symbol": u"η'",
+    "unit": u"%",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "g_after_nox_discharge",
+    "name": u"烟气脱硝后NOX排放量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "g_denitration_quality",
+    "name": u"烟气脱硝量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "g_escape_rate",
+    "name": u"氨逃逸率",
+    "symbol": u"",
+    "unit": u"ppm",
+    "calculate": u"取3",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "g_escape_quality",
+    "name": u"氨逃逸量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "g__escape_quality_urea",
+    "name": u"逃逸氨折算尿素量",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"(NH2 )2CO→2NH2 + CO",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_nh3nox_molar",
+    "name": u"NH3/NOX摩尔比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"已知，取1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_urea_nox_molar",
+    "name": u"尿素/NOX摩尔比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"NH3/NOX摩尔比/2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_urea_nox_quality",
+    "name": u"尿素/NOX式量比",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"已知，取1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_theory_urea",
+    "name": u"理论尿素消耗量",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_desulfurization",
+    "name_eng": "d_use_urea",
+    "name": u"尿素用量(一台炉)",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"理论尿素消耗量+逃逸氨折算尿素量",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}]
+
+smokeAirSystem_data = [{
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "a_altitude",
+    "name": u"海拔",
+    "symbol": u"m",
+    "unit": u"A",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "a_atmospheric_pressure",
+    "name": u"大气压",
+    "symbol": u"pa",
+    "unit": u"P",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "b_temperature_case",
+    "name": u"工况温度",
+    "symbol": u"℃",
+    "unit": u"t",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "b_operational_point_flowrate",
+    "name": u"工况流量",
+    "symbol": u"m³/h",
+    "unit": u"qv",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "b_local_atmosphere",
+    "name": u"当地大气压",
+    "symbol": u"pa",
+    "unit": u"p",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "b_the_case_temperature",
+    "name": u"标况温度",
+    "symbol": u"℃",
+    "unit": u"t0",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "b_standard_of_pressure",
+    "name": u"标况压力",
+    "symbol": u"pa",
+    "unit": u"p0",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "b_standard_of_flow",
+    "name": u"标况流量",
+    "symbol": u"Nm³/h",
+    "unit": u"qv0",
+    "calculate": u"qv0=qv*(p/p0)*((t0+273)/(t+273))",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "p_the_case_temperature",
+    "name": u"标况温度",
+    "symbol": u"℃",
+    "unit": u"t0",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "p_standard_of_pressure",
+    "name": u"标况压力",
+    "symbol": u"pa",
+    "unit": u"p0",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "p_standard_of_flow",
+    "name": u"标况流量",
+    "symbol": u"Nm³/h",
+    "unit": u"qv0",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "p_temperature_case",
+    "name": u"工况温度",
+    "symbol": u"℃",
+    "unit": u"t",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "p_local_atmosphere",
+    "name": u"当地大气压",
+    "symbol": u"pa",
+    "unit": u"p",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "p_operational_point_flowrate",
+    "name": u"工况流量",
+    "symbol": u"m³/h",
+    "unit": u"qv",
+    "calculate": u"qv=qv0*(p0/p)*((t+273)/(t0+273))",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_air_temperature",
+    "name": u"空气温度",
+    "symbol": u"t",
+    "unit": u"℃",
+    "calculate": u"设计值",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_boiler_body_resistance",
+    "name": u"锅炉本体阻力",
+    "symbol": u"pg",
+    "unit": u"pa",
+    "calculate": u"是否海拔修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_duct_resistance",
+    "name": u"风道阻力",
+    "symbol": u"py",
+    "unit": u"pa",
+    "calculate": u"大气压未修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_local_atmosphere",
+    "name": u"当地大气压",
+    "symbol": u"p0",
+    "unit": u"pa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_smoke_flow_rate_condition",
+    "name": u"烟风流量（工况）",
+    "symbol": u"q",
+    "unit": u"m³/h",
+    "calculate": u"50:50时   1.1倍",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_nameplate_medium_temperature",
+    "name": u"铭牌介质温度",
+    "symbol": u"t1",
+    "unit": u"℃",
+    "calculate": u"常规20℃",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_fan_total_pressure",
+    "name": u"风机全压",
+    "symbol": u"p1",
+    "unit": u"pa",
+    "calculate": u"p1=p*(101325/p0)*((t+273)/(t1+273))",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_fan_select_total_pressure",
+    "name": u"风机选用全压",
+    "symbol": u"p2",
+    "unit": u"",
+    "calculate": u"1.2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_fan_selection_flow",
+    "name": u"风机选用流量",
+    "symbol": u"q2",
+    "unit": u"m³/h",
+    "calculate": u"1.3",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_fan_power",
+    "name": u"风机效率",
+    "symbol": u"η1",
+    "unit": u"",
+    "calculate": u"取0.75",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_electric_motor_power",
+    "name": u"电动机效率",
+    "symbol": u"ηd",
+    "unit": u"",
+    "calculate": u"取0.95",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_fan_shaft_power",
+    "name": u"风机轴功率",
+    "symbol": u"P'",
+    "unit": u"kw",
+    "calculate": u"P'=p2*q2/η",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_fan_security_volumn",
+    "name": u"电机安全裕量",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"取1.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "f_motor_power",
+    "name": u"电机功率",
+    "symbol": u"P",
+    "unit": u"kw",
+    "calculate": u"P=K*P'/ηd",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_air_temperature",
+    "name": u"空气温度",
+    "symbol": u"t",
+    "unit": u"℃",
+    "calculate": u"设计值",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_boiler_body_resistance",
+    "name": u"锅炉本体阻力",
+    "symbol": u"pg",
+    "unit": u"pa",
+    "calculate": u"是否海拔修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_duct_resistance",
+    "name": u"风道阻力",
+    "symbol": u"py",
+    "unit": u"pa",
+    "calculate": u"大气压未修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_local_atmosphere",
+    "name": u"当地大气压",
+    "symbol": u"p0",
+    "unit": u"pa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_smoke_flow_rate_condition",
+    "name": u"烟风流量（工况）",
+    "symbol": u"q",
+    "unit": u"m³/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_nameplate_medium_temperature",
+    "name": u"铭牌介质温度",
+    "symbol": u"t1",
+    "unit": u"℃",
+    "calculate": u"常规20℃",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_fan_total_pressure",
+    "name": u"风机全压",
+    "symbol": u"p1",
+    "unit": u"pa",
+    "calculate": u"p1=p*(101325/p0)",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_fan_select_total_pressure",
+    "name": u"风机选用全压",
+    "symbol": u"p2",
+    "unit": u"",
+    "calculate": u"1.2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_fan_selection_flow",
+    "name": u"风机选用流量",
+    "symbol": u"q2",
+    "unit": u"m³/h",
+    "calculate": u"1.3",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_fan_power",
+    "name": u"风机效率",
+    "symbol": u"η1",
+    "unit": u"",
+    "calculate": u"取0.75",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_electric_motor_power",
+    "name": u"电动机效率",
+    "symbol": u"ηd",
+    "unit": u"",
+    "calculate": u"取0.95",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_fan_shaft_power",
+    "name": u"风机轴功率",
+    "symbol": u"P'",
+    "unit": u"kw",
+    "calculate": u"P'=p2*q2/η",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_fan_security_volumn",
+    "name": u"电机安全裕量",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"取1.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "s_motor_power",
+    "name": u"电机功率",
+    "symbol": u"P",
+    "unit": u"kw",
+    "calculate": u"P=K*P'/ηd",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_air_temperature",
+    "name": u"烟气温度",
+    "symbol": u"t",
+    "unit": u"℃",
+    "calculate": u"设计值",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_boiler_body_resistance",
+    "name": u"锅炉本体烟气阻力",
+    "symbol": u"pg",
+    "unit": u"pa",
+    "calculate": u"是否海拔修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_denitration",
+    "name": u"脱硝",
+    "symbol": u"pn",
+    "unit": u"pa",
+    "calculate": u"大气压未修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_duster",
+    "name": u"除尘器",
+    "symbol": u"pc",
+    "unit": u"Pa",
+    "calculate": u"大气压未修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_duct_resistance",
+    "name": u"风道阻力",
+    "symbol": u"py",
+    "unit": u"pa",
+    "calculate": u"大气压未修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_resistance_desulfurization_fan",
+    "name": u"风机后脱硫塔及烟囱烟道阻力",
+    "symbol": u"ph",
+    "unit": u"pa",
+    "calculate": u"大气压未修正",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_local_atmosphere",
+    "name": u"当地大气压",
+    "symbol": u"p0",
+    "unit": u"pa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_smoke_flow_rate_condition",
+    "name": u"烟风流量（工况）",
+    "symbol": u"q",
+    "unit": u"m³/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_nameplate_medium_temperature",
+    "name": u"铭牌介质温度",
+    "symbol": u"t1",
+    "unit": u"℃",
+    "calculate": u"常规250℃",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_fan_total_pressure",
+    "name": u"风机全压",
+    "symbol": u"p1",
+    "unit": u"pa",
+    "calculate": u"p1=p*(101325/p0)*((t+273)/(t1+273))",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_fan_select_total_pressure",
+    "name": u"风机选用全压",
+    "symbol": u"p2",
+    "unit": u"",
+    "calculate": u"1.2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_fan_selection_flow",
+    "name": u"风机选用流量",
+    "symbol": u"q2",
+    "unit": u"m³/h",
+    "calculate": u"1.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_fan_power",
+    "name": u"风机效率",
+    "symbol": u"η1",
+    "unit": u"",
+    "calculate": u"取0.75",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_electric_motor_power",
+    "name": u"电动机效率",
+    "symbol": u"ηd",
+    "unit": u"",
+    "calculate": u"取0.95",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_fan_shaft_power",
+    "name": u"风机轴功率",
+    "symbol": u"P'",
+    "unit": u"kw",
+    "calculate": u"P'=p2*q2/η",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_fan_security_volumn",
+    "name": u"电机安全裕量",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"取1.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "i_motor_power",
+    "name": u"电机功率",
+    "symbol": u"P",
+    "unit": u"kw",
+    "calculate": u"P=K*P'/ηd",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_air_temperature",
+    "name": u"空气温度",
+    "symbol": u"t",
+    "unit": u"℃",
+    "calculate": u"常规20",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_boiler_body_resistance",
+    "name": u"风压",
+    "symbol": u"pg",
+    "unit": u"pa",
+    "calculate": u"锅炉厂资料",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_duct_resistance",
+    "name": u"管道阻力",
+    "symbol": u"pz",
+    "unit": u"pa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_local_atmosphere",
+    "name": u"当地大气压",
+    "symbol": u"p0",
+    "unit": u"pa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_smoke_flow_rate_condition",
+    "name": u"烟风流量（工况）",
+    "symbol": u"q",
+    "unit": u"m³/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_nameplate_medium_temperature",
+    "name": u"铭牌介质温度",
+    "symbol": u"t1",
+    "unit": u"℃",
+    "calculate": u"常规20℃",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_fan_total_pressure",
+    "name": u"风机全压",
+    "symbol": u"p1",
+    "unit": u"pa",
+    "calculate": u"p1=p*(101325/p0)*((t+273)/(t1+273))",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_fan_select_total_pressure",
+    "name": u"风机选用全压",
+    "symbol": u"p2",
+    "unit": u"",
+    "calculate": u"1.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_fan_selection_flow",
+    "name": u"风机选用流量",
+    "symbol": u"q2",
+    "unit": u"m³/h",
+    "calculate": u"1.3",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_fan_power",
+    "name": u"风机效率",
+    "symbol": u"η1",
+    "unit": u"",
+    "calculate": u"取0.75",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_electric_motor_power",
+    "name": u"电动机效率",
+    "symbol": u"ηd",
+    "unit": u"",
+    "calculate": u"取0.95",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_fan_shaft_power",
+    "name": u"风机轴功率",
+    "symbol": u"P'",
+    "unit": u"kw",
+    "calculate": u"P'=p2*q2/η",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_fan_security_volumn",
+    "name": u"电机安全裕量",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"取1.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_smokeAirSystem",
+    "name_eng": "r_motor_power",
+    "name": u"电机功率",
+    "symbol": u"P",
+    "unit": u"kw",
+    "calculate": u"P=K*P'/ηd",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}]
+
+circulatingWater_data = [{
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_steam_exhaust_flow",
+    "name": u"乏汽流量",
+    "symbol": u"",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_steam_exhaust_flow_select",
+    "name": u"乏汽流量选择",
+    "symbol": u"",
+    "unit": u"t/h",
+    "calculate": u"选定",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_circulating_ratio",
+    "name": u"循环倍率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"北方60~70；中部65~75；南方70~80",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_circulating_water",
+    "name": u"循环水量",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_auxiliary_engine_cooling_water",
+    "name": u"辅机冷却水量",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_total_circulating_water",
+    "name": u"总循环水量",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_total_circulating_water_select",
+    "name": u"总循环水量",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"选定",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name":
+    "coalCHP_circulatingWater",
+    "name_eng":
+    "v_enter_the_outlet_temperature_difference",
+    "name":
+    u"进、出水口温差",
+    "symbol":
+    u"",
+    "unit":
+    u"℃",
+    "calculate":
+    u"",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_dry_bulb_temperature",
+    "name": u"干球温度",
+    "symbol": u"",
+    "unit": u"℃",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_k",
+    "name": u"K",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"插值法",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_evaporation_loss_rate",
+    "name": u"蒸发损失率",
+    "symbol": u"",
+    "unit": u"%",
+    "calculate": u"Pe=K*温差",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_evaporation_loss",
+    "name": u"蒸发损失",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"Qe=Pe*Q/100",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_points_blow_loss",
+    "name": u"风吹损失率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"Pw：有除水器时为0.2%-0.3%；无除水器时≥0.5%",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_concentrate_ratio",
+    "name": u"分吹损失",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_discharge_loss",
+    "name": u"浓缩倍率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"C：一般取3",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_discharge_capacity",
+    "name": u"排污损失率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"Pb=（Pe-Pw（c-1））/（c-1）",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_amount_of_makeup_water_winter",
+    "name": u"排污量",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_amount_of_makeup_water_summer",
+    "name": u"补充水量",
+    "symbol": u"",
+    "unit": u"m3/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_circulating_pool_size",
+    "name": u"循环水池尺寸",
+    "symbol": u"",
+    "unit": u"m3",
+    "calculate": u"15-25分钟循环水量",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_circulating_pool_long",
+    "name": u"循环水池深",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"深",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_circulating_pool_wide",
+    "name": u"循环水池长",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"长",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_circulating_pool_hight",
+    "name": u"循环水池宽",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"宽",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "v_check_circulating_pool_size",
+    "name": u"校核循环水池尺寸",
+    "symbol": u"",
+    "unit": u"m3",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_pressure_condenser",
+    "name": u"凝汽器循环水进水工作压力",
+    "symbol": u"",
+    "unit": u"Mpa",
+    "calculate": u"输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_condenser_tube_friction",
+    "name": u"凝汽器阻力",
+    "symbol": u"",
+    "unit": u"Mpa",
+    "calculate": u"厂家提供",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_circulating_water_pressure",
+    "name": u"循环水回水压力",
+    "symbol": u"",
+    "unit": u"Mpa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_circulating_water_pressure",
+    "name": u"循环水吸水池压力",
+    "symbol": u"",
+    "unit": u"Mpa",
+    "calculate": u"输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_circulation_height_difference",
+    "name": u"循环水泵出口与凝汽器循环水进水口高度差",
+    "symbol": u"",
+    "unit": u"M",
+    "calculate": u"输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_height_difference_inlet",
+    "name": u"吸水池与水泵入口高度差",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_pipe_losses",
+    "name": u"管道损失",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"暂定采用5mH2O",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_y_losses",
+    "name": u"Y型过滤器损失",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"厂家提供",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_pumping_head",
+    "name": u"总扬程",
+    "symbol": u"",
+    "unit": u"m",
+    "calculate": u"102*（P1-P2）+(H1-H2)+1.2*(H3+H4)",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_flow",
+    "name": u"流量",
+    "symbol": u"",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_pump_power",
+    "name": u"泵效率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"0.6~0.85",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_mechine_power",
+    "name": u"机械传动效率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"直连1.0，联轴器0.98，皮带0.95",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_motor_power",
+    "name": u"电动机效率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"通常取0.98",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_motor_backup_coefficient",
+    "name": u"电动机备用系数",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"查表选取",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_supporting_motor_power",
+    "name": u"配套电机功率",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"ρβgHqv/(3600*1000*η*η2*η3)",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_forklift_parameters_power",
+    "name": u"选用型号功率",
+    "symbol": u"",
+    "unit": u"功率",
+    "calculate": u"两用一备",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_forklift_parameters_flow",
+    "name": u"选用型号流量",
+    "symbol": u"",
+    "unit": u"流量",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_circulatingWater",
+    "name_eng": "c_forklift_parameters_lift",
+    "name": u"选用型号扬程",
+    "symbol": u"",
+    "unit": u"扬程",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}]
+
+removalAshSlag_data = [{
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_total_ash_residue_after",
+    "name": u"灰渣总量(炉内脱硫后)",
+    "symbol": u"",
+    "unit": u"kg/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_fly_ash_content",
+    "name": u"飞灰份额",
+    "symbol": u"αf",
+    "unit": u"%",
+    "calculate": u"循化流化床一般飞灰比6：4，7：3",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_dust_collector_inlet_",
+    "name": u"除尘器入口（锅炉出口）飞灰量",
+    "symbol": u"Gaf",
+    "unit": u"kg/h",
+    "calculate": u"αf*Gzh",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_the_imported_smoke_volume",
+    "name": u"标况下除尘器进口烟气容积流量",
+    "symbol": u"VNycj",
+    "unit": u"Nm3/h",
+    "calculate": u"烟风量计算表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_the_smoke_volume_flow",
+    "name": u"除尘器进口处烟气容积流量(实态）",
+    "symbol": u"Vycj",
+    "unit": u"m3/h",
+    "calculate": u"烟风量计算表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_the_smoke_concentration",
+    "name": u"标况下除尘器进口烟气浓度",
+    "symbol": u"Ci",
+    "unit": u"mg/Nm3",
+    "calculate": u"Gaf*106/VNycj",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_the_smoke_concentration_solid",
+    "name": u"除尘器进口处烟气浓度(实态）",
+    "symbol": u"C'i",
+    "unit": u"mg/m3",
+    "calculate": u"Gaf*106/Vycj",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_collection_efficiency",
+    "name": u"除尘效率",
+    "symbol": u"ηc",
+    "unit": u"%",
+    "calculate": u"电布袋除尘器，取99.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_the_smoke_concentration_chimney",
+    "name": u"除尘器（烟囱）出口烟气浓度（标况）",
+    "symbol": u"Co",
+    "unit": u"mg/Nm3",
+    "calculate": u"Ci*（1-ηc）",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_dust_collector_stack",
+    "name": u"除尘器（烟囱）出口烟气飞灰量（标况）",
+    "symbol": u"G'af",
+    "unit": u"kg/h",
+    "calculate": u"Gaf*（1-ηc）",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_ash_under_dust_collector",
+    "name": u"除尘器下灰量",
+    "symbol": u"Af",
+    "unit": u"kg/h",
+    "calculate": u"Gaf*ηc",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_the_imported_smoke_real_state",
+    "name": u"引风机进口烟气容积量(实态）",
+    "symbol": u"Vxf",
+    "unit": u"m3/h",
+    "calculate": u"烟风量计算表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "a_flue_gas_concentratio",
+    "name": u"烟囱出口烟气浓度（实态）",
+    "symbol": u"",
+    "unit": u"mg/m3",
+    "calculate": u"Gaf*（1-ηc）*106/Vxf",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_removal_coefficient",
+    "name": u"出力系数",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"间断＞200%，连续＞150%",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_removal_the_ash_system",
+    "name": u"除灰系统出力",
+    "symbol": u"Gm",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_dry_ash_accumulation_density",
+    "name": u"干灰堆积密度",
+    "symbol": u"Pa",
+    "unit": u"t/m³",
+    "calculate": u"0.7~0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_slag_accumulation_coefficient",
+    "name": u"灰库充满系数",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"0.7~0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_stored_ash",
+    "name": u"存灰时间",
+    "symbol": u"T",
+    "unit": u"h",
+    "calculate": u"1~2d，用户要求",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_effective_volume_ash_storage",
+    "name": u"灰库有效体积",
+    "symbol": u"Va",
+    "unit": u"m³",
+    "calculate": u"T*Gm/Pa/K",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_dia",
+    "name": u"直径",
+    "symbol": u"D",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "r_height",
+    "name": u"高度",
+    "symbol": u"H",
+    "unit": u"m",
+    "calculate": u"未含有5m的操作平台",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "g_grey_gas",
+    "name": u"灰气比",
+    "symbol": u"n",
+    "unit": u"",
+    "calculate": u"7~20",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "g_air_transport_ash_system",
+    "name": u"输灰系统耗气量",
+    "symbol": u"Q",
+    "unit": u"Nm³/min",
+    "calculate": u"1.2*16.67*Gm/n/1.293",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_slag_amount",
+    "name": u"渣量",
+    "symbol": u"Gz",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_output_cold_single_stage",
+    "name": u"冷渣机的出力（单台）",
+    "symbol": u"Glz",
+    "unit": u"t/h",
+    "calculate": u"2.5",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_cold_single_stage_count",
+    "name": u"冷渣机台数",
+    "symbol": u"n",
+    "unit": u"",
+    "calculate": u"事故/运行",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_slag_removal_system",
+    "name": u"除渣系统出力",
+    "symbol": u"Gzm",
+    "unit": u"t/h",
+    "calculate": u"2.5倍的冷渣机总出力",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_high_temperature_belt_conveyor",
+    "name": u"耐高温带式输送机出力",
+    "symbol": u"Gssm",
+    "unit": u"t/h",
+    "calculate": u"除渣系统出力",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_cold_slag_accumulation_density",
+    "name": u"冷渣堆积密度",
+    "symbol": u"Pa",
+    "unit": u"t/m³",
+    "calculate": u"1.2",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_slag_accumulation_coefficient",
+    "name": u"渣库充满系数",
+    "symbol": u"K",
+    "unit": u"",
+    "calculate": u"0.7~0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_sludge_time",
+    "name": u"存渣时间",
+    "symbol": u"T",
+    "unit": u"h",
+    "calculate": u"1~2d，用户要求",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_slag_storage_volume_effective",
+    "name": u"渣库有效体积",
+    "symbol": u"Va",
+    "unit": u"m³",
+    "calculate": u"T*Gm/Pa/K",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_dia",
+    "name": u"直径",
+    "symbol": u"D",
+    "unit": u"m",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_removalAshSlag",
+    "name_eng": "s_height",
+    "name": u"高度",
+    "symbol": u"H",
+    "unit": u"m",
+    "calculate": u"未含有5m的操作平台",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}]
+
+# 锅炉辅机系统
+boilerAuxiliaries_data = [{
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_boiler_evaporation",
+    "name": u"锅炉蒸发量",
+    "symbol": u"D0",
+    "unit": u"t/h",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_emission_time",
+    "name": u"排放时间",
+    "symbol": u"t",
+    "unit": u"min",
+    "calculate": u"一班一次，2-3次，一次0.5-1min",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_emission_rate",
+    "name": u"定期排污率",
+    "symbol": u"η",
+    "unit": u"/",
+    "calculate": u"0.1%-0.5%",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_sewage_quantity",
+    "name": u"定期排污水量",
+    "symbol": u"Dpb",
+    "unit": u"kg/h",
+    "calculate": u"D0*1000*t*60*η",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_drum_pressure",
+    "name": u"汽包压力",
+    "symbol": u"P",
+    "unit": u"Mpa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_drum_aturatedwater_enthalpy",
+    "name": u"汽包压力下的饱和水焓",
+    "symbol": u"hd",
+    "unit": u"kj/kg",
+    "calculate": u"汽包压力",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_work_pressure",
+    "name": u"排污扩容器工作压力",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"扩容器压力选0.15MPa(a)/0.45",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_work_aturatedwater_enthalpy",
+    "name": u"扩容器压力下饱和水焓",
+    "symbol": u"hs",
+    "unit": u"kj/kg",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_work_latentheat_vaporization",
+    "name": u"扩容器压力下汽化潜热",
+    "symbol": u"r",
+    "unit": u"kj/kg",
+    "calculate": u"查表（饱和汽焓-饱和水焓）",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_ultimate_strength",
+    "name": u"扩容器单位容积润许极限强度",
+    "symbol": u"R",
+    "unit": u"m3/（m3/kg）",
+    "calculate": u"2000",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_affluence_coefficient",
+    "name": u"富裕系数",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"1.3~1.5的富裕系数",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_volume",
+    "name": u"排污扩容容积",
+    "symbol": u"Vv",
+    "unit": u"m³",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "r_specifications",
+    "name": u"选取",
+    "symbol": u"考虑紧急放水后：DP-7.5",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_boiler_evaporation",
+    "name": u"锅炉蒸发量",
+    "symbol": u"D0",
+    "unit": u"t/h",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_emission_rate",
+    "name": u"连续排污率",
+    "symbol": u"η",
+    "unit": u"/",
+    "calculate": u"1%-2%",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_sewage_quantity",
+    "name": u"连续排污水量",
+    "symbol": u"Dpb",
+    "unit": u"kg/h",
+    "calculate": u"D0*1000*η",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_drum_pressure",
+    "name": u"汽包压力",
+    "symbol": u"P",
+    "unit": u"Mpa",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_drum_aturatedwater_enthalpy",
+    "name": u"汽包压力下的饱和水焓",
+    "symbol": u"hd",
+    "unit": u"kj/kg",
+    "calculate": u"汽包压力",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_work_pressure",
+    "name": u"排污扩容器工作压力",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"扩容器压力选0.15MPa(a)/0.45/1.0",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_work_aturatedwater_enthalpy",
+    "name": u"扩容器压力下饱和水焓",
+    "symbol": u"hs",
+    "unit": u"kj/kg",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_work_steam_pecificvolume",
+    "name": u"扩容器压力下蒸汽比容",
+    "symbol": u"υ",
+    "unit": u"m3/kg",
+    "calculate": u"查表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_work_latentheat_vaporization",
+    "name": u"扩容器压力下汽化潜热",
+    "symbol": u"r",
+    "unit": u"kj/kg",
+    "calculate": u"查表（饱和汽焓-饱和水焓）",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_steam_dryness",
+    "name": u"扩容器蒸汽干度",
+    "symbol": u"X",
+    "unit": u"",
+    "calculate": u"0.97~0.98",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_ultimate_strength",
+    "name": u"扩容器单位容积润许极限强度",
+    "symbol": u"R",
+    "unit": u"m3/（m3/kg）",
+    "calculate": u"2000",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_vaporization_capacity",
+    "name": u"排污水汽化量",
+    "symbol": u"Df",
+    "unit": u"kg/h",
+    "calculate": u"(hd*η-hs)/xr",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_affluence_coefficient",
+    "name": u"富裕系数",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"1.2的富裕系数",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_volume",
+    "name": u"排污扩容汽容积",
+    "symbol": u"Vv",
+    "unit": u"m³",
+    "calculate": u"水容积为汽容积的1/4",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "c_specifications",
+    "name": u"选取",
+    "symbol": u"DP-3.5/DP-1.5",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_boiler_watersystem_volume",
+    "name": u"锅炉水系统容积",
+    "symbol": u"V",
+    "unit": u"m³",
+    "calculate": u"输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_phosphate_content",
+    "name": u"应维持的磷酸根含量",
+    "symbol": u"PO43-",
+    "unit": u"mg/L",
+    "calculate": u"10~30",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_water_hardness",
+    "name": u"给水硬度（原水）",
+    "symbol": u"H",
+    "unit": u"mmol/L",
+    "calculate": u"7.0~9.5",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_purity",
+    "name": u"纯度",
+    "symbol": u"ε",
+    "unit": u"m",
+    "calculate": u"0.92~0.98",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_boiler_dosage_startup",
+    "name": u"锅炉启动时加药量",
+    "symbol": u"qm",
+    "unit": u"g",
+    "calculate": u"V(PO4+28.5*H)/250ε",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_boiler_water_supply",
+    "name": u"锅炉给水量",
+    "symbol": u"qfm",
+    "unit": u"t/h",
+    "calculate": u"输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_boiler_sewage_quantity",
+    "name": u"锅炉排污量",
+    "symbol": u"qbl",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_boiler_dosage_run",
+    "name": u"运行时加药量",
+    "symbol": u"qm",
+    "unit": u"g/h",
+    "calculate": u"计算",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_Na3PO4_concentration",
+    "name": u"磷酸钠浓度",
+    "symbol": u"C",
+    "unit": u"/",
+    "calculate": u"1%~5%",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_Na3PO4_density",
+    "name": u"在C浓度下的磷酸三钠密度",
+    "symbol": u"ρ",
+    "unit": u"g/cm3",
+    "calculate": u"见表",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "d_solution_quantity_run",
+    "name": u"运行时汽包内加入的溶液量",
+    "symbol": u"qv",
+    "unit": u"m3/h",
+    "calculate": u"qm/10Cρ",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_boiler_design_pressure",
+    "name": u"锅炉设计使用压力",
+    "symbol": u"P",
+    "unit": u"Mpa",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name":
+    "coalCHP_boilerAuxiliaries",
+    "name_eng":
+    "p_inlet_pressure",
+    "name":
+    u"省煤器入口进水压力",
+    "symbol":
+    u"P1",
+    "unit":
+    u"Mpa",
+    "calculate":
+    u"当工作压力P≤0.8MPa时，取P+0.05；当0.8<P≤5.9MPa时，取1.06P",
+    "remark":
+    "",
+    "default_value":
+    "",
+    "disable":
+    ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_deaerator_pressure",
+    "name": u"除氧器工作压力",
+    "symbol": u"Pd",
+    "unit": u"Mpa",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_water_supply_resistance",
+    "name": u"给水管阻力（以压头计）",
+    "symbol": u"ΔPfw",
+    "unit": u"m",
+    "calculate": u"计算--许可流速2~3m/s",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_water_inlet_resistance",
+    "name": u"进水管阻力（以压头计）",
+    "symbol": u"ΔPin",
+    "unit": u"m",
+    "calculate": u"计算--许可流速0.5~1m/s",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_center_altitude_difference",
+    "name": u"水泵中心至汽包正常水位的几何高度差",
+    "symbol": u"Hy",
+    "unit": u"m",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_deaerator_altitude_difference",
+    "name": u"除氧器最低水位至水泵中心几何高度差（给水泵进口静水头）",
+    "symbol": u"Hst",
+    "unit": u"m",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_feedpump_total_head",
+    "name": u"给水泵总扬程",
+    "symbol": u"Hsw",
+    "unit": u"m",
+    "calculate": u"（P1-Pd）*102+1.2*(ΔPfw+ΔPin)+Hy-Hst",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_flow",
+    "name": u"流量",
+    "symbol": u"Q",
+    "unit": u"t/h",
+    "calculate": u"已知",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_pump_efficiency",
+    "name": u"泵效率",
+    "symbol": u"η",
+    "unit": u"/",
+    "calculate": u"0.6~0.8",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_transmission_efficiency",
+    "name": u"机械传动效率",
+    "symbol": u"η2",
+    "unit": u"/",
+    "calculate": u"直连1.0，联轴器0.98，皮带0.95",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_motor_efficiency",
+    "name": u"电动机效率",
+    "symbol": u"η3",
+    "unit": u"/",
+    "calculate": u"通常取0.9",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_motor_reserve_factor",
+    "name": u"电动机备用系数",
+    "symbol": u"β",
+    "unit": u"/",
+    "calculate": u"查表选取",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_auxiliary_motor_power",
+    "name": u"配套电机功率",
+    "symbol": u"P",
+    "unit": u"kw",
+    "calculate": u"ρβgHqv/(3600*1000*η*η2*η3)",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "p_specifications",
+    "name": u"给水泵选用规格",
+    "symbol": u"",
+    "unit": u"",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_boiler_evaporation",
+    "name": u"锅炉蒸发量",
+    "symbol": u"D0",
+    "unit": u"t/h",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_makeup_steam",
+    "name": u"补汽量",
+    "symbol": u"D0''",
+    "unit": u"t/h",
+    "calculate": u"若无取0",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_steamwater_cycle_loss",
+    "name": u"厂内汽水循环损失",
+    "symbol": u"D1",
+    "unit": u"t/h",
+    "calculate": u"0.03",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_pollution_loss",
+    "name": u"排污损失",
+    "symbol": u"D2",
+    "unit": u"t/h",
+    "calculate": u"0.02",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_condensing_capacity",
+    "name": u"凝结水量",
+    "symbol": u"D0'",
+    "unit": u"t/h",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_condensate_loss",
+    "name": u"换热凝结水损失",
+    "symbol": u"D1'",
+    "unit": u"t/h",
+    "calculate": u"0.02",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_boiler_normal_watersupply",
+    "name": u"锅炉正常补水量",
+    "symbol": u"D1s",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_increase_loss",
+    "name": u"启动或事故增加损失",
+    "symbol": u"Dx",
+    "unit": u"t/h",
+    "calculate": u"0.1",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_boiler_max_watersupply",
+    "name": u"锅炉最大补水量",
+    "symbol": u"Dbu",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_water_equipment_output",
+    "name": u"水处理设备全部出力",
+    "symbol": u"Q1",
+    "unit": u"t/h",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "m_water_equipment_select",
+    "name": u"选取水处理设备出力",
+    "symbol": u"Q1’",
+    "unit": u"t/h",
+    "calculate": u"2×20",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "s_boiler_evaporation",
+    "name": u"锅炉蒸发量",
+    "symbol": u"D0",
+    "unit": u"t/h",
+    "calculate": u"数据输入",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "s_storage_time",
+    "name": u"储水时间",
+    "symbol": u"t",
+    "unit": u"min",
+    "calculate": u"130t/h以下20min；130t/h以上10~15min",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "s_volume",
+    "name": u"容积",
+    "symbol": u"V",
+    "unit": u"m3",
+    "calculate": u"",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "s_size_length",
+    "name": u"尺寸(长)",
+    "symbol": u"L",
+    "unit": u"m",
+    "calculate": u"长",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}, {
+    "module_name": "coalCHP_boilerAuxiliaries",
+    "name_eng": "s_size_diameter",
+    "name": u"尺寸(直径)",
+    "symbol": u"D",
+    "unit": u"m",
+    "calculate": u"直径",
+    "remark": "",
+    "default_value": "",
+    "disable": ""
+}]
+
+coal_data = [
+    (u'阳泉混煤', '67.1', '3.1', '4.7', '1.0', '0.7', '6.0', '16.8', '8', '1.4',
+     '26250'), (u'焦作原煤', '59.6', '2.0', '0.8', '0.8', '0.5', '10.0', '26.3',
+                '8.2', '1.2', '22154'),
+    (u'西山混煤', '55.3', '3.7', '5.2', '0.4', '0.4', '10.0', '24.6', '14', '1.7',
+     '21903'), (u'鹤壁原煤', '72.3', '4.0', '2.0', '1.4', '0.3', '5.0', '15.0',
+                '12', '2.0', '28340'),
+    (u'铜川混煤', '64.7', '3.4', '1.8', '1.0', '5.3', '405', '19.3', '14.2', '1.4',
+     '26083'), (u'淄博混煤', '67.8', '3.0', '2.4', '1.3', '2.4', '3.9', '19.2',
+                '15', '1.6', '25958'), (u'义马混煤', '43.4', '3.4', '11.4', '1.1',
+                                        '1.5', '17.7', '21.5', '41', '1.5',
+                                        '16720'),
+    (u'大同混煤', '70.5', '4.2', '8.3', '0.9', '1.1', '6.0', '9.0', '30', '1.1',
+     '27839'), (u'鹤岗四号原煤', '48.4', '3.6', '10.2', '0.6', '0.3', '10.1', '26.8',
+                '36', '1.3', '19312'), (u'六道湾原煤', '59.6', '3.5', '9.2', '0.7',
+                                        '0.7', '9.2', '17.1', '37', '1.6',
+                                        '22823'),
+    (u'淮南原煤', '56.8', '4.13', '11.51', '1.09', '1.1', '10.6', '14.87', '32.1',
+     '1.5', '21983'), (u'萍乡安源低质煤', '39.9', '2.7', '4.6', '0.6', '0.2', '7.0',
+                       '45.0', '36', '1.6',
+                       '15884'), (u'平顶山原煤', '47.2', '3.3', '6.5', '0.6', '0.8',
+                                  '5.6', '36.0', '37', '1.3', '18308'),
+    (u'资兴低质煤', '34.2', '3.4', '5.7', '0.8', '0.5', '8.6', '46.8', '37.1', '',
+     '14128'), (u'开滦洗三号', '39.8', '2.6', '3.8', '0.8', '1.0', '7.0', '45.0',
+                '37', '', '15675'), (u'平顶山洗中煤', '36.7', '3.0', '9.2', '0.7',
+                                     '0.4', '12.0', '38.0', '45.5', '1.5',
+                                     '14003'), (u'淮南望峰岗洗二中煤', '36.6', '2.4',
+                                                '5.5', '0.9', '1.6', '15.0',
+                                                '38.0', '40', '', '16093'),
+    (u'徐州烟煤', '62.9', '4.13', '6.7', '1.45', '1.224', '10.0', '13.5', '37',
+     '1.6', '24720'), (u'金竹山无烟煤', '64.8', '2.2', '1.82', '1.56', '0.64', '7.0',
+                       '22.3', '8', '1.7', '22210')
+]
 
 
 class AddCoalCHP():
     # 初始化数据
     @staticmethod
     def init_data():
-        Company.insert_company()
+        Company.init_company()
         Role.insert_roles()
         User.insert_admin()
         data = [
-            questionnaire_data, coalHandingSystem_data, furnaceCalculation_data
+            questionnaire_data, coalHandingSystem_data,
+            furnaceCalculation_data, coalCHP_desulfurization_data,
+            smokeAirSystem_data, circulatingWater_data, removalAshSlag_data,
+            boilerAuxiliaries_data
         ]
         for index in range(len(data)):
             AddCoalCHP.insert_constant(data[index])
@@ -1992,8 +5432,11 @@ class AddCoalCHP():
             unit = data[index]["unit"]
             calculate = data[index]["calculate"]
             remark = data[index]["remark"]
+            default_value = data[index]["default_value"]
+            disable = data[index]["disable"]
             coalCHPConstant = CoalCHPConstant.create_coalCHPConstant(
-                module_name, name_eng, name, symbol, unit, calculate, remark)
+                module_name, name_eng, name, symbol, unit, calculate, remark,
+                default_value, disable)
             CoalCHPConstant.insert_coalCHPConstant(coalCHPConstant)
 
     # 表中插入煤炭分析数据

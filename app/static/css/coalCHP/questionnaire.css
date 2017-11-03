@@ -34,6 +34,14 @@
     font-weight: bold;
 }
 
+.third-title-center{
+    font-size: 16px;
+    margin: 10px 0px 18px 0px;
+    font-weight: bold;
+    padding-top: 0px;
+    text-align: center;
+}
+
 .margin-left15{
     margin-left: 15px;
     font-weight: bold;
@@ -73,8 +81,18 @@
     background-color: #e4cb10;
 }
 
+.show-warning2{
+    color: rgb(14, 0, 0);
+    background-color: #e4cb10;
+}
+
 .show-info{
     color: #fff;
+    background-color: #5bc0de;
+}
+
+.show-info2{
+    color: rgb(14, 2, 2);
     background-color: #5bc0de;
 }
 
