@@ -148,8 +148,105 @@ class GPGCirculatingWaterSystem(db.Model):
     # 方案表外键
     plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
 
-    # 乏汽流量
-    steam_exhaust_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 冬季乏汽流量
+    steam_exhaust_flux_winter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 夏季乏汽流量
+    steam_exhaust_flux_summer = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选定乏汽流量
+    steam_exhaust_flux_selected = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 冬季循环倍率
+    circulation_ratio_winter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 夏季循环倍率
+    circulation_ratio_summer = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 冬季循环水量
+    circulation_water_flow_winter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 夏季循环水量
+    circulation_water_flow_summer = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 冬季辅机冷却水量
+    auxiliary_cooling_water_flow_winter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 夏季辅机冷却水量
+    auxiliary_cooling_water_flow_summer = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 冬季总循环水量
+    total_circulation_water_flow_winter = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 夏季总循环水量
+    total_circulation_water_flow_summer = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 总循环水量-选定
+    selected_total_circulation_water_flow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 喷淋密度
+    spray_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 喷淋面积
+    spray_area = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 进、出水口温差
+    in_out_water_temperature_difference = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 干球温度
+    dry_bulb_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 蒸发损失率
+    evaporation_loss_rate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 蒸发损失
+    evaporation_loss = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风吹损失率
+    wind_blow_loss_rate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 风吹损失
+    wind_blow_loss = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 浓缩倍率
+    concentration_rate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 排污损失率
+    discharge_rate = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 排污量
+    discharge_capacity = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 补充水量
+    supply_water_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水池15-25分钟循环水量
+    circulating_pool_water_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水池尺寸-深
+    circulating_pool_size_deep = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水池尺寸-长
+    circulating_pool_size_length = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水池尺寸-宽
+    circulating_pool_size_width = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 校核循环水池尺寸
+    circulating_pool_size_checked = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 凝汽器循环水进水工作压力
+    condenser_circulating_water_inlet_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 凝汽器阻力
+    condenser_friction = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水回水压力
+    circulating_backwater_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水吸水池压力
+    circulating_water_reservoir_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 循环水泵出口与凝汽器循环水进水口高度差
+    circulation_pump_outlet_to_condenser_inlet_height_difference = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 吸水池与水泵入口高度差
+    reservoir_to_pump_inlet_height_difference = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 管道损失
+    pipe_loss = db.Column(db.NUMERIC(precision=15, scale=5))
+    # Y型过滤器损失
+    y_filter_loss = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 总扬程
+    total_pumping_lift = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流量
+    pump_flow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 泵效率
+    pump_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 机械传动效率
+    pump_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机效率
+    pump_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机备用系数
+    pump_motor_spare_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 配套电机功率
+    pump_matching_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用型号-功率
+    selected_pump_model_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用型号-流量
+    selected_pump_model_flow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用型号-扬程
+    selected_pump_model_lift = db.Column(db.NUMERIC(precision=15, scale=5))
+
+
+
 
 # 煤气发电 风阻力
 class GPGWindResistance(db.Model):

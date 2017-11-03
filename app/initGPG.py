@@ -5,7 +5,23 @@
 from gasPowerGeneration_models import GasPowerGenerationConstant, \
                                     GasPowerGenerationNeedsQuestionnaire, \
                                     GPGBoilerOfPTS, GPGFlueGasAirSystem, \
-                                    GPGSmokeResistance, GPGWindResistance
+                                    GPGSmokeResistance, GPGWindResistance, \
+                                    GPGCirculatingWaterSystem
+# 煤气发电 循环水系统
+GPGCirculatingWaterSystem_data = [
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "steam_exhaust_flux_winter", "name": u"冬季乏汽流量", "symbol": u"", "unit": u"t/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "steam_exhaust_flux_summer", "name": u"夏季乏汽流量", "symbol": u"", "unit": u"t/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "steam_exhaust_flux_selected", "name": u"选定乏汽流量", "symbol": u"", "unit": u"t/h", "calculate": u"", "remark": u"选定"},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_ratio_winter", "name": u"冬季循环倍率", "symbol": u"", "unit": u"", "calculate": u"", "remark": u"北方60~70；中部65~75；南方70~80"},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_ratio_summer", "name": u"夏季循环倍率", "symbol": u"", "unit": u"", "calculate": u"", "remark": u"北方60~70；中部65~75；南方70~80"},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_water_flow_winter", "name": u"冬季循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_water_flow_summer", "name": u"夏季循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "auxiliary_cooling_water_flow_winter", "name": u"冬季辅机冷却水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "auxiliary_cooling_water_flow_summer", "name": u"夏季辅机冷却水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "total_circulation_water_flow_winter", "name": u"冬季总循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "total_circulation_water_flow_summer", "name": u"夏季总循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "selected_total_circulation_water_flow", "name": u"总循环水量-选定", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+]
 
 # 煤气发电 风阻力
 GPGWindResistance_data = [
@@ -3363,7 +3379,8 @@ class AddGPG():
     @staticmethod
     def init_data():
         data = [questionnaire_data, GPGBoilerOfPTS_data, GPGGasAirSys_data,
-                GPGSmokeResistance_data, GPGWindResistance_data]
+                GPGSmokeResistance_data, GPGWindResistance_data,
+                GPGCirculatingWaterSystem_data]
         for index in range(len(data)):
             AddGPG.insert_constant(data[index])
 
