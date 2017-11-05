@@ -181,6 +181,8 @@ class GPGCirculatingWaterSystem(db.Model):
     in_out_water_temperature_difference = db.Column(db.NUMERIC(precision=15, scale=5))
     # 干球温度
     dry_bulb_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # K
+    dry_bulb_k_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 蒸发损失率
     evaporation_loss_rate = db.Column(db.NUMERIC(precision=15, scale=5))
     # 蒸发损失

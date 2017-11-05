@@ -8,19 +8,467 @@ from gasPowerGeneration_models import GasPowerGenerationConstant, \
                                     GPGSmokeResistance, GPGWindResistance, \
                                     GPGCirculatingWaterSystem
 # 煤气发电 循环水系统
-GPGCirculatingWaterSystem_data = [
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "steam_exhaust_flux_winter", "name": u"冬季乏汽流量", "symbol": u"", "unit": u"t/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "steam_exhaust_flux_summer", "name": u"夏季乏汽流量", "symbol": u"", "unit": u"t/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "steam_exhaust_flux_selected", "name": u"选定乏汽流量", "symbol": u"", "unit": u"t/h", "calculate": u"", "remark": u"选定"},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_ratio_winter", "name": u"冬季循环倍率", "symbol": u"", "unit": u"", "calculate": u"", "remark": u"北方60~70；中部65~75；南方70~80"},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_ratio_summer", "name": u"夏季循环倍率", "symbol": u"", "unit": u"", "calculate": u"", "remark": u"北方60~70；中部65~75；南方70~80"},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_water_flow_winter", "name": u"冬季循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "circulation_water_flow_summer", "name": u"夏季循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "auxiliary_cooling_water_flow_winter", "name": u"冬季辅机冷却水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "auxiliary_cooling_water_flow_summer", "name": u"夏季辅机冷却水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "total_circulation_water_flow_winter", "name": u"冬季总循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "total_circulation_water_flow_summer", "name": u"夏季总循环水量", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
-    {"module_name": "GPG_CirculatingWaterSystem", "name_eng": "selected_total_circulation_water_flow", "name": u"总循环水量-选定", "symbol": u"", "unit": u"m3/h", "calculate": u"", "remark": u""},
+GPGCirculatingWaterSystem_data = [{
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "steam_exhaust_flux_winter",
+        "name": u"冬季乏汽流量",
+        "symbol": u"",
+        "unit": u"t/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "steam_exhaust_flux_summer",
+        "name": u"夏季乏汽流量",
+        "symbol": u"",
+        "unit": u"t/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "steam_exhaust_flux_selected",
+        "name": u"选定乏汽流量",
+        "symbol": u"",
+        "unit": u"t/h",
+        "calculate": u"",
+        "remark": u"选定"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulation_ratio_winter",
+        "name": u"冬季循环倍率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"北方60~70；中部65~75；南方70~80"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulation_ratio_summer",
+        "name": u"夏季循环倍率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"北方60~70；中部65~75；南方70~80"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulation_water_flow_winter",
+        "name": u"冬季循环水量",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulation_water_flow_summer",
+        "name": u"夏季循环水量",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "auxiliary_cooling_water_flow_winter",
+        "name":
+        u"冬季辅机冷却水量",
+        "symbol":
+        u"",
+        "unit":
+        u"m3/h",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "auxiliary_cooling_water_flow_summer",
+        "name":
+        u"夏季辅机冷却水量",
+        "symbol":
+        u"",
+        "unit":
+        u"m3/h",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "total_circulation_water_flow_winter",
+        "name":
+        u"冬季总循环水量",
+        "symbol":
+        u"",
+        "unit":
+        u"m3/h",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "total_circulation_water_flow_summer",
+        "name":
+        u"夏季总循环水量",
+        "symbol":
+        u"",
+        "unit":
+        u"m3/h",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "spray_density",
+        "name": u"喷淋密度",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "spray_area",
+        "name": u"喷淋面积",
+        "symbol": u"",
+        "unit": u"m2",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "in_out_water_temperature_difference",
+        "name":
+        u"进、出水口温差",
+        "symbol":
+        u"",
+        "unit":
+        u"℃",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "dry_bulb_temperature",
+        "name": u"干球温度",
+        "symbol": u"",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "dry_bulb_k_coefficient",
+        "name": u"K",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"插值法",
+        "remark": u"参考表5.6.1"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "evaporation_loss_rate",
+        "name": u"蒸发损失率",
+        "symbol": u"",
+        "unit": u"%",
+        "calculate": u"Pe=K*温差",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "evaporation_loss",
+        "name": u"蒸发损失",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"Qe=Pe*Q/100",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "wind_blow_loss_rate",
+        "name":
+        u"风吹损失率",
+        "symbol":
+        u"",
+        "unit":
+        u"",
+        "calculate":
+        u"Pw：有除水器时为0.2%-0.3%；无除水器时≥0.5%",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "wind_blow_loss",
+        "name": u"风吹损失",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "concentration_rate",
+        "name": u"浓缩倍率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"C：一般取3",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "discharge_rate",
+        "name": u"排污损失率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"Pb=（Pe-Pw（c-1））/（c-1）",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "discharge_capacity",
+        "name": u"排污量",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "supply_water_amount",
+        "name": u"补充水量",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulating_pool_water_amount",
+        "name": u"循环水池15-25分钟循环水量",
+        "symbol": u"",
+        "unit": u"m3",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulating_pool_size_deep",
+        "name": u"循环水池尺寸-深",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulating_pool_size_length",
+        "name": u"循环水池尺寸-长",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulating_pool_size_width",
+        "name": u"循环水池尺寸-宽",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "circulating_pool_size_checked",
+        "name": u"校核循环水池尺寸",
+        "symbol": u"",
+        "unit": u"m3",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "condenser_circulating_water_inlet_pressure",
+        "name":
+        u"凝汽器循环水进水工作压力",
+        "symbol":
+        u"",
+        "unit":
+        u"Mpa",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "condenser_friction",
+        "name": u"凝汽器阻力",
+        "symbol": u"",
+        "unit": u"Mpa",
+        "calculate": u"",
+        "remark": u"厂家提供"
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "circulating_backwater_pressure",
+        "name":
+        u"循环水回水压力",
+        "symbol":
+        u"",
+        "unit":
+        u"Mpa",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "circulating_water_reservoir_pressure",
+        "name":
+        u"循环水吸水池压力",
+        "symbol":
+        u"",
+        "unit":
+        u"Mpa",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "circulation_pump_outlet_to_condenser_inlet_height_difference",
+        "name":
+        u"循环水泵出口与凝汽器循环水进水口高度差",
+        "symbol":
+        u"",
+        "unit":
+        u"m",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "reservoir_to_pump_inlet_height_difference",
+        "name":
+        u"吸水池与水泵入口高度差",
+        "symbol":
+        u"",
+        "unit":
+        u"m",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pipe_loss",
+        "name": u"管道损失",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"暂定采用5mH2O",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "y_filter_loss",
+        "name": u"Y型过滤器损失",
+        "symbol": u"",
+        "unit": u"m",
+        "calculate": u"",
+        "remark": u"厂家提供"
+    }, {
+        "module_name":
+        "GPG_CirculatingWaterSystem",
+        "name_eng":
+        "total_pumping_lift",
+        "name":
+        u"总扬程",
+        "symbol":
+        u"",
+        "unit":
+        u"m",
+        "calculate":
+        u"102*（P1-P2）+(H1-H2)+1.2*(H3+H4)",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pump_flow",
+        "name": u"流量",
+        "symbol": u"",
+        "unit": u"t/h",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pump_efficiency",
+        "name": u"泵效率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"0.6~0.85"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pump_transmission_efficiency",
+        "name": u"机械传动效率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"直连1.0，联轴器0.98，皮带0.95"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pump_motor_efficiency",
+        "name": u"电动机效率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u"通常取0.98"
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pump_motor_spare_coefficient",
+        "name": u"电动机备用系数",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"查表选取",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "pump_matching_motor_power",
+        "name": u"配套电机功率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"ρβgHqv/(3600*1000*η*η2*η3)",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "selected_pump_model_power",
+        "name": u"选用型号-功率",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "selected_pump_model_flow",
+        "name": u"选用型号-流量",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "selected_pump_model_lift",
+        "name": u"选用型号-扬程",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }
 ]
 
 # 煤气发电 风阻力
