@@ -124,3 +124,15 @@ function unlockMeunBiomassCHP() {
     $('.biomassFurnace, .biomassFuelStorTran, .biomassDesulDenit, .biomassDASRemove, .biomassBoilerAuxiliaries, .biomassOfficialProcess').removeClass('unselect');
     $('.biomassFurnace, .biomassFuelStorTran, .biomassDesulDenit, .biomassDASRemove, .biomassBoilerAuxiliaries, .biomassOfficialProcess').removeAttr('onclick');
 }
+
+// 解锁子菜单
+function unlockMeunGPG() {
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').removeClass('unselect');
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').removeAttr('onclick');
+}
+
+//锁定子菜单
+function lockMeunGPG() {
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').addClass('unselect');
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').attr("onclick", "return false;");
+}

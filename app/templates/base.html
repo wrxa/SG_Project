@@ -157,10 +157,10 @@
                         <div id="gaspower" class="collapse ">
                             <ul class="nav">
                                 <li><a class="GPG_Questionnaire" href="{{ url_for('main.GPG_Questionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="GPG_BoilerOfPTS" href="{{ url_for('main.GPG_BoilerOfPTS') }}" class="">原则性热力系统锅炉部分</a></li> 
-                                <li><a class="GPG_GasAirSystem" href="{{ url_for('main.GPG_GasAirSystem') }}" class="">烟风系统</a></li>      
-                                <li><a class="GPG_SmokeResistance" href="{{ url_for('main.GPG_SmokeResistance') }}" class="">烟阻力</a></li>
-                                <li><a class="GPG_WindResistance" href="{{ url_for('main.GPG_WindResistance') }}" class="">风阻力</a></li>                      
+                                <li><a class="GPG_BoilerOfPTS unselect" onclick="return false;" href="{{ url_for('main.GPG_BoilerOfPTS') }}" class="">原则性热力系统锅炉部分</a></li> 
+                                <li><a class="GPG_GasAirSystem unselect" onclick="return false;" href="{{ url_for('main.GPG_GasAirSystem') }}" class="">烟风系统</a></li>      
+                                <li><a class="GPG_SmokeResistance unselect" onclick="return false;" href="{{ url_for('main.GPG_SmokeResistance') }}" class="">烟阻力</a></li>
+                                <li><a class="GPG_WindResistance unselect" onclick="return false;" href="{{ url_for('main.GPG_WindResistance') }}" class="">风阻力</a></li>                      
                             </ul>
                         </div>
                     </li>
@@ -191,6 +191,7 @@
     <input type="hidden" id="menuSelect" value="{{menuSelect}}" />
     <input type="hidden" value="{{session.coalCHPPlanId}}" id="coalCHPCurrentPlanId">
     <input type="hidden" value="{{session.biomassCHPPlanId}}" id="biomassCHPCurrentPlanId">
+    <input type="hidden" value="{{session.GPGPlanId}}" id="GPGCurrentPlanId">
     <div class="clearfix"></div>
     <footer>
         <div class="container-fluid">

@@ -990,7 +990,7 @@ class GPGBoilerOfPTS(db.Model):
     surplus_gas_cog = db.Column(db.NUMERIC(precision=15, scale=5))
 
     # BFG煤气热值
-    bdg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+    bfg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
 
     # LDG煤气热值
     ldg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
@@ -1081,7 +1081,7 @@ class GasPowerGenerationNeedsQuestionnaire(db.Model):
     cog_gas_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
 
     # BFG煤气热值
-    bdg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+    bfg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
 
     # LDG煤气热值
     ldg_gas_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))

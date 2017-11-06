@@ -33,7 +33,11 @@ BEGIN
 		ELSEIF TG_OP='INSERT' AND MODULEID='gasPowerGeneration' THEN
 
 			INSERT INTO gaspowergeneration_needsquestionnaire (plan_id) VALUES (NEWIDD);
-
+			INSERT INTO gaspowergeneration_boiler_of_pts (plan_id) VALUES (NEWIDD);
+			INSERT INTO gaspowergeneration_circulating_water_system (plan_id) VALUES (NEWIDD);
+			INSERT INTO gaspowergeneration_gas_air_system (plan_id) VALUES (NEWIDD);
+			INSERT INTO gaspowergeneration_smoke_resistance (plan_id) VALUES (NEWIDD);
+			INSERT INTO gaspowergeneration_wind_resistance (plan_id) VALUES (NEWIDD);
 
 			RETURN NULL;
 		END IF;

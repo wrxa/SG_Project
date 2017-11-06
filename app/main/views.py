@@ -15,6 +15,7 @@ from ..decorators import admin_required
 from coalService import ToCoalCHP
 from biomassService import ToBiomassCHP
 from ..gasPowerGeneration_models import GasPowerGenerationConstant, GasPowerGenerationNeedsQuestionnaire
+from gasPowerGeneration_Service import ToGPG
 
 
 # 显示主页
@@ -579,18 +580,42 @@ def ccppSteamTurbine():
         'page/CCPP/ccppSteamTurbine.html', menuSelect='ccppSteamTurbine')
 
 # ########################ccpp end#################################
-# ###################### 煤气发电 start ####################
 
+# ###################### 煤气发电 start ####################
+@main.route('/GPG_SaveQuestionnaire', methods=['POST'])
+@login_required
+def GPG_SaveQuestionnaire():
+    companyName = request.form.get('company_name')
+    companyLocation = request.form.get('company_location')
+    # projectApprovalEia = request.form.get('project_approval_eia')
+    plan_id = ToGPG.create_plan(companyName, companyLocation)
+    questionnaire = ToGPG.to_questionnaire(request.form, plan_id)
+    GasPowerGenerationNeedsQuestionnaire.insert_questionnaire(questionnaire)
+    session['GPGPlanId'] = plan_id
+    return jsonify({'planId': plan_id})
+
+@main.route('/selectPlan', methods=['POST'])
+@login_required
+def selectPlan():
+    planId = request.values.get('planId')
+    questionnaire = GasPowerGenerationNeedsQuestionnaire.search_questionnaire(planId)
+    questionnaireData = ToGPG.to_questionnaireJson(questionnaire)
+    session['GPGPlanId'] = planId
+    return jsonify({'questionnaire': questionnaireData})
 
 @main.route('/GPG_Questionnaire')
 @login_required
 def GPG_Questionnaire():
     GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
         "GPG_questionnaire")
+    plans = Plan.search_plan(current_user.id)
+    companys = Company.search_company()
     return render_template(
         'page/GasPowerGeneration/GPG_Questionnaire.html',
         menuSelect='GPG_Questionnaire',
-        constants=GPGConstant)
+        constants=GPGConstant,
+        plans=plans,
+        companys=companys)
 
 
 @main.route('/GPG_BoilerOfPTS')

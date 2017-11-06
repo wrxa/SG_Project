@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
-<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<script src="{{ url_for('static', filename='js/GPG/GPG_Questionnaire.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
 <!-- MAIN -->
 <div class="main">
@@ -55,7 +55,7 @@
 											<div class="col-md-5">
 												<div class="input-group">
 													<span class="input-group-addon show-success">结果</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" readonly="true"/>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" readonly="true"/>
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													{% if constant.remark != "" %}
 													<i class="fa fa-calculator"  title="参考值："  
@@ -90,7 +90,7 @@
 											<div class="col-md-5">
 												<div class="input-group">
 													<span class="input-group-addon show-success">结果</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" 
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"
 													{% if constant.name_eng in ['superheated_steam_enthalpy', 
 													'air_enthalpy', 'air_need_for_combustion', 'feedwater_enthalpy', 
 													'saturation_water_temperature','saturation_water_enthalpy', 'steam_output'] %} 

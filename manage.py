@@ -27,7 +27,7 @@ def make_shell_context():
         addCoalCHP=AddCoalCHP,
         addBiomassCHP=AddBiomassCHP,
         Permission=Permission,
-		addGPG=AddGPG)
+        addGPG=AddGPG)
 
 
 manager.add_command("shell", Shell(make_context=make_shell_context))

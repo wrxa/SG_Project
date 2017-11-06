@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
-<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<script src="{{ url_for('static', filename='js/GPG/GPG_Questionnaire.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
 <!-- MAIN -->
 <div class="main">
 	<!-- MAIN CONTENT -->
 	<div class="main-content width88">
 		<div class="container-fluid">
-			<div class="page-title">燃煤热电联产-需求调查表</div>
+			<div class="page-title">煤气发电-需求调查表</div>
 			<div class="row">
 
 				<div class="col-md-12">
 
 					<div class="panel">
-						<div class="page-title">燃煤发电需求调查表</div>
+						<div class="page-title">煤气发电需求调查表</div>
 					</div>
 				</div>
 			</div>
+
+			<form id="GPG_questionnaire">
 			<div class="row">
 				<div class="row col-md-6">
 
@@ -28,27 +30,31 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon show-primary width-size">单位名称</span>
-										<input class="form-control" type="text">
+										<input class="form-control" type="text" name="company_name">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="input-group">
-										<span class="input-group-addon show-primary width-size">   设计单位   </span>
-										<input class="form-control" type="text">
+										<span class="input-group-addon show-primary width-size">选择已有方案</span>
+										<select class="form-control" id="knownPlan">
+											{% for plan in plans %} 
+											{% for company in companys %} 
+											{% if plan.company_id==company.id and plan.module_id=='gasPowerGeneration' %}
+											<option value="{{ plan.id }}">{{ company.company_name }}</option>
+											{% endif %}
+											{% endfor %}
+											{% endfor %}
+											<option value="0" selected="selected">请选择</option>
+										</select>
 									</div>
 								</div>
 								<div class="col-md-12 margin-top-20">
 									<div class="input-group">
 										<span class="input-group-addon show-primary width-size1">項目所在地</span>
-										<input class="form-control" type="text">
+										<input class="form-control" type="text" name="company_location">
 									</div>
 								</div>
-								<div class="col-md-12 margin-top-20">
-									<div class="input-group">
-										<span class="input-group-addon show-primary">項目单位性质</span>
-										<input class="form-control" type="text">
-									</div>
-								</div>
+
 
 							</div>
 						</div>
@@ -77,7 +83,7 @@
 											<div class="col-md-6">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">数值</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -103,7 +109,7 @@
 											<div class="col-md-6">
 												<div class="input-group">
 													<span class="input-group-addon show-primary">含量</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 											</div>
@@ -148,21 +154,21 @@
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="atmosphere_temperature_h_check">
+														<input class="form-control" type="text" id="atmosphere_temperature_h" name="atmosphere_temperature_h">
 														<span class="input-group-addon show-unit">℃</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="atmosphere_temperature_a_check">
+														<input class="form-control" type="text" id="atmosphere_temperature_a" name="atmosphere_temperature_a">
 														<span class="input-group-addon show-unit">℃</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="atmosphere_temperature_l_check">
+														<input class="form-control" type="text" id="atmosphere_temperature_l" name="atmosphere_temperature_l">
 														<span class="input-group-addon show-unit">℃</span>
 													</div>	
 												</div>
@@ -177,21 +183,21 @@
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="atmosphere_pressure_h_check">
+														<input class="form-control" type="text" id="atmosphere_pressure_h" name="atmosphere_pressure_h">
 														<span class="input-group-addon show-unit">kPa</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="atmosphere_pressure_a_check">
+														<input class="form-control" type="text" id="atmosphere_pressure_a" name="atmosphere_pressure_a">
 														<span class="input-group-addon show-unit">kPa</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="atmosphere_pressure_l_check">
+														<input class="form-control" type="text" id="atmosphere_pressure_l" name="atmosphere_pressure_l">
 														<span class="input-group-addon show-unit">kPa</span>
 													</div>	
 												</div>
@@ -206,21 +212,21 @@
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="relative_humidity_h_check">
+														<input class="form-control" type="text" id="relative_humidity_h" name="relative_humidity_h">
 														<span class="input-group-addon show-unit">%</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="relative_humidity_a_check">
+														<input class="form-control" type="text" id="relative_humidity_a" name="relative_humidity_a">
 														<span class="input-group-addon show-unit">%</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="relative_humidity_l_check">
+														<input class="form-control" type="text" id="relative_humidity_l" name="relative_humidity_l">
 														<span class="input-group-addon show-unit">%</span>
 													</div>	
 												</div>
@@ -235,21 +241,21 @@
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="outside_wind_speed_h_check">
+														<input class="form-control" type="text" id="outside_wind_speed_h" name="outside_wind_speed_h">
 														<span class="input-group-addon show-unit">m/s</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="outside_wind_speed_a_check">
+														<input class="form-control" type="text" id="outside_wind_speed_a" name="outside_wind_speed_a">
 														<span class="input-group-addon show-unit">m/s</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="outside_wind_speed_l_check">
+														<input class="form-control" type="text" id="outside_wind_speed_l" name="outside_wind_speed_l">
 														<span class="input-group-addon show-unit">m/s</span>
 													</div>	
 												</div>
@@ -264,21 +270,24 @@
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="seismic_fortification_intensity_h_check">
+														<input class="form-control" type="text" 
+														id="seismic_fortification_intensity_h" name="seismic_fortification_intensity_h">
 														<span class="input-group-addon show-unit">度</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="seismic_fortification_intensity_a_check">
+														<input class="form-control" type="text" 
+														id="seismic_fortification_intensity_a" name="seismic_fortification_intensity_a">
 														<span class="input-group-addon show-unit"度</span>
 													</div>	
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
 														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="seismic_fortification_intensity_l_check">
+														<input class="form-control" type="text" 
+														id="seismic_fortification_intensity_l" name="seismic_fortification_intensity_l">
 														<span class="input-group-addon show-unit">度</span>
 													</div>	
 												</div>
@@ -314,7 +323,7 @@
 												<div class="col-md-6">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
 														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													</div>
 												</div>
@@ -344,7 +353,7 @@
 												<div class="col-md-6">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
 														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													</div>
 												</div>
@@ -373,7 +382,7 @@
 												<div class="col-md-6">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
 														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													</div>
 												</div>
@@ -398,7 +407,7 @@
 												<div class="col-md-6">
 													<div class="input-group">
 														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
 														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													</div>
 												</div>
@@ -451,11 +460,11 @@
 														<td>{{ constant.name }}</td>
 														<td>
 															<label class="radio-inline">
-																<input name="project_approval_eia" value="yes" type="radio">
+																<input id="project_approval_eia_yes" name="project_approval_eia" value="true" type="radio">
 																<span><i></i>有</span>
 															</label>
 															<label class="radio-inline">
-																<input name="project_approval_eia" value="no" type="radio" checked>
+																<input id="project_approval_eia_no" name="project_approval_eia" value="false" type="radio" checked>
 																<span><i></i>无</span>
 															</label>
 														</td>
@@ -464,7 +473,7 @@
 													{% endfor %}
 												</tbody>
 											</table>
-										</div>																										
+										</div>
 									</div>
 		
 								</div>
@@ -476,9 +485,9 @@
 								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存调查表信息</span></div>
 								<div class="row text-center">
 									<br><br>
-									<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+									<button type="button" class="btn btn-success" id="GPG_SaveQuestionnaire"><i class="fa fa-check-circle"></i>保存</button>
 
-									<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+									<!--<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>-->
 								</div>
 								<br> <br>
 							</div>
@@ -487,6 +496,7 @@
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 		<!-- END MAIN CONTENT -->
 	</div>

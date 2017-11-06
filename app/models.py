@@ -148,7 +148,7 @@ class Module:
     biomassCHP = "biomassCHP"
     # CCPP
     CCPP = "CCPP"
-    # 煤气发电
+    # 煤气发电 GasPowerGeneration
     gasPowerGeneration = "gasPowerGeneration"
 
 
