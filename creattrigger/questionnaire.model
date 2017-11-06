@@ -1,0 +1,102 @@
+class Questionnaire(db.Model):
+    # 表名
+    __tablename__ = 'questionnaire'
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, index=True)
+    # 方案ID(外键)
+    plan_id = db.Column(db.Integer,db.ForeignKey('plan.id'))
+    # 燃料:设计值
+    s_fuel_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 燃料:校核值
+    s_fuel_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 甲烷:设计值
+    methane_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 甲烷:校核值
+    methane_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 乙烷:设计值
+    ethane_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 乙烷:校核值
+    ethane_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 乙烯:设计值
+    ethylene_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 乙烯:校核值
+    ethylene_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 丙烯:设计值
+    propylene_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 丙烯:校核值
+    propylene_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 丙烷:设计值
+    propane_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 丙烷:校核值
+    propane_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 丁烯:设计值
+    butene_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 丁烯:校核值
+    butene_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # i-异丁烷:设计值
+    i_isobutane_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # i-异丁烷:校核值
+    i_isobutane_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # n-异丁烷:设计值
+    n_isobutane_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # n-异丁烷:校核值
+    n_isobutane_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 戊烷:设计值
+    pentane_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 戊烷:校核值
+    pentane_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 碳6:设计值
+    carbon6_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 碳6:校核值
+    carbon6_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 氢气:设计值
+    hydrogen_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 氢气:校核值
+    hydrogen_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 氦气:设计值
+    helium_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 氦气:校核值
+    helium_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 氮气:设计值
+    nitrogen_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 氮气:校核值
+    nitrogen_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 一氧化碳:设计值
+    carbon_monoxide_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 一氧化碳:校核值
+    carbon_monoxide_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 二氧化碳:设计值
+    carbon_dioxide_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 二氧化碳:校核值
+    carbon_dioxide_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 硫化氢:设计值
+    hydrogen_sulfide_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 硫化氢:校核值
+    hydrogen_sulfide_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 氧气:设计值
+    oxygen_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 氧气:校核值
+    oxygen_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 水:设计值
+    water_design = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 水:校核值
+    water_check = db.Column(db.NUMERIC(precision=15, scale=5))
+
