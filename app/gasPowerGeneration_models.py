@@ -62,82 +62,6 @@ class GasPowerGenerationConstant(db.Model):
         return '<gasPowerGenerationConstant %r>' % self.module_name
 
 
-'''
-# 燃煤热电联产产煤成分数据表
-class CoalCHPComponent(db.Model):
-    # 表名
-    __tablename__ = 'coalCHP_coalComponent'
-    # 煤种id， 自动生成
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # 煤种名称
-    name = db.Column(db.String(50))
-    # 收到基碳含量
-    carbon = db.Column(db.String(50))
-    # 收到基氢含量
-    hydrogen = db.Column(db.String(50))
-    # 收到基氧含量
-    oxygen = db.Column(db.String(50))
-    # 收到基氮含量
-    nitrogen = db.Column(db.String(50))
-    # 收到基硫含量
-    sulfur = db.Column(db.String(50))
-    # 收到基水份含量
-    water = db.Column(db.String(50))
-    # 收到基灰份
-    grey = db.Column(db.String(50))
-    # 干燥无灰基挥发分
-    daf = db.Column(db.String(50))
-    # 收到可磨系数
-    grindability = db.Column(db.String(50))
-    # 收到基低位发热量
-    low = db.Column(db.String(50))
-
-    @staticmethod
-    def create_coalCHPComponent(name, carbon, hydrogen, oxygen, nitrogen,
-                                sulfur, water, grey, daf, grindability, low):
-        coalCHPComponent = CoalCHPComponent()
-        coalCHPComponent.name = name
-        coalCHPComponent.carbon = carbon
-        coalCHPComponent.hydrogen = hydrogen
-        coalCHPComponent.oxygen = oxygen
-        coalCHPComponent.nitrogen = nitrogen
-        coalCHPComponent.sulfur = sulfur
-        coalCHPComponent.water = water
-        coalCHPComponent.grey = grey
-        coalCHPComponent.daf = daf
-        coalCHPComponent.grindability = grindability
-        coalCHPComponent.low = low
-
-        return coalCHPComponent
-
-    @staticmethod
-    def insert_coalCHPComponent(coalCHPComponent):
-        try:
-            db.session.add(coalCHPComponent)
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            print("Error %s" % e)
-            raise e
-        finally:
-            print("Insert/Update coalCHPComponent<id=%s>" %
-                  (coalCHPComponent.id))
-
-    @staticmethod
-    def search_coalCHPComponent():
-        result = CoalCHPComponent.query.all()
-        return result
-
-    # 根据id查找实体
-    @staticmethod
-    def search_coalCHPSort(id):
-        result = CoalCHPComponent.query.filter_by(id=id).one_or_none()
-        return result
-
-    def __repr__(self):
-        return '<CoalCHPComponent %r>' % self.name
-'''
-
 # 煤气发电 循环水系统 circulating_water_system
 class GPGCirculatingWaterSystem(db.Model):
     # 表名
@@ -968,6 +892,28 @@ class GPGFlueGasAirSystem(db.Model):
     # 烟囱总阻力
     chimney_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
 
+    def __init__(self, **kwargs):
+        super(GPGFlueGasAirSystem, self).__init__(**kwargs)
+
+    @staticmethod
+    def insert_BoilerOfPTS(gaspowergeneration_gas_air_system):
+        try:
+            db.session.add(gaspowergeneration_gas_air_system)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_gas_air_system"
+                  "<id=%s> in database" % (gaspowergeneration_gas_air_system.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_FlueGasAirSystem(planId):
+        result = GPGFlueGasAirSystem.query.filter_by(plan_id=planId).one_or_none()
+        return result
+
 
 # 煤气发电 原则性热力系统锅炉部分 (boiler of Principle Thermodynamic System)
 class GPGBoilerOfPTS(db.Model):
@@ -1039,6 +985,29 @@ class GPGBoilerOfPTS(db.Model):
 
     # 产汽量
     steam_output = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    def __init__(self, **kwargs):
+        super(GPGBoilerOfPTS, self).__init__(**kwargs)
+
+    @staticmethod
+    def insert_BoilerOfPTS(gaspowergeneration_boiler_of_pts):
+        try:
+            db.session.add(gaspowergeneration_boiler_of_pts)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_boiler_of_pts"
+                  "<id=%s> in database" % (gaspowergeneration_boiler_of_pts.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_BoilerOfPTS(planId):
+        result = GPGBoilerOfPTS.query.filter_by(plan_id=planId).one_or_none()
+        return result
+
 
 
 
@@ -1222,8 +1191,8 @@ class GasPowerGenerationNeedsQuestionnaire(db.Model):
             print("Insert/Update gasPowerGenerationNeedsQuestionnaire"
                   "<id=%s> in database" % (gasPowerGenerationNeedsQuestionnaire.id))
 
-    # 根据id查找实体
+    # 根据Plan id查找实体
     @staticmethod
-    def search_questionnaire(id):
-        result = GasPowerGenerationNeedsQuestionnaire.query.filter_by(id=id).one_or_none()
+    def search_questionnaire(planId):
+        result = GasPowerGenerationNeedsQuestionnaire.query.filter_by(plan_id=planId).one_or_none()
         return result

@@ -55,7 +55,24 @@
 											<div class="col-md-5">
 												<div class="input-group">
 													<span class="input-group-addon show-success">结果</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" readonly="true"/>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" 
+													{% if constant.name_eng == 'surplus_gas_bfg' %}													
+													value="{{ gpg_BoilerOfPTS.surplus_gas_bfg }}" 
+													{% elif constant.name_eng == 'surplus_gas_ldg' %}													
+													value="{{ gpg_BoilerOfPTS.surplus_gas_ldg }}"  
+													{% elif constant.name_eng == 'surplus_gas_cog' %}													
+													value="{{ gpg_BoilerOfPTS.surplus_gas_cog }}" 
+
+													{% elif constant.name_eng == 'bfg_gas_calorific_value' %}													
+													value="{{ gpg_BoilerOfPTS.bfg_gas_calorific_value }}" 
+													{% elif constant.name_eng == 'ldg_gas_calorific_value' %}													
+													value="{{ gpg_BoilerOfPTS.ldg_gas_calorific_value }}"  
+													{% elif constant.name_eng == 'cog_gas_calorific_value' %}													
+													value="{{ gpg_BoilerOfPTS.cog_gas_calorific_value }}" 
+													{% endif %}
+													readonly="true"/>
+														
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													{% if constant.remark != "" %}
 													<i class="fa fa-calculator"  title="参考值："  

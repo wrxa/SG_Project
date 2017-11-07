@@ -11,37 +11,21 @@ from util.iapws_if97 import seuif97
 # G45=1000*P_T(G44)
 
 
-# G22=H_PT(G20,G21)
+# 表内计算G22=H_PT(G20,G21)
 class FSteamEnthalpy(FieldCalculation):
     def notify(self, val):
         # 判断f_steam_pressure是否有变化
         result = val['dbresult']
-        newf_steam_pressure = ''
-        newf_steam_temperature = ''
-        oldf_steam_pressure = ''
-        oldf_steam_temperature = ''
         # 得到字段：G20:f_steam_pressure、G21:f_steam_temperature
-        if val['f_steam_pressure'] != '' and val['f_steam_temperature'] != '':
-            newf_steam_pressure = float(val['f_steam_pressure'])
-            newf_steam_temperature = float(val['f_steam_temperature'])
-        if val['flg'] == 'design' and result.f_steam_pressure_design \
-                is not None and result.f_steam_temperature_design is not None:
-            oldf_steam_pressure = float(result.f_steam_pressure_design)
-            oldf_steam_temperature = float(result.f_steam_temperature_design)
-            
-        elif val['flg'] == 'check' and result.f_steam_pressure_check \
-                is not None and result.f_steam_temperature_check is not None:
-            oldf_steam_pressure = float(result.f_steam_pressure_check)
-            oldf_steam_temperature = float(result.f_steam_temperature_check)
-     
-        if oldf_steam_pressure != '' and newf_steam_pressure != '' and \
-           abs(oldf_steam_pressure - newf_steam_pressure) > 0.00001 \
-           or \
-           oldf_steam_temperature != '' and newf_steam_temperature != '' and \
-           abs(oldf_steam_temperature - newf_steam_temperature) > 0.00001:
+        if val['f_steam_pressure'] != '' and \
+            val['f_steam_temperature'] != '' and \
+            val['f_steam_pressure'] is not None and \
+                val['f_steam_temperature'] is not None:
             # G22=H_PT(G20,G21) 并更新
-            f_steam_enthalpy = \
-                seuif97.pt2h(newf_steam_pressure, newf_steam_temperature)
+            f_steam_enthalpy = seuif97.pt2h(
+                float(val['f_steam_pressure']),
+                float(val['f_steam_temperature'])
+            )
             if f_steam_enthalpy > 0:
                 if val['flg'] == 'design':
                     result.f_steam_enthalpy_design = \
@@ -53,29 +37,16 @@ class FSteamEnthalpy(FieldCalculation):
         print(result)
 
 
-# G24=HL_P(G20*1.1)
+#  表内计算G24=HL_P(G20*1.1)
 class FSaturatedWaterEnthalpy(FieldCalculation):
     def notify(self, val):
         result = val['dbresult']
-        newf_steam_pressure = ''
-        oldf_steam_pressure = ''
         # 得到字段：f_steam_pressure
-        if val['f_steam_pressure'] != '':
-            newf_steam_pressure = float(val['f_steam_pressure'])
-        if val['flg'] == 'design' and \
-                result.f_steam_pressure_design is not None:
-            oldf_steam_pressure = float(result.f_steam_pressure_design)
-        elif val['flg'] == 'check' and \
-                result.f_steam_pressure_design is not None:
-            oldf_steam_pressure = float(result.f_steam_pressure_check)
-        # 判断f_steam_pressure是否有变化
-        if oldf_steam_pressure != '' and \
-           newf_steam_pressure != '' and \
-           abs(oldf_steam_pressure - newf_steam_pressure) \
-           > 0.00001:
+        if val['f_steam_pressure'] != '' and \
+                val['f_steam_pressure'] is not None:
             # G24=HL_P(G20*1.1)G24:f_saturated_water_enthalpy
             f_saturated_water_enthalpy = \
-                seuif97.h_p(newf_steam_pressure)
+                seuif97.h_p(float(val['f_steam_pressure']))
             if f_saturated_water_enthalpy >= 0:
                 if val['flg'] == 'design':
                     result.f_saturated_water_enthalpy_design = \
@@ -88,38 +59,21 @@ class FSaturatedWaterEnthalpy(FieldCalculation):
         print(result)
 
 
-# G26=H_PT(G20*1.1,G25)G26:f_water_enthalpy
+# 表内计算G26=H_PT(G20*1.1,G25)G26:f_water_enthalpy
 class FWaterEnthalpy(FieldCalculation):
     def notify(self, val):
         # 判断f_steam_pressure是否有变化
         result = val['dbresult']
         # 得到字段：G20:f_steam_pressure、G25:f_water_temperature
-        newf_steam_pressure = ''
-        newf_water_temperature = ''
-        oldf_steam_pressure = ''
-        oldf_water_temperature = ''
-        if val['f_steam_pressure'] != '' and val['f_water_temperature'] != '':
-            newf_steam_pressure = float(val['f_steam_pressure'])
-            newf_water_temperature = float(val['f_water_temperature'])
-        if val['flg'] == 'design' and result.f_steam_pressure_design is not None and result.f_water_temperature_design is not None:
-            oldf_steam_pressure = float(result.f_steam_pressure_design)
-            oldf_water_temperature = float(result.f_water_temperature_design)
-        elif val['flg'] == 'check' and result.f_steam_pressure_check is not None and result.f_water_temperature_check is not None:
-            oldf_steam_pressure = float(result.f_steam_pressure_check)
-            oldf_water_temperature = float(result.f_water_temperature_check)
-       
-        if oldf_steam_pressure != '' and \
-           newf_steam_pressure != '' and \
-           abs(oldf_steam_pressure - newf_steam_pressure) \
-           > 0.00001 \
-           or \
-           oldf_water_temperature != '' and \
-           newf_water_temperature != '' and \
-           abs(oldf_water_temperature - newf_water_temperature) \
-           > 0.00001:
+        if val['f_steam_pressure'] != '' and \
+            val['f_water_temperature'] != '' and \
+            val['f_steam_pressure'] is not None and \
+                val['f_water_temperature'] is not None:
             # G26=H_PT(G20*1.1,G25)G26:f_water_enthalpy
-            f_water_enthalpy = \
-                seuif97.pt2h(newf_steam_pressure*1.1, newf_water_temperature)
+            f_water_enthalpy = seuif97.pt2h(
+                float(val['f_steam_pressure'])*1.1,
+                float(val['f_water_temperature'])
+            )
             if f_water_enthalpy > 0:
                 if val['flg'] == 'design':
                     result.f_water_enthalpy_design = \
@@ -131,29 +85,18 @@ class FWaterEnthalpy(FieldCalculation):
         print(result)
 
 
-# G45=1000*P_T(G44)G44:a_temperature
+# G45=1000*P_T(G44)
+# G44:a_temperature
 # G45:a_saturation_pressure
+# 表内
 class ASaturationPressure(FieldCalculation):
     def notify(self, val):
         result = val['dbresult']
-        newa_temperature = ''
-        olda_temperature = ''
         # 得到字段：a_temperature
-        if val['a_temperature'] != '':
-            newa_temperature = float(val['a_temperature'])
-        if val['flg'] == 'design' and result.a_temperature_design is not None:
-            olda_temperature = float(result.a_temperature_design)
-        elif val['flg'] == 'check' and result.a_temperature_check is not None:
-            olda_temperature = float(result.a_temperature_check)
-        
-        # 判断a_temperature是否有变化
-        if olda_temperature != '' and \
-           newa_temperature != '' and \
-           abs(olda_temperature - newa_temperature) \
-           > 0.00001:
+        if val['a_temperature'] != '' and val['a_temperature'] is not None:
             # G45=1000*P_T(G44)
             a_saturation_pressure = \
-                seuif97.psat_t(newa_temperature)*100
+                seuif97.psat_t(float(val['a_temperature']))*100
             if a_saturation_pressure > 0:
                 if val['flg'] == 'design':
                     result.a_saturation_pressure_design = \
@@ -168,32 +111,32 @@ class ASaturationPressure(FieldCalculation):
 # G45=1000*P_T(G44)
 # G44:a_temperature
 # G45:a_saturation_pressure
+# 表间
+# 因为字段：a_temperature是从需求调查表中同步过来，
+# 当需求调查表该字段修改后，触发器不会因为该字段的修改而改变a_saturation_pressure的值，故需要自行添加该流程：
+# 每当需求表提交更新成功后，接着执行该程序段更新字段a_saturation_pressure
+# 故：第一步，分析被计算字段的值是因为哪些根本字段而影响的是，第二步，分析：根本字段是自定义输入，还是读取需求调查表得到而来，
+# 第三步：如果是自定义仅仅需要表内计算即可，如果是同步则，如果需求要求可改变则需要写两段代码（表间，表内），否则仅仅需要如上代码
 class ASaturationPressureAfter(FieldCalculation):
     def notify(self, val):
         result = val
-        a_temperature_design = ''
-        a_temperature_check = ''
         # 得到字段：a_temperature
         if result.a_temperature_design is not None:
-            a_temperature_design = float(result.a_temperature_design)
-        if result.a_temperature_check is not None:
-            a_temperature_check = float(result.a_temperature_check)
-        
-        if a_temperature_design != '':
             # G45=1000*P_T(G44)
             a_saturation_pressure = \
-                seuif97.psat_t(a_temperature_design)*100
+                seuif97.psat_t(float(result.a_temperature_design))*100
             if a_saturation_pressure >= 0:
                 result.a_saturation_pressure_design = \
                     a_saturation_pressure
 
-        if a_temperature_check != '':
+        if result.a_temperature_check is not None:
             # G45=1000*P_T(G44)
             a_saturation_pressure = \
-                seuif97.psat_t(a_temperature_check)*100
+                seuif97.psat_t(float(result.a_temperature_check))*100
             if a_saturation_pressure >= 0:
                 result.a_saturation_pressure_check = \
                     a_saturation_pressure
+
         # 没有则不做任何操作!
         print(result)
 

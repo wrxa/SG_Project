@@ -14,7 +14,8 @@ from ..models import User, CoalCHPComponent, CoalCHPConstant,\
 from ..decorators import admin_required
 from coalService import ToCoalCHP
 from biomassService import ToBiomassCHP
-from ..gasPowerGeneration_models import GasPowerGenerationConstant, GasPowerGenerationNeedsQuestionnaire
+from ..gasPowerGeneration_models import GasPowerGenerationConstant, \
+    GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem
 from gasPowerGeneration_Service import ToGPG
 
 
@@ -598,7 +599,8 @@ def GPG_SaveQuestionnaire():
 @login_required
 def selectPlan():
     planId = request.values.get('planId')
-    questionnaire = GasPowerGenerationNeedsQuestionnaire.search_questionnaire(planId)
+    questionnaire = GasPowerGenerationNeedsQuestionnaire.search_questionnaire(
+        planId)
     questionnaireData = ToGPG.to_questionnaireJson(questionnaire)
     session['GPGPlanId'] = planId
     return jsonify({'questionnaire': questionnaireData})
@@ -623,10 +625,14 @@ def GPG_Questionnaire():
 def GPG_BoilerOfPTS():
     GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
         "GPG_BoilerOfPTS")
+
+    gpg_BoilerOfPTS = GPGBoilerOfPTS.search_BoilerOfPTS(session.get('GPGPlanId'))
+
     return render_template(
         'page/GasPowerGeneration/GPG_Boiler_of_PTS.html',
         menuSelect='GPG_BoilerOfPTS',
-        constants=GPGConstant)
+        constants=GPGConstant,
+        gpg_BoilerOfPTS=gpg_BoilerOfPTS)
 
 
 @main.route('/GPG_GasAirSystem')
@@ -634,10 +640,14 @@ def GPG_BoilerOfPTS():
 def GPG_GasAirSystem():
     GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
         "GPG_GasAirSystem")
+
+    gpg_FlueGasAirSystem = GPGFlueGasAirSystem.search_FlueGasAirSystem(session.get('GPGPlanId'))
+
     return render_template(
         'page/GasPowerGeneration/GPG_Gas_Air_System.html',
         menuSelect='GPG_GasAirSystem',
-        constants=GPGConstant)
+        constants=GPGConstant,
+        gpg_FlueGasAirSystem=gpg_FlueGasAirSystem)
 
 
 @main.route('/GPG_SmokeResistance')
