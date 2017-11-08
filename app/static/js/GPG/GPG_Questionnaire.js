@@ -80,7 +80,7 @@ function GPG_SaveQuestionnaire() {
             alert("Connection error");
         },
         success: function (data) {
-            unlockMeunGPG();
+            unlockMenuGPG();
             alert("保存成功！！！");
         }
     });
@@ -102,7 +102,7 @@ function updatePlanData() {
             },
             success: function (data) {
                 assignmentForm(data.questionnaire);
-                unlockMeunGPG();
+                unlockMenuGPG();
             }
         });
     }else{

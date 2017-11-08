@@ -126,7 +126,7 @@ function unlockMeunBiomassCHP() {
 }
 
 // 解锁子菜单
-function unlockMeunGPG() {
+function unlockMenuGPG() {
     $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').removeClass('unselect');
     $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').removeAttr('onclick');
 }

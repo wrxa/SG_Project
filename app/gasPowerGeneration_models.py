@@ -680,39 +680,39 @@ class GPGFlueGasAirSystem(db.Model):
 
     '''引风机'''
     # 烟风温度
-    Induced_smoke_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_smoke_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
     # 全压
-    Induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
     # 当地大气压
-    Induced_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
     # 烟风流量（工况）
-    Induced_condition_smoke_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_condition_smoke_flux = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机温度
-    Induced_fan_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
     # 烟气密度
-    Induced_smoke_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_smoke_density = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机全压
-    Induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机选用全压
-    Induced_fan_selected_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_selected_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机选用流量
-    Induced_fan_selected_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_selected_flux = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机效率
-    Induced_fan_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
     # 机械传动效率
-    Induced_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
     # 电动机效率
-    Induced_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风机轴功率
-    Induced_fan_shaft_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_fan_shaft_power = db.Column(db.NUMERIC(precision=15, scale=5))
     # 电机安全裕量
-    Induced_motor_safe_margin = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_motor_safe_margin = db.Column(db.NUMERIC(precision=15, scale=5))
     # 电机功率
-    Induced_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选用规格功率
-    Induced_specification_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_specification_power = db.Column(db.NUMERIC(precision=15, scale=5))
     # 选用规格流量
-    Induced_specification_flux = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_specification_flux = db.Column(db.NUMERIC(precision=15, scale=5))
 
     '''煤气总管道计算'''
     # 介质流量
@@ -896,7 +896,7 @@ class GPGFlueGasAirSystem(db.Model):
         super(GPGFlueGasAirSystem, self).__init__(**kwargs)
 
     @staticmethod
-    def insert_BoilerOfPTS(gaspowergeneration_gas_air_system):
+    def insert_FlueGasAirSystem(gaspowergeneration_gas_air_system):
         try:
             db.session.add(gaspowergeneration_gas_air_system)
             db.session.commit()

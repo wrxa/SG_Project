@@ -17,7 +17,9 @@ from biomassService import ToBiomassCHP
 from ..gasPowerGeneration_models import GasPowerGenerationConstant, \
     GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem
 from gasPowerGeneration_Service import ToGPG
-
+from app.observer_calculate.execution_strategy import GPG_Boiler_superheated_steam_enthalpy_EXEC, \
+    GPG_Boiler_feedwater_enthalpy_EXEC, GPG_Boiler_air_enthalpy_EXEC, \
+    GPG_Boiler_saturation_water_temperature_EXEC, GPG_Boiler_saturation_water_enthalpy_EXEC
 
 # 显示主页
 # 必要条件：用户需先登录
@@ -594,6 +596,54 @@ def GPG_SaveQuestionnaire():
     GasPowerGenerationNeedsQuestionnaire.insert_questionnaire(questionnaire)
     session['GPGPlanId'] = plan_id
     return jsonify({'planId': plan_id})
+
+@main.route('/GPG_SaveBoilerOfPTS', methods=['POST'])
+@login_required
+def GPG_SaveBoilerOfPTS():
+    plan_id = session.get('GPGPlanId')
+    boiler = ToGPG.to_BoilerOfPTS(request.form, plan_id)
+
+    GPG_Boiler_superheated_steam_enthalpy_EXEC().specialCalculation(boiler, request.form)
+    GPG_Boiler_feedwater_enthalpy_EXEC().specialCalculation(boiler, request.form)
+    GPG_Boiler_saturation_water_temperature_EXEC().specialCalculation(boiler, request.form)
+    GPG_Boiler_saturation_water_enthalpy_EXEC().specialCalculation(boiler, request.form)
+
+    '''以下公式有问题'''
+    #GPG_Boiler_air_enthalpy_EXEC().specialCalculation(boiler, request.form)
+
+    GPGBoilerOfPTS.insert_BoilerOfPTS(boiler)
+    session['GPGPlanId'] = plan_id
+    datas = {}
+    datas['flag'] = "success"
+    return jsonify({'result': datas})
+
+@main.route('/GPG_SaveGasAirData', methods=['POST'])
+@login_required
+def GPG_SaveGasAirData():
+    plan_id = session.get('GPGPlanId')
+    GasAirData = ToGPG.to_GasAirData(request.form, plan_id)
+
+    GPGFlueGasAirSystem.insert_FlueGasAirSystem(GasAirData)
+    session['GPGPlanId'] = plan_id
+    datas = {}
+    datas['flag'] = "success"
+    return jsonify({'result': datas})
+
+@main.route('/getBoilerByPlanId', methods=['POST'])
+@login_required
+def getBoilerByPlanId():
+    planId = request.values.get('planId')
+    gpg_BoilerOfPTS = GPGBoilerOfPTS.search_BoilerOfPTS(planId)
+    BoilerJson = ToGPG.to_BoilerJson(gpg_BoilerOfPTS)
+    return jsonify({'BoilerJson': BoilerJson})
+
+@main.route('/getGasAirDataByPlanId', methods=['POST'])
+@login_required
+def getGasAirDataByPlanId():
+    planId = request.values.get('planId')
+    gpg_GasAirData = GPGFlueGasAirSystem.search_FlueGasAirSystem(planId)
+    GasAirJson = ToGPG.to_GasAirJson(gpg_GasAirData)
+    return jsonify({'GasAirJson': GasAirJson})
 
 @main.route('/selectPlan', methods=['POST'])
 @login_required

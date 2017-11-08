@@ -198,129 +198,129 @@ BEGIN
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_local_atmosphere:当地大气压,的计算15-----------------------------------
+----------------------实现字段induced_local_atmosphere:当地大气压,的计算15-----------------------------------
   IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_local_atmosphere=NEW.s2c_local_atmosphere_air
+     induced_local_atmosphere=NEW.s2c_local_atmosphere_air
      where plan_id=NEW.plan_id;
 
   ELSIF (OLD.s2c_local_atmosphere_air ISNULL) AND NEW.s2c_local_atmosphere_air NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_local_atmosphere=NEW.s2c_local_atmosphere_air
+     induced_local_atmosphere=NEW.s2c_local_atmosphere_air
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_condition_smoke_flux:烟风流量（工况）,的计算16-----------------------------------
+----------------------实现字段induced_condition_smoke_flux:烟风流量（工况）,的计算16-----------------------------------
   IF OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_condition_smoke_flux=(NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273)))
+     induced_condition_smoke_flux=(NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273)))
      where plan_id=NEW.plan_id;
 
   ELSIF (OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL) AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_condition_smoke_flux=(NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273)))
+     induced_condition_smoke_flux=(NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273)))
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_fan_total_pressure:风机全压,的计算17-----------------------------------
-  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.Induced_smoke_temperature != NEW.Induced_smoke_temperature OR OLD.Induced_fan_total_pressure != NEW.Induced_fan_total_pressure OR OLD.Induced_fan_temperature != NEW.Induced_fan_temperature OR OLD.Induced_smoke_density != NEW.Induced_smoke_density THEN
+----------------------实现字段induced_fan_total_pressure:风机全压,的计算17-----------------------------------
+  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.induced_smoke_temperature != NEW.induced_smoke_temperature OR OLD.induced_fan_total_pressure != NEW.induced_fan_total_pressure OR OLD.induced_fan_temperature != NEW.induced_fan_temperature OR OLD.induced_smoke_density != NEW.induced_smoke_density THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_fan_total_pressure=NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density
+     induced_fan_total_pressure=NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density
      where plan_id=NEW.plan_id;
 
-  ELSIF (OLD.Induced_smoke_density ISNULL OR OLD.Induced_fan_temperature ISNULL OR OLD.Induced_fan_total_pressure ISNULL OR OLD.Induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.Induced_smoke_density NOTNULL AND NEW.Induced_fan_temperature NOTNULL AND NEW.Induced_fan_total_pressure NOTNULL AND NEW.Induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
+  ELSIF (OLD.induced_smoke_density ISNULL OR OLD.induced_fan_temperature ISNULL OR OLD.induced_fan_total_pressure ISNULL OR OLD.induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.induced_smoke_density NOTNULL AND NEW.induced_fan_temperature NOTNULL AND NEW.induced_fan_total_pressure NOTNULL AND NEW.induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_fan_total_pressure=NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density
-     where plan_id=NEW.plan_id;
-
-  END IF;
-----------------------实现字段Induced_fan_selected_total_pressure:风机选用全压,的计算18-----------------------------------
-  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.Induced_smoke_temperature != NEW.Induced_smoke_temperature OR OLD.Induced_fan_total_pressure != NEW.Induced_fan_total_pressure OR OLD.Induced_fan_temperature != NEW.Induced_fan_temperature OR OLD.Induced_smoke_density != NEW.Induced_smoke_density THEN
-     update gaspowergeneration_gas_air_system set 
-
-     Induced_fan_selected_total_pressure=(NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15
-     where plan_id=NEW.plan_id;
-
-  ELSIF (OLD.Induced_smoke_density ISNULL OR OLD.Induced_fan_temperature ISNULL OR OLD.Induced_fan_total_pressure ISNULL OR OLD.Induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.Induced_smoke_density NOTNULL AND NEW.Induced_fan_temperature NOTNULL AND NEW.Induced_fan_total_pressure NOTNULL AND NEW.Induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
-     update gaspowergeneration_gas_air_system set 
-
-     Induced_fan_selected_total_pressure=(NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15
+     induced_fan_total_pressure=NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_fan_selected_flux:风机选用流量,的计算19-----------------------------------
+----------------------实现字段induced_fan_selected_total_pressure:风机选用全压,的计算18-----------------------------------
+  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.induced_smoke_temperature != NEW.induced_smoke_temperature OR OLD.induced_fan_total_pressure != NEW.induced_fan_total_pressure OR OLD.induced_fan_temperature != NEW.induced_fan_temperature OR OLD.induced_smoke_density != NEW.induced_smoke_density THEN
+     update gaspowergeneration_gas_air_system set 
+
+     induced_fan_selected_total_pressure=(NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15
+     where plan_id=NEW.plan_id;
+
+  ELSIF (OLD.induced_smoke_density ISNULL OR OLD.induced_fan_temperature ISNULL OR OLD.induced_fan_total_pressure ISNULL OR OLD.induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.induced_smoke_density NOTNULL AND NEW.induced_fan_temperature NOTNULL AND NEW.induced_fan_total_pressure NOTNULL AND NEW.induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
+     update gaspowergeneration_gas_air_system set 
+
+     induced_fan_selected_total_pressure=(NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15
+     where plan_id=NEW.plan_id;
+
+  END IF;
+----------------------实现字段induced_fan_selected_flux:风机选用流量,的计算19-----------------------------------
   IF OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_fan_selected_flux=((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1
+     induced_fan_selected_flux=((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1
      where plan_id=NEW.plan_id;
 
   ELSIF (OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL) AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_fan_selected_flux=((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1
+     induced_fan_selected_flux=((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_fan_shaft_power:风机轴功率,的计算20-----------------------------------
-  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke OR OLD.Induced_smoke_temperature != NEW.Induced_smoke_temperature OR OLD.Induced_fan_total_pressure != NEW.Induced_fan_total_pressure OR OLD.Induced_fan_temperature != NEW.Induced_fan_temperature OR OLD.Induced_smoke_density != NEW.Induced_smoke_density OR OLD.Induced_fan_efficiency != NEW.Induced_fan_efficiency OR OLD.Induced_transmission_efficiency != NEW.Induced_transmission_efficiency THEN
+----------------------实现字段induced_fan_shaft_power:风机轴功率,的计算20-----------------------------------
+  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke OR OLD.induced_smoke_temperature != NEW.induced_smoke_temperature OR OLD.induced_fan_total_pressure != NEW.induced_fan_total_pressure OR OLD.induced_fan_temperature != NEW.induced_fan_temperature OR OLD.induced_smoke_density != NEW.induced_smoke_density OR OLD.induced_fan_efficiency != NEW.induced_fan_efficiency OR OLD.induced_transmission_efficiency != NEW.induced_transmission_efficiency THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_fan_shaft_power=((NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.Induced_fan_efficiency/NEW.Induced_transmission_efficiency/3600/102/9.81
+     induced_fan_shaft_power=((NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.induced_fan_efficiency/NEW.induced_transmission_efficiency/3600/102/9.81
      where plan_id=NEW.plan_id;
 
-  ELSIF (OLD.Induced_transmission_efficiency ISNULL OR OLD.Induced_fan_efficiency ISNULL OR OLD.Induced_smoke_density ISNULL OR OLD.Induced_fan_temperature ISNULL OR OLD.Induced_fan_total_pressure ISNULL OR OLD.Induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.Induced_transmission_efficiency NOTNULL AND NEW.Induced_fan_efficiency NOTNULL AND NEW.Induced_smoke_density NOTNULL AND NEW.Induced_fan_temperature NOTNULL AND NEW.Induced_fan_total_pressure NOTNULL AND NEW.Induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
+  ELSIF (OLD.induced_transmission_efficiency ISNULL OR OLD.induced_fan_efficiency ISNULL OR OLD.induced_smoke_density ISNULL OR OLD.induced_fan_temperature ISNULL OR OLD.induced_fan_total_pressure ISNULL OR OLD.induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.induced_transmission_efficiency NOTNULL AND NEW.induced_fan_efficiency NOTNULL AND NEW.induced_smoke_density NOTNULL AND NEW.induced_fan_temperature NOTNULL AND NEW.induced_fan_total_pressure NOTNULL AND NEW.induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_fan_shaft_power=((NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.Induced_fan_efficiency/NEW.Induced_transmission_efficiency/3600/102/9.81
-     where plan_id=NEW.plan_id;
-
-  END IF;
-----------------------实现字段Induced_motor_power:电机功率,的计算21-----------------------------------
-  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke OR OLD.Induced_smoke_temperature != NEW.Induced_smoke_temperature OR OLD.Induced_fan_total_pressure != NEW.Induced_fan_total_pressure OR OLD.Induced_fan_temperature != NEW.Induced_fan_temperature OR OLD.Induced_smoke_density != NEW.Induced_smoke_density OR OLD.Induced_fan_efficiency != NEW.Induced_fan_efficiency OR OLD.Induced_transmission_efficiency != NEW.Induced_transmission_efficiency OR OLD.Induced_motor_efficiency != NEW.Induced_motor_efficiency OR OLD.Induced_motor_safe_margin != NEW.Induced_motor_safe_margin THEN
-     update gaspowergeneration_gas_air_system set 
-
-     Induced_motor_power=NEW.Induced_motor_safe_margin*(((NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.Induced_fan_efficiency/NEW.Induced_transmission_efficiency/3600/102/9.81)/NEW.Induced_motor_efficiency
-     where plan_id=NEW.plan_id;
-
-  ELSIF (OLD.Induced_motor_safe_margin ISNULL OR OLD.Induced_motor_efficiency ISNULL OR OLD.Induced_transmission_efficiency ISNULL OR OLD.Induced_fan_efficiency ISNULL OR OLD.Induced_smoke_density ISNULL OR OLD.Induced_fan_temperature ISNULL OR OLD.Induced_fan_total_pressure ISNULL OR OLD.Induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.Induced_motor_safe_margin NOTNULL AND NEW.Induced_motor_efficiency NOTNULL AND NEW.Induced_transmission_efficiency NOTNULL AND NEW.Induced_fan_efficiency NOTNULL AND NEW.Induced_smoke_density NOTNULL AND NEW.Induced_fan_temperature NOTNULL AND NEW.Induced_fan_total_pressure NOTNULL AND NEW.Induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
-     update gaspowergeneration_gas_air_system set 
-
-     Induced_motor_power=NEW.Induced_motor_safe_margin*(((NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.Induced_fan_efficiency/NEW.Induced_transmission_efficiency/3600/102/9.81)/NEW.Induced_motor_efficiency
+     induced_fan_shaft_power=((NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.induced_fan_efficiency/NEW.induced_transmission_efficiency/3600/102/9.81
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_specification_power:选用规格功率,的计算22-----------------------------------
-  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke OR OLD.Induced_smoke_temperature != NEW.Induced_smoke_temperature OR OLD.Induced_fan_total_pressure != NEW.Induced_fan_total_pressure OR OLD.Induced_fan_temperature != NEW.Induced_fan_temperature OR OLD.Induced_smoke_density != NEW.Induced_smoke_density OR OLD.Induced_fan_efficiency != NEW.Induced_fan_efficiency OR OLD.Induced_transmission_efficiency != NEW.Induced_transmission_efficiency OR OLD.Induced_motor_efficiency != NEW.Induced_motor_efficiency OR OLD.Induced_motor_safe_margin != NEW.Induced_motor_safe_margin THEN
+----------------------实现字段induced_motor_power:电机功率,的计算21-----------------------------------
+  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke OR OLD.induced_smoke_temperature != NEW.induced_smoke_temperature OR OLD.induced_fan_total_pressure != NEW.induced_fan_total_pressure OR OLD.induced_fan_temperature != NEW.induced_fan_temperature OR OLD.induced_smoke_density != NEW.induced_smoke_density OR OLD.induced_fan_efficiency != NEW.induced_fan_efficiency OR OLD.induced_transmission_efficiency != NEW.induced_transmission_efficiency OR OLD.induced_motor_efficiency != NEW.induced_motor_efficiency OR OLD.induced_motor_safe_margin != NEW.induced_motor_safe_margin THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_specification_power=0.5*(NEW.Induced_motor_safe_margin*(((NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.Induced_fan_efficiency/NEW.Induced_transmission_efficiency/3600/102/9.81)/NEW.Induced_motor_efficiency)
+     induced_motor_power=NEW.induced_motor_safe_margin*(((NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.induced_fan_efficiency/NEW.induced_transmission_efficiency/3600/102/9.81)/NEW.induced_motor_efficiency
      where plan_id=NEW.plan_id;
 
-  ELSIF (OLD.Induced_motor_safe_margin ISNULL OR OLD.Induced_motor_efficiency ISNULL OR OLD.Induced_transmission_efficiency ISNULL OR OLD.Induced_fan_efficiency ISNULL OR OLD.Induced_smoke_density ISNULL OR OLD.Induced_fan_temperature ISNULL OR OLD.Induced_fan_total_pressure ISNULL OR OLD.Induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.Induced_motor_safe_margin NOTNULL AND NEW.Induced_motor_efficiency NOTNULL AND NEW.Induced_transmission_efficiency NOTNULL AND NEW.Induced_fan_efficiency NOTNULL AND NEW.Induced_smoke_density NOTNULL AND NEW.Induced_fan_temperature NOTNULL AND NEW.Induced_fan_total_pressure NOTNULL AND NEW.Induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
+  ELSIF (OLD.induced_motor_safe_margin ISNULL OR OLD.induced_motor_efficiency ISNULL OR OLD.induced_transmission_efficiency ISNULL OR OLD.induced_fan_efficiency ISNULL OR OLD.induced_smoke_density ISNULL OR OLD.induced_fan_temperature ISNULL OR OLD.induced_fan_total_pressure ISNULL OR OLD.induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.induced_motor_safe_margin NOTNULL AND NEW.induced_motor_efficiency NOTNULL AND NEW.induced_transmission_efficiency NOTNULL AND NEW.induced_fan_efficiency NOTNULL AND NEW.induced_smoke_density NOTNULL AND NEW.induced_fan_temperature NOTNULL AND NEW.induced_fan_total_pressure NOTNULL AND NEW.induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_specification_power=0.5*(NEW.Induced_motor_safe_margin*(((NEW.Induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.Induced_smoke_temperature+273)/(NEW.Induced_fan_temperature+273))*1.293/NEW.Induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.Induced_fan_efficiency/NEW.Induced_transmission_efficiency/3600/102/9.81)/NEW.Induced_motor_efficiency)
+     induced_motor_power=NEW.induced_motor_safe_margin*(((NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.induced_fan_efficiency/NEW.induced_transmission_efficiency/3600/102/9.81)/NEW.induced_motor_efficiency
      where plan_id=NEW.plan_id;
 
   END IF;
-----------------------实现字段Induced_specification_flux:选用规格流量,的计算23-----------------------------------
+----------------------实现字段induced_specification_power:选用规格功率,的计算22-----------------------------------
+  IF OLD.s2c_local_atmosphere_air != NEW.s2c_local_atmosphere_air OR OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke OR OLD.induced_smoke_temperature != NEW.induced_smoke_temperature OR OLD.induced_fan_total_pressure != NEW.induced_fan_total_pressure OR OLD.induced_fan_temperature != NEW.induced_fan_temperature OR OLD.induced_smoke_density != NEW.induced_smoke_density OR OLD.induced_fan_efficiency != NEW.induced_fan_efficiency OR OLD.induced_transmission_efficiency != NEW.induced_transmission_efficiency OR OLD.induced_motor_efficiency != NEW.induced_motor_efficiency OR OLD.induced_motor_safe_margin != NEW.induced_motor_safe_margin THEN
+     update gaspowergeneration_gas_air_system set 
+
+     induced_specification_power=0.5*(NEW.induced_motor_safe_margin*(((NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.induced_fan_efficiency/NEW.induced_transmission_efficiency/3600/102/9.81)/NEW.induced_motor_efficiency)
+     where plan_id=NEW.plan_id;
+
+  ELSIF (OLD.induced_motor_safe_margin ISNULL OR OLD.induced_motor_efficiency ISNULL OR OLD.induced_transmission_efficiency ISNULL OR OLD.induced_fan_efficiency ISNULL OR OLD.induced_smoke_density ISNULL OR OLD.induced_fan_temperature ISNULL OR OLD.induced_fan_total_pressure ISNULL OR OLD.induced_smoke_temperature ISNULL OR OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL OR OLD.s2c_local_atmosphere_air ISNULL) AND NEW.induced_motor_safe_margin NOTNULL AND NEW.induced_motor_efficiency NOTNULL AND NEW.induced_transmission_efficiency NOTNULL AND NEW.induced_fan_efficiency NOTNULL AND NEW.induced_smoke_density NOTNULL AND NEW.induced_fan_temperature NOTNULL AND NEW.induced_fan_total_pressure NOTNULL AND NEW.induced_smoke_temperature NOTNULL AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL AND NEW.s2c_local_atmosphere_air NOTNULL THEN
+     update gaspowergeneration_gas_air_system set 
+
+     induced_specification_power=0.5*(NEW.induced_motor_safe_margin*(((NEW.induced_fan_total_pressure*(101325/(NEW.s2c_local_atmosphere_air))*((NEW.induced_smoke_temperature+273)/(NEW.induced_fan_temperature+273))*1.293/NEW.induced_smoke_density)*1.15)*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)/NEW.induced_fan_efficiency/NEW.induced_transmission_efficiency/3600/102/9.81)/NEW.induced_motor_efficiency)
+     where plan_id=NEW.plan_id;
+
+  END IF;
+----------------------实现字段induced_specification_flux:选用规格流量,的计算23-----------------------------------
   IF OLD.s2c_standard_temperature_smoke != NEW.s2c_standard_temperature_smoke OR OLD.s2c_standard_pressure_smoke != NEW.s2c_standard_pressure_smoke OR OLD.s2c_standard_flux_smoke != NEW.s2c_standard_flux_smoke OR OLD.s2c_condition_temperature_smoke != NEW.s2c_condition_temperature_smoke OR OLD.s2c_local_atmosphere_smoke != NEW.s2c_local_atmosphere_smoke THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_specification_flux=0.5*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)
+     induced_specification_flux=0.5*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)
      where plan_id=NEW.plan_id;
 
   ELSIF (OLD.s2c_local_atmosphere_smoke ISNULL OR OLD.s2c_condition_temperature_smoke ISNULL OR OLD.s2c_standard_flux_smoke ISNULL OR OLD.s2c_standard_pressure_smoke ISNULL OR OLD.s2c_standard_temperature_smoke ISNULL) AND NEW.s2c_local_atmosphere_smoke NOTNULL AND NEW.s2c_condition_temperature_smoke NOTNULL AND NEW.s2c_standard_flux_smoke NOTNULL AND NEW.s2c_standard_pressure_smoke NOTNULL AND NEW.s2c_standard_temperature_smoke NOTNULL THEN
      update gaspowergeneration_gas_air_system set 
 
-     Induced_specification_flux=0.5*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)
+     induced_specification_flux=0.5*(((NEW.s2c_standard_flux_smoke*(NEW.s2c_standard_pressure_smoke/NEW.s2c_local_atmosphere_smoke)*((NEW.s2c_condition_temperature_smoke+273)/(NEW.s2c_standard_temperature_smoke+273))))/2*1.1)
      where plan_id=NEW.plan_id;
 
   END IF;
@@ -897,15 +897,15 @@ CREATE TRIGGER "gaspowergeneration_gas_air_system" AFTER UPDATE OF
 "blower_motor_efficiency",
 "blower_motor_safe_margin",
 "c2s_condition_flux_smoke",
-"Induced_smoke_temperature",
-"Induced_fan_total_pressure",
+"induced_smoke_temperature",
+"induced_fan_total_pressure",
 "c2s_local_atmosphere_air",
-"Induced_fan_temperature",
-"Induced_smoke_density",
-"Induced_fan_efficiency",
-"Induced_transmission_efficiency",
-"Induced_motor_efficiency",
-"Induced_motor_safe_margin",
+"induced_fan_temperature",
+"induced_smoke_density",
+"induced_fan_efficiency",
+"induced_transmission_efficiency",
+"induced_motor_efficiency",
+"induced_motor_safe_margin",
 "c2s_local_atmosphere_smoke",
 "gas_tube_flow_velocity",
 "c2s_standard_temperature_air",

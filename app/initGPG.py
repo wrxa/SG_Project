@@ -2427,7 +2427,7 @@ GPGGasAirSys_data = [{
         "remark": u""
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_smoke_temperature",
+        "name_eng": "induced_smoke_temperature",
         "name": u"烟风温度",
         "symbol": u"t",
         "unit": u"℃",
@@ -2435,7 +2435,7 @@ GPGGasAirSys_data = [{
         "remark": u"设计值"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_total_pressure",
+        "name_eng": "induced_fan_total_pressure",
         "name": u"全压",
         "symbol": u"p",
         "unit": u"pa",
@@ -2443,7 +2443,7 @@ GPGGasAirSys_data = [{
         "remark": u"烟道总阻力"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_local_atmosphere",
+        "name_eng": "induced_local_atmosphere",
         "name": u"当地大气压",
         "symbol": u"p0",
         "unit": u"pa",
@@ -2451,7 +2451,7 @@ GPGGasAirSys_data = [{
         "remark": u"根据当地海拔按表选取"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_condition_smoke_flux",
+        "name_eng": "induced_condition_smoke_flux",
         "name": u"烟风流量（工况）",
         "symbol": u"q",
         "unit": u"m³/h",
@@ -2459,7 +2459,7 @@ GPGGasAirSys_data = [{
         "remark": u"标---工况之间转换"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_temperature",
+        "name_eng": "induced_fan_temperature",
         "name": u"风机温度",
         "symbol": u"t1",
         "unit": u"℃",
@@ -2467,7 +2467,7 @@ GPGGasAirSys_data = [{
         "remark": u"风机铭牌标定温度，一般为165/200℃"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_smoke_density",
+        "name_eng": "induced_smoke_density",
         "name": u"烟气密度",
         "symbol": u"ρ0",
         "unit": u"kg/m³",
@@ -2475,7 +2475,7 @@ GPGGasAirSys_data = [{
         "remark": u"取一般烟气平均密度"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_total_pressure",
+        "name_eng": "induced_fan_total_pressure",
         "name": u"风机全压",
         "symbol": u"p1",
         "unit": u"pa’",
@@ -2483,7 +2483,7 @@ GPGGasAirSys_data = [{
         "remark": u""
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_selected_total_pressure",
+        "name_eng": "induced_fan_selected_total_pressure",
         "name": u"风机选用全压",
         "symbol": u"p2",
         "unit": u"",
@@ -2491,7 +2491,7 @@ GPGGasAirSys_data = [{
         "remark": u"选用系数：1.10~1.15"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_selected_flux",
+        "name_eng": "induced_fan_selected_flux",
         "name": u"风机选用流量",
         "symbol": u"q2",
         "unit": u"m³/h",
@@ -2499,7 +2499,7 @@ GPGGasAirSys_data = [{
         "remark": u"选用系数：1.05~1.2"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_efficiency",
+        "name_eng": "induced_fan_efficiency",
         "name": u"风机效率",
         "symbol": u"η",
         "unit": u"",
@@ -2507,7 +2507,7 @@ GPGGasAirSys_data = [{
         "remark": u"全压头时效率，一般风机0.6，高效风机为0.9"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_transmission_efficiency",
+        "name_eng": "induced_transmission_efficiency",
         "name":  u"机械传动效率",
         "symbol": u"η1",
         "unit": u"",
@@ -2515,7 +2515,7 @@ GPGGasAirSys_data = [{
         "remark": u"直联时1.0，联轴器连接时0.95~0.98，三角皮带传动0.9~0.95，平皮带传动时0.8"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_motor_efficiency",
+        "name_eng": "induced_motor_efficiency",
         "name": u"电机效率",
         "symbol": u"ηd",
         "unit": u"",
@@ -2523,7 +2523,7 @@ GPGGasAirSys_data = [{
         "remark": u"电动机效率0.9"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_fan_shaft_power",
+        "name_eng": "induced_fan_shaft_power",
         "name": u"风机轴功率",
         "symbol": u"P'",
         "unit": u"kw",
@@ -2531,7 +2531,7 @@ GPGGasAirSys_data = [{
         "remark": u""
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_motor_safe_margin",
+        "name_eng": "induced_motor_safe_margin",
         "name": u"电机安全裕量",
         "symbol": u"K",
         "unit": u"",
@@ -2539,7 +2539,7 @@ GPGGasAirSys_data = [{
         "remark": u"1.1"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_motor_power",
+        "name_eng": "induced_motor_power",
         "name": u"电机功率",
         "symbol": u"P",
         "unit": u"kw",
@@ -2547,7 +2547,7 @@ GPGGasAirSys_data = [{
         "remark": u""
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_specification_power",
+        "name_eng": "induced_specification_power",
         "name": u"选用规格-功率",
         "symbol": u"50%定频",
         "unit": u"一个",
@@ -2555,7 +2555,7 @@ GPGGasAirSys_data = [{
         "remark": u""
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "Induced_specification_flux",
+        "name_eng": "induced_specification_flux",
         "name": u"选用规格-流量",
         "symbol": u"50%定频",
         "unit": u"一个",

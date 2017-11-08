@@ -140,6 +140,5 @@ class ASaturationPressureAfter(FieldCalculation):
         # 没有则不做任何操作!
         print(result)
 
-
 if __name__ == "__main__":
     print("coalchp_furnace_calculation.py")
