@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
-<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<script src="{{ url_for('static', filename='js/GPG/GPG_SmokeResistance.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
 <!-- MAIN -->
 <div class="main">
@@ -17,6 +17,7 @@
 					</div>
 				</div>
 			</div>
+			<form id="GPG_SmokeResistanceForm">
 			<div class="row">
 				<div class="row col-md-12">
 					<div class="col-md-12">
@@ -129,7 +130,8 @@
 											</div>
 											{% else %}
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
 											</div>
 											{% endif %}
 										</div>
@@ -181,7 +183,8 @@
 											</div>						
 
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
 											</div>
 										</div>
 									</div>
@@ -208,12 +211,12 @@
 
 								{% for constant in constants %} 
 								{% if constant.name_eng in ['air_preheater_local_resistance', 'air_preheater_local_resistance_coefficient',
-								'air_preheater_90_outlet_sharp_turn_elbow', 'air_preheater_sharp_turn_elbow_powder_local_resistance_coefficient',
-								'air_preheater_sharp_turn_elbow_air_elbow_local_resistance_coefficient',
-								'air_preheater_sharp_turn_elbow_powder_concentration_corrected_coefficient',
-								'air_preheater_90_section_slow_turn_elbow', 'air_preheater_slow_turn_elbow_powder_local_resistance_coefficient',
-								'air_preheater_slow_turn_elbow_air_elbow_local_resistance_coefficient', 
-								'air_preheater_slow_turn_elbow_powder_concentration_corrected_coefficient', 'air_preheater_reducer_tube'] %}
+								'air_preheater_90_outlet_sharp_turn_elbow', 'air_preheater_powder_local_resistance_coefficient',
+								'air_preheater_air_elbow_local_resistance_coefficient',
+								'air_preheater_powder_concentration_corrected_coefficient',
+								'air_preheater_90_section_slow_turn_elbow', 'air_preheater_slow_powder_local_resistance_coefficient',
+								'air_preheater_slow_air_local_resistance_coefficient', 
+								'air_preheater_slow_powder_concentration_corrected_coefficient', 'air_preheater_reducer_tube'] %}
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
@@ -236,7 +239,8 @@
 											</div>						
 
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
 											</div>
 										</div>
 									</div>
@@ -343,7 +347,8 @@
 											</div>
 											{% else %}
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
 											</div>
 											{% endif %}
 										</div>
@@ -420,14 +425,14 @@
 
 								{% for constant in constants %} 
 								{% if constant.name_eng in ['deduster_local_resistance', 'deduster_local_resistance_coefficient',
-								'deduster_90_outlet_slow_turn_elbow', 'deduster_slow_turn_elbow_powder_local_resistance_coefficient',
-								'deduster_slow_turn_elbow_air_elbow_local_resistance_coefficient',
-								'deduster_slow_turn_elbow_powder_concentration_corrected_coefficient',
-								'deduster_90_section_slow_turn_elbow', 'deduster_section_slow_turn_elbow_powder_local_resistance_coefficient',
-								'deduster_section_slow_turn_elbow_air_elbow_local_resistance_coefficient', 
+								'deduster_90_outlet_slow_turn_elbow', 'deduster_slow_powder_local_resistance_coefficient',
+								'deduster_slow_air_local_resistance_coefficient',
+								'deduster_slow_powder_concentration_corrected_coefficient',
+								'deduster_90_section_slow_turn_elbow', 'deduster_section_slow_powder_local_resistance_coefficient',
+								'deduster_section_slow_air_local_resistance_coefficient', 
 								'deduster_corrected_turning_angle_coefficient', 'deduster_section_corrected_height_width_ratio_coefficient',
 								'deduster_section_original_resistance_coefficient_with_roughness',
-								'deduster_section_slow_turn_elbow_powder_concentration_corrected_coefficient',
+								'deduster_section_slow_powder_corrected_coefficient',
 								'deduster_inlet_bellows'] %}
 								<div style="text-align:center">
 									<div class="panel-body">
@@ -451,7 +456,8 @@
 											</div>						
 											
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
 											</div>
 										</div>
 									</div>
@@ -502,7 +508,8 @@
 											</div>						
 											
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
 											</div>
 										</div>
 									</div>
@@ -565,7 +572,8 @@
 											</div>
 											{% else %}
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
 											</div>
 											{% endif %}
 										</div>
@@ -619,7 +627,8 @@
 											</div>						
 
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
 											</div>
 										</div>
 									</div>
@@ -676,7 +685,8 @@
 											</div>						
 
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
 											</div>
 										</div>
 									</div>
@@ -727,7 +737,8 @@
 											</div>						
 
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
 											</div>
 										</div>
 									</div>
@@ -781,7 +792,8 @@
 											</div>
 
 											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
 											</div>
 
 										</div>
@@ -798,9 +810,7 @@
 							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
 							<div class="row text-center">
 								<br><br>
-								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
-
-								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+								<button type="button" class="btn btn-success" id="submitSmokeResistance"><i class="fa fa-check-circle"></i>保存</button>
 							</div>
 							<br> <br>
 						</div>
@@ -822,6 +832,7 @@
 					</div>
 				</div>-->
 			</div>
+			</form>
 		</div>
 		<!-- END MAIN CONTENT -->
 	</div>

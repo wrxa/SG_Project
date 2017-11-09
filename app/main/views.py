@@ -15,7 +15,8 @@ from ..decorators import admin_required
 from coalService import ToCoalCHP
 from biomassService import ToBiomassCHP
 from ..gasPowerGeneration_models import GasPowerGenerationConstant, \
-    GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem
+    GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem, \
+    GPGSmokeResistance
 from gasPowerGeneration_Service import ToGPG
 from app.observer_calculate.execution_strategy import GPG_Boiler_superheated_steam_enthalpy_EXEC, \
     GPG_Boiler_feedwater_enthalpy_EXEC, GPG_Boiler_air_enthalpy_EXEC, \
@@ -629,6 +630,18 @@ def GPG_SaveGasAirData():
     datas['flag'] = "success"
     return jsonify({'result': datas})
 
+@main.route('/GPG_SaveSmokeResistanceData', methods=['POST'])
+@login_required
+def GPG_SaveSmokeResistanceData():
+    plan_id = session.get('GPGPlanId')
+    SmokeResistanceData = ToGPG.to_SmokeResistanceData(request.form, plan_id)
+
+    GPGSmokeResistance.insert_SmokeResistance(SmokeResistanceData)
+    session['GPGPlanId'] = plan_id
+    datas = {}
+    datas['flag'] = "success"
+    return jsonify({'result': datas})
+
 @main.route('/getBoilerByPlanId', methods=['POST'])
 @login_required
 def getBoilerByPlanId():
@@ -644,6 +657,14 @@ def getGasAirDataByPlanId():
     gpg_GasAirData = GPGFlueGasAirSystem.search_FlueGasAirSystem(planId)
     GasAirJson = ToGPG.to_GasAirJson(gpg_GasAirData)
     return jsonify({'GasAirJson': GasAirJson})
+
+@main.route('/getSmokeResistanceByPlanId', methods=['POST'])
+@login_required
+def getSmokeResistanceByPlanId():
+    planId = request.values.get('planId')
+    gpg_SmokeResistanceData = GPGSmokeResistance.search_SmokeResistance(planId)
+    SmokeResistanceJson = ToGPG.to_SmokeResistanceJson(gpg_SmokeResistanceData)
+    return jsonify({'SmokeResistanceJson': SmokeResistanceJson})
 
 @main.route('/selectPlan', methods=['POST'])
 @login_required

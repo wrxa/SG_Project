@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from ..gasPowerGeneration_models import GasPowerGenerationNeedsQuestionnaire,\
-    GPGBoilerOfPTS, GPGFlueGasAirSystem
+    GPGBoilerOfPTS, GPGFlueGasAirSystem, GPGSmokeResistance
 from flask_login import current_user
 from ..models import Company, Plan, Module
 from ..observer_calculate.execution_strategy import Furnace_calculationBefore
@@ -118,7 +118,82 @@ list_gas_air_system = [
     "chimney_resistance_coefficient", "chimney_average_velocity",
     "chimney_average_diameter", "chimney_friction_resistance",
     "chimney_outlet_resistance_coefficient", "chimney_outlet_resistance",
-    "chimney_total_resistance"
+    "chimney_total_resistance", "induced_total_pressure"
+]
+
+list_smoke_resistance = [
+    "air_preheater_outlet_calculated_temperature",
+    "air_preheater_outlet_smoke_amount", "air_preheater_density",
+    "air_preheater_flow_velocity", "air_preheater_dynamic_pressure_head",
+    "air_preheater_smoke_tube_area", "air_preheater_length",
+    "air_preheater_width", "air_preheater_duct_perimeter",
+    "air_preheater_tube_equivalent_diameter",
+    "air_preheater_gas_kinetic_viscosity", "air_preheater_reynolds_number",
+    "air_preheater_absolute_tube_roughness",
+    "air_preheater_relative_tube_roughness",
+    "air_preheater_560_relative_tube_roughness", "air_preheater_discriminant",
+    "air_preheater_frictional_resistance",
+    "air_preheater_frictional_resistance_coefficient",
+    "air_preheater_unit_length_frictional_resistance",
+    "air_preheater_ducting_length", "air_preheater_local_resistance",
+    "air_preheater_local_resistance_coefficient",
+    "air_preheater_90_outlet_sharp_turn_elbow",
+    "air_preheater_powder_local_resistance_coefficient",
+    "air_preheater_air_elbow_local_resistance_coefficient",
+    "air_preheater_powder_concentration_corrected_coefficient",
+    "air_preheater_90_section_slow_turn_elbow",
+    "air_preheater_slow_powder_local_resistance_coefficient",
+    "air_preheater_slow_air_local_resistance_coefficient",
+    "air_preheater_slow_powder_concentration_corrected_coefficient",
+    "air_preheater_reducer_tube", "air_preheater_to_deduster_total_resistance",
+    "deduster_outlet_calculated_temperature", "deduster_outlet_smoke_amount",
+    "deduster_density", "deduster_flow_velocity",
+    "deduster_dynamic_pressure_head", "deduster_smoke_tube_area",
+    "deduster_length", "deduster_width", "deduster_duct_perimeter",
+    "deduster_tube_equivalent_diameter", "deduster_gas_kinetic_viscosity",
+    "deduster_reynolds_number", "deduster_absolute_tube_roughness",
+    "deduster_relative_tube_roughness", "deduster_560_relative_tube_roughness",
+    "deduster_discriminant", "deduster_frictional_resistance",
+    "deduster_frictional_resistance_coefficient",
+    "deduster_unit_length_frictional_resistance", "deduster_ducting_length",
+    "deduster_local_resistance", "deduster_local_resistance_coefficient",
+    "deduster_90_outlet_slow_turn_elbow",
+    "deduster_slow_powder_local_resistance_coefficient",
+    "deduster_slow_air_local_resistance_coefficient",
+    "deduster_slow_powder_concentration_corrected_coefficient",
+    "deduster_90_section_slow_turn_elbow",
+    "deduster_section_slow_powder_local_resistance_coefficient",
+    "deduster_section_slow_air_local_resistance_coefficient",
+    "deduster_corrected_turning_angle_coefficient",
+    "deduster_section_corrected_height_width_ratio_coefficient",
+    "deduster_section_original_resistance_coefficient_with_roughness",
+    "deduster_section_slow_powder_corrected_coefficient",
+    "deduster_inlet_bellows", "deduster_to_induced_draft_total_resistance",
+    "induced_draft_inlet_calculated_temperature",
+    "induced_draft_inlet_smoke_amount", "induced_draft_density",
+    "induced_draft_flow_velocity", "induced_draft_dynamic_pressure_head",
+    "induced_draft_smoke_tube_area", "induced_draft_width",
+    "induced_draft_height", "induced_draft_duct_perimeter",
+    "induced_draft_tube_equivalent_diameter",
+    "induced_draft_gas_kinetic_viscosity", "induced_draft_reynolds_number",
+    "induced_draft_absolute_tube_roughness",
+    "induced_draft_relative_tube_roughness",
+    "induced_draft_560_relative_tube_roughness", "induced_draft_discriminant",
+    "induced_draft_frictional_resistance",
+    "induced_draft_frictional_resistance_coefficient",
+    "induced_draft_unit_length_frictional_resistance",
+    "induced_draft_ducting_length", "induced_draft_local_resistance",
+    "induced_draft_local_resistance_coefficient",
+    "induced_draft_outlet_plate_gate", "induced_draft_outlet_diffuser_tube",
+    "induced_draft_45_90_slow_turn_elbow",
+    "induced_draft_powder_local_resistance_coefficient",
+    "induced_draft_air_local_resistance_coefficient",
+    "induced_draft_corrected_turning_angle_coefficient",
+    "induced_draft_corrected_height_width_ratio_coefficient",
+    "induced_draft_original_resistance_coefficient_with_roughness",
+    "induced_draft_powder_concentration_corrected_coefficient",
+    "brick_chimney_inlet", "induced_draft_to_chimney_total_resistance",
+    "smoke_chimney_total_resistance"
 ]
 
 # 格式化数据库取出的值
@@ -194,7 +269,7 @@ class ToGPG():
         datas['planId'] = planId
         return datas
 
-    #返回烟风系统值
+    #返回烟风系统json值
     @staticmethod
     def to_GasAirJson(GasAirData):
         json = {}
@@ -214,6 +289,27 @@ class ToGPG():
                 setattr(GasAirData, list_gas_air_system[index],
                         form.get(list_gas_air_system[index]))
         return GasAirData
+
+    #返回烟阻力json值
+    @staticmethod
+    def to_SmokeResistanceJson(SmokeResistanceData):
+        json = {}
+        for index in range(len(list_smoke_resistance)):
+            json[list_smoke_resistance[index]] = format_value(
+                # TODO还未过滤特殊字符项
+                "number", str(getattr(SmokeResistanceData, list_smoke_resistance[index])))
+        return json
+
+    @staticmethod
+    def to_SmokeResistanceData(form, plan_id):
+        SmokeResistanceData = GPGSmokeResistance.query.filter_by(
+            plan_id=plan_id).first()
+
+        for index in range(len(list_smoke_resistance)):
+            if form.get(list_smoke_resistance[index]) != '':
+                setattr(SmokeResistanceData, list_smoke_resistance[index],
+                        form.get(list_smoke_resistance[index]))
+        return SmokeResistanceData
 
     #返回锅炉页面初期值
     @staticmethod

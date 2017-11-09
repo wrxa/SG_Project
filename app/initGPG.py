@@ -1331,7 +1331,7 @@ GPGSmokeResistance_data = [{
     "remark": u"（2）P111"
 }, {
     "module_name": "GPG_SmokeResistance",
-    "name_eng": "air_preheater_sharp_turn_elbow_powder_local_resistance_coefficient",
+    "name_eng": "air_preheater_powder_local_resistance_coefficient",
     "name": u"含粉气体局部阻力系数",
     "symbol": u"ζu1",
     "unit": u"",
@@ -1339,7 +1339,7 @@ GPGSmokeResistance_data = [{
     "remark": u"（2）P110"
 }, {
     "module_name": "GPG_SmokeResistance",
-    "name_eng": "air_preheater_sharp_turn_elbow_air_elbow_local_resistance_coefficient",
+    "name_eng": "air_preheater_air_elbow_local_resistance_coefficient",
     "name": u"纯空气弯头局部阻力系数",
     "symbol": u"ζo",
     "unit": u"",
@@ -1349,7 +1349,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "air_preheater_sharp_turn_elbow_powder_concentration_corrected_coefficient",
+    "air_preheater_powder_concentration_corrected_coefficient",
     "name":
     u"含粉浓度修正系数",
     "symbol":
@@ -1379,7 +1379,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "air_preheater_slow_turn_elbow_powder_local_resistance_coefficient",
+    "air_preheater_slow_powder_local_resistance_coefficient",
     "name":
     u"含粉气体局部阻力系数",
     "symbol":
@@ -1394,7 +1394,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "air_preheater_slow_turn_elbow_air_elbow_local_resistance_coefficient",
+    "air_preheater_slow_air_local_resistance_coefficient",
     "name":
     u"纯空气弯头局部阻力系数",
     "symbol":
@@ -1409,7 +1409,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "air_preheater_slow_turn_elbow_powder_concentration_corrected_coefficient",
+    "air_preheater_slow_powder_concentration_corrected_coefficient",
     "name":
     u"含粉浓度修正系数",
     "symbol":
@@ -1659,7 +1659,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "deduster_slow_turn_elbow_powder_local_resistance_coefficient",
+    "deduster_slow_powder_local_resistance_coefficient",
     "name":
     u"含粉气体局部阻力系数",
     "symbol":
@@ -1674,7 +1674,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "deduster_slow_turn_elbow_air_elbow_local_resistance_coefficient",
+    "deduster_slow_air_local_resistance_coefficient",
     "name":
     u"纯空气弯头局部阻力系数",
     "symbol":
@@ -1689,7 +1689,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "deduster_slow_turn_elbow_powder_concentration_corrected_coefficient",
+    "deduster_slow_powder_concentration_corrected_coefficient",
     "name":
     u"含粉浓度修正系数",
     "symbol":
@@ -1712,7 +1712,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "deduster_section_slow_turn_elbow_powder_local_resistance_coefficient",
+    "deduster_section_slow_powder_local_resistance_coefficient",
     "name":
     u"含粉气体局部阻力系数",
     "symbol":
@@ -1727,7 +1727,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "deduster_section_slow_turn_elbow_air_elbow_local_resistance_coefficient",
+    "deduster_section_slow_air_local_resistance_coefficient",
     "name":
     u"纯空气局部阻力系数",
     "symbol":
@@ -1787,7 +1787,7 @@ GPGSmokeResistance_data = [{
     "module_name":
     "GPG_SmokeResistance",
     "name_eng":
-    "deduster_section_slow_turn_elbow_powder_concentration_corrected_coefficient",
+    "deduster_section_slow_powder_corrected_coefficient",
     "name":
     u"含粉浓度修正系数",
     "symbol":
@@ -2435,7 +2435,7 @@ GPGGasAirSys_data = [{
         "remark": u"设计值"
     }, {
         "module_name": "GPG_GasAirSystem",
-        "name_eng": "induced_fan_total_pressure",
+        "name_eng": "induced_total_pressure",
         "name": u"全压",
         "symbol": u"p",
         "unit": u"pa",
@@ -3127,7 +3127,7 @@ GPGGasAirSys_data = [{
     }, {
         "module_name": "GPG_GasAirSystem",
         "name_eng": "low_load_smoke_temperature",
-        "name": u"低负荷下烟气量",
+        "name": u"低负荷下排烟温度",
         "symbol": u"t1",
         "unit": u"℃",
         "calculate": u"",

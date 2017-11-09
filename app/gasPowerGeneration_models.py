@@ -397,21 +397,21 @@ class GPGSmokeResistance(db.Model):
     # 1个90度空预器出口变径急转弯头
     air_preheater_90_outlet_sharp_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉气体局部阻力系数
-    air_preheater_sharp_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    air_preheater_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 纯空气弯头局部阻力系数
-    air_preheater_sharp_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    air_preheater_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉浓度修正系数
-    air_preheater_sharp_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    air_preheater_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
 
     '''90度等截面缓转弯头'''
     # 1个90度等截面缓转弯头
     air_preheater_90_section_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉气体局部阻力系数
-    air_preheater_slow_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    air_preheater_slow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 纯空气弯头局部阻力系数
-    air_preheater_slow_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    air_preheater_slow_air_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉浓度修正系数
-    air_preheater_slow_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    air_preheater_slow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 1个渐缩管
     air_preheater_reducer_tube = db.Column(db.NUMERIC(precision=15, scale=5))
     # 空预器出口至除尘器入口总阻力
@@ -468,19 +468,19 @@ class GPGSmokeResistance(db.Model):
     # 1个90度除尘器出口缓转弯头
     deduster_90_outlet_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉气体局部阻力系数
-    deduster_slow_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    deduster_slow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 纯空气弯头局部阻力系数
-    deduster_slow_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    deduster_slow_air_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉浓度修正系数
-    deduster_slow_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    deduster_slow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
 
     ''' 90度等截面缓转弯头 '''
     # 1个90度等截面缓转弯头
     deduster_90_section_slow_turn_elbow = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉气体局部阻力系数
-    deduster_section_slow_turn_elbow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    deduster_section_slow_powder_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 纯空气弯头局部阻力系数
-    deduster_section_slow_turn_elbow_air_elbow_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    deduster_section_slow_air_local_resistance_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 转弯角度修正系数
     deduster_corrected_turning_angle_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 截面高宽比修正系数
@@ -488,7 +488,7 @@ class GPGSmokeResistance(db.Model):
     # 包含管壁粗糙度影响的纯空气下的转弯原始阻力系数
     deduster_section_original_resistance_coefficient_with_roughness = db.Column(db.NUMERIC(precision=15, scale=5))
     # 含粉浓度修正系数
-    deduster_section_slow_turn_elbow_powder_concentration_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    deduster_section_slow_powder_corrected_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
     # 1个进口风箱
     deduster_inlet_bellows = db.Column(db.NUMERIC(precision=15, scale=5))
     # 除尘器出口至引风机入口总阻力
@@ -566,6 +566,28 @@ class GPGSmokeResistance(db.Model):
     induced_draft_to_chimney_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
     # 烟道总阻力
     smoke_chimney_total_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    def __init__(self, **kwargs):
+        super(GPGSmokeResistance, self).__init__(**kwargs)
+
+    @staticmethod
+    def insert_SmokeResistance(gaspowergeneration_smoke_resistance):
+        try:
+            db.session.add(gaspowergeneration_smoke_resistance)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_smoke_resistance"
+                  "<id=%s> in database" % (gaspowergeneration_smoke_resistance.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_SmokeResistance(planId):
+        result = GPGSmokeResistance.query.filter_by(plan_id=planId).one_or_none()
+        return result
 
 # 煤气发电 烟风系统
 class GPGFlueGasAirSystem(db.Model):
@@ -682,7 +704,7 @@ class GPGFlueGasAirSystem(db.Model):
     # 烟风温度
     induced_smoke_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
     # 全压
-    induced_fan_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    induced_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
     # 当地大气压
     induced_local_atmosphere = db.Column(db.NUMERIC(precision=15, scale=5))
     # 烟风流量（工况）
