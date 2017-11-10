@@ -29,7 +29,7 @@ public class MainOrder {
 		//		creatModelMain();
 		//		planTriggerMain();
 		creatTableInTriggerAndTriggerFunctionMain();
-//		creatTableBetweenTriggerAndTriggerFunctionMain();
+		//		creatTableBetweenTriggerAndTriggerFunctionMain();
 	}
 
 	/**
@@ -73,24 +73,24 @@ public class MainOrder {
 	 * @throws IOException
 	 */
 	public static void creatTableInTriggerAndTriggerFunctionMain() throws IOException {
-		String tablename = "gaspowergeneration_boiler_of_pts";
-		String flagxh = "check";
-		//String flagsj = "design";
+		String tablename = "gaspowergeneration_smoke_resistance";
+		String flagxh = "";
+		String flagsj = "";
 		String excleColumn = "F";
-		ConversionFormula(excleColumn);//生成cache文件
-		Properties prop = readOrderedPropertiesFile("cache.properties");
-		Map<String, String> map = creatGZiduanMap(prop, excleColumn);
-		Map<String, String> mapNotes = getNotesMap(prop);
+		FileInputStream fileInputStream = new FileInputStream("In_the_table_inputTrigger.properties");
+		ConversionFormula(fileInputStream, excleColumn);
+		Map<String, String> map = creatGZiduanMap();
+		Map<String, String> mapNotes = getNotesMap();
 		PrintStream oldps = System.out;
-		OutputStream os = new FileOutputStream("In_the_table_boiler_Trigger.sql");
+		OutputStream os = new FileOutputStream("In_the_table_smoke_resistance_Trigger.sql");
 		PrintStream newps = new PrintStream(os);
 		System.setOut(newps);
-		tableInTriggerFunction(prop, map, mapNotes, tablename, flagxh, excleColumn);
-		tableInTrigger(prop, map, mapNotes, tablename, flagxh, excleColumn);
+		tableInTriggerFunction(map, mapNotes, tablename, flagxh);
+		tableInTrigger(map, mapNotes, tablename, flagxh);
 		System.out.println();
-		//tableInTriggerFunction(prop, map, mapNotes, tablename, flagsj, excleColumn);
-		//tableInTrigger(prop, map, mapNotes, tablename, flagsj, excleColumn);
-		//System.setOut(oldps);
+		//tableInTriggerFunction(map, mapNotes, tablename, flagsj);
+		//tableInTrigger(map, mapNotes, tablename, flagsj, excleColumn);
+		System.setOut(oldps);
 	}
 
 	/**
@@ -100,10 +100,10 @@ public class MainOrder {
 	 */
 	public static void creatTableBetweenTriggerAndTriggerFunctionMain() throws IOException {
 		Properties prop = readOrderedPropertiesFile("between_the_table_inputTrigger.properties");
-		String atablename = "gaspowergeneration_needsquestionnaire";
-		String btablenname = "gaspowergeneration_boiler_of_pts";
+		String atablename = "ccpp_questionnaire";
+		String btablenname = "ccpp_ccpp";
 		PrintStream oldps = System.out;
-		OutputStream os = new FileOutputStream("between_needsquestionnaire_and_boiler.sql");
+		OutputStream os = new FileOutputStream("between_the_table_outTrigger.sql");
 		PrintStream newps = new PrintStream(os);
 		System.setOut(newps);
 		printProp(prop, atablename, btablenname);
@@ -112,29 +112,29 @@ public class MainOrder {
 
 	/********************************************************表内触发器和触发函数的创建**********************************************************************************/
 
-	public static void ConversionFormula(String flg) throws IOException {
+	public static void ConversionFormula(FileInputStream fileInputStream, String excleColumn) throws IOException {
 		OutputStream os = new FileOutputStream("cache.properties");
 		PrintStream oldps = System.out;
 		PrintStream newps = new PrintStream(os);
 		System.setOut(newps);
 		Properties props = new OrderedProperties();
-		FileInputStream fileInputStream = new FileInputStream("In_the_table_inputTrigger.properties");
 		props.load(fileInputStream);
 		// 用于存储所有节点  
 		Map<String, String> map = new HashMap<String, String>();
 		for (Object key : props.keySet()) {
 			if (props.getProperty(key.toString()).split("=").length > 1) {
-				map.put(flg + key.toString().split("#")[0], flg + key.toString().split("#")[0] + "=" + props.getProperty(key.toString()).split("=")[1]);
+				map.put(excleColumn + key.toString().split("#")[0], excleColumn + key.toString().split("#")[0] + "=" + props.getProperty(key.toString()).split("=")[1]);
 			} else {
-				map.put(flg + key.toString().split("#")[0], flg + key.toString().split("#")[0] + "=");
+				map.put(excleColumn + key.toString().split("#")[0], excleColumn + key.toString().split("#")[0] + "=");
 			}
 		}
+
 		/**
 		 * 递归实现搜索替换
 		 */
 		for (Object key : props.keySet()) {
 			if (props.getProperty(key.toString()).split("=").length > 1) {
-				String newstr = th(map, props.getProperty(key.toString()).split("=")[1], flg);
+				String newstr = th(map, props.getProperty(key.toString()).split("=")[1], excleColumn);
 				System.out.println(key + ":" + props.getProperty(key.toString()).split("=")[0] + "=" + newstr);
 			} else {
 				System.out.println(key + ":" + props.getProperty(key.toString()).split("=")[0] + "=");
@@ -143,35 +143,41 @@ public class MainOrder {
 		System.setOut(oldps);
 	}
 
-	public static String th(Map<String, String> map, String dd, String flg) {
+	public static String th(Map<String, String> map, String dd, String excleColumn) {
 		String[] arrayStr = dd.split("\\+|\\(|\\)|\\*|/|\\-");
 		// 去除数组中为空的字符串  
 		List<String> tmp = new ArrayList<String>();
 		for (String str : arrayStr) {
-			if (str != null && str.startsWith(flg)) {
+			if (str != null && str.startsWith(excleColumn)) {
 				tmp.add(str);
 			}
 		}
 		arrayStr = tmp.toArray(new String[0]);
+		sort(arrayStr, excleColumn);
 		for (String str : arrayStr) {
 			String newstr = str;
 			if (map.get(newstr).split("=").length > 1) {
 				dd = dd.replaceAll(newstr, "(" + map.get(newstr).split("=")[1] + ")");
-				dd = th(map, dd, flg);
+				dd = th(map, dd, excleColumn);
+			} else {
+				//深度搜索到叶子节点，替换
+				dd = dd.replaceAll(newstr, "(" + map.get(newstr).split("=")[0].replaceAll(excleColumn, "MM") + ")");
 			}
 		}
 		return dd;
 	}
 
-	public static Map<String, String> creatGZiduanMap(Properties properties, String excleColumn) {
+	public static Map<String, String> creatGZiduanMap() {
+		Properties properties = readOrderedPropertiesFile("cache.properties");
 		Map<String, String> map = new HashMap<String, String>();
 		for (String key : properties.stringPropertyNames()) {
-			map.put(excleColumn + key.split("#")[0], properties.getProperty(key).split("=")[0]);
+			map.put("MM" + key.split("#")[0], properties.getProperty(key).split("=")[0]);
 		}
 		return map;
 	}
 
-	public static Map<String, String> getNotesMap(Properties properties) {
+	public static Map<String, String> getNotesMap() {
+		Properties properties = readOrderedPropertiesFile("cache.properties");
 		Map<String, String> map = new HashMap<String, String>();
 		for (String key : properties.stringPropertyNames()) {
 			map.put(properties.getProperty(key).split("=")[0], key.split("#")[1]);
@@ -185,14 +191,13 @@ public class MainOrder {
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	public static void tableInTriggerFunction(Properties properties, Map<String, String> map, Map<String, String> mapNotes, String tablename, String flag, String excleColumn)
-			throws FileNotFoundException {
+	public static void tableInTriggerFunction(Map<String, String> map, Map<String, String> mapNotes, String tablename, String flag) throws FileNotFoundException {
+		Properties properties = readOrderedPropertiesFile("cache.properties");
 		int i = 1;
 		/**
 		 * 创建触发函数头
 		 */
-		//System.out.println("CREATE OR REPLACE FUNCTION " + tablename + "_" + flag + "()");
-		System.out.println("CREATE OR REPLACE FUNCTION " + tablename  + "()");
+		System.out.println("CREATE OR REPLACE FUNCTION " + tablename + flag + "()");
 		System.out.println("RETURNS TRIGGER AS");
 		System.out.println("$BODY$");
 		System.out.println("BEGIN");
@@ -201,7 +206,7 @@ public class MainOrder {
 		 */
 		for (String key : properties.stringPropertyNames()) {
 			if (properties.getProperty(key).split("=").length > 1) {
-				gzdih(properties.getProperty(key).split("=")[1], map, mapNotes, properties.getProperty(key).split("=")[0], i, flag, tablename, excleColumn);
+				gzdih(properties.getProperty(key).split("=")[1], map, mapNotes, properties.getProperty(key).split("=")[0], i, flag, tablename);
 				i += 1;
 			}
 
@@ -222,7 +227,7 @@ public class MainOrder {
 	 * @param map
 	 * @param strright
 	 */
-	public static void gzdih(String str, Map<String, String> map, Map<String, String> mapNotes, String strright, int i, String fg, String tablename, String excleColumn) {
+	public static void gzdih(String str, Map<String, String> map, Map<String, String> mapNotes, String strright, int i, String fg, String tablename) {
 		String[] arrSt = str.split("\\*|/|\\(|\\)|\\+|\\-");
 		//将arrSt排序：由大到小
 
@@ -231,14 +236,13 @@ public class MainOrder {
 		String str_sj = str;
 		Set set_sj = new TreeSet();
 		for (String str1 : arrSt) {
-			if (str1.startsWith(excleColumn)) {
+			if (str1.startsWith("MM")) {
 				set_sj.add(str1);
 			}
 		}
 		String[] arrSt_sj = (String[]) set_sj.toArray(new String[0]);
 		for (String str1 : arrSt_sj) {
-			//String sead = map.get(str1) + "_" + fg + "";
-			String sead = map.get(str1) + "";
+			String sead = map.get(str1) + fg + "";
 			if (str1.equals(arrSt_sj[arrSt_sj.length - 1])) {
 				dddString += "OLD." + sead + " != NEW." + sead + "";
 			} else {
@@ -251,20 +255,17 @@ public class MainOrder {
 		System.out.println("     update " + tablename + " set ");
 		System.out.println();
 		//生成公式
-		sort(arrSt_sj, excleColumn);
+		sort(arrSt_sj, "MM");
 		for (String str1 : arrSt_sj) {
-			//str_sj = str_sj.replaceAll(str1, "NEW." + map.get(str1) + "_" + fg + "");
-			str_sj = str_sj.replaceAll(str1, "NEW." + map.get(str1) + "");
+			str_sj = str_sj.replaceAll(str1, "NEW." + map.get(str1) + fg + "");
 		}
-		//System.out.println("     " + strright + "_" + fg + "=" + str_sj + "");
-		System.out.println("     " + strright + "=" + str_sj + "");
+		System.out.println("     " + strright + fg + "=" + str_sj + "");
 		System.out.println("     where plan_id=NEW.plan_id;");
 		System.out.println();
 
 		dddString = "  ELSIF (";
 		for (String str1 : arrSt_sj) {
-			//String sead = map.get(str1) + "_" + fg + "";
-			String sead = map.get(str1) + "";
+			String sead = map.get(str1) + fg + "";
 			if (str1.equals(arrSt_sj[arrSt_sj.length - 1])) {
 				dddString += "OLD." + sead + " ISNULL) AND ";
 			} else {
@@ -272,8 +273,7 @@ public class MainOrder {
 			}
 		}
 		for (String str1 : arrSt_sj) {
-			//String sead = map.get(str1) + "_" + fg + "";
-			String sead = map.get(str1) + "";
+			String sead = map.get(str1) + fg + "";
 			if (str1.equals(arrSt_sj[arrSt_sj.length - 1])) {
 				dddString += "NEW." + sead + " NOTNULL";
 			} else {
@@ -287,11 +287,9 @@ public class MainOrder {
 		System.out.println();
 		//生成公式
 		for (String str1 : arrSt_sj) {
-			//str_sj = str_sj.replaceAll(str1, "NEW." + map.get(str1) + "_" + fg + "");
-			str_sj = str_sj.replaceAll(str1, "NEW." + map.get(str1) + "");
+			str_sj = str_sj.replaceAll(str1, "NEW." + map.get(str1) + fg + "");
 		}
-		//System.out.println("     " + strright + "_" + fg + "=" + str_sj + "");
-		System.out.println("     " + strright + "=" + str_sj + "");
+		System.out.println("     " + strright + fg + "=" + str_sj + "");
 		System.out.println("     where plan_id=NEW.plan_id;");
 		System.out.println();
 
@@ -302,11 +300,30 @@ public class MainOrder {
 	 * 由大到小排序
 	 * @param num
 	 */
-	public static void sort(String[] num, String flg) {
+	public static void sort(String[] num, String excleColumn) {
 		int j = 0;
 		while (j < num.length) {
 			for (int i = 0; i < num.length - 1; i++) {
-				if (Integer.parseInt(num[i].split(flg)[1]) < Integer.parseInt(num[i + 1].split(flg)[1])) {
+				if (Integer.parseInt(num[i].split(excleColumn)[1]) < Integer.parseInt(num[i + 1].split(excleColumn)[1])) {
+					String temp;
+					temp = num[i];
+					num[i] = num[i + 1];
+					num[i + 1] = temp;
+				}
+			}
+			j++;
+		}
+	}
+
+	/**
+	 * 由大到小排序
+	 * @param num
+	 */
+	public static void sort1(String[] num) {
+		int j = 0;
+		while (j < num.length) {
+			for (int i = 0; i < num.length - 1; i++) {
+				if (Integer.parseInt(num[i].split("MM")[1]) < Integer.parseInt(num[i + 1].split("MM")[1])) {
 					String temp;
 					temp = num[i];
 					num[i] = num[i + 1];
@@ -323,21 +340,20 @@ public class MainOrder {
 	 * @param map
 	 * @throws FileNotFoundException 
 	 */
-	public static void tableInTrigger(Properties properties, Map<String, String> map, Map<String, String> mapNotes, String tablename, String flag, String excleColumn) throws FileNotFoundException {
+	public static void tableInTrigger(Map<String, String> map, Map<String, String> mapNotes, String tablename, String flag) throws FileNotFoundException {
+		Properties properties = readOrderedPropertiesFile("cache.properties");
 		/**
 		 * 触发器头
 		 */
 		System.out.println();
 		System.out.println("--创建触发器");
-		//		System.out.println("DELETE FROM pg_trigger WHERE tgname='" + tablename + "_" + flag + "';");
-		//System.out.println("CREATE TRIGGER \"" + tablename + "_" + flag + "\" AFTER UPDATE OF");
-		System.out.println("CREATE TRIGGER \"" + tablename + "\" AFTER UPDATE OF");
-		
+		//		System.out.println("DELETE FROM pg_trigger WHERE tgname='" + tablename + flag + "';");
+		System.out.println("CREATE TRIGGER \"" + tablename + flag + "\" AFTER UPDATE OF");
 		String dddString = "";
 		Set set = new TreeSet();
 		for (String key : properties.stringPropertyNames()) {
 			if (properties.getProperty(key).split("=").length > 1) {
-				setTriggerField(properties.getProperty(key).split("=")[1], set, excleColumn);
+				setTriggerField(properties.getProperty(key).split("=")[1], set, "MM");
 			}
 		}
 		String[] arrSt_sj = (String[]) set.toArray(new String[0]);
@@ -345,8 +361,7 @@ public class MainOrder {
 		 * 构造触发器体
 		 */
 		for (String str1 : arrSt_sj) {
-			//String sead = map.get(str1) + "_" + flag + "";
-			String sead = map.get(str1) + "";
+			String sead = map.get(str1) + flag + "";
 			if (str1.equals(arrSt_sj[arrSt_sj.length - 1])) {
 				System.out.println("\"" + sead + "\"");
 			} else {
@@ -358,8 +373,7 @@ public class MainOrder {
 		 */
 		System.out.println("ON \"public\".\"" + tablename + "\"");
 		System.out.println("FOR EACH ROW");
-		//System.out.println("EXECUTE PROCEDURE \"" + tablename + "_" + flag + "\"();");
-		System.out.println("EXECUTE PROCEDURE \"" + tablename + "\"();");
+		System.out.println("EXECUTE PROCEDURE \"" + tablename + flag + "\"();");
 	}
 
 	/**
