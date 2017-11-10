@@ -21,45 +21,6 @@
 			<form id="GPG_questionnaire">
 			<div class="row">
 				<div class="row col-md-6">
-
-					<!-- 公司信息 -->
-					<div class="col-md-12">
-						<div class="panel">
-							<div class="first-title"><i class="fa fa-building" aria-hidden="true"></i><span class="margin-left15">单位信息</span></div>
-							<div class="panel-body">
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon show-primary width-size">单位名称</span>
-										<input class="form-control" type="text" name="company_name">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon show-primary width-size">选择已有方案</span>
-										<select class="form-control" id="knownPlan">
-											{% for plan in plans %} 
-											{% for company in companys %} 
-											{% if plan.company_id==company.id and plan.module_id=='gasPowerGeneration' %}
-											<option value="{{ plan.id }}">{{ company.company_name }}</option>
-											{% endif %}
-											{% endfor %}
-											{% endfor %}
-											<option value="0" selected="selected">请选择</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-12 margin-top-20">
-									<div class="input-group">
-										<span class="input-group-addon show-primary width-size1">項目所在地</span>
-										<input class="form-control" type="text" name="company_location">
-									</div>
-								</div>
-
-
-							</div>
-						</div>
-					</div>
-
 					<!-- 煤气参数 -->
 					<div class="col-md-12">
 						<!-- INPUT GROUPS -->
@@ -129,11 +90,100 @@
 						</div>
 					</div>
 
+					<!-- 其他资料需求 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"></div>
+							<div class="row">
+							</div>
+	
+							<div>
+								<div class="second-title"> 其他资料需求</div>
+									
+								<div class="panel-body">
+									<table class="table table-bordered">
+										<tbody>
+											<tr class="success">
+												<td class="third-title">名称</td>
+												<td class="third-title">备注</td>
+											</tr class="success">
+											{% for constant in constants %} 
+											{% if constant.name_eng in ['factory_location_elevation', 
+											'dielectric_position_height_caliber_route', 'water_quality_analysis_report',
+											'cooling_tower'] %}
+											<tr class="success">
+												<td>{{ constant.name }}</td>
+												<td>{{ constant.remark }}</td>
+											</tr>
+											{% endif %}
+
+											{% if constant.name_eng in ['project_approval_eia'] %}
+											<tr class="success">
+												<td>{{ constant.name }}</td>
+												<td>
+													<label class="radio-inline">
+														<input id="project_approval_eia_yes" name="project_approval_eia" type="radio">
+														<span><i></i>有</span>
+													</label>
+													<label class="radio-inline">
+														<input id="project_approval_eia_no" name="project_approval_eia" type="radio" checked>
+														<span><i></i>无</span>
+													</label>
+												</td>
+											</tr>
+											{% endif %}
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+	
+						</div>
+					</div>
+
 				</div>
 
 				<div class="col-md-6">
 
 					<div class="row">
+
+						<div class="col-md-12">
+							<div class="panel">
+								<div class="first-title"><i class="fa fa-building" aria-hidden="true"></i><span class="margin-left15">单位信息</span></div>
+								<div class="panel-body">
+									<div class="col-md-6">
+										<div class="input-group">
+											<span class="input-group-addon show-primary width-size">单位名称</span>
+											<input class="form-control" type="text" name="company_name">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="input-group">
+											<span class="input-group-addon show-primary width-size">选择已有方案</span>
+											<select class="form-control" id="knownPlan">
+												{% for plan in plans %} 
+												{% for company in companys %} 
+												{% if plan.company_id==company.id and plan.module_id=='gasPowerGeneration' %}
+												<option value="{{ plan.id }}">{{ company.company_name }}</option>
+												{% endif %}
+												{% endfor %}
+												{% endfor %}
+												<option value="0" selected="selected">请选择</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-12 margin-top-20">
+										<div class="input-group">
+											<span class="input-group-addon show-primary width-size1">項目所在地</span>
+											<input class="form-control" type="text" name="company_location">
+										</div>
+									</div>
+	
+	
+								</div>
+							</div>
+						</div>
 
 						<!-- 大气、地质条件 -->
 						<div class="col-md-12">
@@ -427,57 +477,6 @@
 							</div>
 						</div>
 
-						<!-- 其他资料需求 -->
-						<div class="col-md-12">
-								<!-- INPUT GROUPS -->
-								<div class="panel">
-									<div class="first-title"></div>
-									<div class="row">
-									</div>
-		
-									<div>
-										<div class="second-title"> 其他资料需求</div>
-										
-										<div class="panel-body">
-											<table class="table table-bordered">
-												<tbody>
-													<tr class="success">
-														<td class="third-title">名称</td>
-														<td class="third-title">备注</td>
-													</tr class="success">
-													{% for constant in constants %} 
-													{% if constant.name_eng in ['factory_location_elevation', 
-													'dielectric_position_height_caliber_route', 'water_quality_analysis_report',
-													'cooling_tower'] %}
-													<tr class="success">
-														<td>{{ constant.name }}</td>
-														<td>{{ constant.remark }}</td>
-													</tr>
-													{% endif %}
-
-													{% if constant.name_eng in ['project_approval_eia'] %}
-													<tr class="success">
-														<td>{{ constant.name }}</td>
-														<td>
-															<label class="radio-inline">
-																<input id="project_approval_eia_yes" name="project_approval_eia" type="radio">
-																<span><i></i>有</span>
-															</label>
-															<label class="radio-inline">
-																<input id="project_approval_eia_no" name="project_approval_eia" type="radio" checked>
-																<span><i></i>无</span>
-															</label>
-														</td>
-													</tr>
-													{% endif %}
-													{% endfor %}
-												</tbody>
-											</table>
-										</div>
-									</div>
-		
-								</div>
-							</div>
 
 						<div class="col-md-12">
 							<!-- INPUT GROUPS -->
