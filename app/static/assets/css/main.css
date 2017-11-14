@@ -51,7 +51,7 @@ footer {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  width: 14%;
+  width: 230px;
   height: 100%;
   float: left;
   background-color: #2B333E;
@@ -67,7 +67,7 @@ footer {
   width: calc(100% - 260px);
   left: 0;
   position: relative;
-  float: right;
+  float: right!important;
   background-color: #f5f5fa; }
 
 #wrapper #sidebar-nav,
@@ -417,6 +417,10 @@ ul.notifications > li {
         .sidebar .nav .nav > li > a.active a {
           color: #fff; }
 
+          .unselect{
+            color: #676a6d!important;
+            cursor: no-drop;
+        }
 /********************
  * TYPOGRAPHY
  ********************/
@@ -1755,8 +1759,8 @@ ul.activity-timeline > li {
     border: 1px solid #CCC; }
 
 .width88{
-    width: 86%;
-    float: right;
+  width: calc(100% - 230px);
+  float: right;
 }
 
 .short-width{
@@ -1779,3 +1783,8 @@ background-color: #337ab7;
 background-color: #337ab7;
 }
 /*# sourceMappingURL=main.css.map */
+
+.modal-content{
+  margin-top: 150px;
+  font-size: 13px;
+}

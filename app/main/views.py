@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from flask import render_template, redirect, url_for, flash,\
-    abort, jsonify, request
+    abort, jsonify, request, session
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, ChangePasswordForm,\
     ChangeEmailForm, UpdateUserForm, RegistrationForm
 from .. import db
 from ..models import User, CoalCHPComponent, CoalCHPConstant,\
-    CoalCHPNeedsQuestionnaire, Plan, Company
+    CoalCHPNeedsQuestionnaire, Plan, Company, CoalCHPFurnaceCalculation,\
+    BiomassCHPconstant, BiomassCHPBeltWidth,\
+    BiomassCHPNeedsQuestionnaire, BiomassCHPBoilerCalculation,\
+    CoalCHPCoalHandingSystem, CoalCHPRemovalAshSlag, CoalCHPDesulfurization,\
+    CoalCHPCirculatingWater, CoalCHPSmokeAirSystem, CoalCHPBoilerAuxiliaries
 from ..decorators import admin_required
-from coalService import ToCoalCHP
+from biomassService import ToBiomassCHP
+from ..gasPowerGeneration_models import GasPowerGenerationConstant,\
+     GasPowerGenerationNeedsQuestionnaire
 
 
 # 显示主页
@@ -211,45 +217,58 @@ def register():
     return render_template('page/add_user.html', form=form)
 
 
-# ######################燃煤热电联产例子 start ####################
-@main.route('/coalQuestionnaire')
+# ##############生物质热电联产 start###############
+# 需求调查表
+@main.route('/biomassQuestionnaire')
 @login_required
-def coalQuestionnaire():
-    coalCHPComponent = CoalCHPComponent.search_coalCHPComponent()
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_questionnaire")
+def biomassQuestionnaire():
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "biomassCHP_questionnaire")
     # 查询已有方案
     plans = Plan.search_plan(current_user.id)
     companys = Company.search_company()
     return render_template(
-        'page/coalCHP/coalQuestionnaire.html',
-        menuSelect='coalQuestionnaire',
-        coalsort=coalCHPComponent,
-        constants=coalCHPConstant,
+        'page/BiomassCHP/biomassQuestionnaire.html',
+        menuSelect='biomassQuestionnaire',
+        constants=biomassCHPConstant,
         plans=plans,
         companys=companys)
 
 
-@main.route('/coalSort', methods=['POST'])
+# 保存页面所有表单数据
+@main.route('/biomassFormData', methods=['POST'])
 @login_required
-def coalSort():
-    id = request.values.get('id')
-    datas = ToCoalCHP.to_coalCHPComponentJson(id)
-
-    return jsonify({'coalSort': datas})
-
-
-@main.route('/formData', methods=['POST'])
-@login_required
-def formData():
+def biomassFormData():
     companyName = request.form.get('company_name')
     companyLocation = request.form.get('company_location')
+    plan_id = ToBiomassCHP.create_plan(companyName, companyLocation)
+    questionnaire = ToBiomassCHP.to_questionnaire(request.form, plan_id)
+    BiomassCHPNeedsQuestionnaire.insert_questionnaire(questionnaire)
+    # datas = {}
+    # datas['flag'] = "success"
 
-    plan_id = ToCoalCHP.create_plan(companyName, companyLocation)
+    # return jsonify({'coalSort': datas})
+    session['biomassCHPPlanId'] = plan_id
+    return jsonify({'planId': plan_id})
 
-    questionnaire = ToCoalCHP.to_questionnaire(request.form, plan_id)
 
-    CoalCHPNeedsQuestionnaire.insert_questionnaire(questionnaire)
+# 初期化锅炉页面
+@main.route('/biomassInitFurnace', methods=['POST'])
+@login_required
+def biomassInitFurnace():
+    planId = request.values.get('planId')
+    furnace = BiomassCHPBoilerCalculation.search_furnace_calculation(planId)
+    furnaceData = ToBiomassCHP.to_furnaceJson(furnace)
+    return jsonify({'furnace': furnaceData})
+
+
+# 保存锅炉页面信息
+@main.route('/biomassFormDataFurnace', methods=['POST'])
+@login_required
+def biomassFormDataFurnace():
+    furnaceData = ToBiomassCHP.to_furnace(request.form,
+                                          session.get('biomassCHPPlanId'))
+    BiomassCHPBoilerCalculation.insert_furnace_calculation(furnaceData)
 
     datas = {}
     datas['flag'] = "success"
@@ -257,57 +276,71 @@ def formData():
     return jsonify({'coalSort': datas})
 
 
-@main.route('/findPlan', methods=['POST'])
+# 查找已知方案
+@main.route('/biomassFindPlan', methods=['POST'])
 @login_required
-def findPlan():
+def biomassFindPlan():
     planId = request.values.get('planId')
-    questionnaire = CoalCHPNeedsQuestionnaire.search_questionnaire(planId)
-    questionnaireData = ToCoalCHP.to_questionnaireJson(questionnaire)
-    return jsonify({'questionnaire': questionnaireData})
+    if(planId == '0'):
+        questionnaireData = {}
+        return jsonify({'questionnaire': questionnaireData})
+    else:
+        questionnaire = BiomassCHPNeedsQuestionnaire.search_questionnaire(
+            planId)
+        questionnaireData = ToBiomassCHP.to_questionnaireJson(questionnaire)
+        session['biomassCHPPlanId'] = planId
+        return jsonify({'questionnaire': questionnaireData})
 
 
-@main.route('/coalFurnace')
+# 燃料存储及输送
+@main.route('/biomassFuelStorTran')
 @login_required
-def coalFurnace():
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_furnaceCalculation")
+def biomassFuelStorTran():
+    biomassCHPBeltWidth = BiomassCHPBeltWidth.search_biomassCHPBeltWidth()
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "fuel_ST")
     return render_template(
-        'page/coalCHP/coalFurnace.html',
-        menuSelect='coalFurnace',
-        constants=coalCHPConstant)
+        'page/BiomassCHP/biomassFuelStorTran.html',
+        menuSelect='biomassFuelStorTran',
+        beltsort=biomassCHPBeltWidth,
+        constants=biomassCHPConstant)
 
 
-@main.route('/coalSteamTurbine')
+# 匹配断面系数
+@main.route('/beltSort', methods=['POST'])
 @login_required
-def coalSteamTurbine():
-    return render_template(
-        'page/coalCHP/coalSteamTurbine.html', menuSelect='coalSteamTurbine')
+def beltSort():
+    id = request.values.get('id')
+    datas = {}
+    biomassCHPBeltWidth = BiomassCHPBeltWidth.search_biomassCHPSort(id)
+    datas['width'] = biomassCHPBeltWidth.width
+    datas['coefficient'] = biomassCHPBeltWidth.coefficient
+
+    return jsonify({'beltSort': datas})
 
 
-@main.route('/coalHandingSystem')
+# 脱硫脱硝系统
+@main.route('/biomassDesulDenit')
 @login_required
-def coalHandingSystem():
-    coalHandingSystemConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_CoalHandingSystem")
+def biomassDesulDenit():
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "desulfurization_denitrification")
     return render_template(
-        'page/coalCHP/coalHandingSystem.html',
-        menuSelect='coalHandingSystem',
-        constants=coalHandingSystemConstant)
-# ##################燃煤热电联产 end##################
+        'page/BiomassCHP/biomassDesulDenit.html',
+        menuSelect='biomassDesulDenit',
+        constants=biomassCHPConstant)
 
 
-# ##############生物质热电联产例子 start###############
-@main.route('/biomassQuestionnaire')
+# 除尘除灰除渣系统
+@main.route('/biomassDASRemove')
 @login_required
-def biomassQuestionnaire():
-    coalCHPComponent = CoalCHPComponent.search_coalCHPComponent()
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_questionnaire")
+def biomassDASRemove():
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "das_remove")
     return render_template(
-        'page/BiomassCHP/biomassQuestionnaire.html',
-        menuSelect='biomassQuestionnaire',
-        coalsort=coalCHPComponent,
-        constants=coalCHPConstant)
+        'page/BiomassCHP/biomassDASRemove.html',
+        menuSelect='biomassDASRemove',
+        constants=biomassCHPConstant)
 
 
 @main.route('/biomassSteamTurbine')
@@ -318,11 +351,40 @@ def biomassSteamTurbine():
         menuSelect='biomassSteamTurbine')
 
 
+# 锅炉计算
 @main.route('/biomassFurnace')
 @login_required
 def biomassFurnace():
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "boiler_calculation")
     return render_template(
-        'page/BiomassCHP/biomassFurnace.html', menuSelect='biomassFurnace')
+        'page/BiomassCHP/biomassFurnace.html',
+        menuSelect='biomassFurnace',
+        constants=biomassCHPConstant)
+
+
+# 锅炉辅机
+@main.route('/biomassBoilerAuxiliaries')
+@login_required
+def biomassBoilerAuxiliaries():
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "boiler_auxiliaries")
+    return render_template(
+        'page/BiomassCHP/biomassBoilerAuxiliaries.html',
+        menuSelect='biomassBoilerAuxiliaries',
+        constants=biomassCHPConstant)
+
+
+# 公用工程
+@main.route('/biomassOfficialProcess')
+@login_required
+def biomassOfficialProcess():
+    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
+        "official_process")
+    return render_template(
+        'page/BiomassCHP/biomassOfficialProcess.html',
+        menuSelect='biomassOfficialProcess',
+        constants=biomassCHPConstant)
 
 # ########################生物质热电联产 end#################################
 
@@ -355,6 +417,64 @@ def ccppSteamTurbine():
         'page/CCPP/ccppSteamTurbine.html', menuSelect='ccppSteamTurbine')
 
 # ########################ccpp end#################################
+# ###################### 煤气发电 start ####################
+
+
+@main.route('/GPG_Questionnaire')
+@login_required
+def GPG_Questionnaire():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_questionnaire")
+    return render_template(
+        'page/GasPowerGeneration/GPG_Questionnaire.html',
+        menuSelect='GPG_Questionnaire',
+        constants=GPGConstant)
+
+
+@main.route('/GPG_BoilerOfPTS')
+@login_required
+def GPG_BoilerOfPTS():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_BoilerOfPTS")
+    return render_template(
+        'page/GasPowerGeneration/GPG_Boiler_of_PTS.html',
+        menuSelect='GPG_BoilerOfPTS',
+        constants=GPGConstant)
+
+
+@main.route('/GPG_GasAirSystem')
+@login_required
+def GPG_GasAirSystem():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_GasAirSystem")
+    return render_template(
+        'page/GasPowerGeneration/GPG_Gas_Air_System.html',
+        menuSelect='GPG_GasAirSystem',
+        constants=GPGConstant)
+
+
+@main.route('/GPG_SmokeResistance')
+@login_required
+def GPG_SmokeResistance():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_SmokeResistance")
+    return render_template(
+        'page/GasPowerGeneration/GPG_SmokeResistance.html',
+        menuSelect='GPG_SmokeResistance',
+        constants=GPGConstant)
+
+
+@main.route('/GPG_WindResistance')
+@login_required
+def GPG_WindResistance():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_WindResistance")
+    return render_template(
+        'page/GasPowerGeneration/GPG_WindResistance.html',
+        menuSelect='GPG_WindResistance',
+        constants=GPGConstant)
+
+# ###################### 煤气发电 end ####################
 
 
 @main.route('/subPages3')

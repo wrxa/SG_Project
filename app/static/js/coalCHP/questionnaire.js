@@ -6,7 +6,7 @@ $(document).ready(function () {
     $("#coalDesign").change(function () {
         // 选择其他项时清空当前所有煤质分析值
         var id = $(this).val();
-        if (id == "others") {
+        if (id == "-1") {
             for (var i = 0; i < sorts.length; i++) {
                 $("#" + sorts[i] + "_design").val("");
             }
@@ -25,7 +25,7 @@ $(document).ready(function () {
                     }
                 },
                 error: function () {
-                    alert("异常！");
+                    messageToast('error', '发生异常！',3000);
                 }
             });
         }
@@ -35,7 +35,7 @@ $(document).ready(function () {
     $("#coalCheck").change(function () {
         // 选择其他项时清空当前所有煤质分析值
         var id = $(this).val();
-        if (id == "others") {
+        if (id == "-1") {
             for (var i = 0; i < sorts.length; i++) {
                 $("#s_" + sorts[i] + "_check").val("");
             }
@@ -54,12 +54,11 @@ $(document).ready(function () {
                     }
                 },
                 error: function () {
-                    alert("异常！");
+                    messageToast('error', '发生异常！',3000);
                 }
             });
         }
     });
-
 
     // 给选择已知方案下拉框绑定事件
     $("#knownPlan").bind('change', updatePlanData);
@@ -68,62 +67,67 @@ $(document).ready(function () {
     $('#submitData').bind('click', submitQuestionnaire);
 });
 
-// 提交保存页面所有表单数据
-function submitQuestionnaire(){
+/**
+ * 提交保存页面所有表单数据
+ */
+function submitQuestionnaire() {
     $.ajax({
         cache: true,
         type: "POST",
-        url:'./formData',
-        data:$('#coalchpQuestionnaire').serialize(),
+        url: './formData',
+        data: $('#coalchpQuestionnaire').serialize(),
         async: false,
-        error: function(request) {
-            alert("Connection error");
+        error: function (request) {
+            messageToast('error', '发生异常，保存失败！',3000);
         },
-        success: function(data) {
-            alert("成功！！！" + data.coalSort.flag);
+        success: function (data) {
+            unlockMeunCoalCHP();
+            messageToast('success', '燃煤热电联产-需求调查表数据保存成功！',3000);
         }
     });
 
 }
 
-// 选择已知方案时动态变更所有输入框内值
-function updatePlanData(){
+/**
+ * 选择已知方案时动态变更所有输入框内值
+ */
+function updatePlanData() {
     var planId = $(this).val();
-    $.ajax({
-        cache: true,
-        type: "POST",
-        url:'./findPlan',
-        data: { "planId": planId },
-        async: false,
-        error: function(request) {
-            alert("Connection error");
-        },
-        success: function(data) {
-            assignmentForm(data.questionnaire);
-        }
-    });
-
+    if (planId != 0) {
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: './findPlan',
+            data: { "planId": planId },
+            async: false,
+            error: function (request) {
+                $("#ajax_message").html("异常！");
+                $("#modal_info").modal('show');
+            },
+            success: function (data) {
+                assignmentForm(data.questionnaire);
+                unlockMeunCoalCHP();
+            }
+        });
+    }else{
+        // 清空页面所有表单值
+        $("#coalchpQuestionnaire input").val("");
+        $("#coalCheck, #coalDesign").val("others");
+    }
 }
 
-// 给页面中所有表单赋值
-function assignmentForm(datas){
-    var elements = getElements();
+/**
+ * 给页面中所有表单赋值
+ * @param {后台传回来的值} datas 
+ */
+function assignmentForm(datas) {
+    var elements = getElements("coalchpQuestionnaire");
     var tempInput;
     for (var i = 0; i < elements.length; i++) {
         tempInput = elements[i];
-        $("input[name='"+tempInput+"']").val(datas[tempInput]);
+        $("input[name='" + tempInput + "']").val(datas[tempInput]);
     }
+    // 给select框赋值
     $("#coalCheck").val(datas['s_fuel_check']);
     $("#coalDesign").val(datas['s_fuel_design']);
-}
-
-
-//获取form中的所有的<input>对象  
-function getElements() {  
-    var tagElements = $("#coalchpQuestionnaire input");  
-    var elements = new Array();  
-    for (var j = 0; j < tagElements.length; j++){ 
-        elements.push(tagElements[j].name); 
-    }
-    return elements;  
 }

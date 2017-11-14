@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/coalBoilerAuxiliaries.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃煤热电联产-锅炉辅机系统</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">锅炉辅机系统</div>
+					</div>
+				</div>
+			</div>
+			<form id="coalBoilerAuxiliariesForm">
+				<div class="row">
+					<div class="row col-md-6">
+						<!-- 定期排污扩容器 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel">
+								<div class="first-title">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+									<span class="margin-left15">定期排污扩容器</span>
+								</div>
+								<div class="panel-body">
+									{% for constant in constants %} {% if constant.name_eng in ['r_boiler_evaporation', 'r_emission_time', 'r_emission_rate',
+									'r_sewage_quantity', 'r_drum_pressure', 'r_drum_aturatedwater_enthalpy', 'r_work_pressure', 'r_work_aturatedwater_enthalpy',
+									'r_work_latentheat_vaporization', 'r_affluence_coefficient', 'r_ultimate_strength', 'r_volume', 'r_specifications']
+									%}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+
+											</div>
+											{% if constant.calculate != "" %}
+											<div class="col-md-1">
+												<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+											</div>
+											{% endif %}
+
+										</div>
+									</div>
+									<br> {% endif %} {% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 磷酸盐加药装置-PH控制在9~11 -->
+						<div class="col-md-12">
+							<div class="panel">
+								<div class="first-title">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+									<span class="margin-left15">磷酸盐加药装置</span>
+								</div>
+								<div class="panel-body">
+									{% for constant in constants %} {% if constant.name_eng in ['d_boiler_watersystem_volume', 'd_phosphate_content', 'd_water_hardness',
+									'd_purity', 'd_boiler_dosage_startup', 'd_boiler_water_supply', 'd_boiler_sewage_quantity', 'd_boiler_dosage_run',
+									'd_na3po4_concentration', 'd_na3po4_density', 'd_solution_quantity_run'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+
+											</div>
+											{% if constant.calculate != "" %}
+											<div class="col-md-1">
+												<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+											</div>
+											{% endif %}
+
+										</div>
+									</div>
+									<br> {% endif %} {% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 锅炉补给水处理能力 -->
+						<div class="col-md-12">
+							<div class="panel">
+								<div class="first-title">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+									<span class="margin-left15"> 锅炉补给水处理能力</span>
+								</div>
+								<div class="panel-body">
+									{% for constant in constants %} {% if constant.name_eng in ['m_boiler_evaporation', 'm_makeup_steam', 'm_steamwater_cycle_loss',
+									'm_pollution_loss', 'm_condensing_capacity', 'm_condensate_loss', 'm_boiler_normal_watersupply', 'm_increase_loss',
+									'm_boiler_max_watersupply'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+
+											</div>
+											{% if constant.calculate != "" %}
+											<div class="col-md-1">
+												<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+											</div>
+											{% endif %}
+
+										</div>
+									</div>
+									<br> {% endif %} {% endfor %}
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+					<div class="col-md-6">
+
+						<div class="row">
+
+
+							<!-- 连续排污扩容器 -->
+							<div class="col-md-12">
+								<!-- INPUT GROUPS -->
+								<div class="panel margin-right30">
+									<div class="first-title">
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<span class="margin-left15">连续排污扩容器</span>
+									</div>
+									<div class="panel-body">
+										{% for constant in constants %} {% if constant.name_eng in ['c_boiler_evaporation', 'c_emission_rate', 'c_sewage_quantity',
+										'c_drum_pressure', 'c_drum_aturatedwater_enthalpy', 'c_work_pressure', 'c_work_aturatedwater_enthalpy', 'c_work_steam_pecificvolume',
+										'c_work_latentheat_vaporization', 'c_steam_dryness', 'c_ultimate_strength', 'c_vaporization_capacity', 'c_affluence_coefficient',
+										'c_volume', 'c_specifications'] %}
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													</div>
+
+												</div>
+												{% if constant.calculate != "" %}
+												<div class="col-md-1">
+													<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+												</div>
+												{% endif %}
+
+											</div>
+										</div>
+										<br> {% endif %} {% endfor %}
+									</div>
+								</div>
+							</div>
+
+
+							<!--  给水泵 -->
+							<div class="col-md-12">
+								<div class="panel margin-right30">
+									<div class="first-title">
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<span class="margin-left15"> 给水泵</span>
+									</div>
+									<div class="panel-body">
+										{% for constant in constants %} {% if constant.name_eng in ['p_water_inlet_resistance', 'p_center_altitude_difference', 'p_deaerator_altitude_difference',
+										'p_feedpump_total_head', 'p_flow', 'p_pump_efficiency', 'p_transmission_efficiency', 'p_motor_efficiency', 'p_motor_reserve_factor',
+										'p_auxiliary_motor_power', 'p_specifications'] %}
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													</div>
+
+												</div>
+												{% if constant.calculate != "" %}
+												<div class="col-md-1">
+													<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+												</div>
+												{% endif %}
+
+											</div>
+										</div>
+										<br> {% endif %} {% endfor %}
+									</div>
+								</div>
+							</div>
+
+							
+							<!--  除氧水箱/凝结水箱-共用 -->
+							<div class="col-md-12">
+								<div class="panel  margin-right30">
+									<div class="first-title">
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<span class="margin-left15"> 除氧水箱/凝结水箱-共用</span>
+									</div>
+									<div class="panel-body">
+										{% for constant in constants %} 
+										{% if constant.name_eng in ['s_boiler_evaporation', 's_storage_time', 's_volume', 's_size_length', 's_size_diameter'] %}
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													</div>
+
+												</div>
+												{% if constant.calculate != "" %}
+												<div class="col-md-1">
+													<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+												</div>
+												{% endif %}
+
+											</div>
+										</div>
+										<br> {% endif %} {% endfor %}
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<!-- INPUT GROUPS -->
+								<div class="panel margin-right30">
+									<div class="first-title">
+										<i class="fa fa-floppy-o" aria-hidden="true"></i>
+										<span class="margin-left15">保存调查表信息</span>
+									</div>
+									<div class="row text-center">
+										<br>
+										<br>
+										<button type="button" id="submitData" class="btn btn-success">
+											<i class="fa fa-check-circle"></i> 保存</button>
+
+										<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
+									</div>
+									<br>
+									<br>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		</form>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}
+	

@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/coalCirculatingWater.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃煤热电联产-循环水系统</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">循环水系统</div>
+					</div>
+				</div>
+			</div>
+			<form id="coalCirculatingWaterForm">
+				<div class="row">
+					<div class="row col-md-6">
+						<!-- 循环水量计算 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel">
+								<div class="first-title">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+									<span class="margin-left15">循环水量计算</span>
+								</div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									
+											{% if constant.name_eng in ['v_steam_exhaust_flow'] %}
+											<div class="row">
+											    <div class="col-md-12">
+													<div class="col-md-3">{{ constant.name }}</div>
+													<div class="col-md-4">
+														<div class="input-group">
+															<span class="input-group-addon show-primary">冬季</span>
+															<input class="form-control" type="text" id="{{ constant.name_eng }}_winter" name="{{ constant.name_eng }}_winter">
+															<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+														</div>
+	
+													</div>
+													<div class="col-md-4">
+														<div class="input-group">
+															<span class="input-group-addon show-success">夏季</span>
+															<input class="form-control" type="text" id="{{ constant.name_eng }}_summer" name="{{ constant.name_eng }}_summer">
+															<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+														</div>
+													</div>
+													{% if constant.calculate != "" %}
+													<div class="col-md-1">
+														<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
+														 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													</div>
+													{% endif %}
+												</div>
+											</div>
+										</br>
+											{% endif %}
+										
+											{% if constant.name_eng in ['v_circulating_ratio', 'v_circulating_water', 'v_auxiliary_engine_cooling_water', 'v_total_circulating_water', 'v_amount_of_makeup_water'] %}
+											<div class="row">
+											    <div class="col-md-12">
+													<div class="col-md-3">{{ constant.name }}</div>
+													<div class="col-md-4">
+														<div class="input-group">
+															<span class="input-group-addon show-primary">冬季</span>
+															<input class="form-control" type="text" id="{{ constant.name_eng }}_winter" name="{{ constant.name_eng }}_winter">
+															<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="input-group">
+															<span class="input-group-addon show-success">夏季</span>
+															<input class="form-control" type="text" id="{{ constant.name_eng }}_summer" name="{{ constant.name_eng }}_summer">
+															<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+														</div>
+													</div>
+													{% if constant.calculate != "" %}
+													<div class="col-md-1">
+														<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
+														 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													</div>
+													{% endif %}
+												</div>
+											</div>
+										</br>
+											{% endif %}
+
+											
+											{% if constant.name_eng in ['v_steam_exhaust_flow_select', 'v_total_circulating_water_select'] %}
+											<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+												<div class="col-md-4">
+													<div class="input-group">
+														<span class="input-group-addon show-success">选择</span>
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													</div>
+
+												</div>
+												{% if constant.calculate != "" %}
+												<div class="col-md-3">
+													<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+												</div>
+												{% endif %}
+											</div>
+										
+											</div>
+										</br>
+									{% endif %}
+									
+									
+									
+									{% if constant.name_eng in ['v_enter_the_outlet_temperature_difference', 'v_dry_bulb_temperature', 'v_k', 'v_evaporation_loss_rate', 'v_evaporation_loss', 'v_blowing_loss_rate', 'v_partial_blow_loss', 'v_concentrate_ratio', 'v_discharge_loss', 'v_discharge_capacity', 'v_amount_of_makeup_water_winter', 'v_amount_of_makeup_water_summer', 'v_circulating_pool_size', 'v_circulating_pool_long', 'v_circulating_pool_wide', 'v_circulating_pool_hight', 'v_check_circulating_pool_size'] %}
+									<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										<div class="col-md-8">
+											<div class="input-group">
+												<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+
+										</div>
+										{% if constant.calculate != "" %}
+										<div class="col-md-1">
+											<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+										</div>
+										{% endif %}
+									</div>
+								
+									</div>
+								</br>
+							{% endif %}
+									
+									
+									
+									
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+
+						<div class="row">
+
+							<div class="col-md-12">
+								<!-- INPUT GROUPS -->
+								<div class="panel margin-right30">
+									
+									<div class="first-title">
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<span class="margin-left15">附录</span>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-12">
+												<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/circulatingWater.png') }}"/>
+	
+											</div>
+										</div>
+									<br>
+								</div>
+
+							</div>
+
+							<!-- 循环水泵计算 -->
+						
+								<div class="panel margin-right30">
+									<div class="first-title">
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<span class="margin-left15">循环水泵计算</span>
+									</div>
+
+									<div class="panel-body">
+										{% for constant in constants %} {% if constant.name_eng in ['c_pressure_condenser', 'c_condenser_tube_friction', 'c_circulating_water_pressure', 'c_circulating_water_pressure', 'c_circulation_height_difference', 'c_height_difference_inlet', 'c_pipe_losses', 'c_y_losses', 'c_pumping_head', 'c_flow', 'c_pump_power', 'c_mechine_power', 'c_motor_power', 'c_motor_backup_coefficient', 'c_supporting_motor_power', 'c_forklift_parameters_power', 'c_forklift_parameters_flow', 'c_forklift_parameters_lift'] %}
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
+												<div class="col-md-6">
+													<div class="input-group">
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													</div>
+
+												</div>
+												{% if constant.calculate != "" %}
+												<div class="col-md-1">
+													<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+												</div>
+												{% endif %}
+
+											</div>
+										</div>
+										<br> {% endif %} {% endfor %}
+									</div>
+							</div> 
+						</div> 
+
+							<div class="col-md-12">
+								<!-- INPUT GROUPS -->
+								<div class="panel margin-right30">
+									<div class="first-title">
+										<i class="fa fa-floppy-o" aria-hidden="true"></i>
+										<span class="margin-left15">保存调查表信息</span>
+									</div>
+									<div class="row text-center">
+										<br>
+										<br>
+										<button type="button" id="submitData" class="btn btn-success">
+											<i class="fa fa-check-circle"></i> 保存</button>
+
+										<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
+									</div>
+									<br>
+									<br>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+		</div>
+		</form>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

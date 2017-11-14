@@ -1,0 +1,485 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/biomassCHP/fuelSotrTran.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/biomassCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">生物质热电联产-燃料存储及输送系统</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">燃料存储及输送系统</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-md-6">	
+					<!-- 锅炉燃料耗量 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"><i class="fa fa-free-code-camp" aria-hidden="true"></i><span class="margin-left15">锅炉燃料耗量</span></div>
+							<div class="panel-body">
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['b_rated_fuel_consumption', 'b_saily_use_hours', 'b_daily_consumption', 'b_annual_use_hours', 'b_year_consumption', 'b_unbalance_coefficient', 'b_daily_fuel_consumption', 'b_carrying_vehicle_load', 'b_daily_vehicle'] %}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">设计</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-success">校核</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+					<!-- 尾部料仓有效容积 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"><i class="fa fa-hourglass-3" aria-hidden="true"></i><span class="margin-left15">尾部料仓有效容积</span></div>
+							<div class="panel-body">
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['t_rated_fuel_consumption', 't_hourage', 't_bin_quantity', 't_total_effective_volume', 't_single_effective_volume_calculation', 't_single_effective_volume_selected', 't_consumption_hours'] %}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">设计</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-success">校核</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<!-- 上料系统出力 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"><i class="fa fa-rocket" aria-hidden="true"></i><span class="margin-left15">上料系统出力</span>
+								{% for constant in constants %}
+								{% if constant.name_eng in ['f_single_rated_fuel_consumption'] %}
+									<i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+								{% endif %}
+								{% endfor %}
+							</div>
+							<div class="panel-body">
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['f_single_rated_fuel_consumption', 'f_daily_consumption', 'f_feeding_output_calculation', 'f_feeding_output_selected'] %}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">设计</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-success">校核</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% if constant.name_eng in ['f_belt_width'] %}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}</div>
+										<div class="col-md-8">
+											<div class="input-group">
+												<select class="form-control" id="beltWidth">
+													{% for sort in beltsort %} 
+														{% if sort.width == "800" %}
+															<option value="{{ sort.id }}" selected>{{ sort.width }}</option>
+														{% else %}
+															<option value="{{ sort.id }}">{{ sort.width }}</option>
+														{% endif %}
+													{% endfor %}
+												</select>
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% if constant.name_eng in ['f_section_coefficient', 'f_belt_speed', 'f_loose_density', 'f_belt_max_delivery'] %}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}</div>
+										<div class="col-md-8">
+											<div class="input-group">
+												{% if constant.name_eng in ['f_section_coefficient'] %}
+													<input class="form-control" type="text"  readonly="true" id="belt_coefficient" value="380">
+												{% else %}
+													<input class="form-control" type="text">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<!-- 炉前螺旋给料机出力 -->
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div class="first-title"><i class="fa fa-send" aria-hidden="true"></i><span class="margin-left15">炉前螺旋给料机出力</span></div>
+							<div class="panel-body">
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['s_rated_fuel_consumption', 's_duplex_number', 's_flushness', 's_duplex_output', 's_single_duplex_output'] %}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">设计</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="input-group">
+												<span class="input-group-addon show-success">校核</span>
+												{% if  constant.default_value != "" %}
+													<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+												{% else %}
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+												{% endif %}
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+										{% if constant.calculate != "" %}
+											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+										{% endif %}
+									</div>
+								</div>
+								<br>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="row">
+						<!-- 原料堆场面积 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title">
+									<i class="fa fa-home" aria-hidden="true"></i><span class="margin-left15">原料堆场面积</span>
+									{% for constant in constants %}
+									{% if constant.name_eng in ['s_fuel_reserve_days'] %}
+										<i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+									{% endif %}
+									{% endfor %}
+								</div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									{% if constant.name_eng in ['s_fuel_reserve_days', 's_fuel_available_reserves', 's_aggregate_coefficient', 's_average_stack_height', 's_fuel_bulk_density', 's_yard_area'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">设计</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-success">校核</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											{% if constant.calculate != "" %}
+												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}
+										</div>
+									</div>
+									<br>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 干料棚面积 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-institution" aria-hidden="true"></i><span class="margin-left15">干料棚面积</span>
+									{% for constant in constants %}
+									{% if constant.name_eng in ['d_fuel_reserve_days'] %}
+										<i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+									{% endif %}
+									{% endfor %}
+								</div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									{% if constant.name_eng in ['d_fuel_reserve_days', 'd_fuel_available_reserves', 'd_aggregate_coefficient', 'd_average_stack_height', 'd_fuel_bulk_density', 'd_yard_area'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">设计</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-success">校核</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											{% if constant.calculate != "" %}
+												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}
+										</div>
+									</div>
+									<br>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 尾部螺旋给料机出力 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">尾部螺旋给料机出力</span></div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									{% if constant.name_eng in ['f_rated_fuel_consumption', 'f_duplex_number', 'f_flushness', 'f_duplex_output', 'f_single_duplex_output'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">设计</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-success">校核</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											{% if constant.calculate != "" %}
+												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}
+										</div>
+									</div>
+									<br>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 炉前料仓有效容积 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-hourglass-1" aria-hidden="true"></i><span class="margin-left15">炉前料仓有效容积</span></div>
+								<div class="panel-body">
+									{% for constant in constants %} 
+									{% if constant.name_eng in ['bs_rated_fuel_consumption', 'b_hourage', 'b_bin_quantity', 'b_total_effective_volume', 'b_single_effective_volume_calculation', 'b_single_effective_volume_selected', 'b_consumption_hours'] %}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">设计</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_design">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-success">校核</span>
+													{% if  constant.default_value != "" %}
+														<input class="form-control" type="text" value="{{ constant.default_value }}" id="{{ constant.name_eng }}_check">
+													{% else %}
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check">
+													{% endif %}
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												</div>
+											</div>
+											{% if constant.calculate != "" %}
+												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
+											{% endif %}
+										</div>
+									</div>
+									<br>
+									{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						<!-- 参考信息 -->
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-file" aria-hidden="true"></i><span class="margin-left15">参考信息</span></div>
+								<div class="panel-body">
+									<div><span class="second-title">上料系统工艺流程：</span><br><br><span class="flow-text">干料棚尾部料仓地下受料斗→尾部料仓双螺旋给料机→皮带输送机→炉前料仓→炉前料仓双螺旋给料机</span></div><br>
+									<div class="second-title"> 表10.2.4</div>
+									<div class="col-md-12 margin-top-20">
+										 <img class="img-responsive center-block" src="{{ url_for('static', filename='img/BiomassCHP/10.2.4.png') }}" />
+									</div>
+								</div>
+								<br>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<!-- INPUT GROUPS -->
+							<div class="panel margin-right30">
+								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存页面信息</span></div>
+								<div class="row text-center">
+									<button type="button" id="submitData" class="btn btn-success btn-lg"><i class="fa fa-check-circle"></i>保存</button>
+									<button type="button" class="btn btn-danger  btn-lg"><i class="fa fa-trash-o"></i>清空</button>
+								</div>
+								<br> <br>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

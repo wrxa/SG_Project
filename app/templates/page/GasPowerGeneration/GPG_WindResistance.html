@@ -1,0 +1,825 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃气发电-风阻力</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">风阻力</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-md-12">
+					<div class="col-md-12">
+						<div class="first-title" style="font-weight: bold"> 风道阻力计算
+							<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" 
+								data-placement="right" data-html="true"
+								data-content="(2)火电厂制粉系统设计计算技术规定<br/>
+								(8)烟风煤粉管道设计技术规程<br/>">
+							</i>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="second-title" style="font-weight: bold"> 推荐流速
+						</div>
+						<div class="col-md-12 third-title-center"> 
+							<div class="col-md-3"> 项目名称
+							</div>
+							<div class="col-md-2"> 符号	
+							</div>
+							<div class="col-md-2"> 单位 										
+							</div>
+							<div class="col-md-3"> 公式及计算 										
+							</div>
+							<div class="col-md-2"> 一次风										
+							</div>
+						</div>
+
+						{% for constant in constants %} 
+						{% if constant.name_eng in ['recommend_velocity_coldwind', 'recommend_velocity_hotwind'] %}
+						<div style="text-align:center">
+							<div class="panel-body">
+								<div class="col-md-12">
+									<div class="col-md-3 show-primary">{{ constant.name }}											
+									</div>
+
+									<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+									</div>
+
+									<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+									</div>
+
+									<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+										{% if constant.remark != "" %}
+										<i class="fa fa-calculator"  title="参考："  
+										data-container="body" data-toggle="popover" data-placement="right" 
+										data-content="{{ constant.remark }}">
+										</i>
+										{% endif %}												
+									</div>						
+
+									<div class="col-md-2 show-warning2">
+									{% if constant.name_eng == "recommend_velocity_coldwind" %}
+										10 ~ 12
+									{% else %}
+										15 ~ 25
+									{% endif %}												
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 1. 冷风道(吸风口至空预器）</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['intake_to_preheater_temperature', 'intake_to_preheater_amount', 
+								'intake_to_preheater_density', 'intake_to_preheater_flow_velocity', 'intake_to_preheater_dynamic_pressure_head'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											{% if constant.name_eng in ['air_preheater_discriminant'] %}
+											<div class="col-md-2 show-warning2">紊流过渡区													
+											</div>
+											{% else %}
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>	
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 1.1 风机进口</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_inlet_duct_section_area', 'fan_inlet_duct_length', 
+								'fan_inlet_duct_width', 'fan_inlet_duct_perimeter', 'fan_inlet_duct_equivalent_diameter',
+								'fan_inlet_gas_kinetic_viscosity', 'fan_inlet_reynolds_number', 'fan_inlet_absolute_tube_roughness',
+								'fan_inlet_relative_tube_roughness', 'fan_inlet_560_relative_tube_roughness', 'fan_inlet_discriminant'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											{% if constant.name_eng in ['fan_inlet_discriminant'] %}
+											<div class="col-md-2 show-warning2">紊流过渡区													
+											</div>
+											{% else %}
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.1.1 摩擦阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_inlet_frictional_resistance', 'fan_inlet_frictional_resistance_coefficient', 
+								'fan_inlet_unit_length_frictional_resistance', 'fan_inlet_ducting_length'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.1.2 局部阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_inlet_local_resistance',
+								'fan_inlet_local_resistance_coefficient', 'fan_inlet_single_local_resistance_coefficient', 'fan_inlet_single_bellows',
+								'fan_inlet_single_damper'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.1.3 风机进口段总阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_inlet_total_pressure'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 1.2 风机出口至空预器</div>
+								<div class="second-title"> 1.2.1 摩擦阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_outlet_frictional_resistance', 'fan_outlet_unit_length_frictional_resistance',
+								'fan_outlet_ducting_length'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.2.2 局部阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_outlet_local_resistance', 'fan_outlet_local_resistance_coefficient',
+								'fan_outlet_single_increase_pipe', 'fan_outlet_90_section_slow_turn_elbow',
+								'fan_outlet_preheater_diffuser_pipe'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.2.3 风机出口至空预器总阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['fan_outlet_to_preheater_total_pressure'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2. 热风道（空预器出口至锅炉风室）</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['preheater_to_boiler_temperature', 'preheater_to_boiler_amount',
+								'preheater_to_boiler_density', 'preheater_to_boiler_flow_velocity', 
+								'preheater_to_boiler_dynamic_pressure_head', 'preheater_outlet_duct_section_area',
+								'preheater_outlet_duct_diameter', 'preheater_outlet_duct_length, preheater_outlet_duct_width',
+								'preheater_outlet_duct_perimeter', 'preheater_outlet_duct_equivalent_diameter',
+								'preheater_outlet_gas_kinetic_viscosity', 'preheater_outlet_reynolds_number',
+								'preheater_outlet_absolute_tube_roughness', 'preheater_outlet_relative_tube_roughness',
+								'preheater_outlet_560_relative_tube_roughness', 'preheater_outlet_discriminant'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											{% if constant.name_eng in ['preheater_outlet_discriminant'] %}
+											<div class="col-md-2 show-warning2">紊流过渡区													
+											</div>
+											{% else %}
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>	
+					
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2.1 摩擦阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['preheater_outlet_frictional_resistance', 'preheater_outlet_frictional_resistance_coefficient',
+								'preheater_outlet_unit_length_frictional_resistance', 'preheater_outlet_ducting_length'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>	
+
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2.2 局部阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['preheater_outlet_local_resistance', 'preheater_outlet_local_resistance_coefficient',
+								'preheater_outlet_shrink_pipe', 'preheater_outlet_90_sharp_turn_elbow',
+								'preheater_outlet_90_sharp_turn_elbow_count', 'preheater_outlet_90_sharp_turn_elbow_resistance',
+								'preheater_outlet_air_intake_gate', 'preheater_outlet_combustor_gate'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2.3 空预器出口至锅炉风室总阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['preheater_outlet_to_boiler_total_pressure'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel">
+							<div>
+								<div class="second-title"> 3. 风道总阻力</div>								
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 一次风										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['windhole_total_pressure'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel margin-right30">
+							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+							<div class="row text-center">
+								<br><br>
+								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+
+								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+							</div>
+							<br> <br>
+						</div>
+					</div>
+				</div>
+
+				<!--<div class="col-md-5">
+					<div class="col-md-12">
+						<div class="panel margin-right30">
+							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+							<div class="row text-center">
+								<br><br>
+								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+
+								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+							</div>
+							<br> <br>
+						</div>
+					</div>
+				</div>-->
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

@@ -35,6 +35,9 @@ def create_app(config_name):
     from .api_1_0 import api as api_1_0_blueprint
     app.register_blueprint(api_1_0_blueprint, url_prefix='/api')
 
+    from .coal_chp import coal_chp as coalchp_blueprint
+    app.register_blueprint(coalchp_blueprint, url_prefix='/coal_chp')
+
     app.debug = False
 
     return app

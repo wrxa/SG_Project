@@ -1,0 +1,829 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃气发电-烟阻力</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">烟阻力</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-md-12">
+					<div class="col-md-12">
+						<div class="first-title" style="font-weight: bold"> 烟道阻力计算（1台引风机/1炉）
+							<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" 
+								data-placement="right" data-html="true"
+								data-content="(2)火电厂制粉系统设计计算技术规定<br/>
+								(8)烟风煤粉管道设计技术规程<br/>">
+							</i>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="second-title" style="font-weight: bold"> 推荐流速
+						</div>
+						<div class="col-md-12 third-title-center"> 
+							<div class="col-md-3"> 项目名称
+							</div>
+							<div class="col-md-2"> 符号	
+							</div>
+							<div class="col-md-2"> 单位 										
+							</div>
+							<div class="col-md-3"> 公式及计算 										
+							</div>
+							<div class="col-md-2"> 钢烟道										
+							</div>
+						</div>
+
+						{% for constant in constants %} 
+						{% if constant.name_eng in ['recommend_velocity'] %}
+						<div style="text-align:center">
+							<div class="panel-body">
+								<div class="col-md-12">
+									<div class="col-md-3 show-primary">{{ constant.name }}											
+									</div>
+
+									<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+									</div>
+
+									<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+									</div>
+
+									<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+										{% if constant.remark != "" %}
+										<i class="fa fa-calculator"  title="参考："  
+										data-container="body" data-toggle="popover" data-placement="right" 
+										data-content="{{ constant.remark }}">
+										</i>
+										{% endif %}												
+									</div>						
+
+									<div class="col-md-2 show-warning2">10~15													
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 1. 空预器出口至除尘器入口 </div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['air_preheater_outlet_calculated_temperature', 'air_preheater_outlet_smoke_amount', 
+								'air_preheater_density', 'air_preheater_flow_velocity', 'air_preheater_dynamic_pressure_head', 
+								'air_preheater_smoke_tube_area', 'air_preheater_length', 'air_preheater_width', 'air_preheater_duct_perimeter',
+								'air_preheater_tube_equivalent_diameter', 'air_preheater_gas_kinetic_viscosity',
+								'air_preheater_reynolds_number', 'air_preheater_absolute_tube_roughness', 'air_preheater_relative_tube_roughness',
+								'air_preheater_560_relative_tube_roughness', 'air_preheater_discriminant'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+
+											{% if constant.name_eng in ['air_preheater_discriminant'] %}
+											<div class="col-md-2 show-warning2">紊流过渡区													
+											</div>
+											{% else %}
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.1 摩擦阻力 </div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['air_preheater_frictional_resistance',
+								'air_preheater_frictional_resistance_coefficient', 'air_preheater_unit_length_frictional_resistance',
+								'air_preheater_ducting_length'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.2 局部阻力 </div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['air_preheater_local_resistance', 'air_preheater_local_resistance_coefficient',
+								'air_preheater_90_outlet_sharp_turn_elbow', 'air_preheater_sharp_turn_elbow_powder_local_resistance_coefficient',
+								'air_preheater_sharp_turn_elbow_air_elbow_local_resistance_coefficient',
+								'air_preheater_sharp_turn_elbow_powder_concentration_corrected_coefficient',
+								'air_preheater_90_section_slow_turn_elbow', 'air_preheater_slow_turn_elbow_powder_local_resistance_coefficient',
+								'air_preheater_slow_turn_elbow_air_elbow_local_resistance_coefficient', 
+								'air_preheater_slow_turn_elbow_powder_concentration_corrected_coefficient', 'air_preheater_reducer_tube'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+							<div>
+								<div class="second-title"> 1.3 空预器出口至除尘器入口总阻力 </div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['air_preheater_to_deduster_total_resistance'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2. 除尘器出口至引风机入口</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['deduster_outlet_calculated_temperature', 'deduster_outlet_smoke_amount', 
+								'deduster_density', 'deduster_flow_velocity', 'deduster_dynamic_pressure_head', 
+								'deduster_smoke_tube_area', 'deduster_length', 'deduster_width', 'deduster_duct_perimeter',
+								'deduster_tube_equivalent_diameter', 'deduster_gas_kinetic_viscosity',
+								'deduster_reynolds_number', 'deduster_absolute_tube_roughness', 'deduster_relative_tube_roughness',
+								'deduster_560_relative_tube_roughness', 'deduster_discriminant'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											{% if constant.name_eng in ['deduster_discriminant'] %}
+											<div class="col-md-2 show-warning2">紊流过渡区													
+											</div>
+											{% else %}
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2.1 摩擦阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['deduster_frictional_resistance',
+								'deduster_frictional_resistance_coefficient', 'deduster_unit_length_frictional_resistance',
+								'deduster_ducting_length'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;													
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2.2 局部阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['deduster_local_resistance', 'deduster_local_resistance_coefficient',
+								'deduster_90_outlet_slow_turn_elbow', 'deduster_slow_turn_elbow_powder_local_resistance_coefficient',
+								'deduster_slow_turn_elbow_air_elbow_local_resistance_coefficient',
+								'deduster_slow_turn_elbow_powder_concentration_corrected_coefficient',
+								'deduster_90_section_slow_turn_elbow', 'deduster_section_slow_turn_elbow_powder_local_resistance_coefficient',
+								'deduster_section_slow_turn_elbow_air_elbow_local_resistance_coefficient', 
+								'deduster_corrected_turning_angle_coefficient', 'deduster_section_corrected_height_width_ratio_coefficient',
+								'deduster_section_original_resistance_coefficient_with_roughness',
+								'deduster_section_slow_turn_elbow_powder_concentration_corrected_coefficient',
+								'deduster_inlet_bellows'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}													
+											</div>						
+											
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="panel">
+							<div>
+								<div class="second-title"> 2.3 除尘器出口至引风机入口总阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 钢烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['deduster_to_induced_draft_total_resistance'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+											
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 3. 引风机出口至烟囱</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 金属烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['induced_draft_inlet_calculated_temperature', 'induced_draft_inlet_smoke_amount', 
+								'induced_draft_density', 'induced_draft_flow_velocity', 'induced_draft_dynamic_pressure_head', 
+								'induced_draft_smoke_tube_area', 'induced_draft_width', 'induced_draft_height', 'induced_draft_duct_perimeter',
+								'induced_draft_tube_equivalent_diameter', 'induced_draft_gas_kinetic_viscosity',
+								'induced_draft_reynolds_number', 'induced_draft_absolute_tube_roughness', 'induced_draft_relative_tube_roughness',
+								'induced_draft_560_relative_tube_roughness', 'induced_draft_discriminant'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											{% if constant.name_eng in ['induced_draft_discriminant'] %}
+											<div class="col-md-2 show-warning2">紊流过渡区													
+											</div>
+											{% else %}
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="panel">
+							<div>
+								<div class="second-title"> 3.1 摩擦阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 金属烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['induced_draft_frictional_resistance',
+								'induced_draft_frictional_resistance_coefficient', 'induced_draft_unit_length_frictional_resistance',
+								'induced_draft_ducting_length'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="panel">
+							<div>
+								<div class="second-title"> 3.2 局部阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 金属烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['induced_draft_local_resistance', 'induced_draft_local_resistance_coefficient',
+								'induced_draft_outlet_plate_gate', 'induced_draft_outlet_diffuser_tube',
+								'induced_draft_45_90_slow_turn_elbow', 'induced_draft_powder_local_resistance_coefficient',
+								'induced_draft_air_local_resistance_coefficient',
+								'induced_draft_corrected_turning_angle_coefficient', 'induced_draft_corrected_height_width_ratio_coefficient',
+								'induced_draft_original_resistance_coefficient_with_roughness', 
+								'induced_draft_powder_concentration_corrected_coefficient', 'brick_chimney_inlet'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="panel">
+							<div>
+								<div class="second-title"> 3.3 引风机出口至烟囱入口总阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 金属烟道										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['induced_draft_to_chimney_total_resistance'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>						
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 4. 烟道总阻力</div>									
+
+								<div class="col-md-12 third-title-center"> 
+									<div class="col-md-3"> 项目名称
+									</div>
+									<div class="col-md-2"> 符号	
+									</div>
+									<div class="col-md-2"> 单位 										
+									</div>
+									<div class="col-md-3"> 公式及计算 										
+									</div>
+									<div class="col-md-2"> 结果										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['smoke_chimney_total_resistance'] %}
+								<div style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3 show-primary">{{ constant.name }}											
+											</div>
+
+											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
+											</div>
+
+											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
+											</div>
+
+											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}												
+											</div>
+
+											<div class="col-md-2">
+												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											</div>
+
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="panel margin-right30">
+							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+							<div class="row text-center">
+								<br><br>
+								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+
+								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+							</div>
+							<br> <br>
+						</div>
+					</div>
+				</div>
+
+				<!--<div class="col-md-5">
+					<div class="col-md-12">
+						<div class="panel margin-right30">
+							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+							<div class="row text-center">
+								<br><br>
+								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+
+								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+							</div>
+							<br> <br>
+						</div>
+					</div>
+				</div>-->
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

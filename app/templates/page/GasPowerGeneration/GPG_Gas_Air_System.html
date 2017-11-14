@@ -1,0 +1,739 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/questionnaire.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃气发电-烟风系统</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">烟风系统</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-md-7">
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 工况--标况 </div>									
+
+								<div class="col-md-12 third-title" style="text-align:center"> 
+									<div class="col-md-3"> 名称
+									</div>
+									<div class="col-md-5"> 公式	
+									</div>
+									<div class="col-md-2"> 风 										
+									</div>
+									<div class="col-md-2"> 烟 										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['c2s_condition_temperature', 'c2s_condition_flux', 
+								'c2s_local_atmosphere', 'c2s_standard_temperature', 'c2s_standard_pressure', 
+								'c2s_standard_flux'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-2">
+												<div class="input-group">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_air" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+
+											<div class="col-md-2">
+												<div class="input-group">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_smoke" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 标况--工况 </div>									
+
+								<div class="col-md-12 third-title" style="text-align:center"> 
+									<div class="col-md-2"> 名称
+									</div>
+									<div class="col-md-4"> 公式	
+									</div>
+									<div class="col-md-2"> 风 										
+									</div>
+									<div class="col-md-2"> 烟 										
+									</div>
+									<div class="col-md-2"> 煤气 										
+									</div>
+								</div> 
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['s2c_standard_temperature', 's2c_standard_pressure', 
+								's2c_standard_flux', 's2c_condition_temperature', 's2c_local_atmosphere', 
+								's2c_condition_flux'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-2">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-4">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-2">
+												<div class="input-group">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_air" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+
+											<div class="col-md-2">
+												<div class="input-group">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_smoke" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="input-group">
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_gas" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 送风机计算 </div>									
+
+
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['blower_air_temperature', 'blower_wind_resistance', 
+								'blower_local_atmosphere', 'blower_condition_smoke_flux', 'blower_fan_temperature', 
+								'blower_fan_total_pressure', 'blower_fan_selected_total_pressure', 'blower_fan_selected_flux', 
+								'blower_fan_pressure_efficiency', 'blower_transmission_efficiency', 'blower_motor_efficiency',
+								'blower_fan_shaft_power', 'blower_motor_safe_margin', 'blower_motor_power',
+								'blower_specification_power', 'blower_specification_flux'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 引风机计算 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['Induced_smoke_temperature', 'Induced_fan_total_pressure', 
+								'Induced_local_atmosphere', 'Induced_condition_smoke_flux', 'Induced_fan_temperature', 
+								'Induced_smoke_density', 'Induced_fan_total_pressure', 'Induced_fan_selected_total_pressure', 
+								'Induced_fan_selected_flux', 'Induced_fan_efficiency', 'Induced_transmission_efficiency',
+								'Induced_motor_efficiency', 'Induced_fan_shaft_power', 'Induced_motor_safe_margin',
+								'Induced_motor_power', 'Induced_specification_power', 'Induced_specification_flux'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 煤气总管道计算 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['gas_tube_medium_flux', 'gas_tube_medium_temperature', 
+								'gas_tube_flow_velocity', 'gas_tube_calculated_cross_sectional_area', 'gas_tube_calculated_diameter', 
+								'gas_tube_selected_diameter', 'gas_tube_selected_thickness'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 冷风管道计算 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['coldwind_tube_medium_flux', 'coldwind_tube_medium_temperature', 
+								'coldwind_tube_flow_velocity', 'coldwind_tube_calculated_cross_sectional_area', 'coldwind_tube_calculated_diameter', 
+								'coldwind_tube_length', 'coldwind_tube_width', 'coldwind_tube_specification'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 热风管道计算-空预器出口方管 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['hotwind_tube_medium_flux', 'hotwind_tube_medium_temperature', 
+								'hotwind_tube_flow_velocity', 'hotwind_tube_calculated_cross_sectional_area', 'hotwind_tube_calculated_diameter', 
+								'hotwind_tube_length', 'hotwind_tube_width', 'hotwind_tube_specification'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 烟管道计算-总 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['total_smoke_tube_medium_flux', 'total_smoke_tube_medium_temperature', 
+								'total_smoke_tube_flow_velocity', 'total_smoke_tube_calculated_cross_sectional_area', 'total_smoke_tube_calculated_diameter', 
+								'total_smoke_tube_length', 'total_smoke_tube_width', 'total_smoke_tube_specification'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 烟管道计算-支 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['branch_smoke_tube_medium_flux', 'branch_smoke_tube_medium_temperature', 
+								'branch_smoke_tube_flow_velocity', 'branch_smoke_tube_calculated_cross_sectional_area', 'branch_smoke_tube_calculated_diameter', 
+								'branch_smoke_tube_length', 'branch_smoke_tube_width', 'branch_smoke_tube_specification'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 热风管道计算-母管 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['main_hotwind_tube_medium_flux', 'main_hotwind_tube_medium_temperature', 
+								'main_hotwind_tube_flow_velocity', 'main_hotwind_tube_calculated_cross_sectional_area', 'main_hotwind_tube_calculated_diameter', 
+								'main_hotwind_tube_selected_diameter', 'main_hotwind_tube_selected_thickness'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 热风管道计算-入口支管 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['branch_hotwind_tube_medium_flux', 'branch_hotwind_tube_medium_temperature', 
+								'branch_hotwind_tube_flow_velocity', 'branch_hotwind_tube_calculated_cross_sectional_area', 
+								'branch_hotwind_tube_calculated_diameter', 'branch_hotwind_tube_selected_diameter', 
+								'branch_hotwind_tube_selected_thickness'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 烟囱抽力计算 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['chimney_height', 'local_atmosphere', 'standard_air_density', 
+								'standard_average_smoke_density', 'standard_calculated_smoke_density', 'outdoor_air_temperature', 
+								'chimney_inlet_temperature', 'chimney_temperature_drop_per_meter', 'chimney_average_temperature', 'chimney_draft'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 烟囱出口内径计算及低负荷校核 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['smoke_amount', 'chimney_outlet_temperature', 'chimney_outlet_flow', 
+								'chimney_outlet_inner_diameter', 'chimney_outlet_selected_inner_diameter', 'chimney_experience_base_diameter', 
+								'low_load_smoke_amount', 'low_load_smoke_temperature', 'low_load_flow_30_percent'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel">
+							<div>
+								<div class="second-title"> 烟囱阻力计算 </div>
+
+								{% for constant in constants %} 
+								{% if constant.name_eng in ['chimney_resistance_coefficient', 'chimney_average_velocity', 'chimney_average_diameter', 
+								'chimney_friction_resistance', 'chimney_outlet_resistance_coefficient', 'chimney_outlet_resistance', 
+								'chimney_total_resistance'] %}
+								<div class="row" style="text-align:center">
+									<div class="panel-body">
+										<div class="col-md-12">
+											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})											
+											</div>
+
+											<div class="col-md-5">{{ constant.calculate }}												
+											</div>
+											
+											<div class="col-md-4">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">结果</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考值："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-5">
+
+					<div class="col-md-12">
+						<div class="panel margin-right30">
+							<div class="first-title">
+								<i class="fa fa-building" aria-hidden="true"></i>
+								<span class="margin-left15">参考信息</span>
+							</div>
+							<div class="panel-body">
+								<div class="second-title"> 烟囱出口流速</div>
+								<div class="col-md-12 margin-top-20">
+									<img class="img-responsive center-block" src="{{ url_for('static', filename='img/GPG/GPG_GasAirSystem/windSpeed.png') }}"/>
+								</div>
+							</div>
+
+							<div class="panel-body">
+								<div class="second-title"> 表7-28</div>
+								<div class="col-md-12 margin-top-20">
+									<img class="img-responsive center-block" src="{{ url_for('static', filename='img/GPG/GPG_GasAirSystem/7-28.png') }}"
+									/>
+								</div>
+							</div>
+
+							<div class="panel-body">
+								<div class="second-title"> 烟囱高度规定</div>
+								<div class="col-md-12 margin-top-20">
+									<img class="img-responsive center-block" src="{{ url_for('static', filename='img/GPG/GPG_GasAirSystem/4-18-1.png') }}"
+									/>
+								</div>
+							</div>
+
+							<div class="panel-body">
+								<div class="second-title"> 表4-18</div>
+								<div class="col-md-12 margin-top-20">
+									<img class="img-responsive center-block" src="{{ url_for('static', filename='img/GPG/GPG_GasAirSystem/4-18-2.png') }}"
+									/>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-12">
+						<!-- INPUT GROUPS -->
+						<div class="panel margin-right30">
+							<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+							<div class="row text-center">
+								<br><br>
+								<button type="button" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+
+								<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+							</div>
+							<br> <br>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

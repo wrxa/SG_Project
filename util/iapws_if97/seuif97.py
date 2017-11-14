@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import ctypes
-from platform import *
+from platform import system
 import math
+import numpy
 
 cdll_names = {'Linux': 'libseuif97.so',
               'Windows': 'libseuif97.dll'}
@@ -13,6 +14,81 @@ if (osplat == 'Linux'):
 elif (osplat == 'Windows'):
     flib = ctypes.windll.LoadLibrary(cdll_names[osplat])
     prototype = ctypes.WINFUNCTYPE(ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_int)
+
+
+def HG_P(var):
+    return 1
+
+
+def VG_P(var):
+    return 1
+
+
+# 烟焓表
+smokeEnthalpyData = [
+    [u'温度', u'co2', u'N2', u'O2', u'H2O', u'干空气', u'co', u'h2', u'H2S', u'Ch4', u'C2H4'],
+    [100, 172, 130.13, 131.93, 150.18, 130.51, 130.21, 128.96, 154.08, 165.39, 210.61],
+    [200, 361.67, 260.6, 267.38, 303.47, 261.94, 262.1, 259.59, 314.86, 353.38, 465.59],
+    [300, 564.24, 392.41, 407.48, 461.36, 395.42, 395.67, 390.65, 482.34, 567.75, 758.68],
+    [400, 777.44, 526.89, 551.58, 623.6, 532.08, 532.58, 520.86, 658.19, 808.93, 1088.62],
+    [500, 1001.78, 664.58, 700.17, 791.55, 672.01, 672.01, 653.17, 841.59, 984.78, 1446.61],
+    [600, 1236.76, 805.06, 851.64, 964.68, 814.96, 816.46, 786.41, 1032.51, 1071.84, 1828.88],
+    [700, 1475.41, 940.36, 1005.89, 1143.64, 960.75, 961.33, 920.3, 1230.98, 1667.68, 2233.35],
+    [800, 1718.95, 1094.65, 1162.32, 1328.11, 1109.05, 1112.06, 1055.12, 1436.98, 1996.36, 2672.98],
+    [900, 1972.43, 1243.55, 1319.67, 1517.87, 1259.36, 1262.38, 1190.78, 1646.75, 2336.35, 3105.08],
+    [1000, 2226.75, 1393.86, 1480.11, 1713.32, 1411.86, 1415.2, 1327.28, 1863.21, 2696.43, 3567.32]
+]
+
+weight = [
+    [u'体积百分比 （空气）', 0.0003, 0.7808, 0.2095, 0.0001, 0.0093, 0, 0, 0, 0, 0],
+    [u'体积百分比 （窑尾）', 0.304, 0.583, 0.043, 0.07, 0, 0, 0, 0, 0, 0],
+    [u'体积百分比 （玻璃）', 0.081, 0.764, 0.105, 0.05, 0, 0, 0, 0, 0, 0],
+    [u'体积百分比 （电石）', 0.143, 0.76, 0.083, 0.014, 0, 0, 0, 0, 0, 0],
+    [u'体积百分比 （烧结）', 0.05, 0.79, 0.158, -1, -1, 0.002, -1, -1, -1],
+    [u'体积百分比（工业硅）', 0.0363, 0.7708, 0.1736, 0.0193, 0, 0, 0, 0, 0, 0]
+]
+
+
+def _gasEnthalpy(var, para):
+    param = numpy.mat(weight[int(para)][1:]).T
+    for i in range(2, 11):
+        if smokeEnthalpyData[i][0] > var:
+            tabledata1 = numpy.mat(smokeEnthalpyData[i - 1][1:]) * param
+            tabledata2 = numpy.mat(smokeEnthalpyData[i][1:]) * param
+            result = tabledata1 + (tabledata1 + tabledata2) * (var - smokeEnthalpyData[i - 1][0]) / 100
+            return float(result)
+        elif abs(smokeEnthalpyData[i][0] - var) <= 0.0001:
+            tabledata = numpy.mat(smokeEnthalpyData[i][1:])
+            return float(tabledata * param)
+    return -1
+
+
+def h_kq(var):
+    return _gasEnthalpy(var, 0)
+
+
+def h_sp(var):
+    return _gasEnthalpy(var, 1)
+
+
+def h_bl(var):
+    return _gasEnthalpy(var, 2)
+
+
+def h_ds(var):
+    return _gasEnthalpy(var, 3)
+
+
+def h_sj(var):
+    return _gasEnthalpy(var, 4)
+
+
+def h_g(var):
+    return _gasEnthalpy(var, 5)
+
+
+# def h_nt(var):
+#     return _gasEnthalpy(var, 6)
 
 
 # 饱和区压强计算
@@ -35,6 +111,10 @@ def psat_s(s):
         psat_s = __p4_s(s) * 10
         return psat_s
     return -1
+
+
+def h_p(p):
+    return pt(p, tsat_p(p), 4)
 
 
 # 饱和区温度计算
@@ -286,16 +366,16 @@ def tx2s(t, x):
 # ---------- processing ------------
 def ishd(p1, t1, p2):
     f = flib.seuishd
-    f.argtypes = [c_double, c_double, c_double]
-    f.restype = c_double
+    f.argtypes = [ctypes.c_double, ctypes.c_double, ctypes.c_double]
+    f.restype = ctypes.c_double
     result = f(p1, t1, p2)
     return result
 
 
 def ief(p1, t1, p2, t2):
     f = flib.seuief
-    f.argtypes = [c_double, c_double, c_double, c_double]
-    f.restype = c_double
+    f.argtypes = [ctypes.c_double, ctypes.c_double, ctypes.c_double, ctypes.c_double]
+    f.restype = ctypes.c_double
     result = f(p1, t1, p2, t2)
     return result
 

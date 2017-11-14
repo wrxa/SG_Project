@@ -26,6 +26,17 @@
 						<div class="panel">
 							<div class="first-title"><i class="fa fa-fire" aria-hidden="true"></i><span class="margin-left15">燃料情况</span></div>
 							<div class="second-title"> 煤质分析</div>
+
+							
+							<div class="col-md-12">
+								<div class="col-md-3 text-center"></div>
+								<div class="col-md-4 text-center design-color">设计值</div>
+								<div class="col-md-4 text-center check-color">校核值</div>
+								<div class="col-md-1 text-center"></div>
+							</div>
+
+						</br>
+
 							<div class="row">
 								<div class="panel-body">
 									<div class="col-md-12">
@@ -34,23 +45,23 @@
 										</div>
 										<div class="col-md-4">
 											<div class="input-group">
-												<span class="input-group-addon show-primary">设计</span>
+												<!-- <span class="input-group-addon show-primary"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span> -->
 												<select class="form-control" id="coalDesign" name="s_fuel_design">
 														{% for sort in coalsort %} 
 														<option value="{{ sort.id }}">{{ sort.name }}</option>
 														{% endfor %}
-														<option value="others" selected="selected">其他</option>
+														<option value="-1" selected="selected">其他</option>
 												</select>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="input-group">
-												<span class="input-group-addon show-success">校核</span>
+												<!-- <span class="input-group-addon show-success"><i class="fa fa-check" aria-hidden="true"></i></span> -->
 												<select class="form-control" id="coalCheck" name="s_fuel_check">
 														{% for sort in coalsort %} 
 														<option value="{{ sort.id }}">{{ sort.name }}</option>
 														{% endfor %}
-														<option value="others" selected="selected">其他</option>
+														<option value="-1" selected="selected">其他</option>
 												</select>
 											</div>
 										</div>
@@ -61,7 +72,6 @@
 							<div>
 								<div class="second-title"> 燃料收到基的元素分析及工业分析</div>
 
-
 								{% for constant in constants %} 
 								{% if constant.name_eng in ['s_low', 's_carbon', 's_hydrogen', 's_oxygen', 's_nitrogen', 's_sulfur', 's_water', 's_grey', 's_daf', 's_grindability'] %}
 								<div class="row">
@@ -70,17 +80,17 @@
 											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
+													<!-- <span class="input-group-addon show-primary"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span> -->
 													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
+													<!-- <span class="input-group-addon show-success"><i class="fa fa-check" aria-hidden="true"></i></span> -->
 													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.remark != "" %}
@@ -235,11 +245,12 @@
 											<select class="form-control" id="knownPlan">
 												{% for plan in plans %} 
 												{% for company in companys %} 
-												{% if plan.company_id==company.id  %}
+												{% if plan.company_id==company.id and plan.module_id=='coalCHP' %}
 												<option value="{{ plan.id }}">{{ company.company_name }}</option>
 												{% endif %}
 												{% endfor %}
 												{% endfor %}
+												<option value="0" selected="selected">请选择</option>
 											</select>
 										</div>
 									</div>
@@ -250,14 +261,6 @@
 										</div>
 
 									</div>
-									<div class="col-md-12 margin-top-20">
-										<div class="input-group">
-											<span class="input-group-addon show-primary">項目单位性质</span>
-											<input class="form-control" type="text">
-										</div>
-
-									</div>
-
 								</div>
 
 							</div>
@@ -364,9 +367,9 @@
 								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存调查表信息</span></div>
 								<div class="row text-center">
 									<br><br>
-									<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i> Success</button>
+									<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i> 保存</button>
 
-									<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>
+									<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
 								</div>
 								<br> <br>
 							</div>

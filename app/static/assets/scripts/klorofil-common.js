@@ -54,9 +54,11 @@ $(document).ready(function() {
 
 	$('.sidebar a[data-toggle="collapse"]').on('click', function() {
 		var leftMeun = ['collapsed index', 'elements', 'charts', 'tables', 'typography', 'icons',
-		'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem',
-		'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine',
-		'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine'
+		'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem', 'coalDesulfurization','coalBoilerAuxiliaries', 'coalRemovalAshSlag', 'coalCirculatingWater', 'coalSmokeAirSystem',
+		'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine','biomassFuelStorTran',
+		'biomassDesulDenit', 'biomassDASRemove', 'biomassBoilerAuxiliaries', 'biomassOfficialProcess',
+		'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',
+		'GPG_Questionnaire', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 'GPG_WindResistance'
 		];
 		// 不走后台时菜单清除除下拉菜单以外的选中状态
 		var thisClass = "";
