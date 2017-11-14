@@ -7,7 +7,8 @@ $(document).ready(function() {
                     'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine','biomassFuelStorTran',
                     'biomassDesulDenit', 'biomassDASRemove', 'biomassBoilerAuxiliaries', 'biomassOfficialProcess',
                     'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',
-		    'GPG_Questionnaire', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 'GPG_WindResistance'
+                    'GPG_Questionnaire', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 'GPG_WindResistance', 
+                    'GPG_CirculatingWaterSystem'
                     ];
     var menuSelect = $("#menuSelect").val();
 
@@ -41,7 +42,8 @@ $(document).ready(function() {
                 }
             }
             if(menuSelect == 'GPG_Questionnaire'|| menuSelect == 'GPG_BoilerOfPTS' || menuSelect == 'GPG_GasAirSystem'
-                || menuSelect == 'GPG_SmokeResistance' || menuSelect == 'GPG_WindResistance') {
+                || menuSelect == 'GPG_SmokeResistance' || menuSelect == 'GPG_WindResistance' 
+                || menuSelect =='GPG_CirculatingWaterSystem') {
                 // alert()
                 if($('.sidebar a[data-toggle="collapse"]').hasClass('collapsed')) {
                     $('#gaspowerMean').attr('class', 'index active');
@@ -127,12 +129,12 @@ function unlockMeunBiomassCHP() {
 
 // 解锁子菜单
 function unlockMenuGPG() {
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').removeClass('unselect');
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').removeAttr('onclick');
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').removeClass('unselect');
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').removeAttr('onclick');
 }
 
 //锁定子菜单
-function lockMeunGPG() {
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').addClass('unselect');
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance').attr("onclick", "return false;");
+function lockMenuGPG() {
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').addClass('unselect');
+    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').attr("onclick", "return false;");
 }

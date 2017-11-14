@@ -6,7 +6,505 @@ from gasPowerGeneration_models import GasPowerGenerationConstant, \
                                     GasPowerGenerationNeedsQuestionnaire, \
                                     GPGBoilerOfPTS, GPGFlueGasAirSystem, \
                                     GPGSmokeResistance, GPGWindResistance, \
-                                    GPGCirculatingWaterSystem
+                                    GPGCirculatingWaterSystem, GPGSmokeAirCalculate
+
+# 煤气发电 烟风量计算
+GPGSmokeAirCalculate_data = [{
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_h2",
+        "name": u"H2 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_co",
+        "name": u"CO 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_ch4",
+        "name": u"CH4 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_c2h4",
+        "name": u"C2H4 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_c3h8",
+        "name": u"C3H8 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_c4h10",
+        "name": u"C4H10 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_n2",
+        "name": u"N2 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_o2",
+        "name": u"O2 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_co2",
+        "name": u"CO2 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_h2s",
+        "name": u"H2S 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "cpsh_cmhn",
+        "name": u"CmHn 定压比热容",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_need_air_amonut_per_m3",
+        "name": u"标态下每m³干燃气燃烧所需理论空气量",
+        "symbol": u"V0",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_air_density",
+        "name": u"标态下空气密度",
+        "symbol": u"ρ0",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_need_air_mass_per_m3",
+        "name": u"标态下每m³干燃气燃烧所需理论空气质量",
+        "symbol": u"L0",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "excessive_air_coefficient",
+        "name": u"过量空气系数",
+        "symbol": u"α",
+        "unit": u"kg/m³",
+        "calculate": u"",
+        "remark": u"1.05-1.1"
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "actual_need_air_amonut",
+        "name": u"实际所需空气量",
+        "symbol": u"V",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_gas_humidity_per_m3",
+        "name": u"标态下每m³燃气的含湿量",
+        "symbol": u"dR",
+        "unit": u"g/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_air_humidity_per_m3",
+        "name": u"标态下每m³空气的含湿量",
+        "symbol": u"dK",
+        "unit": u"g/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "actual_air_amount_in_wet",
+        "name": u"空气中有水时，实际空气量",
+        "symbol": u"V",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_ro2_amonut_per_m3",
+        "name": u"标态下每m³燃气燃烧理论烟气量中RO2",
+        "symbol": u"VRO2",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_n2_amonut_per_m3",
+        "name": u"标态下每m³燃气燃烧理论烟气量中N2",
+        "symbol": u"VN2",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_actual_ro2_amonut_per_m3",
+        "name": u"标态下每m³燃气燃烧理论烟气量中N2实际",
+        "symbol": u"VN2",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_h2o_amonut_per_m3",
+        "name": u"标态下每m³燃气燃烧理论烟气量中H2O",
+        "symbol": u"VH2O",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_actual_h2o_amonut_per_m3",
+        "name": u"标态下每m³燃气燃烧理论烟气量中H2O实际",
+        "symbol": u"VH2O",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "constant_o2_amonut_per_m3",
+        "name": u"标态下每m³燃气燃烧理论烟气量中O2",
+        "symbol": u"VO2",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "actual_burning_gas_amonut",
+        "name": u"实际燃烧烟气量",
+        "symbol": u"Vy",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "theory_burning_gas_amonut",
+        "name": u"理论燃烧烟气量",
+        "symbol": u"Vy",
+        "unit": u"m³/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "net_calorific_value",
+        "name": u"低位发热量",
+        "symbol": u"Hl",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "gross_heating_value",
+        "name": u"高位发热量",
+        "symbol": u"Hh",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "gas_init_temperature",
+        "name": u"燃气初始温度",
+        "symbol": u"tg",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "air_init_temperature",
+        "name": u"空气初始温度",
+        "symbol": u"tg",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "gas_average_cpvh",
+        "name": u"燃气平均定压体积热容",
+        "symbol": u"Cg",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "gas_h2o_average_cpvh",
+        "name": u"燃气中H2O平均定压体积热容",
+        "symbol": u"C",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "air_average_cpvh",
+        "name": u"空气平均定压体积热容",
+        "symbol": u"Ca",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "air_h2o_average_cpvh",
+        "name": u"空气中H2O平均定压体积热容",
+        "symbol": u"C",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_SmokeAirCalculate",
+        "name_eng":
+        "hy_adiabatic_calorimeter_temperature",
+        "name":
+        u"假设---绝热状态的热量计温度",
+        "symbol":
+        u"tc",
+        "unit":
+        u"℃",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "smoke_ro2_average_cpvh",
+        "name": u"烟气中RO2平均定压体积热容",
+        "symbol": u"C",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "smoke_h2o_average_cpvh",
+        "name": u"烟气中H2O平均定压体积热容",
+        "symbol": u"C",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "smoke_n2_average_cpvh",
+        "name": u"烟气中N2平均定压体积热容",
+        "symbol": u"C",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "smoke_o2_average_cpvh",
+        "name": u"烟气中O2平均定压体积热容",
+        "symbol": u"C",
+        "unit": u"KJ/m³.K",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_SmokeAirCalculate",
+        "name_eng":
+        "calc_adiabatic_calorimeter_temperature",
+        "name":
+        u"计算---绝热状态的热量计温度",
+        "symbol":
+        u"tc",
+        "unit":
+        u"℃",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "deviation_check",
+        "name": u"误差核对---2%以内合理",
+        "symbol": u"",
+        "unit": u"%",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name":
+        "GPG_SmokeAirCalculate",
+        "name_eng":
+        "incomplete_combustion_loss_coefficient",
+        "name":
+        u"化学不完全燃烧热损失系数",
+        "symbol":
+        u"q3",
+        "unit":
+        u"%",
+        "calculate":
+        u"",
+        "remark":
+        u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "incomplete_combustion_loss",
+        "name": u"化学不完全燃烧热损失",
+        "symbol": u"Q3",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "heat_loss_coefficient",
+        "name": u"散热损失系数",
+        "symbol": u"q5",
+        "unit": u"%",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "heat_loss",
+        "name": u"散热损失",
+        "symbol": u"Q5",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "calc_theory_burning_temperature",
+        "name": u"计算---理论燃烧温度",
+        "symbol": u"tc",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "high_temperature_coefficient",
+        "name": u"高温系数",
+        "symbol": u"",
+        "unit": u"",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "coefficient_actual_temperature",
+        "name": u"实际燃烧温度--系数法",
+        "symbol": u"tc",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "calc_actual_temperature",
+        "name": u"实际燃烧温度--计算法",
+        "symbol": u"tc",
+        "unit": u"℃",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "ro2_volume_enthalpy",
+        "name": u"烟气中R02体积焓",
+        "symbol": u"ct",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "n2_volume_enthalpy",
+        "name": u"烟气中N2体积焓",
+        "symbol": u"ct",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "h2o_volume_enthalpy",
+        "name": u"烟气中H2O体积焓",
+        "symbol": u"ct",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "air_volume_enthalpy",
+        "name": u"烟气中空气体积焓",
+        "symbol": u"ct",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "dust_volume_enthalpy",
+        "name": u"烟气中飞灰体积焓",
+        "symbol": u"ct",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "theory_smoke_volume_enthalpy",
+        "name": u"理论烟气体积焓",
+        "symbol": u"hy0",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "theory_air_volume_enthalpy",
+        "name": u"理论空气体积焓",
+        "symbol": u"hk0",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "theory_dust_volume_enthalpy",
+        "name": u"理论飞灰体积焓",
+        "symbol": u"hfh",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }, {
+        "module_name": "GPG_SmokeAirCalculate",
+        "name_eng": "smoke_enthalpy",
+        "name": u"烟气焓",
+        "symbol": u"hy",
+        "unit": u"KJ/m³",
+        "calculate": u"",
+        "remark": u""
+    }
+]
+
 # 煤气发电 循环水系统
 GPGCirculatingWaterSystem_data = [{
         "module_name": "GPG_CirculatingWaterSystem",
@@ -27,7 +525,7 @@ GPGCirculatingWaterSystem_data = [{
     }, {
         "module_name": "GPG_CirculatingWaterSystem",
         "name_eng": "steam_exhaust_flux_selected",
-        "name": u"选定乏汽流量",
+        "name": u"乏汽流量-选定",
         "symbol": u"",
         "unit": u"t/h",
         "calculate": u"",
@@ -124,6 +622,14 @@ GPGCirculatingWaterSystem_data = [{
         u"",
         "remark":
         u""
+    }, {
+        "module_name": "GPG_CirculatingWaterSystem",
+        "name_eng": "selected_total_circulation_water_flow",
+        "name": u"总循环水量-选定",
+        "symbol": u"",
+        "unit": u"m3/h",
+        "calculate": u"",
+        "remark": u"Q选定"
     }, {
         "module_name": "GPG_CirculatingWaterSystem",
         "name_eng": "spray_density",
@@ -3825,10 +4331,11 @@ questionnaire_data = [{
 class AddGPG():
     # 初始化数据
     @staticmethod
-    def init_data():
+    def init_data():  
         data = [questionnaire_data, GPGBoilerOfPTS_data, GPGGasAirSys_data,
                 GPGSmokeResistance_data, GPGWindResistance_data,
-                GPGCirculatingWaterSystem_data]
+                GPGCirculatingWaterSystem_data, GPGSmokeAirCalculate_data]
+              
         for index in range(len(data)):
             AddGPG.insert_constant(data[index])
 

@@ -58,7 +58,8 @@ $(document).ready(function() {
 		'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine','biomassFuelStorTran',
 		'biomassDesulDenit', 'biomassDASRemove', 'biomassBoilerAuxiliaries', 'biomassOfficialProcess',
 		'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',
-		'GPG_Questionnaire', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 'GPG_WindResistance'
+		'GPG_Questionnaire', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 'GPG_WindResistance', 
+		'GPG_CirculatingWaterSystem'
 		];
 		// 不走后台时菜单清除除下拉菜单以外的选中状态
 		var thisClass = "";

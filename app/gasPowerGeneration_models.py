@@ -62,6 +62,161 @@ class GasPowerGenerationConstant(db.Model):
         return '<gasPowerGenerationConstant %r>' % self.module_name
 
 
+# 煤气发电 烟、风量计算 smoke_air_calculate
+class GPGSmokeAirCalculate(db.Model):
+    # 表名
+    __tablename__ = 'gaspowergeneration_smoke_air_calculate'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
+
+    # H2 定压比热容		
+    cpsh_h2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co 定压比热容		
+    cpsh_co = db.Column(db.NUMERIC(precision=15, scale=5))
+    # ch4 定压比热容		
+    cpsh_ch4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c2h4 定压比热容		
+    cpsh_c2h4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c3h8 定压比热容		
+    cpsh_c3h8 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c4h10 定压比热容		
+    cpsh_c4h10 = db.Column(db.NUMERIC(precision=15, scale=5))
+    #n2 定压比热容		
+    cpsh_n2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # o2 定压比热容		
+    cpsh_o2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co2 定压比热容		
+    cpsh_co2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # h2s 定压比热容		
+    cpsh_h2s = db.Column(db.NUMERIC(precision=15, scale=5))
+    # cmhn 定压比热容		
+    cpsh_cmhn = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 标态下每m³干燃气燃烧所需理论空气量																							
+    constant_need_air_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下空气密度																																												
+    constant_air_density = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³干燃气燃烧所需理论空气质量																																												
+    constant_need_air_mass_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 过量空气系数																																												
+    excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 实际所需空气量																																												
+    actual_need_air_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气的含湿量																																												
+    constant_gas_humidity_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³空气的含湿量																																												
+    constant_air_humidity_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 空气中有水时，实际空气量																																																				
+    actual_air_amount_in_wet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气燃烧理论烟气量中RO2																																																																									
+    constant_ro2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气燃烧理论烟气量中N2																																																																																														
+    constant_n2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气燃烧理论烟气量中N2实际																																																																									
+    constant_actual_ro2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气燃烧理论烟气量中H2O																																																																									
+    constant_h2o_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气燃烧理论烟气量中H2O实际																																																																																														
+    constant_actual_h2o_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³燃气燃烧理论烟气量中O2																																																																																														
+    constant_o2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 实际燃烧烟气量																																																																																																					
+    actual_burning_gas_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论燃烧烟气量																																																																																																					
+    theory_burning_gas_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 低位发热量																																																																																																					
+    net_calorific_value = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 高位发热量																																																																																																					
+    gross_heating_value = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 燃气初始温度																																																																																																																										
+    gas_init_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 空气初始温度																																																																																																																										
+    air_init_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 燃气平均定压体积热容																																																																																																																												
+    gas_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 燃气中H2O平均定压体积热容	
+    gas_h2o_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 空气平均定压体积热容	
+    air_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 空气中H2O平均定压体积热容	
+    air_h2o_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))		
+    # 假设---绝热状态的热量计温度							
+    hy_adiabatic_calorimeter_temperature = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 烟气中RO2平均定压体积热容	
+    smoke_ro2_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 烟气中H2O平均定压体积热容	
+    smoke_h2o_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 烟气中N2平均定压体积热容	
+    smoke_n2_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟气中O2平均定压体积热容	
+    smoke_o2_average_cpvh = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 计算---绝热状态的热量计温度							
+    calc_adiabatic_calorimeter_temperature = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 误差核对---2%以内合理							
+    deviation_check = db.Column(db.NUMERIC(precision=15, scale=5))   	
+    # 化学不完全燃烧热损失系数	
+    incomplete_combustion_loss_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))  	
+    # 化学不完全燃烧热损失	
+    incomplete_combustion_loss = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 散热损失系数	
+    heat_loss_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 散热损失	
+    heat_loss = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 计算---理论燃烧温度							
+    calc_theory_burning_temperature = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 高温系数							
+    high_temperature_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 实际燃烧温度--系数法							
+    coefficient_actual_temperature = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 实际燃烧温度--计算法							
+    calc_actual_temperature = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 烟气中R02体积焓							
+    ro2_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 烟气中N2体积焓							
+    n2_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟气中H2O体积焓							
+    h2o_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟气中空气体积焓							
+    air_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 烟气中飞灰体积焓							
+    dust_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 理论烟气体积焓							
+    theory_smoke_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))	
+    # 理论空气体积焓							
+    theory_air_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论飞灰体积焓							
+    theory_dust_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 烟气焓							
+    smoke_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    def __init__(self, **kwargs):
+        super(GPGSmokeAirCalculate, self).__init__(**kwargs)
+
+    @staticmethod
+    def insert_SmokeAirCalculate(gaspowergeneration_smoke_air_calculate):
+        try:
+            db.session.add(gaspowergeneration_smoke_air_calculate)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_smoke_air_calculate"
+                  "<id=%s> in database" % (gaspowergeneration_smoke_air_calculate.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_SmokeAirCalculate(planId):
+        result = GPGSmokeAirCalculate.query.filter_by(plan_id=planId).one_or_none()
+        return result
+
+
+
+
 # 煤气发电 循环水系统 circulating_water_system
 class GPGCirculatingWaterSystem(db.Model):
     # 表名
@@ -171,7 +326,27 @@ class GPGCirculatingWaterSystem(db.Model):
     # 选用型号-扬程
     selected_pump_model_lift = db.Column(db.NUMERIC(precision=15, scale=5))
 
+    def __init__(self, **kwargs):
+        super(GPGCirculatingWaterSystem, self).__init__(**kwargs)
 
+    @staticmethod
+    def insert_CirculatingWater(gaspowergeneration_circulating_water_system):
+        try:
+            db.session.add(gaspowergeneration_circulating_water_system)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_circulating_water_system"
+                  "<id=%s> in database" % (gaspowergeneration_circulating_water_system.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_CirculatingWater(planId):
+        result = GPGCirculatingWaterSystem.query.filter_by(plan_id=planId).one_or_none()
+        return result
 
 
 # 煤气发电 风阻力
@@ -332,6 +507,28 @@ class GPGWindResistance(db.Model):
     preheater_outlet_to_boiler_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
     # 风道总阻力
     windhole_total_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    def __init__(self, **kwargs):
+        super(GPGWindResistance, self).__init__(**kwargs)
+
+    @staticmethod
+    def insert_WindResistance(gaspowergeneration_wind_resistance):
+        try:
+            db.session.add(gaspowergeneration_wind_resistance)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_wind_resistance"
+                  "<id=%s> in database" % (gaspowergeneration_wind_resistance.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_WindResistance(planId):
+        result = GPGWindResistance.query.filter_by(plan_id=planId).one_or_none()
+        return result
 
 # 煤气发电 烟阻力
 class GPGSmokeResistance(db.Model):

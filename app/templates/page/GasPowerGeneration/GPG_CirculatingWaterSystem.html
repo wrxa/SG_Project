@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/GPG/GPG_CirculatingWaterSystem.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃气发电-循环水系统</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">循环水系统</div>
+					</div>
+				</div>
+			</div>
+			
+			<form id="GPG_CirculatingWaterSystemForm">
+			<div class="row">
+				
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel">
+						<div>
+							<div class="second-title"> 1、循环水量计算 &nbsp;
+								<i class="fa fa-question-circle-o"  title="参考："  
+								data-container="body" data-toggle="popover" data-placement="right" 
+								data-content="《工业循环冷却水处理设计规范》GB50050-2007">
+								</i>
+							</div>
+
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['steam_exhaust_flux_winter', 'steam_exhaust_flux_summer', 
+							'steam_exhaust_flux_selected', 'circulation_ratio_winter', 'circulation_ratio_summer', 
+							'circulation_water_flow_winter', 'circulation_water_flow_summer',
+							'auxiliary_cooling_water_flow_winter', 'auxiliary_cooling_water_flow_summer',
+							'total_circulation_water_flow_winter', 'total_circulation_water_flow_summer',
+							'selected_total_circulation_water_flow','spray_density','spray_area',
+							'in_out_water_temperature_difference','dry_bulb_temperature',
+							'dry_bulb_k_coefficient','evaporation_loss_rate','evaporation_loss',
+							'wind_blow_loss_rate','wind_blow_loss','concentration_rate','discharge_rate',
+							'discharge_capacity','supply_water_amount','circulating_pool_water_amount',
+							'circulating_pool_size_deep','circulating_pool_size_length','circulating_pool_size_width',
+							'circulating_pool_size_checked'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-4">{{ constant.name }}
+											{% if constant.symbol != "" %}
+											({{ constant.symbol }})
+											{% endif %}
+
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}											
+										</div>
+
+										<div class="col-md-8">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<div class="panel">
+						<div>
+							<div class="second-title"> 2、循环水泵计算 </div>
+
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['condenser_circulating_water_inlet_pressure',
+							'condenser_friction','circulating_backwater_pressure',
+							'circulating_water_reservoir_pressure','circulation_pump_outlet_to_condenser_inlet_height_difference',
+							'reservoir_to_pump_inlet_height_difference','pipe_loss','y_filter_loss','total_pumping_lift',
+							'pump_flow','pump_efficiency','pump_transmission_efficiency','pump_motor_efficiency',
+							'pump_motor_spare_coefficient','pump_matching_motor_power','selected_pump_model_power',
+							'selected_pump_model_flow','selected_pump_model_lift'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-4">{{ constant.name }}
+											{% if constant.symbol != "" %}
+											({{ constant.symbol }})
+											{% endif %}
+
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}											
+										</div>
+
+										<div class="col-md-8">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+			
+				<div class="col-md-12">
+					<div class="panel margin-right30">
+						<div class="first-title">
+							<i class="fa fa-building" aria-hidden="true"></i>
+							<span class="margin-left15">参考信息</span>
+						</div>
+						<div class="panel-body">
+							<div class="second-title"> 表5.6.1 系数K (%)</div>
+							<div class="col-md-12 margin-top-20">
+								<img class="img-responsive center-block" src="{{ url_for('static', filename='img/GPG/GPG_CirculatingWaterSystem/5.6.1.png') }}"/>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel margin-right30">
+						<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+						<div class="row text-center">
+							<br><br>
+							<button type="button" class="btn btn-success" id="submitCirculatingWaterData"><i class="fa fa-check-circle"></i> 保存</button>
+							
+						</div>
+						<br> <br>
+					</div>
+				</div>
+				
+			</div>
+			</form>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

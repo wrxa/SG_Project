@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from ..gasPowerGeneration_models import GasPowerGenerationNeedsQuestionnaire,\
-    GPGBoilerOfPTS, GPGFlueGasAirSystem, GPGSmokeResistance
+    GPGBoilerOfPTS, GPGFlueGasAirSystem, GPGSmokeResistance, GPGWindResistance, \
+    GPGCirculatingWaterSystem
 from flask_login import current_user
 from ..models import Company, Plan, Module
 from ..observer_calculate.execution_strategy import Furnace_calculationBefore
@@ -37,7 +38,7 @@ list_boiler_of_pts = [
     'air_temperature', 'air_enthalpy', 'air_need_for_combustion', 'boiler_feed_water_temperature',
     'feedwater_enthalpy', 'rate_of_blowdown', 'saturation_water_temperature',
     'saturation_water_enthalpy', 'steam_output'
-    ]
+]
 
 list_gas_air_system = [
     "c2s_condition_temperature_air", "c2s_condition_flux_air",
@@ -196,6 +197,80 @@ list_smoke_resistance = [
     "smoke_chimney_total_resistance"
 ]
 
+list_wind_resistance = [
+    "recommend_velocity_coldwind", "recommend_velocity_hotwind",
+    "intake_to_preheater_temperature", "intake_to_preheater_amount",
+    "intake_to_preheater_density", "intake_to_preheater_flow_velocity",
+    "intake_to_preheater_dynamic_pressure_head", "fan_inlet_duct_section_area",
+    "fan_inlet_duct_length", "fan_inlet_duct_width",
+    "fan_inlet_duct_perimeter", "fan_inlet_duct_equivalent_diameter",
+    "fan_inlet_gas_kinetic_viscosity", "fan_inlet_reynolds_number",
+    "fan_inlet_absolute_tube_roughness", "fan_inlet_relative_tube_roughness",
+    "fan_inlet_560_relative_tube_roughness", "fan_inlet_discriminant",
+    "fan_inlet_frictional_resistance",
+    "fan_inlet_frictional_resistance_coefficient",
+    "fan_inlet_unit_length_frictional_resistance", "fan_inlet_ducting_length",
+    "fan_inlet_local_resistance", "fan_inlet_local_resistance_coefficient",
+    "fan_inlet_single_local_resistance_coefficient",
+    "fan_inlet_single_bellows", "fan_inlet_single_damper",
+    "fan_inlet_total_pressure", "fan_outlet_frictional_resistance",
+    "fan_outlet_unit_length_frictional_resistance",
+    "fan_outlet_ducting_length", "fan_outlet_local_resistance",
+    "fan_outlet_local_resistance_coefficient",
+    "fan_outlet_single_increase_pipe", "fan_outlet_90_section_slow_turn_elbow",
+    "fan_outlet_preheater_diffuser_pipe",
+    "fan_outlet_to_preheater_total_pressure",
+    "preheater_to_boiler_temperature", "preheater_to_boiler_amount",
+    "preheater_to_boiler_density", "preheater_to_boiler_flow_velocity",
+    "preheater_to_boiler_dynamic_pressure_head",
+    "preheater_outlet_duct_section_area", "preheater_outlet_duct_diameter",
+    "preheater_outlet_duct_length", "preheater_outlet_duct_width",
+    "preheater_outlet_duct_perimeter",
+    "preheater_outlet_duct_equivalent_diameter",
+    "preheater_outlet_gas_kinetic_viscosity",
+    "preheater_outlet_reynolds_number",
+    "preheater_outlet_absolute_tube_roughness",
+    "preheater_outlet_relative_tube_roughness",
+    "preheater_outlet_560_relative_tube_roughness",
+    "preheater_outlet_discriminant", "preheater_outlet_frictional_resistance",
+    "preheater_outlet_frictional_resistance_coefficient",
+    "preheater_outlet_unit_length_frictional_resistance",
+    "preheater_outlet_ducting_length", "preheater_outlet_local_resistance",
+    "preheater_outlet_local_resistance_coefficient",
+    "preheater_outlet_shrink_pipe", "preheater_outlet_90_sharp_turn_elbow",
+    "preheater_outlet_90_sharp_turn_elbow_count",
+    "preheater_outlet_90_sharp_turn_elbow_resistance",
+    "preheater_outlet_air_intake_gate", "preheater_outlet_combustor_gate",
+    "preheater_outlet_to_boiler_total_pressure", "windhole_total_pressure"
+]
+
+list_circulating_water_system = [
+    'steam_exhaust_flux_winter', 'steam_exhaust_flux_summer',
+    'steam_exhaust_flux_selected', 'circulation_ratio_winter',
+    'circulation_ratio_summer', 'circulation_water_flow_winter',
+    'circulation_water_flow_summer', 'auxiliary_cooling_water_flow_winter',
+    'auxiliary_cooling_water_flow_summer',
+    'total_circulation_water_flow_winter',
+    'total_circulation_water_flow_summer',
+    'selected_total_circulation_water_flow', 'spray_density', 'spray_area',
+    'in_out_water_temperature_difference', 'dry_bulb_temperature',
+    'dry_bulb_k_coefficient', 'evaporation_loss_rate', 'evaporation_loss',
+    'wind_blow_loss_rate', 'wind_blow_loss', 'concentration_rate',
+    'discharge_rate', 'discharge_capacity', 'supply_water_amount',
+    'circulating_pool_water_amount', 'circulating_pool_size_deep',
+    'circulating_pool_size_length', 'circulating_pool_size_width',
+    'circulating_pool_size_checked',
+    'condenser_circulating_water_inlet_pressure', 'condenser_friction',
+    'circulating_backwater_pressure', 'circulating_water_reservoir_pressure',
+    'circulation_pump_outlet_to_condenser_inlet_height_difference',
+    'reservoir_to_pump_inlet_height_difference', 'pipe_loss', 'y_filter_loss',
+    'total_pumping_lift', 'pump_flow', 'pump_efficiency',
+    'pump_transmission_efficiency', 'pump_motor_efficiency',
+    'pump_motor_spare_coefficient', 'pump_matching_motor_power',
+    'selected_pump_model_power', 'selected_pump_model_flow',
+    'selected_pump_model_lift'
+]
+
 # 格式化数据库取出的值
 def format_value(flag, values):
     '''
@@ -269,6 +344,27 @@ class ToGPG():
         datas['planId'] = planId
         return datas
 
+    #返回循环水系统json值
+    @staticmethod
+    def to_CirculatingWaterJson(CirculatingWaterData):
+        json = {}
+        for index in range(len(list_circulating_water_system)):
+            json[list_circulating_water_system[index]] = format_value(
+                # TODO还未过滤特殊字符项
+                "number", str(getattr(CirculatingWaterData, list_circulating_water_system[index])))
+        return json
+
+    @staticmethod
+    def to_CirculatingWaterData(form, plan_id):
+        CirculatingWaterData = GPGCirculatingWaterSystem.query.filter_by(
+            plan_id=plan_id).first()
+
+        for index in range(len(list_circulating_water_system)):
+            if form.get(list_circulating_water_system[index]) != '':
+                setattr(CirculatingWaterData, list_circulating_water_system[index],
+                        form.get(list_circulating_water_system[index]))
+        return CirculatingWaterData
+
     #返回烟风系统json值
     @staticmethod
     def to_GasAirJson(GasAirData):
@@ -310,6 +406,28 @@ class ToGPG():
                 setattr(SmokeResistanceData, list_smoke_resistance[index],
                         form.get(list_smoke_resistance[index]))
         return SmokeResistanceData
+
+    #返回风阻力json值
+    @staticmethod
+    def to_WindResistanceJson(WindResistanceData):
+        json = {}
+        for index in range(len(list_wind_resistance)):
+            json[list_wind_resistance[index]] = format_value(
+                # TODO还未过滤特殊字符项
+                "number", str(getattr(WindResistanceData, list_wind_resistance[index])))
+        return json
+
+    @staticmethod
+    def to_WindResistanceData(form, plan_id):
+        WindResistanceData = GPGWindResistance.query.filter_by(
+            plan_id=plan_id).first()
+
+        for index in range(len(list_wind_resistance)):
+            if form.get(list_wind_resistance[index]) != '':
+                setattr(WindResistanceData, list_wind_resistance[index],
+                        form.get(list_wind_resistance[index]))
+        return WindResistanceData
+
 
     #返回锅炉页面初期值
     @staticmethod

@@ -16,7 +16,7 @@ from coalService import ToCoalCHP
 from biomassService import ToBiomassCHP
 from ..gasPowerGeneration_models import GasPowerGenerationConstant, \
     GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem, \
-    GPGSmokeResistance
+    GPGSmokeResistance, GPGWindResistance, GPGCirculatingWaterSystem
 from gasPowerGeneration_Service import ToGPG
 from app.observer_calculate.execution_strategy import GPG_Boiler_superheated_steam_enthalpy_EXEC, \
     GPG_Boiler_feedwater_enthalpy_EXEC, GPG_Boiler_air_enthalpy_EXEC, \
@@ -642,6 +642,28 @@ def GPG_SaveSmokeResistanceData():
     datas['flag'] = "success"
     return jsonify({'result': datas})
 
+@main.route('/GPG_SaveWindResistanceData', methods=['POST'])
+@login_required
+def GPG_SaveWindResistanceData():
+    plan_id = session.get('GPGPlanId')
+    WindResistanceData = ToGPG.to_WindResistanceData(request.form, plan_id)
+    GPGWindResistance.insert_WindResistance(WindResistanceData)
+    session['GPGPlanId'] = plan_id
+    datas = {}
+    datas['flag'] = "success"
+    return jsonify({'result': datas})
+
+@main.route('/GPG_SaveCirculatingWaterData', methods=['POST'])
+@login_required
+def GPG_SaveCirculatingWaterData():
+    plan_id = session.get('GPGPlanId')
+    CirculatingWaterData = ToGPG.to_CirculatingWaterData(request.form, plan_id)
+    GPGCirculatingWaterSystem.insert_CirculatingWater(CirculatingWaterData)
+    session['GPGPlanId'] = plan_id
+    datas = {}
+    datas['flag'] = "success"
+    return jsonify({'result': datas})
+
 @main.route('/getBoilerByPlanId', methods=['POST'])
 @login_required
 def getBoilerByPlanId():
@@ -665,6 +687,22 @@ def getSmokeResistanceByPlanId():
     gpg_SmokeResistanceData = GPGSmokeResistance.search_SmokeResistance(planId)
     SmokeResistanceJson = ToGPG.to_SmokeResistanceJson(gpg_SmokeResistanceData)
     return jsonify({'SmokeResistanceJson': SmokeResistanceJson})
+
+@main.route('/getWindResistanceByPlanId', methods=['POST'])
+@login_required
+def getWindResistanceByPlanId():
+    planId = request.values.get('planId')
+    gpg_WindResistanceData = GPGWindResistance.search_WindResistance(planId)
+    WindResistanceJson = ToGPG.to_WindResistanceJson(gpg_WindResistanceData)
+    return jsonify({'WindResistanceJson': WindResistanceJson})
+
+@main.route('/getCirculatingWaterDataByPlanId', methods=['POST'])
+@login_required
+def getCirculatingWaterDataByPlanId():
+    planId = request.values.get('planId')
+    gpg_CirculatingWaterData = GPGCirculatingWaterSystem.search_CirculatingWater(planId)
+    CirculatingWaterJson = ToGPG.to_CirculatingWaterJson(gpg_CirculatingWaterData)
+    return jsonify({'CirculatingWaterJson': CirculatingWaterJson})
 
 @main.route('/selectPlan', methods=['POST'])
 @login_required
@@ -740,6 +778,17 @@ def GPG_WindResistance():
     return render_template(
         'page/GasPowerGeneration/GPG_WindResistance.html',
         menuSelect='GPG_WindResistance',
+        constants=GPGConstant)
+
+@main.route('/GPG_CirculatingWaterSystem')
+@login_required
+def GPG_CirculatingWaterSystem():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_CirculatingWaterSystem")
+
+    return render_template(
+        'page/GasPowerGeneration/GPG_CirculatingWaterSystem.html',
+        menuSelect='GPG_CirculatingWaterSystem',
         constants=GPGConstant)
 
 # ###################### 煤气发电 end ####################

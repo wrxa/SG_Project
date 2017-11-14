@@ -35,16 +35,13 @@
 							<div class="row col-md-2">{{ constant.name }}									
 							</div>						
 
-							<div class="row col-md-4">10~15 &nbsp; {{ constant.unit }} &nbsp;(钢烟道)																	
-							</div>
-
-							<div class="row col-md-1">
+							<div class="row col-md-4">10~15 &nbsp; {{ constant.unit }} &nbsp;(钢烟道)&nbsp;
 								{% if constant.remark != "" %}
 								<i class="fa fa-question-circle-o"  title="参考："  
 								data-container="body" data-toggle="popover" data-placement="left" 
 								data-content="{{ constant.remark }}">
 								</i>
-								{% endif %}		
+								{% endif %}																		
 							</div>
 						</div>							
 					</div>
@@ -65,15 +62,9 @@
 								<div class="second-title"> 1. 空预器出口至除尘器入口 </div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称								
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -87,53 +78,48 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}													
-											</div>						
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}												
+											</div>
 
-											{% if constant.name_eng in ['air_preheater_discriminant'] %}
-											<div class="col-md-2 show-warning2">紊流过渡区													
-											</div>
-											{% else %}
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
-											</div>
-											{% endif %}
+											<div class="col-md-7">
+												{% if constant.name_eng in ['air_preheater_discriminant'] %}
+													紊流过渡区												
+												{% else %}
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+												{% endif %}											
+											</div>					
 										</div>
 									</div>
 								</div>
 								{% endif %}
 								{% endfor %}
 							</div>
+							<br/>
 
 							<div>
 								<div class="second-title"> 1.1 摩擦阻力 </div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称								
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -144,27 +130,28 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
+											</div>
 
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -172,20 +159,15 @@
 								{% endif %}
 								{% endfor %}
 							</div>
+							<br/>
 
 							<div>
 								<div class="second-title"> 1.2 局部阻力 </div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
-									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-5"> 项目名称
+									</div>									
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -200,27 +182,28 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
+												data-content="{{ constant.calculate }}">
+												</i>													
 												{% endif %}												
-											</div>						
+											</div>
 
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -228,20 +211,15 @@
 								{% endif %}
 								{% endfor %}
 							</div>
+							<br/>
 
 							<div>
 								<div class="second-title"> 1.3 空预器出口至除尘器入口总阻力 </div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称									
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -250,21 +228,27 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})	
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
 											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;													
-											</div>						
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -283,15 +267,9 @@
 								<div class="second-title"> 2. 除尘器出口至引风机入口</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -305,33 +283,32 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})	
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
-
-											{% if constant.name_eng in ['deduster_discriminant'] %}
-											<div class="col-md-2 show-warning2">紊流过渡区													
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}													
 											</div>
-											{% else %}
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+											<div class="col-md-7">
+												{% if constant.name_eng in ['deduster_discriminant'] %}
+												紊流过渡区													
+												{% else %}
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+												{% endif %}
 											</div>
-											{% endif %}
 										</div>
 									</div>
 								</div>
@@ -345,15 +322,9 @@
 								<div class="second-title"> 2.1 摩擦阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称									
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -364,20 +335,27 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})	
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}										
 											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;													
-											</div>						
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" id="{{ constant.name_eng }}" />
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -392,15 +370,9 @@
 								<div class="second-title"> 2.2 局部阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
-									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-5"> 项目名称
+									</div>										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -418,28 +390,28 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}													
-											</div>						
-											
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}										
 											</div>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+											</div>										
 										</div>
 									</div>
 								</div>
@@ -453,15 +425,9 @@
 								<div class="second-title"> 2.3 除尘器出口至引风机入口总阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称									
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 钢烟道										
+									<div class="col-md-7"> 钢烟道										
 									</div>
 								</div> 
 
@@ -470,27 +436,27 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
-											
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
+											</div>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -500,7 +466,9 @@
 							</div>
 						</div>
 					</div>
+				</div>
 
+				<div class="row col-md-6">
 					<div class="col-md-12">
 						<!-- INPUT GROUPS -->
 						<div class="panel">
@@ -508,15 +476,9 @@
 								<div class="second-title"> 3. 引风机出口至烟囱</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 金属烟道										
+									<div class="col-md-7"> 金属烟道										
 									</div>
 								</div> 
 
@@ -530,33 +492,32 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
-
-											{% if constant.name_eng in ['induced_draft_discriminant'] %}
-											<div class="col-md-2 show-warning2">紊流过渡区													
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
 											</div>
-											{% else %}
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
-											</div>
-											{% endif %}
+											<div class="col-md-7">
+												{% if constant.name_eng in ['induced_draft_discriminant'] %}
+												紊流过渡区
+												{% else %}
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
+												{% endif %}
+											</div>										
 										</div>
 									</div>
 								</div>
@@ -570,15 +531,9 @@
 								<div class="second-title"> 3.1 摩擦阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 金属烟道										
+									<div class="col-md-7"> 金属烟道										
 									</div>
 								</div> 
 
@@ -589,27 +544,27 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
+											</div>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -624,15 +579,9 @@
 								<div class="second-title"> 3.2 局部阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 金属烟道										
+									<div class="col-md-7"> 金属烟道										
 									</div>
 								</div> 
 
@@ -647,27 +596,27 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
+											</div>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -682,15 +631,9 @@
 								<div class="second-title"> 3.3 引风机出口至烟囱入口总阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
+									<div class="col-md-5"> 项目名称
 									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 金属烟道										
+									<div class="col-md-7"> 金属烟道										
 									</div>
 								</div> 
 
@@ -699,27 +642,27 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>						
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
+											</div>
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -731,21 +674,14 @@
 					</div>
 
 					<div class="col-md-12">
-						<!-- INPUT GROUPS -->
 						<div class="panel">
 							<div>
 								<div class="second-title"> 4. 烟道总阻力</div>									
 
 								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
-									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 结果										
+									<div class="col-md-5"> 项目名称
+									</div>						
+									<div class="col-md-7"> 结果										
 									</div>
 								</div> 
 
@@ -754,29 +690,28 @@
 								<div style="text-align:center">
 									<div class="panel-body">
 										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
+											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+												{% if constant.calculate != "" %}
+												<i class="lnr lnr-pencil"  title="计算公式："  
 												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
+												data-content="{{ constant.calculate }}">
+												</i>													
+												{% endif %}											
 											</div>
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+											<div class="col-md-7">
+												<div class="input-group">
+													<span class="input-group-addon show-primary">数值</span>
+													<input class="form-control" type="text" 
+													id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"	/>
+													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													{% if constant.remark != "" %}
+													<i class="fa fa-calculator"  title="参考："  
+													data-container="body" data-toggle="popover" data-placement="right" 
+													data-content="{{ constant.remark }}">
+													</i>
+													{% endif %}
+												</div>
 											</div>
-
 										</div>
 									</div>
 								</div>
@@ -794,63 +729,6 @@
 								<button type="button" class="btn btn-success" id="submitSmokeResistance"><i class="fa fa-check-circle"></i>保存</button>
 							</div>
 							<br> <br>
-						</div>
-					</div>
-				</div>
-
-				<div class="row col-md-6">
-					<div class="col-md-12">
-						<div class="panel">
-							<div>
-								<div class="second-title"> 4. 烟道总阻力</div>									
-
-								<div class="col-md-12 third-title-center"> 
-									<div class="col-md-3"> 项目名称
-									</div>
-									<div class="col-md-2"> 符号	
-									</div>
-									<div class="col-md-2"> 单位 										
-									</div>
-									<div class="col-md-3"> 公式及计算 										
-									</div>
-									<div class="col-md-2"> 结果										
-									</div>
-								</div> 
-
-								{% for constant in constants %} 
-								{% if constant.name_eng in ['smoke_chimney_total_resistance'] %}
-								<div style="text-align:center">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-3 show-primary">{{ constant.name }}											
-											</div>
-
-											<div class="col-md-2 show-warning2">{{ constant.symbol }}&nbsp;										
-											</div>
-
-											<div class="col-md-2 show-success">{{ constant.unit }}&nbsp;												
-											</div>
-
-											<div class="col-md-3 show-info2">{{ constant.calculate }}&nbsp;	
-												{% if constant.remark != "" %}
-												<i class="fa fa-calculator"  title="参考："  
-												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}">
-												</i>
-												{% endif %}												
-											</div>
-
-											<div class="col-md-2">
-												<input class="form-control" type="text" 
-												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
-											</div>
-
-										</div>
-									</div>
-								</div>
-								{% endif %}
-								{% endfor %}
-							</div>
 						</div>
 					</div>
 				</div>
