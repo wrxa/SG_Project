@@ -1,0 +1,132 @@
+﻿Public Function h_kq(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_kq = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B18") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C18") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D18") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E18") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F18") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G18") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H18") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I18") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J18") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K18")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B18") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C18") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D18") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E18") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F18") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G18") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H18") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I18") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J18") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K18") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B18") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C18") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D18") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E18") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F18") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G18") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H18") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I18") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J18") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K18")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_kq = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B18") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C18") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D18") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E18") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F18") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G18") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H18") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I18") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J18") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K18"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+Public Function h_sp(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_sp = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B19") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C19") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D19") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E19") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F19") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G19") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H19") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I19") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J19") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K19")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B19") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C19") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D19") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E19") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F19") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G19") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H19") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I19") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J19") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K19") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B19") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C19") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D19") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E19") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F19") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G19") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H19") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I19") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J19") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K19")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_sp = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B19") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C19") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D19") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E19") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F19") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G19") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H19") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I19") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J19") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K19"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+Public Function h_bl(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_bl = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B20") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C20") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D20") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E20") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F20") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G20") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H20") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I20") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J20") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K20")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B20") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C20") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D20") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E20") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F20") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G20") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H20") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I20") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J20") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K20") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B20") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C20") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D20") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E20") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F20") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G20") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H20") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I20") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J20") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K20")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_bl = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B20") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C20") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D20") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E20") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F20") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G20") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H20") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I20") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J20") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K20"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+Public Function h_ds(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_ds = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B21") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C21") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D21") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E21") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F21") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G21") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H21") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I21") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J21") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K21")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B21") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C21") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D21") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E21") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F21") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G21") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H21") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I21") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J21") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K21") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B21") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C21") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D21") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E21") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F21") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G21") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H21") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I21") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J21") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K21")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_ds = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B21") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C21") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D21") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E21") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F21") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G21") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H21") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I21") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J21") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K21"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+Public Function h_sj(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_sj = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B22") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C22") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D22") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E22") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F22") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G22") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H22") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I22") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J22") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K22")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B22") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C22") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D22") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E22") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F22") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G22") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H22") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I22") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J22") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K22") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B22") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C22") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D22") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E22") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F22") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G22") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H22") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I22") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J22") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K22")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_sj = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B22") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C22") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D22") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E22") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F22") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G22") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H22") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I22") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J22") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K22"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+
+
+Public Function h_g(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_g = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B23") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C23") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D23") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E23") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F23") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G23") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H23") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I23") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J23") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K23")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B23") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C23") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D23") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E23") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F23") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G23") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H23") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I23") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J23") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K23") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B23") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C23") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D23") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E23") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F23") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G23") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H23") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I23") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J23") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K23")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_g = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B23") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C23") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D23") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E23") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F23") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G23") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H23") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I23") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J23") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K23"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+
+Public Function h_nt(ByVal t As Double) As Double
+    
+    Dim i As Integer
+    For i = 2 To 11
+        If Sheets("烟焓表").Range("A" & CStr(i)) > t Then
+            h_nt = (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B24") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C24") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D24") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E24") + Sheets("烟焓表").Range("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F24") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G24") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H24") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I24") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J24") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K24")) + _
+ (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B24") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C24") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D24") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E24") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F24") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G24") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H24") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I24") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J24") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K24") _
+  - (Sheets("烟焓表").Range("B" & CStr(i - 1)) * Sheets("烟焓表").Range("B24") + Sheets("烟焓表").Range("C" & CStr(i - 1)) * Sheets("烟焓表").Range("C24") + Sheets("烟焓表").Range("D" & CStr(i - 1)) * Sheets("烟焓表").Range("D24") + Sheets("烟焓表").Range("E" & CStr(i - 1)) * Sheets("烟焓表").Range("E24") + Sheets("烟焓表").Rang
+e("F" & CStr(i - 1)) * Sheets("烟焓表").Range("F24") + Sheets("烟焓表").Range("G" & CStr(i - 1)) * Sheets("烟焓表").Range("G24") + Sheets("烟焓表").Range("H" & CStr(i - 1)) * Sheets("烟焓表").Range("H24") + Sheets("烟焓表").Range("I" & CStr(i - 1)) * Sheets("烟焓表").Range("I24") + Sheets("烟焓表").Range("J" & CStr(i - 1)) * Sheets("烟焓表").Range("J24") + Sheets("烟焓表").Range("K" & CStr(i - 1)) * Sheets("烟焓表").Range("K24")) _
+ ) * (t - Sheets("烟焓表").Range("A" & CStr(i - 1))) / 100
+        Exit For
+        End If
+        If Sheets("烟焓表").Range("A" & CStr(i)) = t Then
+            h_nt = (Sheets("烟焓表").Range("B" & CStr(i)) * Sheets("烟焓表").Range("B24") + Sheets("烟焓表").Range("C" & CStr(i)) * Sheets("烟焓表").Range("C24") + Sheets("烟焓表").Range("D" & CStr(i)) * Sheets("烟焓表").Range("D24") + Sheets("烟焓表").Range("E" & CStr(i)) * Sheets("烟焓表").Range("E24") + Sheets("烟焓表").Range("F" & CStr(i)) * Sheets("烟焓表").Range("F24") + Sheets("烟焓表").Range("G" & CStr(i)) * Sheets("烟焓表").Range("G24") + Sheets("烟焓表").Range("H" & CStr(i)) * Sheets("烟焓表").Range("H24") + Sheets("烟焓表").Range("I" & CStr(i)) * Sheets("烟焓表").Range("I24") + Sheets("烟焓表").Range("J" & CStr(i)) * Sheets("烟焓表").Range("J24") + Sheets("烟焓表").Range("K" & CStr(i)) * Sheets("烟焓表").Range("K24"))
+        Exit For
+        End If
+    Next i
+    
+End Function
+
+
