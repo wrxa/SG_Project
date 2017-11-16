@@ -7,8 +7,8 @@ $(document).ready(function() {
                     'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine','biomassFuelStorTran',
                     'biomassDesulDenit', 'biomassDASRemove', 'biomassBoilerAuxiliaries', 'biomassOfficialProcess',
                     'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',
-                    'GPG_Questionnaire', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 'GPG_WindResistance', 
-                    'GPG_CirculatingWaterSystem'
+                    'GPG_Questionnaire', 'GPG_SmokeAirCalculate', 'GPG_BoilerOfPTS', 'GPG_GasAirSystem', 'GPG_SmokeResistance', 
+                    'GPG_WindResistance', 'GPG_CirculatingWaterSystem'
                     ];
     var menuSelect = $("#menuSelect").val();
 
@@ -43,7 +43,7 @@ $(document).ready(function() {
             }
             if(menuSelect == 'GPG_Questionnaire'|| menuSelect == 'GPG_BoilerOfPTS' || menuSelect == 'GPG_GasAirSystem'
                 || menuSelect == 'GPG_SmokeResistance' || menuSelect == 'GPG_WindResistance' 
-                || menuSelect =='GPG_CirculatingWaterSystem') {
+                || menuSelect =='GPG_CirculatingWaterSystem' || menuSelect == 'GPG_SmokeAirCalculate') {
                 // alert()
                 if($('.sidebar a[data-toggle="collapse"]').hasClass('collapsed')) {
                     $('#gaspowerMean').attr('class', 'index active');
@@ -129,12 +129,12 @@ function unlockMeunBiomassCHP() {
 
 // 解锁子菜单
 function unlockMenuGPG() {
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').removeClass('unselect');
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').removeAttr('onclick');
+    $('.GPG_BoilerOfPTS, .GPG_SmokeAirCalculate, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').removeClass('unselect');
+    $('.GPG_BoilerOfPTS, .GPG_SmokeAirCalculate, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').removeAttr('onclick');
 }
 
 //锁定子菜单
 function lockMenuGPG() {
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').addClass('unselect');
-    $('.GPG_BoilerOfPTS, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').attr("onclick", "return false;");
+    $('.GPG_BoilerOfPTS, .GPG_SmokeAirCalculate, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').addClass('unselect');
+    $('.GPG_BoilerOfPTS, .GPG_SmokeAirCalculate, .GPG_GasAirSystem, .GPG_SmokeResistance, .GPG_WindResistance, .GPG_CirculatingWaterSystem').attr("onclick", "return false;");
 }

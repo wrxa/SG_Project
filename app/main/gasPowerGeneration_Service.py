@@ -1,10 +1,147 @@
 # -*- coding: utf-8 -*-
 from ..gasPowerGeneration_models import GasPowerGenerationNeedsQuestionnaire,\
     GPGBoilerOfPTS, GPGFlueGasAirSystem, GPGSmokeResistance, GPGWindResistance, \
-    GPGCirculatingWaterSystem
+    GPGCirculatingWaterSystem, GPGSmokeAirCalculate
 from flask_login import current_user
 from ..models import Company, Plan, Module
 from ..observer_calculate.execution_strategy import Furnace_calculationBefore
+
+list_smoke_air_calculate = [
+    'component_h2',
+    'component_co',
+    'component_ch4',
+    'component_c2h4',
+    'component_c3h8',
+    'component_c4h10',
+    'component_n2',
+    'component_o2',
+    'component_co2',
+    'component_h2s',
+    'component_cmhn',
+    'hl_h2',
+    'hl_co',
+    'hl_ch4',
+    'hl_c2h4',
+    'hl_c3h8',
+    'hl_c4h10',
+    'hl_n2',
+    'hl_o2',
+    'hl_co2',
+    'hl_h2s',
+    'hl_cmhn',
+    'hh_h2',
+    'hh_co',
+    'hh_ch4',
+    'hh_c2h4',
+    'hh_c3h8',
+    'hh_c4h10',
+    'hh_n2',
+    'hh_o2',
+    'hh_co2',
+    'hh_h2s',
+    'hh_cmhn',
+    'cpsh_h2',
+    'cpsh_co',
+    'cpsh_ch4',
+    'cpsh_c2h4',
+    'cpsh_c3h8',
+    'cpsh_c4h10',
+    'cpsh_n2',
+    'cpsh_o2',
+    'cpsh_co2',
+    'cpsh_h2s',
+    'cpsh_cmhn',
+    'constant_need_air_amonut_per_m3',
+    'constant_air_density',
+    'constant_need_air_mass_per_m3',
+    'excessive_air_coefficient',
+    'actual_need_air_amonut',
+    'constant_gas_humidity_per_m3',
+    'constant_air_humidity_per_m3',
+    'actual_air_amount_in_wet',
+    'constant_ro2_amonut_per_m3',
+    'constant_n2_amonut_per_m3',
+    'constant_actual_n2_amonut_per_m3',
+    'constant_h2o_amonut_per_m3',
+    'constant_actual_h2o_amonut_per_m3',
+    'constant_o2_amonut_per_m3',
+    'actual_burning_gas_amonut',
+    'theory_burning_gas_amonut',
+    'net_calorific_value',
+    'gross_heating_value',
+    'gas_init_temperature',
+    'air_init_temperature',
+    'gas_average_cpvh',
+    'gas_h2o_average_cpvh',
+    'air_average_cpvh',
+    'air_h2o_average_cpvh',
+    'hy_adiabatic_calorimeter_temperature',
+    'smoke_ro2_average_cpvh',
+    'smoke_h2o_average_cpvh',
+    'smoke_n2_average_cpvh',
+    'smoke_o2_average_cpvh',
+    'calc_adiabatic_calorimeter_temperature',
+    'deviation_check',
+    'incomplete_combustion_loss_coefficient',
+    'incomplete_combustion_loss',
+    'heat_loss_coefficient',
+    'heat_loss',
+    'calc_theory_burning_temperature',
+    'high_temperature_coefficient',
+    'coefficient_actual_temperature',
+    'calc_actual_temperature',
+    'ro2_volume_enthalpy',
+    'n2_volume_enthalpy',
+    'h2o_volume_enthalpy',
+    'air_volume_enthalpy',
+    'dust_volume_enthalpy',
+    'theory_smoke_volume_enthalpy',
+    'theory_air_volume_enthalpy',
+    'theory_dust_volume_enthalpy',
+    'smoke_enthalpy',
+    'qd_net',
+    'qar_net',
+    'unknown_need_air_amonut_b_10500',
+    'unknown_need_air_amonut_a_10500',
+    'unknown_need_air_amonut_gas',
+    'unknown_need_air_amonut_lng',
+    'unknown_excessive_air_coefficient',
+    'unknown_actual_need_air_amonut',
+    'unknown_theory_burning_amonut_gas',
+    'unknown_theory_burning_amonut_oag',
+    'unknown_theory_burning_amonut_lng',
+    'unknown_theory_burning_amonut_cog',
+    'unknown_theory_burning_amonut_b_12600',
+    'unknown_actual_burning_gas_amonut',
+    'unknown_boiler_actual_burning_gas_amonut',
+    'unknown_gas_actual_burning_gas_amonut',
+    'exp_gas_qnet',
+    'exp_gas_theory_air_amount_a_35799',
+    'exp_gas_theory_air_amount_b_35799',
+    'exp_gas_excessive_air_coefficient',
+    'exp_gas_actual_amonut_a_35799',
+    'exp_gas_actual_amonut_b_35799',
+    'exp_boiler_qnet',
+    'exp_boiler_excessive_air_coefficient',
+    'exp_liquid_fuel_qnet',
+    'exp_liquid_fuel_theory_air_amount',
+    'exp_liquid_fuel_excessive_air_coefficient',
+    'exp_liquid_fuel_actual_amonut',
+    'exp_coal_qnet',
+    'exp_coal_theory_air_amount',
+    'exp_coal_excessive_air_coefficient',
+    'exp_coal_actual_amonut',
+    'exp_wood_peat_qnet',
+    'exp_wood_peat_water_content',
+    'exp_wood_peat_theory_air_amount',
+    'exp_wood_peat_excessive_air_coefficient',
+    'exp_wood_peat_best_water_content',
+    'exp_wood_peat_actual_amonut',
+    'exp_boiler_theory_air_amount_a_12561',
+    'exp_boiler_theory_air_amount_b_12561',
+    'exp_boiler_actual_amonut_a_12561',
+    'exp_boiler_actual_amonut_b_12561'
+]
 
 list_questionnaire = [
     'surplus_gas_bfg', 'surplus_gas_ldg', 'surplus_gas_cog',
@@ -343,6 +480,27 @@ class ToGPG():
         datas['company_location'] = companyLocation
         datas['planId'] = planId
         return datas
+
+    #返回烟风量计算json值
+    @staticmethod
+    def to_SmokeAirCalculateJson(SmokeAirCalculateData):
+        json = {}
+        for index in range(len(list_smoke_air_calculate)):
+            json[list_smoke_air_calculate[index]] = format_value(
+                # TODO还未过滤特殊字符项
+                "number", str(getattr(SmokeAirCalculateData, list_smoke_air_calculate[index])))
+        return json
+
+    @staticmethod
+    def to_SmokeAirCalculateData(form, plan_id):
+        SmokeAirCalculateData = GPGSmokeAirCalculate.query.filter_by(
+            plan_id=plan_id).first()
+
+        for index in range(len(list_smoke_air_calculate)):
+            if form.get(list_smoke_air_calculate[index]) != '':
+                setattr(SmokeAirCalculateData, list_smoke_air_calculate[index],
+                        form.get(list_smoke_air_calculate[index]))
+        return SmokeAirCalculateData
 
     #返回循环水系统json值
     @staticmethod

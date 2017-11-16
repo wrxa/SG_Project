@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/GPG/GPG_SmokeAirCalculate.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content width88">
+		<div class="container-fluid">
+			<div class="page-title">燃气发电-烟、风量计算</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel">
+						<div class="page-title">烟、风量计算</div>
+					</div>
+				</div>
+			</div>
+			
+			<form id="GPG_SmokeAirCalculateForm">
+			<div class="row">
+				
+				<div class="first-title">
+					<span class="margin-left15">一、已知成分的烟气量计算</span>
+				</div>
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel">
+						<div>
+							<div class="second-title"> 1、气体燃料的组分 </div>	
+							<div><br/></div>								
+
+							<div class="col-md-12 third-title" style="text-align:center"> 
+								<div class="col-md-1"> 组分
+								</div>
+								<div class="col-md-2"> 含量 										
+								</div>
+								<div class="col-md-3"> Hl 										
+								</div>
+								<div class="col-md-3"> Hh 										
+								</div>
+								<div class="col-md-3"> 定压比热容 										
+								</div>
+							</div> 
+
+
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['h2', 'co', 'ch4', 'c2h4', 'c3h8', 
+							'c4h10', 'n2', 'o2', 'co2', 'h2s', 'cmhn'] %}
+							<div  style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-1">{{ constant.name }} &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}											
+										</div>
+										
+										<div class="col-md-2">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="component_{{ constant.name_eng }}" name="component_{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+
+										<div class="col-md-3">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="hl_{{ constant.name_eng }}" name="hl_{{ constant.name_eng }}"												
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+
+										<div class="col-md-3">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="hh_{{ constant.name_eng }}" name="hh_{{ constant.name_eng }}">
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+
+										<div class="col-md-3">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="cpsh_{{ constant.name_eng }}" name="cpsh_{{ constant.name_eng }}">
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel">
+						<div>
+							<div class="second-title"> 2、烟气量的计算 </div>
+
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['constant_need_air_amonut_per_m3', 'constant_air_density', 
+							'constant_need_air_mass_per_m3', 'excessive_air_coefficient', 'actual_need_air_amonut', 
+							'constant_gas_humidity_per_m3', 'constant_air_humidity_per_m3', 'actual_air_amount_in_wet', 
+							'constant_ro2_amonut_per_m3', 'constant_n2_amonut_per_m3', 'constant_actual_n2_amonut_per_m3',
+							'constant_h2o_amonut_per_m3', 'constant_actual_h2o_amonut_per_m3', 'constant_o2_amonut_per_m3',
+							'actual_burning_gas_amonut', 'theory_burning_gas_amonut', 'net_calorific_value', 
+							'gross_heating_value', 'gas_init_temperature', 'air_init_temperature',
+							'gas_average_cpvh', 'gas_h2o_average_cpvh', 'air_average_cpvh',
+							'air_h2o_average_cpvh', 'hy_adiabatic_calorimeter_temperature', 'smoke_ro2_average_cpvh',
+							'smoke_h2o_average_cpvh', 'smoke_n2_average_cpvh', 'smoke_o2_average_cpvh',
+							'calc_adiabatic_calorimeter_temperature', 'deviation_check', 'incomplete_combustion_loss_coefficient',
+							'incomplete_combustion_loss', 'heat_loss_coefficient', 'heat_loss',
+							'calc_theory_burning_temperature', 'high_temperature_coefficient', 'coefficient_actual_temperature',
+							'calc_actual_temperature', 'ro2_volume_enthalpy', 'n2_volume_enthalpy',
+							'h2o_volume_enthalpy', 'air_volume_enthalpy', 'dust_volume_enthalpy',
+							'theory_smoke_volume_enthalpy', 'theory_air_volume_enthalpy', 'theory_dust_volume_enthalpy',
+							'smoke_enthalpy'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;	
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}											
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+
+				<div class="first-title">
+						<span class="margin-left15">二、未知成分的烟气量计算</span>
+				</div>
+
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel">
+						<div>
+							<div class="second-title"> 1、烟气量的计算 </div>
+
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['qd_net', 'qar_net', 
+							'unknown_need_air_amonut_b_10500', 'unknown_need_air_amonut_a_10500', 'unknown_need_air_amonut_gas', 
+							'unknown_need_air_amonut_lng', 'unknown_excessive_air_coefficient', 'unknown_actual_need_air_amonut', 
+							'unknown_theory_burning_amonut_gas', 'unknown_theory_burning_amonut_oag', 'unknown_theory_burning_amonut_lng',
+							'unknown_theory_burning_amonut_cog', 'unknown_theory_burning_amonut_b_12600', 'unknown_actual_burning_gas_amonut',
+							'unknown_boiler_actual_burning_gas_amonut', 'unknown_gas_actual_burning_gas_amonut'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}											
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel">
+						<div>
+							<div class="second-title"> 2、经验公式计算方法 </div>
+							<div class="second-title">天然气煤气 </div>
+
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['exp_gas_qnet', 'exp_gas_theory_air_amount_a_35799', 
+							'exp_gas_theory_air_amount_b_35799', 'exp_gas_excessive_air_coefficient', 
+							'exp_gas_actual_amonut_a_35799', 'exp_gas_actual_amonut_b_35799'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}												
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div><br/></div>
+
+							<div class="second-title">焦炉、高炉混合煤气 </div>
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['exp_boiler_qnet', 'exp_boiler_theory_air_amount_a_12561', 
+							'exp_boiler_theory_air_amount_b_12561', 'exp_boiler_excessive_air_coefficient', 
+							'exp_boiler_actual_amonut_a_12561', 'exp_boiler_actual_amonut_b_12561'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}												
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div><br/></div>
+
+							<div class="second-title">各种液体燃料 </div>
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['exp_liquid_fuel_qnet', 'exp_liquid_fuel_theory_air_amount', 
+							'exp_liquid_fuel_excessive_air_coefficient', 'exp_liquid_fuel_actual_amonut'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}												
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div><br/></div>
+
+							<div class="second-title">各种煤 </div>
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['exp_coal_qnet', 'exp_coal_theory_air_amount', 
+							'exp_coal_excessive_air_coefficient', 'exp_coal_actual_amonut'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}												
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div><br/></div>
+
+							<div class="second-title">木材和泥煤 </div>
+							{% for constant in constants %} 
+							{% if constant.name_eng in ['exp_wood_peat_qnet', 'exp_wood_peat_water_content', 
+							'exp_wood_peat_theory_air_amount', 'exp_wood_peat_excessive_air_coefficient',
+							'exp_wood_peat_best_water_content', 'exp_wood_peat_actual_amonut'] %}
+							<div class="row" style="text-align:center">
+								<div class="panel-body">
+									<div class="col-md-12">
+										<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+											{% if constant.calculate != "" %}
+											<i class="lnr lnr-pencil"  title="计算公式："  
+											data-container="body" data-toggle="popover" data-placement="right" 
+											data-content="{{ constant.calculate }}">
+											</i>													
+											{% endif %}												
+										</div>
+										
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon show-primary">数值</span>
+												<input class="form-control" type="text" 
+												id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+
+												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+												{% if constant.remark != "" %}
+												<i class="fa fa-calculator"  title="参考值："  
+												data-container="body" data-toggle="popover" data-placement="right" 
+												data-content="{{ constant.remark }}">
+												</i>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div><br/></div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<!-- INPUT GROUPS -->
+					<div class="panel margin-right30">
+						<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存信息</span></div>
+						<div class="row text-center">
+							<br><br>
+							<button type="button" class="btn btn-success" id="submitSmokeAirCalculateData"><i class="fa fa-check-circle"></i> 保存</button>
+							
+						</div>
+						<br> <br>
+					</div>
+				</div>
+				
+			</div>
+			</form>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+	{% endblock %} {% endblock %}

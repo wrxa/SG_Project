@@ -38,6 +38,8 @@ BEGIN
 			INSERT INTO gaspowergeneration_gas_air_system (plan_id) VALUES (NEWIDD);
 			INSERT INTO gaspowergeneration_smoke_resistance (plan_id) VALUES (NEWIDD);
 			INSERT INTO gaspowergeneration_wind_resistance (plan_id) VALUES (NEWIDD);
+			INSERT INTO gaspowergeneration_smoke_air_calculate (plan_id) VALUES (NEWIDD);
+			
 
 			RETURN NULL;
 		END IF;

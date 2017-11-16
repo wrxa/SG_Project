@@ -16,7 +16,8 @@ from coalService import ToCoalCHP
 from biomassService import ToBiomassCHP
 from ..gasPowerGeneration_models import GasPowerGenerationConstant, \
     GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem, \
-    GPGSmokeResistance, GPGWindResistance, GPGCirculatingWaterSystem
+    GPGSmokeResistance, GPGWindResistance, GPGCirculatingWaterSystem, \
+    GPGSmokeAirCalculate
 from gasPowerGeneration_Service import ToGPG
 from app.observer_calculate.execution_strategy import GPG_Boiler_superheated_steam_enthalpy_EXEC, \
     GPG_Boiler_feedwater_enthalpy_EXEC, GPG_Boiler_air_enthalpy_EXEC, \
@@ -664,6 +665,17 @@ def GPG_SaveCirculatingWaterData():
     datas['flag'] = "success"
     return jsonify({'result': datas})
 
+@main.route('/GPG_SaveSmokeAirCalculateData', methods=['POST'])
+@login_required
+def GPG_SaveSmokeAirCalculateData():
+    plan_id = session.get('GPGPlanId')
+    SmokeAirCalculateData = ToGPG.to_SmokeAirCalculateData(request.form, plan_id)
+    GPGSmokeAirCalculate.insert_SmokeAirCalculate(SmokeAirCalculateData)
+    session['GPGPlanId'] = plan_id
+    datas = {}
+    datas['flag'] = "success"
+    return jsonify({'result': datas})
+
 @main.route('/getBoilerByPlanId', methods=['POST'])
 @login_required
 def getBoilerByPlanId():
@@ -704,6 +716,14 @@ def getCirculatingWaterDataByPlanId():
     CirculatingWaterJson = ToGPG.to_CirculatingWaterJson(gpg_CirculatingWaterData)
     return jsonify({'CirculatingWaterJson': CirculatingWaterJson})
 
+@main.route('/getSmokeAirCalculateDataByPlanId', methods=['POST'])
+@login_required
+def getSmokeAirCalculateDataByPlanId():
+    planId = request.values.get('planId')
+    gpg_SmokeAirCalculateData = GPGSmokeAirCalculate.search_SmokeAirCalculate(planId)
+    SmokeAirCalculateJson = ToGPG.to_SmokeAirCalculateJson(gpg_SmokeAirCalculateData)
+    return jsonify({'SmokeAirCalculateJson': SmokeAirCalculateJson})
+
 @main.route('/selectPlan', methods=['POST'])
 @login_required
 def selectPlan():
@@ -743,6 +763,15 @@ def GPG_BoilerOfPTS():
         constants=GPGConstant,
         gpg_BoilerOfPTS=gpg_BoilerOfPTS)
 
+@main.route('/GPG_SmokeAirCalculate')
+@login_required
+def GPG_SmokeAirCalculate():
+    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
+        "GPG_SmokeAirCalculate")
+    return render_template(
+        'page/GasPowerGeneration/GPG_SmokeAirCalculate.html',
+        menuSelect='GPG_SmokeAirCalculate',
+        constants=GPGConstant)
 
 @main.route('/GPG_GasAirSystem')
 @login_required

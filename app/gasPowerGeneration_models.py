@@ -72,6 +72,75 @@ class GPGSmokeAirCalculate(db.Model):
     # 方案表外键
     plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
 
+    # H2 组分		
+    component_h2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co 组分		
+    component_co = db.Column(db.NUMERIC(precision=15, scale=5))
+    # ch4 组分		
+    component_ch4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c2h4 组分		
+    component_c2h4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c3h8 组分		
+    component_c3h8 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c4h10 组分		
+    component_c4h10 = db.Column(db.NUMERIC(precision=15, scale=5))
+    #n2 组分		
+    component_n2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # o2 组分		
+    component_o2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co2 组分		
+    component_co2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # h2s 组分		
+    component_h2s = db.Column(db.NUMERIC(precision=15, scale=5))
+    # cmhn 组分		
+    component_cmhn = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # H2 Hl		
+    hl_h2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co Hl		
+    hl_co = db.Column(db.NUMERIC(precision=15, scale=5))
+    # ch4 Hl		
+    hl_ch4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c2h4 Hl		
+    hl_c2h4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c3h8 Hl		
+    hl_c3h8 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c4h10 Hl		
+    hl_c4h10 = db.Column(db.NUMERIC(precision=15, scale=5))
+    #n2 Hl		
+    hl_n2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # o2 Hl		
+    hl_o2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co2 Hl		
+    hl_co2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # h2s Hl		
+    hl_h2s = db.Column(db.NUMERIC(precision=15, scale=5))
+    # cmhn Hl		
+    hl_cmhn = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # H2 Hh		
+    hh_h2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co Hh		
+    hh_co = db.Column(db.NUMERIC(precision=15, scale=5))
+    # ch4 Hh		
+    hh_ch4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c2h4 Hh		
+    hh_c2h4 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c3h8 Hh		
+    hh_c3h8 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # c4h10 Hh		
+    hh_c4h10 = db.Column(db.NUMERIC(precision=15, scale=5))
+    #n2 Hh		
+    hh_n2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # o2 Hh		
+    hh_o2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # co2 Hh		
+    hh_co2 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # h2s Hh		
+    hh_h2s = db.Column(db.NUMERIC(precision=15, scale=5))
+    # cmhn Hh		
+    hh_cmhn = db.Column(db.NUMERIC(precision=15, scale=5))
+
     # H2 定压比热容		
     cpsh_h2 = db.Column(db.NUMERIC(precision=15, scale=5))
     # co 定压比热容		
@@ -116,7 +185,7 @@ class GPGSmokeAirCalculate(db.Model):
     # 标态下每m³燃气燃烧理论烟气量中N2																																																																																														
     constant_n2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
     # 标态下每m³燃气燃烧理论烟气量中N2实际																																																																									
-    constant_actual_ro2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
+    constant_actual_n2_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
     # 标态下每m³燃气燃烧理论烟气量中H2O																																																																									
     constant_h2o_amonut_per_m3 = db.Column(db.NUMERIC(precision=15, scale=5))
     # 标态下每m³燃气燃烧理论烟气量中H2O实际																																																																																														
@@ -191,6 +260,96 @@ class GPGSmokeAirCalculate(db.Model):
     theory_dust_volume_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
     # 烟气焓							
     smoke_enthalpy = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 燃气干燥基低位发热量							
+    qd_net = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 燃气收到基地位发热量							
+    qar_net = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³干燃气燃烧所需理论空气量 Qd.net<10500时																							
+    unknown_need_air_amonut_b_10500 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³干燃气燃烧所需理论空气量 Qd.net>10500时																							
+    unknown_need_air_amonut_a_10500 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³干燃气燃烧所需理论空气量 天然气																							
+    unknown_need_air_amonut_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³干燃气燃烧所需理论空气量 液化石油气																							
+    unknown_need_air_amonut_lng = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 过量空气系数																																												
+    unknown_excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 标态下每m³干燃气燃烧所需实际空气量																							
+    unknown_actual_need_air_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论燃烧烟气量 天然气																																																																																																				
+    unknown_theory_burning_amonut_gas = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论燃烧烟气量 石油伴生气																																																																																																					
+    unknown_theory_burning_amonut_oag = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论燃烧烟气量 液化天然气																																																																																																				
+    unknown_theory_burning_amonut_lng = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论燃烧烟气量 焦炉煤气																																																																																																				
+    unknown_theory_burning_amonut_cog = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 理论燃烧烟气量 Qar.net<12600																																																																																																					
+    unknown_theory_burning_amonut_b_12600 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 实际燃烧烟气量																																																																																																					
+    unknown_actual_burning_gas_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 高炉煤气实际燃烧烟气量																																																																																																					
+    unknown_boiler_actual_burning_gas_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 天然气实际燃烧烟气量																																																																																																					
+    unknown_gas_actual_burning_gas_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 经验公式计算方法 天然气煤气 低位发热量																																																																																																					
+    exp_gas_qnet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 天然气煤气 理论空气量 QL＞35799																																																																																																					
+    exp_gas_theory_air_amount_a_35799 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 天然气煤气 理论空气量 QL＜35799																																																																																																										
+    exp_gas_theory_air_amount_b_35799 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 天然气煤气 过量空气系数																																																																																																					
+    exp_gas_excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 天然气煤气 实际烟气量 QL＞35799																																																																																																				
+    exp_gas_actual_amonut_a_35799 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 天然气煤气 实际烟气量 QL＜35799																																																																																																				
+    exp_gas_actual_amonut_b_35799 = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 经验公式计算方法 焦炉、高炉混合煤气 低位发热量																																																																																																					
+    exp_boiler_qnet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 焦炉、高炉混合煤气 理论空气量	QL＞12561																																																																																																				
+    exp_boiler_theory_air_amount_a_12561 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 焦炉、高炉混合煤气 理论空气量	QL＜12561																																																																																																				
+    exp_boiler_theory_air_amount_b_12561 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 焦炉、高炉混合煤气 过量空气系数																																																																																																					
+    exp_boiler_excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 焦炉、高炉混合煤气 实际烟气量	QL＞12561																																																																																																				
+    exp_boiler_actual_amonut_a_12561 = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 焦炉、高炉混合煤气 实际烟气量	QL＜12561																																																																																																				
+    exp_boiler_actual_amonut_b_12561 = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 经验公式计算方法 各种液体燃料 低位发热量																																																																																																					
+    exp_liquid_fuel_qnet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 各种液体燃料 理论空气量																																																																																																					
+    exp_liquid_fuel_theory_air_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 各种液体燃料 过量空气系数																																																																																																					
+    exp_liquid_fuel_excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 各种液体燃料 实际烟气量																																																																																																					
+    exp_liquid_fuel_actual_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 经验公式计算方法 各种煤 低位发热量																																																																																																					
+    exp_coal_qnet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 各种煤 理论空气量																																																																																																					
+    exp_coal_theory_air_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 各种煤 过量空气系数																																																																																																					
+    exp_coal_excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 各种煤 实际烟气量																																																																																																					
+    exp_coal_actual_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
+
+    # 经验公式计算方法 木材和泥煤 低位发热量																																																																																																					
+    exp_wood_peat_qnet = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 木材和泥煤 含水量																																																																																																					
+    exp_wood_peat_water_content = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 木材和泥煤 理论空气量																																																																																																					
+    exp_wood_peat_theory_air_amount = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 木材和泥煤 过量空气系数																																																																																																					
+    exp_wood_peat_excessive_air_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 木材和泥煤 最佳含水量																																																																																																					
+    exp_wood_peat_best_water_content = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 经验公式计算方法 木材和泥煤 实际烟气量																																																																																																					
+    exp_wood_peat_actual_amonut = db.Column(db.NUMERIC(precision=15, scale=5))
 
     def __init__(self, **kwargs):
         super(GPGSmokeAirCalculate, self).__init__(**kwargs)
