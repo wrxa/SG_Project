@@ -39,9 +39,8 @@ public class MainOrder {
 	public static void creatModelMain() throws FileNotFoundException {
 		//		String tablename = "ccpp_needsQuestionnaire";
 		//		String inputFileName = "ccpp需求调查表输入原始文件.properties";
-
 		String tablename = "ccpp_ccpp";
-		String inputFileName = "ccpp计算原始数据文件.properties";
+		String inputFileName = "123456.properties";
 		String flagxh = "check";
 		String flagsj = "design";
 		String flagbz = "remarks";
@@ -73,23 +72,23 @@ public class MainOrder {
 	 * @throws IOException
 	 */
 	public static void creatTableInTriggerAndTriggerFunctionMain() throws IOException {
-		String tablename = "gaspowergeneration_smoke_air_calculate";
+		String tablename = "ccpp_ccpp";
 		String flagxh = "";
-		String flagsj = "";
-		String excleColumn = "F";
-		FileInputStream fileInputStream = new FileInputStream("In_the_table_inputTrigger.properties");
+		String flagsj = "_design";
+		String excleColumn = "G";
+		FileInputStream fileInputStream = new FileInputStream("123456.properties");
 		ConversionFormula(fileInputStream, excleColumn);
 		Map<String, String> map = creatGZiduanMap();
 		Map<String, String> mapNotes = getNotesMap();
 		PrintStream oldps = System.out;
-		OutputStream os = new FileOutputStream("In_the_table_smoke_air_calculate_Trigger.sql");
+		OutputStream os = new FileOutputStream("输出文件.sql");
 		PrintStream newps = new PrintStream(os);
 		System.setOut(newps);
 		tableInTriggerFunction(map, mapNotes, tablename, flagxh);
 		tableInTrigger(map, mapNotes, tablename, flagxh);
 		System.out.println();
-		//tableInTriggerFunction(map, mapNotes, tablename, flagsj);
-		//tableInTrigger(map, mapNotes, tablename, flagsj, excleColumn);
+		tableInTriggerFunction(map, mapNotes, tablename, flagsj);
+		tableInTrigger(map, mapNotes, tablename, flagsj);
 		System.setOut(oldps);
 	}
 
@@ -100,10 +99,10 @@ public class MainOrder {
 	 */
 	public static void creatTableBetweenTriggerAndTriggerFunctionMain() throws IOException {
 		Properties prop = readOrderedPropertiesFile("between_the_table_inputTrigger.properties");
-		String atablename = "gaspowergeneration_gas_air_system";
-		String btablenname = "gaspowergeneration_wind_resistance";
+		String atablename = "ccpp_questionnaire";
+		String btablenname = "ccpp_ccpp";
 		PrintStream oldps = System.out;
-		OutputStream os = new FileOutputStream("between_gas_air_system_and_wind_resistance.sql");
+		OutputStream os = new FileOutputStream("between_the_table_outTrigger.sql");
 		PrintStream newps = new PrintStream(os);
 		System.setOut(newps);
 		printProp(prop, atablename, btablenname);
@@ -465,7 +464,7 @@ public class MainOrder {
 		for (String key : properties.stringPropertyNames()) {
 			System.out.println("--该触发器用于：当" + properties.getProperty(key) + "有更新时触发" + btablename + "." + key + "=" + atablename + "." + properties.getProperty(key) + "");
 			//			System.out.println("DELETE FROM pg_trigger WHERE tgname='" + atablename + "_a_" + i + "';");
-			System.out.println("CREATE TRIGGER \"" + atablename + "_B_" + i + "\" AFTER UPDATE OF \"" + properties.getProperty(key) + "\" ON \"public\".\"" + atablename + "\"");
+			System.out.println("CREATE TRIGGER \"" + atablename + "_a_" + i + "\" AFTER UPDATE OF \"" + properties.getProperty(key) + "\" ON \"public\".\"" + atablename + "\"");
 			System.out.println("FOR EACH ROW");
 			System.out.println("EXECUTE PROCEDURE \"" + btablename + "_" + key + "\"();");
 			System.out.println();
