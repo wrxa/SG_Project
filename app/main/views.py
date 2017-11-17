@@ -7,16 +7,12 @@ from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, ChangePasswordForm,\
     ChangeEmailForm, UpdateUserForm, RegistrationForm
 from .. import db
-from ..models import User, CoalCHPComponent, CoalCHPConstant,\
-    CoalCHPNeedsQuestionnaire, Plan, Company, CoalCHPFurnaceCalculation,\
-    BiomassCHPconstant, BiomassCHPBeltWidth,\
-    BiomassCHPNeedsQuestionnaire, BiomassCHPBoilerCalculation,\
-    CoalCHPCoalHandingSystem, CoalCHPRemovalAshSlag, CoalCHPDesulfurization,\
-    CoalCHPCirculatingWater, CoalCHPSmokeAirSystem, CoalCHPBoilerAuxiliaries
+from ..models import User, Company
+from ..models import BiomassCHPconstant, BiomassCHPBeltWidth,\
+    BiomassCHPNeedsQuestionnaire, BiomassCHPBoilerCalculation
 from ..decorators import admin_required
 from biomassService import ToBiomassCHP
-from ..gasPowerGeneration_models import GasPowerGenerationConstant,\
-     GasPowerGenerationNeedsQuestionnaire
+from ..gasPowerGeneration_models import GasPowerGenerationConstant
 
 
 # 显示主页

@@ -8,14 +8,46 @@
 	<div class="main-content width88">
 		<div class="container-fluid">
 			<div class="page-title">燃煤热电联产-脱硫脱硝</div>
-			<div class="row">
+			<div class="row" style="margin-top: -20px;">
 
-				<div class="col-md-12">
-
-					<div class="panel">
-						<div class="page-title">脱硫脱硝</div>
+				<div class="col-md-12 breadcrumb-fix">
+					<div class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li>
+								<a href="{{ url_for('coalviews.coalQuestionnaire', id=session.coalCHPPlanId) }}">需求调查表</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li class="current">
+								<a href="#">脱硫脱硝</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+						</ol>
+					</div>
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
 					</div>
 				</div>
+				</br>
+				</br>
+				</br>
+				</br>
 			</div>
 			<form id="coalDesulfurizationForm">
 				<div class="row">
@@ -37,7 +69,8 @@
 											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
 											<div class="col-md-6">
 												<div class="input-group">
-													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable=='T' %} readonly="true" {%
+													 endif %}>
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -70,7 +103,8 @@
 											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
 											<div class="col-md-6">
 												<div class="input-group">
-													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable=='T' %} readonly="true" {%
+													 endif %}>
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -104,7 +138,8 @@
 											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
 											<div class="col-md-6">
 												<div class="input-group">
-													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable=='T' %} readonly="true" {%
+													 endif %}>
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -138,7 +173,8 @@
 											<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
 											<div class="col-md-6">
 												<div class="input-group">
-													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+													<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable=='T' %} readonly="true" {%
+													 endif %}>
 													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 												</div>
 
@@ -183,7 +219,8 @@
 												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
 												<div class="col-md-6">
 													<div class="input-group">
-														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable=='T' %} readonly="true" {%
+														 endif %}>
 														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													</div>
 
@@ -218,7 +255,8 @@
 												<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})</div>
 												<div class="col-md-6">
 													<div class="input-group">
-														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
+														<input class="form-control" type="text" name="{{ constant.name_eng }}" {% if constant.disable=='T' %} readonly="true" {%
+														 endif %}>
 														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
 													</div>
 
@@ -235,27 +273,7 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="col-md-12">
-								<!-- INPUT GROUPS -->
-								<div class="panel margin-right30">
-									<div class="first-title">
-										<i class="fa fa-floppy-o" aria-hidden="true"></i>
-										<span class="margin-left15">保存调查表信息</span>
-									</div>
-									<div class="row text-center">
-										<br>
-										<br>
-										<button type="button" id="submitData" class="btn btn-success">
-											<i class="fa fa-check-circle"></i> 保存</button>
-
-										<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
-									</div>
-									<br>
-									<br>
-								</div>
-
-							</div>
+						
 						</div>
 					</div>
 				</div>

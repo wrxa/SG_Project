@@ -8,14 +8,38 @@
 	<div class="main-content width88">
 		<div class="container-fluid">
 			<div class="page-title">燃煤热电联产-需求调查表</div>
-			<div class="row">
+			<div class="row" style="margin-top: -20px;">
+				<div class="col-md-12 breadcrumb-fix width88">
 
-				<div class="col-md-12">
-
-					<div class="panel">
-						<div class="page-title">燃煤发电需求调查表</div>
+					<div class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle" >
+							<li class="current"><a href="#">需求调查表</a></li>
+							{% if session.coalCHPPlanId %}
+							<li><a href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a></li>
+							<li><a href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a></li>
+							<li><a href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a></li>
+							<li><a href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝</a></li>
+							<li><a href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a></li>
+							<li><a href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a></li>
+							<li><a href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a></li>
+							{% else %}
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a></li>
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a></li>
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a></li>
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝</a></li>
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a></li>
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a></li>
+							<li title="请先完善新方案"><a class="newPlan forbid-click" onclick="return false;" href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a></li>
+							{% endif %}
+						</ol>
 					</div>
+
+					<div class="col-md-2 breadcrumb-submit">
+							<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i>  保 存 </button>
+					</div>
+
 				</div>
+			</br></br></br></br>
 			</div>
 			<form id="coalchpQuestionnaire">
 			<div class="row">
@@ -24,18 +48,16 @@
 					<div class="col-md-12">
 						<!-- INPUT GROUPS -->
 						<div class="panel">
-							<div class="first-title"><i class="fa fa-fire" aria-hidden="true"></i><span class="margin-left15">燃料情况</span></div>
-							<div class="second-title"> 煤质分析</div>
+							<div class="first-title"><i class="fa fa-fire" aria-hidden="true" ></i><span class="margin-left15">燃料情况</span></div>
 
-							
-							<div class="col-md-12">
-								<div class="col-md-3 text-center"></div>
-								<div class="col-md-4 text-center design-color">设计值</div>
-								<div class="col-md-4 text-center check-color">校核值</div>
-								<div class="col-md-1 text-center"></div>
+							<div class="info-dc">
+									<i class="fa fa-asterisk asterisk-style" aria-hidden="true"></i> 
+									<i class="fa fa-square square-design" aria-hidden="true"></i> ：设计值
+									<i class="fa fa-square square-check" aria-hidden="true"></i> ：校核值
 							</div>
 
-						</br>
+							<div class="second-title"> 煤质分析</div>
+
 
 							<div class="row">
 								<div class="panel-body">
@@ -45,7 +67,6 @@
 										</div>
 										<div class="col-md-4">
 											<div class="input-group">
-												<!-- <span class="input-group-addon show-primary"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span> -->
 												<select class="form-control" id="coalDesign" name="s_fuel_design">
 														{% for sort in coalsort %} 
 														<option value="{{ sort.id }}">{{ sort.name }}</option>
@@ -56,7 +77,6 @@
 										</div>
 										<div class="col-md-4">
 											<div class="input-group">
-												<!-- <span class="input-group-addon show-success"><i class="fa fa-check" aria-hidden="true"></i></span> -->
 												<select class="form-control" id="coalCheck" name="s_fuel_check">
 														{% for sort in coalsort %} 
 														<option value="{{ sort.id }}">{{ sort.name }}</option>
@@ -80,7 +100,6 @@
 											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<!-- <span class="input-group-addon show-primary"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span> -->
 													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design">
 													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
@@ -88,7 +107,6 @@
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<!-- <span class="input-group-addon show-success"><i class="fa fa-check" aria-hidden="true"></i></span> -->
 													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check">
 													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
@@ -361,20 +379,6 @@
 
 						</div>
 
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel margin-right30">
-								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存调查表信息</span></div>
-								<div class="row text-center">
-									<br><br>
-									<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i> 保存</button>
-
-									<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
-								</div>
-								<br> <br>
-							</div>
-
-						</div>
 					</div>
 				</div>
 			</div>

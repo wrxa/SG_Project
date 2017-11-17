@@ -28,7 +28,7 @@
 <div id="wrapper">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="brand">
-            <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='assets/img/sgdl.jpg') }}" alt="Klorofil Logo" class="img-responsive logo"></a>
+            <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='assets/img/sgdl.jpg') }}" alt="陕鼓" class="img-responsive logo"></a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
@@ -107,19 +107,16 @@
                         <a href="#coal" id="coalMean" data-toggle="collapse" class="collapsed index"><i class="fa fa-fire"></i> <span>燃煤热电联产</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
                         <div id="coal" class="collapse ">
                             <ul class="nav">
-                                <li><a class="coalQuestionnaire" href="{{ url_for('coal_chp.coalQuestionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="coalFurnace unselect" onclick="return false;" href="{{ url_for('main.coalFurnace') }}" class="">锅炉计算</a></li>
-                                <li><a class="coalHandingSystem unselect" onclick="return false;" href="{{ url_for('main.coalHandingSystem') }}" class="">输煤系统</a></li>
-                                <li><a class="coalBoilerAuxiliaries unselect" onclick="return false;" href="{{ url_for('main.coalBoilerAuxiliaries') }}" class="">锅炉辅机系统</a></li>
-                                <li><a class="coalDesulfurization unselect" onclick="return false;" href="{{ url_for('main.coalDesulfurization') }}" class="">脱硫脱硝</a></li>
-                                <li><a class="coalRemovalAshSlag unselect" onclick="return false;" href="{{ url_for('main.coalRemovalAshSlag') }}" class="">除灰除渣系统</a></li>
-                                <li><a class="coalCirculatingWater unselect" onclick="return false;" href="{{ url_for('main.coalCirculatingWater') }}" class="">循环水系统</a></li>
-                                <li><a class="coalSmokeAirSystem unselect" onclick="return false;" href="{{ url_for('main.coalSmokeAirSystem') }}" class="">烟风系统</a></li>
-                            
+                                <li><a class="coalPlanList" href="{{ url_for('coalviews.coalPlanList') }}" class="">方案管理</a></li>
+                                <!-- <li><a class="coalQuestionnaire" href="{{ url_for('coalviews.coalQuestionnaire', id=-1) }}" class="">需求调查表</a></li>
+                                <li><a class="coalFurnace unselect" onclick="return false;" href="{{ url_for('coalviews.coalFurnace') }}" class="">锅炉计算</a></li>
+                                <li><a class="coalHandingSystem unselect" onclick="return false;" href="{{ url_for('coalviews.coalHandingSystem') }}" class="">输煤系统</a></li>
+                                <li><a class="coalBoilerAuxiliaries unselect" onclick="return false;" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}" class="">锅炉辅机系统</a></li>
+                                <li><a class="coalDesulfurization unselect" onclick="return false;" href="{{ url_for('coalviews.coalDesulfurization') }}" class="">脱硫脱硝</a></li>
+                                <li><a class="coalRemovalAshSlag unselect" onclick="return false;" href="{{ url_for('coalviews.coalRemovalAshSlag') }}" class="">除灰除渣系统</a></li>
+                                <li><a class="coalCirculatingWater unselect" onclick="return false;" href="{{ url_for('coalviews.coalCirculatingWater') }}" class="">循环水系统</a></li>
+                                <li><a class="coalSmokeAirSystem unselect" onclick="return false;" href="{{ url_for('coalviews.coalSmokeAirSystem') }}" class="">烟风系统</a></li> -->
                                 
-                                
-                                
-                                <!-- <li><a class="coalSteamTurbine unselect" onclick="return false;" href="{{ url_for('main.coalSteamTurbine') }}" class="">汽轮机计算</a></li> -->
                             </ul>
                         </div>
                     </li>

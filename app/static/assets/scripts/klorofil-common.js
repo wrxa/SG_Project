@@ -7,11 +7,13 @@ $(document).ready(function() {
 	$('.btn-toggle-fullwidth').on('click', function() {
 		if(!$('body').hasClass('layout-fullwidth')) {
 			$('.main-content').removeClass('width88');
+			$('.breadcrumb-fix').removeClass('width88');
 			$('body').addClass('layout-fullwidth');
 
 		} else {
 			$('body').removeClass('layout-fullwidth');
 			$('.main-content').addClass('width88');
+			$('.breadcrumb-fix').addClass('width88');
 			$('body').removeClass('layout-default'); // also remove default behaviour if set
 		}
 
@@ -54,7 +56,7 @@ $(document).ready(function() {
 
 	$('.sidebar a[data-toggle="collapse"]').on('click', function() {
 		var leftMeun = ['collapsed index', 'elements', 'charts', 'tables', 'typography', 'icons',
-		'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem', 'coalDesulfurization','coalBoilerAuxiliaries', 'coalRemovalAshSlag', 'coalCirculatingWater', 'coalSmokeAirSystem',
+		'coalPlanList', 'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem', 'coalDesulfurization','coalBoilerAuxiliaries', 'coalRemovalAshSlag', 'coalCirculatingWater', 'coalSmokeAirSystem',
 		'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine','biomassFuelStorTran',
 		'biomassDesulDenit', 'biomassDASRemove', 'biomassBoilerAuxiliaries', 'biomassOfficialProcess',
 		'ccppQuestionnaire', 'ccppFurnace', 'ccppSteamTurbine',

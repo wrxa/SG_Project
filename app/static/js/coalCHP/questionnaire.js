@@ -2,6 +2,8 @@ $(document).ready(function () {
     var sorts = ['s_carbon', 's_hydrogen', 's_oxygen', 's_nitrogen', 's_sulfur', 's_water',
         's_grey', 's_daf', 's_grindability', 's_low'];
 
+    // 初始化需求调查表数据
+    initQuestionnaire();
     // 煤质分析设计煤种选择
     $("#coalDesign").change(function () {
         // 选择其他项时清空当前所有煤质分析值
@@ -12,7 +14,7 @@ $(document).ready(function () {
             }
         } else {
             $.ajax({
-                url: './coalSort',
+                url: '/coalSort',
                 data: { "id": id },
                 type: 'post',
                 cache: false,
@@ -41,7 +43,7 @@ $(document).ready(function () {
             }
         } else {
             $.ajax({
-                url: './coalSort',
+                url: '/coalSort',
                 data: { "id": id },
                 type: 'post',
                 cache: false,
@@ -74,14 +76,14 @@ function submitQuestionnaire() {
     $.ajax({
         cache: true,
         type: "POST",
-        url: './formData',
+        url: '/formData',
         data: $('#coalchpQuestionnaire').serialize(),
         async: false,
         error: function (request) {
             messageToast('error', '发生异常，保存失败！',3000);
         },
         success: function (data) {
-            unlockMeunCoalCHP();
+            unlockBreadcrumb();
             messageToast('success', '燃煤热电联产-需求调查表数据保存成功！',3000);
         }
     });
@@ -97,7 +99,7 @@ function updatePlanData() {
         $.ajax({
             cache: true,
             type: "POST",
-            url: './findPlan',
+            url: '/findPlan',
             data: { "planId": planId },
             async: false,
             error: function (request) {
@@ -106,7 +108,7 @@ function updatePlanData() {
             },
             success: function (data) {
                 assignmentForm(data.questionnaire);
-                unlockMeunCoalCHP();
+                unlockBreadcrumb();
             }
         });
     }else{
@@ -130,4 +132,22 @@ function assignmentForm(datas) {
     // 给select框赋值
     $("#coalCheck").val(datas['s_fuel_check']);
     $("#coalDesign").val(datas['s_fuel_design']);
+}
+
+function initQuestionnaire() {
+    $.ajax({
+        cache: true,
+        type: "POST",
+        url: '/initQuestionnaire',
+        async: false,
+        error: function (request) {
+            messageToast('error', '发生异常！',3000);
+        },
+        success: function (data) {
+            if (data.questionnaire != "null") {
+                assignmentForm(data.questionnaire, "coalchpQuestionnaire");
+            }
+            
+        }
+    });
 }

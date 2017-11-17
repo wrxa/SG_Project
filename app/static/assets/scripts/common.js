@@ -2,7 +2,7 @@ $(document).ready(function() {
     hiddenUnit();
     // 左侧菜单切换的样式
     var leftMeun = ['collapsed index', 'elements', 'charts', 'tables', 'typography', 'icons',
-                    'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem', 'coalDesulfurization' ,
+                    'coalPlanList', 'coalQuestionnaire', 'coalFurnace', 'coalSteamTurbine', 'coalHandingSystem', 'coalDesulfurization' ,
                     'coalBoilerAuxiliaries', 'coalRemovalAshSlag', 'coalCirculatingWater', 'coalSmokeAirSystem',
                     'biomassQuestionnaire', 'biomassFurnace', 'biomassSteamTurbine','biomassFuelStorTran',
                     'biomassDesulDenit', 'biomassDASRemove', 'biomassBoilerAuxiliaries', 'biomassOfficialProcess',
@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     for (var i = 0; i < leftMeun.length; i++) {
         if (menuSelect == leftMeun[i]) {
-            if(menuSelect == 'coalQuestionnaire' || menuSelect == 'coalFurnace' || menuSelect == 'coalSteamTurbine' || menuSelect == 'coalHandingSystem' || menuSelect == 'coalDesulfurization' || menuSelect == 'coalBoilerAuxiliaries' || menuSelect == 'coalRemovalAshSlag' || menuSelect == 'coalCirculatingWater' || menuSelect == 'coalSmokeAirSystem') {
+            if(menuSelect == 'coalPlanList' || menuSelect == 'coalQuestionnaire' || menuSelect == 'coalFurnace' || menuSelect == 'coalSteamTurbine' || menuSelect == 'coalHandingSystem' || menuSelect == 'coalDesulfurization' || menuSelect == 'coalBoilerAuxiliaries' || menuSelect == 'coalRemovalAshSlag' || menuSelect == 'coalCirculatingWater' || menuSelect == 'coalSmokeAirSystem') {
                 if($('.sidebar a[data-toggle="collapse"]').hasClass('collapsed')) {
                     $('#coalMean').attr('class', 'index active');
                     $('#coal').attr('class', 'collapse in');
@@ -112,6 +112,18 @@ function unlockMeunBiomassCHP() {
     $('.biomassFurnace, .biomassFuelStorTran, .biomassDesulDenit, .biomassDASRemove, .biomassBoilerAuxiliaries, .biomassOfficialProcess').removeClass('unselect');
     $('.biomassFurnace, .biomassFuelStorTran, .biomassDesulDenit, .biomassDASRemove, .biomassBoilerAuxiliaries, .biomassOfficialProcess').removeAttr('onclick');
 }
+
+/**
+ * 解锁面包屑菜单
+ */
+function unlockBreadcrumb() {
+    $(".newPlan").removeAttr("onclick");
+    $(".newPlan").removeClass("forbid-click");
+    $(".newPlan").parent("li").removeAttr("title");
+}
+
+
+
 
 /**
  * input框焦点时隐藏单位，失去焦点单位出现

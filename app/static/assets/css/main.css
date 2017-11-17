@@ -1788,3 +1788,7 @@ background-color: #337ab7;
   margin-top: 150px;
   font-size: 13px;
 }
+
+.forbid-click{
+  cursor: no-drop;
+}

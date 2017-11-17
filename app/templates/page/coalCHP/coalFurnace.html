@@ -8,14 +8,46 @@
 	<div class="main-content width88">
 		<div class="container-fluid">
 			<div class="page-title">燃煤热电联产-锅炉计算</div>
-			<div class="row">
+			<div class="row" style="margin-top: -20px;">
 
-				<div class="col-md-12">
-
-					<div class="panel">
-						<div class="page-title">锅炉本体计算</div>
+				<div class="col-md-12 breadcrumb-fix">
+					<div class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li>
+								<a href="{{ url_for('coalviews.coalQuestionnaire', id=session.coalCHPPlanId) }}">需求调查表</a>
+							</li>
+							<li class="current">
+								<a href="#">锅炉计算</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+						</ol>
+					</div>
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
 					</div>
 				</div>
+				</br>
+				</br>
+				</br>
+				</br>
 			</div>
 			<form id="coalFurnaceForm">
 				<div class="row">
@@ -28,6 +60,11 @@
 									<i class="fa fa-fire" aria-hidden="true"></i>
 									<span class="margin-left15">煤质资料</span>
 								</div>
+								<div class="info-dc">
+									<i class="fa fa-asterisk asterisk-style" aria-hidden="true"></i>
+									<i class="fa fa-square square-design" aria-hidden="true"></i> ：设计值
+									<i class="fa fa-square square-check" aria-hidden="true"></i> ：校核值
+								</div>
 								{% for constant in constants %} {% if constant.name_eng in ['s_carbon', 's_hydrogen', 's_oxygen', 's_nitrogen', 's_sulfur',
 								's_water', 's_grey', 's_daf', 's_grindability', 's_sum', 's_low', 's_low_1', 's_low_2', 's_low_estimation', 's_high_estimation']
 								%}
@@ -37,23 +74,23 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -85,23 +122,25 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -131,23 +170,25 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -165,23 +206,25 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -200,23 +243,25 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -234,22 +279,24 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -268,23 +315,25 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -315,23 +364,25 @@
 											<div class="col-md-3">{{ constant.name }}</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 												</div>
 
 											</div>
 											<div class="col-md-4">
 												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+													 %} readonly="true" {% endif %}>
+													<span class="input-group-addon show-success">{{ constant.unit }}</span>
 												</div>
 											</div>
 											{% if constant.calculate != "" %}
 											<div class="col-md-1">
-												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-												 data-placement="right" data-content="{{ constant.calculate }}"></i>
+												<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+												 data-content="{{ constant.calculate }}"></i>
 											</div>
 											{% endif %}
 										</div>
@@ -343,26 +394,6 @@
 
 						</div>
 
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel">
-								<div class="first-title">
-									<i class="fa fa-floppy-o" aria-hidden="true"></i>
-									<span class="margin-left15">保存锅炉计算信息</span>
-								</div>
-								<div class="row text-center">
-									<br>
-									<br>
-									<button type="button" id="submitData" class="btn btn-success">
-										<i class="fa fa-check-circle"></i> 保存</button>
-
-									<!-- <button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button> -->
-								</div>
-								<br>
-								<br>
-							</div>
-
-						</div>
 					</div>
 
 
@@ -370,11 +401,14 @@
 
 						<div class="row">
 
-						<!-- 锅炉参数选择 -->
-						<div class="col-md-12">
+							<!-- 锅炉参数选择 -->
+							<div class="col-md-12">
 								<!-- INPUT GROUPS -->
 								<div class="panel margin-right30">
-									<div class="first-title"><i class="fa fa-filter" aria-hidden="true"></i><span class="margin-left15">锅炉参数选择</span></div>
+									<div class="first-title">
+										<i class="fa fa-filter" aria-hidden="true"></i>
+										<span class="margin-left15">锅炉参数选择</span>
+									</div>
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-md-12">
@@ -400,7 +434,7 @@
 							<!-- 燃料耗量 -->
 							<div class="col-md-12">
 								<!-- INPUT GROUPS -->
-								<div class="panel ">
+								<div class="panel margin-right30">
 									<div class="first-title">
 										<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 										<span class="margin-left15">燃料耗量</span>
@@ -414,23 +448,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -445,7 +481,7 @@
 							<!-- 灰渣量 -->
 							<div class="col-md-12">
 								<!-- INPUT GROUPS -->
-								<div class="panel ">
+								<div class="panel margin-right30">
 									<div class="first-title">
 										<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 										<span class="margin-left15">灰渣量</span>
@@ -458,23 +494,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -489,7 +527,7 @@
 							<!-- 理论空气量 -->
 							<div class="col-md-12">
 								<!-- INPUT GROUPS -->
-								<div class="panel ">
+								<div class="panel margin-right30">
 									<div class="first-title">
 										<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 										<span class="margin-left15">理论空气量</span>
@@ -502,23 +540,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -533,7 +573,7 @@
 							<!-- 理论烟气量 -->
 							<div class="col-md-12">
 								<!-- INPUT GROUPS -->
-								<div class="panel ">
+								<div class="panel margin-right30">
 									<div class="first-title">
 										<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 										<span class="margin-left15">理论烟气量</span>
@@ -546,23 +586,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -575,7 +617,7 @@
 							<!-- 锅炉各处烟气量 -->
 							<div class="col-md-12">
 								<!-- INPUT GROUPS -->
-								<div class="panel ">
+								<div class="panel margin-right30">
 									<div class="first-title">
 										<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 										<span class="margin-left15">锅炉各处烟气量</span>
@@ -589,23 +631,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -623,23 +667,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -657,23 +703,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>
@@ -691,23 +739,25 @@
 												<div class="col-md-3">{{ constant.name }}</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-primary">设计</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-primary">{{ constant.unit }}</span>
 													</div>
 
 												</div>
 												<div class="col-md-4">
 													<div class="input-group">
-														<span class="input-group-addon show-success">校核</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable == 'T' %} readonly="true" {% endif %}>
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+
+														<input class="form-control" type="text" id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check" {% if constant.disable=='T'
+														 %} readonly="true" {% endif %}>
+														<span class="input-group-addon show-success">{{ constant.unit }}</span>
 													</div>
 												</div>
 												{% if constant.calculate != "" %}
 												<div class="col-md-1">
-													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover"
-													 data-placement="right" data-content="{{ constant.calculate }}"></i>
+													<i class="fa fa-question-circle-o" title="符号：  {{ constant.symbol }}" data-container="body" data-toggle="popover" data-placement="right"
+													 data-content="{{ constant.calculate }}"></i>
 												</div>
 												{% endif %}
 											</div>

@@ -35,7 +35,7 @@ function submitBoilerAuxiliaries() {
         },
         success: function (data) {
             assignmentForm(data.newDatas, "coalBoilerAuxiliariesForm");
-            messageToast('success', '燃煤热电联产-输煤系统数据保存成功！',3000);
+            messageToast('success', '燃煤热电联产-锅炉辅机系统数据保存成功！',3000);
         }
     });
 

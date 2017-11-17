@@ -5,7 +5,7 @@ from app import create_app, db
 from app.models import Permission
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
-from app.initCoalCHP import AddCoalCHP
+from app.coal_chp.init.initCoalCHP import AddCoalCHP
 from app.initBiomassCHP import AddBiomassCHP
 from app.initGPG import AddGPG
 # from app.gasPowerGeneration_models import GasPowerGenerationConstant, \

@@ -29,14 +29,14 @@ def create_app(config_name):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .coal_chp.view import coalviews as coalviews_blueprint
+    app.register_blueprint(coalviews_blueprint)
+    
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     from .api_1_0 import api as api_1_0_blueprint
     app.register_blueprint(api_1_0_blueprint, url_prefix='/api')
-
-    from .coal_chp import coal_chp as coalchp_blueprint
-    app.register_blueprint(coalchp_blueprint, url_prefix='/coal_chp')
 
     app.debug = False
 
