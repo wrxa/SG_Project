@@ -61,6 +61,90 @@ class GasPowerGenerationConstant(db.Model):
     def __repr__(self):
         return '<gasPowerGenerationConstant %r>' % self.module_name
 
+# 煤气发电 汽机辅机系统 turbine auxiliary system
+class GPGTurbineAuxiliarySystem(db.Model):
+    # 表名
+    __tablename__ = 'gaspowergeneration_turbine_auxiliary_system'
+
+    # 表ID,自动生成（主键）
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # 方案表外键
+    plan_id = db.Column(db.Integer, db.ForeignKey('plan.id'))
+
+    # 除氧器工作压力
+    deaerator_work_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 除氧器凝结水入口与凝汽器热井最低水位间的水柱静压差
+    deaerator_condensation_well_pressure_difference = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 除氧器入口凝结水管喷雾头所需喷雾压力
+    deaerator_condensation_spray_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 凝汽器的最高真空
+    condenser_maximum_vacuum = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 从热井到除氧器凝结水入口的凝结水管道流动阻力，另加20%裕量
+    deaerator_condensation_well_pipe_resistance = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 凝结水泵的设计扬程
+    condensate_pump_design_lift = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流量
+    condensate_pump_flow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 泵效率
+    condensate_pump_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 机械传动效率
+    condensate_pump_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机效率
+    condensate_pump_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机备用系数
+    condensate_pump_motor_spare_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 配套电机功率
+    condensate_pump_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格
+    condensate_pump_selected = db.Column(db.Text())
+
+    # 射水抽气器工作压力
+    extractor_work_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 射水箱工作压力
+    ejection_tank_work_pressure = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 射水抽气器安装高度与射水箱最高水位之差
+    extractor_ejection_waterline_height_difference = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 射水泵进出口管路损失
+    jet_pump_pipe_loss = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 总扬程
+    jet_pump_total_lift = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 流量
+    jet_pump_flow = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 泵效率
+    jet_pump_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 机械传动效率
+    jet_pump_transmission_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机效率
+    jet_pump_motor_efficiency = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 电动机备用系数
+    jet_pump_motor_spare_coefficient = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 配套电机功率
+    jet_pump_motor_power = db.Column(db.NUMERIC(precision=15, scale=5))
+    # 选用规格
+    jet_pump_selected = db.Column(db.Text())
+
+    def __init__(self, **kwargs):
+        super(GPGTurbineAuxiliarySystem, self).__init__(**kwargs)
+
+    @staticmethod
+    def insert_SmokeAirCalculate(gaspowergeneration_turbine_auxiliary_system):
+        try:
+            db.session.add(gaspowergeneration_turbine_auxiliary_system)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Error %s" % e)
+            raise e
+        finally:
+            print("Insert/Update gaspowergeneration_turbine_auxiliary_system"
+                  "<id=%s> in database" % (gaspowergeneration_turbine_auxiliary_system.id))
+
+    # 根据plan id查找实体
+    @staticmethod
+    def search_SmokeAirCalculate(planId):
+        result = GPGTurbineAuxiliarySystem.query.filter_by(plan_id=planId).one_or_none()
+        return result
+
 
 # 煤气发电 烟、风量计算 smoke_air_calculate
 class GPGSmokeAirCalculate(db.Model):
