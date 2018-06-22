@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='assets/vendor/markdown/markdown.js') }}"></script>
+<script src="{{ url_for('static', filename='js/planList.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/component/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/component/normalize.css') }}">
+<script src="{{ url_for('static', filename='js/blower-loading.js') }}"></script>
+
+
+<!-- MAIN -->
+<div class="main">
+	<style>
+		tbody tr:nth-child(odd) {
+			background-color: #dff0d8!important;
+		}
+		.progress {
+			margin-bottom: 0px;
+		}
+	</style>
+
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">方案管理</div> -->
+			</br>
+			<div class="row">
+				<div class="col-md-12">
+					<input type="hidden" value="{{moduleName}}" id="moduleName">
+					<input type="hidden" value="{{pageFlag}}" id="pageFlag">
+					<input type="hidden" value="{{current_user.role_id}}" id="roleId">
+					<div class="panel-page" style="background-color:white">
+						<div class="page-title">
+							</br>
+							{% if moduleName== "coalCHP" %}燃煤热电联产{% elif moduleName== "biomassCHP" %}生物质热电联产{% elif moduleName== "CCPP" %}燃气蒸汽联合循环{% elif moduleName== "energyIsland" %}能源互联岛{%
+							elif moduleName== "gasPowerGeneration" %}煤气发电{% endif %}报告管理</div>
+						<div class="row">
+							<div class="col-md-12" style="padding: 30px;">
+
+								<div class="col-md-3">
+									<div class="input-group">
+										<span class="input-group-addon show-primary">
+											<i class="fa fa-user-o"></i> 创建人</span>
+										<input class="form-control" type="text" id="findByUser">
+										<!-- <select class="form-control" id="findByUser">
+											{% for plan in plans_distinct %} {% for user in users %} {% if plan.user_id ==user.id %}
+											<option value="{{user.id}}">{{user.user_name}}</option>
+											{% endif %} {% endfor %} {% endfor %}
+											<option value="-1" selected="selected">请选择</option>
+										</select> -->
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="input-group">
+										<span class="input-group-addon show-primary">
+											<i class="fa fa-building-o"></i>&nbsp;&nbsp;公司</span>
+										<input class="form-control" type="text" id="findByCompany">
+										<!-- <select class="form-control" id="findByCompany">
+											{% for plan in plans %} {% for company in companys %} {% if plan.company_id ==company.id %}
+											<option value="{{company.id}}">{{company.company_name}}</option>
+											{% endif %} {% endfor %} {% endfor %}
+											<option value="-1" selected="selected">请选择</option>
+										</select> -->
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<a type="button" class="btn btn-primary" id="queryPlans">
+										<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;检索报告</a>
+								</div>
+								<div class="col-md-3">
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								<div class="text-center" style="width:70%">
+									{% for message in get_flashed_messages(with_categories=True) %}
+									<div class="alert alert-{{ message[0] }}">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										{{ message[1] }}
+									</div>
+									{% endfor %}
+
+								</div>
+								<div style="padding: 30px;">
+									<table class="table table-striped report-list">
+										<thead>
+											<tr>
+												<th style="width:8%">项目名称</th>
+												<th style="width:8%">单位名称</th>
+												<th style="width:11%">項目所在地</th>
+												<th style="width:22%">主要设备参数</th>
+												<th style="width:8%">设计人</th>
+												<th style="width:8%">设计日</th>
+												<!-- <th style="width:8%">最近修改日</th> -->
+												<th style="width:8%">审核人</th>
+												<th style="width:8%">审核日</th>
+												<th style="width:12%">状态</th>
+												<th style="width:12%">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for plan in plans %}
+											<tr>
+												<td data-id="{{ plan.id }}" id="tempId">{{ plan.plan_name }}</td>
+												
+												{% for company in companys %} {% if plan.company_id == company.id %}
+												<td>{{ company.company_name }}</td>
+												{% endif %} {% endfor %}
+
+												<td>{{ plan.company_location }}</td>
+
+												<!-- <td title="{{ plan.main_equipment_para }}" style="cursor: pointer;">{{ plan.main_equipment_para | interval(0,13) }}...</td> -->
+
+												<td style="cursor: pointer;">	
+													{% for para in plan.main_equipment_para_list %}
+													<div>● {{para}}</div>
+													{% endfor %}	
+												</td>
+												
+												{% for user in users %} {% if plan.user_id == user.id %}
+												<td>{{ user.user_name }}</td>
+												{% endif %} {% endfor %}
+
+												<td>{{ plan.plan_create_date | dateformat("%Y-%m-%d") }}</td>
+
+												<!-- <td>{{ plan.plan_update_date | dateformat("%Y-%m-%d") }}</td> -->
+
+
+												{% if not plan.approver_id %}
+												<td><span class="label label-info">未审核</span></td>
+												<td><span class="label label-info">未审核</span></td>
+												{% else %}
+
+												{% for user in users %} {% if plan.approver_id == user.id %}
+												<td>{{ user.user_name }}</td>
+												{% endif %} {% endfor %}
+
+												<td>{{ plan.approve_time | dateformat("%Y-%m-%d") }}</td>
+												
+												{% endif %}
+												
+
+
+												{% if plan.plan_state == -1 %}
+												<td>
+													<div class="progress">
+														<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+															<span>未绑定</span>
+														</div>
+													</div>
+												</td>
+												{% endif %} 
+												{% if plan.plan_state == 0 %}
+												<td>
+													<div class="progress">
+														<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+															<span>未审核</span>
+														</div>
+													</div>
+												</td>
+												{% endif %} 
+												{% if plan.plan_state == 1 %}
+												<td>
+													<div class="progress">
+														<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+															<span>审核中</span>
+														</div>
+													</div>
+												</td>
+												{% endif %} 
+												{% if plan.plan_state == 2 %}
+												<td>
+													<div class="progress">
+														<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+															<span>已审核</span>
+														</div>
+													</div>
+												</td>
+												{% endif %}
+												<td>
+													{% if plan.template_id %}
+
+													<a type="button" target="_blank" class="yulan" title="预览报告" href="javascript:void(0)" style="margin-left: 10px;">
+														<i class="fa fa-file-text-o"></i>
+													</a>
+													 {% else%}
+														{% if plan.module_id == "coalCHP" %}
+														<a href="{{ url_for('coalviews.coalChooseTemplate', planId=plan.id) }}">选择模板</a>
+														{% elif plan.module_id == "gasPowerGeneration" %}
+														<a href="{{ url_for('gpg_view.GPG_ChooseTemplate', planId=plan.id) }}">选择模板</a>
+														{% elif plan.module_id == "biomassCHP" %}
+														<a href="{{ url_for('biomassviews.biomassChooseTemplate', planId=plan.id) }}">选择模板</a>
+														{% elif plan.module_id == "CCPP" %}
+														<a href="{{ url_for('ccppviews.toChooseTemplate', planId=plan.id) }}">选择模板</a>
+														{% elif plan.module_id == "energyIsland" %}
+														<a href="{{ url_for('energy_island.toChooseTemplate', planId=plan.id) }}">选择模板</a>
+														{% endif %}
+													{% endif %}
+
+												</td>
+											</tr>
+											{% endfor %}
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

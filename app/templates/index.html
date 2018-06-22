@@ -1,488 +1,482 @@
 {% extends "base.html" %}
 
-<!doctype html>
-{% block title %}EnergyIsland - {{ current_user.user_name }}{% endblock %}
+<!doctype html> {% block title %}EnergyIsland - {{ current_user.user_name }}{% endblock %} {% block content %} {% block page_content %}
+<style>
+	.page-title {
+		font-size: 24px;
+		text-align: center;
+		margin: 20px;
+		font-weight: bold;
+		letter-spacing: 4px;
+	}
 
+	.gre {
+		color: #fff;
+		background-color: #41B314;
+		cursor: pointer;
+	}
 
-{% block content %}
-{% block page_content %}
-<script>
-        $(function() {
-            var data, options;
+	#container {
+		height: 800px;
+	}
+	.list-plan{
+		height:800px;
+		overflow-y:auto
+	}
+	@media screen and (max-height: 769px) {
+		#container {
+		height: 500px;
+		}
+		.list-plan{
+		height:500px;
+		overflow-y:auto
+	}
+	}
+
+	.input-group {
+		background-color: #ddf;
+		width: 50px;
+		color: #333;
+		border: 1px solid silver;
+		box-shadow: 3px 4px 3px 0px silver;
+		position: absolute;
+		top: 80px;
+		right: 37%;
+		border-radius: 5px;
+		overflow: hidden;
+		line-height: 20px;
+	}
+
+	#input {
+		width: 148px;
+		height: 25px;
+		border: 0;
+		background-color: white;
+	}
+
+	    /* 定义 my-red 主题 右侧地图特效*/
     
-            // headline charts
-            data = {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                series: [
-                    [23, 29, 24, 40, 25, 24, 35],
-                    [14, 25, 18, 34, 29, 38, 44],
-                ]
-            };
+	.amap-ui-control-theme-my-red .amap-ui-control-layer {
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+	background: #337ab7;
+    }
     
-            options = {
-                height: 300,
-                showArea: true,
-                showLine: false,
-                showPoint: false,
-                fullWidth: true,
-                axisX: {
-                    showGrid: false
-                },
-                lineSmooth: false,
-            };
+    .amap-ui-control-theme-my-red .amap-ui-control-layer-expanded {
+        color: #fff;
+        background: #337ab7;
+    }
     
-            new Chartist.Line('#headline-chart', data, options);
-    
-    
-            // visits trend charts
-            data = {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                series: [{
-                    name: 'series-real',
-                    data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
-                }, {
-                    name: 'series-projection',
-                    data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
-                }]
-            };
-    
-            options = {
-                fullWidth: true,
-                lineSmooth: false,
-                height: "270px",
-                low: 0,
-                high: 'auto',
-                series: {
-                    'series-projection': {
-                        showArea: true,
-                        showPoint: false,
-                        showLine: false
-                    },
-                },
-                axisX: {
-                    showGrid: false,
-    
-                },
-                axisY: {
-                    showGrid: false,
-                    onlyInteger: true,
-                    offset: 0,
-                },
-                chartPadding: {
-                    left: 20,
-                    right: 20
-                }
-            };
-    
-            new Chartist.Line('#visits-trends-chart', data, options);
-    
-    
-            // visits chart
-            data = {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                series: [
-                    [6384, 6342, 5437, 2764, 3958, 5068, 7654]
-                ]
-            };
-    
-            options = {
-                height: 300,
-                axisX: {
-                    showGrid: false
-                },
-            };
-    
-            new Chartist.Bar('#visits-chart', data, options);
-    
-    
-            // real-time pie chart
-            var sysLoad = $('#system-load').easyPieChart({
-                size: 130,
-                barColor: function(percent) {
-                    return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
-                },
-                trackColor: 'rgba(245, 245, 245, 0.8)',
-                scaleColor: false,
-                lineWidth: 5,
-                lineCap: "square",
-                animate: 800
-            });
-    
-            var updateInterval = 3000; // in milliseconds
-    
-            setInterval(function() {
-                var randomVal;
-                randomVal = getRandomInt(0, 100);
-    
-                sysLoad.data('easyPieChart').update(randomVal);
-                sysLoad.find('.percent').text(randomVal);
-            }, updateInterval);
-    
-            function getRandomInt(min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-    
-        });
-        </script>
-	<!-- MAIN -->
-	<div class="main">
-			<!-- MAIN CONTENT -->
-			<div class="main-content width88">
-				<div class="container-fluid">
-					<!-- OVERVIEW -->
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">Weekly Overview</h3>
-							<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
+    .amap-ui-control-theme-my-red .amap-ui-control-layer-toggle {
+        color: #fff;
+	}
+	.amap-ui-control-position-rt, .amap-ui-control-position-tr{
+		top: 66px;
+	right: 51px;
+}
+/* #keywords {
+        position: absolute;
+        right: 310px;
+        top: 7px;
+        line-height: 200%;
+        padding: 0 5px;
+        font-size: 13;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        width: 150px;
+    } */
+</style>
+<!-- MAIN -->
+<!-- http://api.map.baidu.com/lbsapi/getpoint/index.html -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="col-md-12">
+				</br>
+				</br>
+				<div class="page-title"></div>
+				<div class="col-md-12">
+					<div class="col-md-10" id="container" tabindex="0"></div>
+					<div class="col-md-2 list-plan" id="panel">
+						<input type="text" style="margin-left:20px;" id="keywords" value="" placeholder="方案名/公司名/创建人"/>
+						<div id="intro" class="" style="margin-left:20px;" >
+							<h3>方案列表</h3>
 						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-download"></i></span>
-										<p>
-											<span class="number">1,252</span>
-											<span class="title">Downloads</span>
-										</p>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-shopping-bag"></i></span>
-										<p>
-											<span class="number">203</span>
-											<span class="title">Sales</span>
-										</p>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-eye"></i></span>
-										<p>
-											<span class="number">274,678</span>
-											<span class="title">Visits</span>
-										</p>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="metric">
-										<span class="icon"><i class="fa fa-bar-chart"></i></span>
-										<p>
-											<span class="number">35%</span>
-											<span class="title">Conversions</span>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-9">
-									<div id="headline-chart" class="ct-chart"></div>
-								</div>
-								<div class="col-md-3">
-									<div class="weekly-summary text-right">
-										<span class="number">2,315</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 12%</span>
-										<span class="info-label">Total Sales</span>
-									</div>
-									<div class="weekly-summary text-right">
-										<span class="number">$5,758</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 23%</span>
-										<span class="info-label">Monthly Income</span>
-									</div>
-									<div class="weekly-summary text-right">
-										<span class="number">$65,938</span> <span class="percentage"><i class="fa fa-caret-down text-danger"></i> 8%</span>
-										<span class="info-label">Total Income</span>
-									</div>
-								</div>
-							</div>
-						</div>
+						<ul id="my-list" style="cursor: pointer;"></ul>
 					</div>
-					<!-- END OVERVIEW -->
-					<div class="row">
-						<div class="col-md-6">
-							<!-- RECENT PURCHASES -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Recent Purchases</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body no-padding">
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th>Order No.</th>
-												<th>Name</th>
-												<th>Amount</th>
-												<th>Date &amp; Time</th>
-												<th>Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><a href="#">763648</a></td>
-												<td>Steve</td>
-												<td>$122</td>
-												<td>Oct 21, 2016</td>
-												<td><span class="label label-success">COMPLETED</span></td>
-											</tr>
-											<tr>
-												<td><a href="#">763649</a></td>
-												<td>Amber</td>
-												<td>$62</td>
-												<td>Oct 21, 2016</td>
-												<td><span class="label label-warning">PENDING</span></td>
-											</tr>
-											<tr>
-												<td><a href="#">763650</a></td>
-												<td>Michael</td>
-												<td>$34</td>
-												<td>Oct 18, 2016</td>
-												<td><span class="label label-danger">FAILED</span></td>
-											</tr>
-											<tr>
-												<td><a href="#">763651</a></td>
-												<td>Roger</td>
-												<td>$186</td>
-												<td>Oct 17, 2016</td>
-												<td><span class="label label-success">SUCCESS</span></td>
-											</tr>
-											<tr>
-												<td><a href="#">763652</a></td>
-												<td>Smith</td>
-												<td>$362</td>
-												<td>Oct 16, 2016</td>
-												<td><span class="label label-success">SUCCESS</span></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="panel-footer">
-									<div class="row">
-										<div class="col-md-6"><span class="panel-note"><i class="fa fa-clock-o"></i> Last 24 hours</span></div>
-										<div class="col-md-6 text-right"><a href="#" class="btn btn-primary">View All Purchases</a></div>
-									</div>
-								</div>
-							</div>
-							<!-- END RECENT PURCHASES -->
-						</div>
-						<div class="col-md-6">
-							<!-- MULTI CHARTS -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Projection vs. Realization</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="visits-trends-chart" class="ct-chart"></div>
-								</div>
-							</div>
-							<!-- END MULTI CHARTS -->
-						</div>
+			    </div>
+				<!-- <div id="panel">
+					<div id="intro">
+						<h3>SimpleMarker & SimpleWindow</h3>
 					</div>
-					<div class="row">
-						<div class="col-md-7">
-							<!-- TODO LIST -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">To-Do List</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body">
-									<ul class="list-unstyled todo-list">
-										<li>
-											<label class="control-inline fancy-checkbox">
-												<input type="checkbox"><span></span>
-											</label>
-											<p>
-												<span class="title">Restart Server</span>
-												<span class="short-description">Dynamically integrate client-centric technologies without cooperative resources.</span>
-												<span class="date">Oct 9, 2016</span>
-											</p>
-											<div class="controls">
-												<a href="#"><i class="icon-software icon-software-pencil"></i></a> <a href="#"><i class="icon-arrows icon-arrows-circle-remove"></i></a>
-											</div>
-										</li>
-										<li>
-											<label class="control-inline fancy-checkbox">
-												<input type="checkbox"><span></span>
-											</label>
-											<p>
-												<span class="title">Retest Upload Scenario</span>
-												<span class="short-description">Compellingly implement clicks-and-mortar relationships without highly efficient metrics.</span>
-												<span class="date">Oct 23, 2016</span>
-											</p>
-											<div class="controls">
-												<a href="#"><i class="icon-software icon-software-pencil"></i></a> <a href="#"><i class="icon-arrows icon-arrows-circle-remove"></i></a>
-											</div>
-										</li>
-										<li>
-											<label class="control-inline fancy-checkbox">
-												<input type="checkbox"><span></span>
-											</label>
-											<p>
-												<strong>Functional Spec Meeting</strong>
-												<span class="short-description">Monotonectally formulate client-focused core competencies after parallel web-readiness.</span>
-												<span class="date">Oct 11, 2016</span>
-											</p>
-											<div class="controls">
-												<a href="#"><i class="icon-software icon-software-pencil"></i></a> <a href="#"><i class="icon-arrows icon-arrows-circle-remove"></i></a>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<!-- END TODO LIST -->
-						</div>
-						<div class="col-md-5">
-							<!-- TIMELINE -->
-							<div class="panel panel-scrolling">
-								<div class="panel-heading">
-									<h3 class="panel-title">Recent User Activity</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body">
-									<ul class="list-unstyled activity-list">
-										<li>
-											<img src="static/assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
-											<p><a href="#">Michael</a> has achieved 80% of his completed tasks <span class="timestamp">20 minutes ago</span></p>
-										</li>
-										<li>
-											<img src="static/assets/img/user2.png" alt="Avatar" class="img-circle pull-left avatar">
-											<p><a href="#">Daniel</a> has been added as a team member to project <a href="#">System Update</a> <span class="timestamp">Yesterday</span></p>
-										</li>
-										<li>
-											<img src="static/assets/img/user3.png" alt="Avatar" class="img-circle pull-left avatar">
-											<p><a href="#">Martha</a> created a new heatmap view <a href="#">Landing Page</a> <span class="timestamp">2 days ago</span></p>
-										</li>
-										<li>
-											<img src="static/assets/img/user4.png" alt="Avatar" class="img-circle pull-left avatar">
-											<p><a href="#">Jane</a> has completed all of the tasks <span class="timestamp">2 days ago</span></p>
-										</li>
-										<li>
-											<img src="static/assets/img/user5.png" alt="Avatar" class="img-circle pull-left avatar">
-											<p><a href="#">Jason</a> started a discussion about <a href="#">Weekly Meeting</a> <span class="timestamp">3 days ago</span></p>
-										</li>
-									</ul>
-									<button type="button" class="btn btn-primary btn-bottom center-block">Load More</button>
-								</div>
-							</div>
-							<!-- END TIMELINE -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<!-- TASKS -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">My Tasks</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body">
-									<ul class="list-unstyled task-list">
-										<li>
-											<p>Updating Users Settings <span class="label-percent">23%</span></p>
-											<div class="progress progress-xs">
-												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width:23%">
-													<span class="sr-only">23% Complete</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<p>Load &amp; Stress Test <span class="label-percent">80%</span></p>
-											<div class="progress progress-xs">
-												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-													<span class="sr-only">80% Complete</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<p>Data Duplication Check <span class="label-percent">100%</span></p>
-											<div class="progress progress-xs">
-												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-													<span class="sr-only">Success</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<p>Server Check <span class="label-percent">45%</span></p>
-											<div class="progress progress-xs">
-												<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-													<span class="sr-only">45% Complete</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<p>Mobile App Development <span class="label-percent">10%</span></p>
-											<div class="progress progress-xs">
-												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-													<span class="sr-only">10% Complete</span>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<!-- END TASKS -->
-						</div>
-						<div class="col-md-4">
-							<!-- VISIT CHART -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Website Visits</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="visits-chart" class="ct-chart"></div>
-								</div>
-							</div>
-							<!-- END VISIT CHART -->
-						</div>
-						<div class="col-md-4">
-							<!-- REALTIME CHART -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">System Load</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div id="system-load" class="easy-pie-chart" data-percent="70">
-										<span class="percent">70</span>
-									</div>
-									<h4>CPU Load</h4>
-									<ul class="list-unstyled list-justify">
-										<li>High: <span>95%</span></li>
-										<li>Average: <span>87%</span></li>
-										<li>Low: <span>20%</span></li>
-										<li>Threads: <span>996</span></li>
-										<li>Processes: <span>259</span></li>
-									</ul>
-								</div>
-							</div>
-							<!-- END REALTIME CHART -->
-						</div>
-					</div>
+					<ul id="my-list"></ul>
+				</div> -->
+				<div class="input-group">
+					<input id='input' class="form-control" type="text" value='点击地图显示地址' disabled></input>
+					<span class="input-group-addon gre" id="createPro">创建項目</span>
 				</div>
+				<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.3&key=84961e7055347b51e5c234c8288a7a99"></script>
+				<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+				<script type="text/javascript">
+				
+					// 构建地图，地图大小级别，中心点经纬度
+					var map = new AMap.Map('container', {
+						resizeEnable: true,
+						zoom: 4,
+						center: [108.887623, 34.231229]
+					});
+
+					AMapUI.loadUI(['misc/MarkerList','overlay/SimpleMarker'], function(MarkerList, SimpleMarker) {
+						var iconStyles = SimpleMarker.getBuiltInIconStyles()
+					var markerList = new MarkerList({
+						//关联的map对象
+						map: map,
+						//列表的dom容器的id
+						listContainer: 'my-list',
+
+						//选中状态（通过点击列表或者marker）时在Marker和列表节点上添加的class，可以借此编写css控制选中时的展示效果
+						selectedClassNames: 'selected',
+
+						//返回数据项的Id
+						getDataId: function(dataItem, index) {
+							//index表示该数据项在数组中的索引位置，从0开始，如果确实没有id，可以返回index代替
+							return dataItem.id;
+						},
+						//返回数据项的位置信息，需要是AMap.LngLat实例，或者是经纬度数组，比如[116.789806, 39.904989]
+						getPosition: function(dataItem) {
+							positionLng = dataItem.position + ""
+							var coor = positionLng.split(',');
+							lnglat = new AMap.LngLat(coor[0], coor[1]);
+							return lnglat;
+						},
+						//返回数据项对应的Marker
+						getMarker: function(dataItem, context, recycledMarker) {
+
+							//marker的标注内容
+							var content = dataItem.markerLabel;
+
+							var label = {
+								offset: new AMap.Pixel(16, 18), //修改label相对于marker的位置
+								// content: content
+							};
+
+							//存在可回收利用的marker
+							// if (recycledMarker) {
+							// 	//直接更新内容返回
+							// 	recycledMarker.setLabel(label);
+							// 	return recycledMarker;
+							// }
+
+							//返回一个新的Marker
+							// return new AMap.Marker({
+							//     label: label
+							// });
+							if (dataItem.moduleId == "coalCHP"){
+								return new SimpleMarker({
+								//设置节点属性
+								iconLabel: {
+									//普通文本
+									innerHTML: '燃煤',
+									//设置样式
+									style: {
+										color: '#fff',
+										fontSize: '80%',
+										marginTop: '2px'
+									}
+								},
+								iconStyle: iconStyles[17],
+								// map: map,
+								// position: lnglat
+							});
+							}else if(dataItem.moduleId == "biomassCHP") {
+								return new SimpleMarker({
+								//设置节点属性
+								iconLabel: {
+									//普通文本
+									innerHTML: '生物',
+									//设置样式
+									style: {
+										color: '#fff',
+										fontSize: '80%',
+										marginTop: '2px'
+									}
+								},
+								iconStyle: iconStyles[8],
+								// map: map,
+								// position: lnglat
+							});
+						}else if(dataItem.moduleId == "CCPP") {
+								return new SimpleMarker({
+								//设置节点属性
+								iconLabel: {
+									//普通文本
+									innerHTML: '燃蒸',
+									//设置样式
+									style: {
+										color: '#fff',
+										fontSize: '80%',
+										marginTop: '2px'
+									}
+								},
+								iconStyle: iconStyles[2],
+								// map: map,
+								// position: lnglat
+							});
+						}else if(dataItem.moduleId == "gasPowerGeneration") {
+								return new SimpleMarker({
+								//设置节点属性
+								iconLabel: {
+									//普通文本
+									innerHTML: '煤气',
+									//设置样式
+									style: {
+										color: '#fff',
+										fontSize: '80%',
+										marginTop: '2px'
+									}
+								},
+								iconStyle: iconStyles[16],
+								// map: map,
+								// position: lnglat
+							});
+							}else {
+								return new SimpleMarker({
+								//设置节点属性
+								iconLabel: {
+									//普通文本
+									innerHTML: '能联',
+									//设置样式
+									style: {
+										color: '#fff',
+										fontSize: '80%',
+										marginTop: '2px'
+									}
+								},
+								iconStyle: iconStyles[13],
+								// map: map,
+								// position: lnglat
+							});
+						}
+						},
+						//返回数据项对应的infoWindow
+						getInfoWindow: function(dataItem, context, recycledInfoWindow) {
+
+							var tpl = '<p>方案名：<%- dataItem.planaName %></br>公司名：<%- dataItem.companyName %></br>关键参数：<%- dataItem.keyParams %></br>方案地址：<%- dataItem.listDesc %>&nbsp;&nbsp;<a href="/editPlan/<%- dataItem.id %><%- dataItem.moduleId %>">详情</a></p>';
+
+							//MarkerList.utils.template支持underscore语法的模板
+							var content = MarkerList.utils.template(tpl, {
+								dataItem: dataItem,
+								dataIndex: context.index
+							});
+
+							if (recycledInfoWindow) {
+								//存在可回收利用的infoWindow, 直接更新内容返回
+								recycledInfoWindow.setContent(content);
+								return recycledInfoWindow;
+							}
+
+							//返回一个新的InfoWindow
+							return new AMap.InfoWindow({
+								offset: new AMap.Pixel(0, -23),
+								content: content
+							});
+						},
+						//返回数据项对应的列表节点
+						getListElement: function(dataItem, context, recycledListElement) {
+
+							var tpl = '<p><%- dataItem.planaName %><p>';
+
+							var content = MarkerList.utils.template(tpl, {
+								dataItem: dataItem,
+								dataIndex: context.index
+							});
+
+							if (recycledListElement) {
+								//存在可回收利用的listElement, 直接更新内容返回
+								recycledListElement.innerHTML = content;
+								return recycledListElement;
+							}
+
+							//返回一段html，MarkerList将利用此html构建一个新的dom节点
+							return '<li>' + content + '</li>';
+						}
+
+					});
+
+					//监听选中改变
+					markerList.on('selectedChanged', function(event, info) {
+						//console.log(event, info);
+					});
+
+					//监听Marker和ListElement上的点击
+					markerList.on('markerClick listElementClick', function(event, record) {
+						//console.log(event, record);
+					});
+
+					//构建一个数据项数组，数据项本身没有格式要求，但需要支持getDataId和getPosition
+					$.getJSON("/planLngLats", function (result) {
+						markerList.render(result.lngLats);
+						$( "#keywords" ).autocomplete({
+						source: result.autoCompletes
+					  });
+					});
+
+					// 搜索按钮点击
+					$("#keywords").on('keypress', function(e) {
+                    if (e.which === 13) {
+						var keywords = $("#keywords").val();
+						$.ajax({
+								cache: true,
+								type: "POST",
+								url: '/getKeyResult',
+								data: {"keywords": keywords},
+								async: false,
+								error: function (request) {
+									messageToast('error', '发生异常，保存失败！', 3000);
+								},
+								success: function (data) {
+									$("#my-list").empty();
+									if (data.keywordResults != "") {
+										markerList.render(data.keywordResults);
+									}else{
+										messageToast('info', '没有找到相关方案！', 2000);
+									}
+								}
+							});
+                    }
+               		 });
+				});
+
+
+
+						// 右上角地图特效start
+
+						AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+
+							//图层切换控件
+							var layerCtrl = new BasicControl.LayerSwitcher({
+								//my-red 见上方style
+								theme: 'my-red',
+								position: 'tr'
+							});
+
+							map.addControl(layerCtrl);
+
+							//缩放控件
+							map.addControl(new BasicControl.Zoom({
+								//内置的dark主题
+								theme: 'dark',
+
+								//左下角
+								position: 'bl'
+							}));
+					});
+					// 右上角地图特效end
+
+
+
+
+					// 定义插件
+					AMap.plugin('AMap.Geocoder', function () {
+						var geocoder = new AMap.Geocoder({
+							city: "010"//城市，默认：“全国”
+						});
+						var marker = new AMap.Marker({
+							map: map,
+							bubble: true
+						})
+						// 点击地图获得当前点击地址，将地址截取到市，没有市接取到自治州/自治区/自治县
+						map.on('click', function (e) {
+							marker.setPosition(e.lnglat);
+							$("#company_lnglat").val(e.lnglat);
+							geocoder.getAddress(e.lnglat, function (status, result) {
+								if (status == 'complete') {
+									var address = result.regeocode.formattedAddress
+									var index = address.indexOf("市");
+									var index1 = address.indexOf("自治");
+									if (index != -1) {
+										var area = address.substring(0, index + 1)
+										$("#input").val(area);
+										$("#input").attr("title", area);
+									} else if (index1 != -1) {
+										var selfarea = address.substring(0, index1 + 3)
+										$("#input").val(selfarea);
+										$("#input").attr("title", selfarea);
+									} else {
+										$("#input").val(address);
+										$("#input").attr("title", address);
+									}
+								}
+							})
+						})
+
+					});
+					// 创建地图插件
+					AMap.plugin(['AMap.ToolBar', 'AMap.Scale', 'AMap.OverView'],
+						function () {
+							// 工具栏
+							map.addControl(new AMap.ToolBar());
+							// 比例尺
+							map.addControl(new AMap.Scale());
+							// 鹰眼
+							map.addControl(new AMap.OverView({ isOpen: true }));
+						});
+
+					// 点击"创建方案"按钮时，弹出模态框填写详细方案信息
+					$("#createPro").on('click', function (e) {
+						if ($("#input").val() != "点击地图显示地址") {
+							$("#createProject").modal('show');
+							$("[name='index_company_name']").val("");
+							$("[name=index_company_location]").val($("#input").val());
+						}
+
+					});
+
+					// 确认创建方案。
+					$("#confirmCreBtn").on("click", function () {
+						if ($("[name='index_company_name']").val() == "" || $("[name='index_plan_name']").val() == "") {
+							messageToast('info', '项目名称和公司名称是唯一区别方案的标识，不能为空！', 4000);
+							$("[name='index_plan_name']").focus();
+						}else {
+							$.ajax({
+								cache: true,
+								type: "POST",
+								url: '/new_project',
+								data: {"company_name": $("[name='index_company_name']").val(), "plan_name": $("[name='index_plan_name']").val(), "company_location": $("[name='index_company_location']").val(), "module_name": $("input[name='index_module_name']:checked").val(), "company_lnglat": $("#company_lnglat").val()},
+								async: false,
+								error: function (request) {
+									messageToast('error', '发生异常，保存失败！', 3000);
+								},
+								success: function (data) {
+									if (data.state == "0") {
+										messageToast('info', '新增方案失败，该方案名已存在，请修改项目名称作为区分！', 4000);
+									} else {
+										$("#createProject").modal('hide');
+										if($("input[name='index_module_name']:checked").val() == "CCPP"){
+											window.location.href="/editPlan/0CCPP"
+										}else if($("input[name='index_module_name']:checked").val() == "coalCHP"){
+											window.location.href="/editPlan/0coalCHP"
+										}else if($("input[name='index_module_name']:checked").val() == "biomassCHP"){
+											window.location.href="/editPlan/0biomassCHP"
+										}else if($("input[name='index_module_name']:checked").val() == "gasPowerGeneration"){
+											window.location.href="/editPlan/0gasPowerGeneration"
+										}else if($("input[name='index_module_name']:checked").val() == "energyIsland"){
+											window.location.href="/editPlan/0energyIsland"
+										}else{
+											messageToast('success',  $("input[name='index_module_name']:checked").val()+'方案创建成功！', 3000);
+										}
+									}
+									
+								}
+							});
+						}
+					});
+
+				</script>
 			</div>
-			<!-- END MAIN CONTENT -->
+
 		</div>
-	{% endblock %}
-{% endblock %}
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+{% endblock %} {% endblock %}

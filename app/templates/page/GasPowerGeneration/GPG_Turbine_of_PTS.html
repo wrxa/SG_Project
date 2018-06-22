@@ -1,0 +1,1014 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/GPG/GPG_TurbineOfPTS.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+</style>
+
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">燃气发电-原则性热力系统汽轮机部分</div> --></br></br></br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li><a class="pre" href="#" data-page="5">上一页</a></li>
+							<li><a id="gpg1" onclick="return false;" href="{{ url_for('gpg_view.GPG_Questionnaire',id=session.planId) }}">煤气发电需求调查表</a></li>
+							<li><a id="gpg2" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerOfPTS') }}">锅炉计算</a></li>
+							<li class="ableClick"><a id="gpg3" href="#">汽轮机计算</a></li>
+							<li><a id="gpg4" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerAuxiliaries') }}">锅炉辅机系统</a></li>
+							<li><a id="gpg5" onclick="return false;" href="{{ url_for('gpg_view.GPG_SmokeAirCalculate') }}">烟、风量计算</a></li> 
+							<li><a id="gpg6" onclick="return false;" href="{{ url_for('gpg_view.GPG_GasAirSystem') }}" >烟风系统</a></li>      
+							<!--<li><a href="{{ url_for('gpg_view.GPG_SmokeResistance') }}">烟阻力</a></li>
+							<li><a href="{{ url_for('gpg_view.GPG_WindResistance') }}">风阻力</a></li>-->
+							<li><a id="gpg7" onclick="return false;" href="{{ url_for('gpg_view.GPG_SteamWaterPipe') }}">汽水管道</a></li>
+							<li><a id="gpg8" onclick="return false;" href="{{ url_for('gpg_view.GPG_CirculatingWaterSystem') }}">循环水系统</a></li>
+							<li><a id="gpg9" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineAuxiliarySystem') }}">汽机辅机系统</a></li>
+							<li><a id="gpg10" onclick="return false;" href="{{ url_for('gpg_view.GPG_EconomicIndicators') }}">主要技术经济指标</a></li>
+							<li><a id="gpg11" onclick="return false;" href="{{ url_for('gpg_view.GPG_Image') }}">图纸一览</a></li>
+							<li><a id="gpg12" onclick="return false;" href="{{ url_for('gpg_view.GPG_EquipmentList') }}">设备清单</a></li>
+							<li class="current"><a class="next" href="#">下一页</a></li>
+						</ol>
+					</div>
+
+					<div id="btnDiv1" class="col-md-2 breadcrumb-submit" style="display:block">
+						<button type="button" id="SaveTurbineOfPtsData" class="btn btn-success"><i class="fa fa-check-circle"></i>  保 存 </button>
+					</div>
+
+					<div id="btnDiv2" class="col-md-2 breadcrumb-submit" style="display:none">
+						<button type="button" id="SaveTurbineOfPtsData2" class="btn btn-success"><i class="fa fa-check-circle"></i>  计 算 </button>
+					</div>
+				</div>
+				</br></br></br></br>
+			</div>
+
+			<form id="GPG_TurbineOfPtsForm">
+
+				<div class="row full-width-style" id="steam_select">
+					<div class="st-content">
+
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">汽轮机计算</h2>
+										<ul>
+											{% if gpg_TurbineOfPTS.s_parameter_flg == "1" %}
+											<li>
+												<a class="left-select left-hover" href="#" id="t-4">汽轮机参数输入</a>
+											</li>
+											<li>
+												<a class="left-select" id="t-1" href="#">发电功率估算</a>
+
+											</li>
+											<li>
+												<a class="left-select" id="t-3" href="#">汽轮机回热系统计算</a>
+											</li>
+											<li>
+												<a class="left-select" id="t-2" href="#">组内功率计算及校核</a>
+											</li>
+											{% else %}
+											
+
+											<li>
+												<a class="left-select left-hover" href="#" id="t-4">汽轮机参数输入</a>
+											</li>
+											<li>
+												<a class="" id="t-1" style="cursor: not-allowed;" href="#" title="请先完成汽轮机参数输入">发电功率估算</a>
+											</li>
+											<li>
+												<a class="" id="t-3" style="cursor: not-allowed;" href="#" title="请先完成汽轮机参数输入">汽轮机回热系统计算</a>
+											</li>
+											<li>
+												<a class="" id="t-2" style="cursor: not-allowed;" href="#" title="请先完成汽轮机参数输入">组内功率计算及校核</a>
+											</li>
+											{% endif %}
+										</ul>
+									</nav>
+
+								</div>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<!-- 锅炉点火系统 -->
+											<div class="col-md-12 t-4">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-free-code-camp" aria-hidden="true"></i>
+														<span class="margin-left15">汽轮机参数输入</span>
+													</div>
+													<div class="panel-body">
+														<!--<input type="hidden" value="1" id="s_parameter_flg" name="s_parameter_flg">-->
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">汽轮机类型：</div>
+																<div class="col-md-8">
+																	<div>
+																		<select class="form-control" id="s_steam_type_test" name="s_steam_type_test">
+																			<option value="0" selected='selected'></option>
+																			<option value="1">抽凝</option>
+																			<option value="2">背压</option>
+																			<option value="3">补凝</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">除氧器温度和压力：</div>
+																<div class="col-md-8">
+																	<div>
+																		<select class="form-control" id="s_temperature_pressure" name="s_temperature_pressure">
+																			<option value="0" selected='selected'></option>
+																			<option value="1">大气式除氧器0.02MPa，104℃</option>
+																			<option value="2">中压除氧器0.3MPa，130℃</option>
+																			<option value="3">高压除氧器0.588MPa，158℃</option>
+																		</select>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="除氧器压力、温度选择原则---大气式除氧器0.02MPa，104℃；中压除氧器0.3MPa，130℃；高压除氧器0.5MPa，159℃；压力均为表压；抽汽压力略高于除氧压力"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">高加级数：</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="s_hh_grade" name="s_hh_grade">
+																		<span class="input-group-addon show-unit">级</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">低加级数：</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="s_lh_grade" name="s_lh_grade">
+																		<span class="input-group-addon show-unit">级</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+												</div>
+											</div>
+
+											<!-- 发电功率估算 -->
+											<div class="col-md-12 t-1 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-flash" aria-hidden="true"></i>
+														<span class="margin-left15">发电功率估算&nbsp;&nbsp;&nbsp;
+															<i class="fa fa-file-image-o" title="参考信息" id="info1" style="cursor: pointer;"></i>
+														</span>
+													</div>
+
+													{% for constant in constants %} {% if constant.name_eng in ['e_turbine_efficiency', 'e_mechanical_efficiency', 'e_generator_efficiency']
+													%}
+
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+
+													{% endif %} {% endfor %}
+
+													<div class="row">
+														<div class="col-md-12">
+															<div class="panel-body">
+																<div class="col-md-3">汽轮机进汽参数</div>
+																<div class="col-md-8">
+																	<div>
+																		<select class="form-control" id="steamType" name="e_steam_type">
+																			<option value="0" selected='selected'></option>
+																			<option value="1">低温低压</option>
+																			<option value="2">次中温次中压</option>
+																			<option value="3">中温中压</option>
+																			<option value="4">次高温次高压</option>
+																			<option value="5">高温高压</option>
+																			<option value="6">其他</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="second-title">主蒸汽</div>
+													{% for constant in constants %} {% if constant.name_eng in ['e_steam_pressure', 'e_steam_temperature', 'e_steam_flow', 'e_steam_entropy',
+													'e_steam_enthalpy'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+
+													{% if gpg_TurbineOfPTS.s_steam_type_test == 3 %}
+														<div class="second-title">补气点</div>
+														{% for constant in constants %} {% if constant.name_eng in ['e_exhaust_point_pressure','e_exhaust_point_temperature','e_exhaust_point_entropy',
+														'e_exhaust_point_enthalpy', 'e_steam_plus_enthalpy', 'e_exhaust_point_flow'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	{% if constant.symbol != "" %}
+																		{% if constant.name_eng == "e_exhaust_point_enthalpy" %}
+																			<div class="col-md-3">补汽点主蒸汽{{ constant.name }}({{ constant.symbol }})</div>
+																		{% elif  constant.name_eng == "e_exhaust_point_flow"%}
+																			<div class="col-md-3">流量({{ constant.symbol }})</div>
+																		{% else %}
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		{% endif %}
+																	{% else %}
+																		<div class="col-md-3">{{ constant.name }}</div>
+																	{% endif %}
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			{% if constant.disable == "T" %}
+																				<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> 
+																			{% else %}
+																				{% if gpg_TurbineOfPTS.s_steam_type_test == 3 and constant.name_eng == "e_exhaust_point_entropy" %}
+																					<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> 
+																				{% else %}
+																					<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> 
+																				{% endif %}	
+																			{% endif %}
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																	</div>
+																	{% if constant.calculate != "" %}
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																	</div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %} {% endfor %}
+													{% else %}
+														<div class="second-title">抽汽点</div>
+															<div class="row">
+															<div class="panel-body">
+																<div class="col-md-3">
+																</div>
+																<div class="col-md-4">
+																	<button type="button" id="by_pressure" class="btn btn-primary btn-sm">
+																		<i class="fa fa-check-circle"></i>根据压力查询温度</button>
+																</div>
+																<div class="col-md-4">
+																	<button type="button" id="by_pressure_entropy" class="btn btn-primary btn-sm">
+																		<i class="fa fa-check-circle"></i>根据压力和熵查询温度</button>
+																</div>
+															</div>
+														</div>
+													
+													{% for constant in constants %} {% if constant.name_eng in ['e_exhaust_point_pressure','e_exhaust_point_temperature','e_exhaust_point_entropy',
+													'e_exhaust_point_enthalpy', 'e_exhaust_point_flow'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+
+													{% endif %}
+
+													{% if gpg_TurbineOfPTS.s_steam_type_test == 3 %}
+														<div class="second-title">补汽后</div>
+													{% else %}
+														<div class="second-title">抽汽后</div>
+													{% endif %}	
+													{% for constant in constants %} {% if constant.name_eng in ['e_exhaust_after_steam', 'e_exhaust_after_pressure', 'e_exhaust_after_enthalpy',
+													'e_exhaust_after_entropy'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																	{% if gpg_TurbineOfPTS.s_steam_type_test == 3 and constant.name_eng == "e_exhaust_after_enthalpy"%}
+																		<div class="col-md-3">混合焓({{ constant.symbol }})</div>
+																	{% else %}
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																	{% endif %}
+																{% else %}
+																	<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																			<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}">
+																		{% else %}
+																			{% if gpg_TurbineOfPTS.s_steam_type_test == 3 and constant.name_eng == "e_exhaust_after_entropy" %}
+																				<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}">
+																			{% else %}
+																				<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}">
+																			{% endif %}
+																		{% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+
+													<!--抽凝-->
+													{% if gpg_TurbineOfPTS.s_steam_type_test != 2 %}
+													<div class="second-title">乏汽</div>
+													{% for constant in constants %} {% if constant.name_eng in ['e_steam_exhaust_pressure', 'e_steam_exhaust_enthalpy'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %}
+
+													<!--背压-->
+													{% if gpg_TurbineOfPTS.s_steam_type_test == 2 %}
+													<div class="second-title">背压</div>
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-3">
+															</div>
+															<div class="col-md-4">
+																<button type="button" id="by_temperature_back" class="btn btn-primary btn-sm">
+																	<i class="fa fa-check-circle"></i>根据温度查询压力</button>
+															</div>
+															<div class="col-md-4">
+																<button type="button" id="by_pressure_back" class="btn btn-primary btn-sm">
+																	<i class="fa fa-check-circle"></i>根据压力查询温度</button>
+															</div>
+														</div>
+													</div>
+													{% for constant in constants %} {% if constant.name_eng in ['e_backpressure_pressure', 'e_backpressure_temperature'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-3">
+															</div>
+															<div class="col-md-4">
+																<button type="button" id="by_pressure_entropy_back" class="btn btn-primary  btn-xs">
+																	<i class="fa fa-check-circle"></i>根据压力和熵查询焓</button>
+															</div>
+															<div class="col-md-4">
+																<button type="button" id="by_temperature_entropy_back" class="btn btn-primary  btn-xs">
+																	<i class="fa fa-check-circle"></i>根据温度和熵查询焓</button>
+															</div>
+														</div>
+													</div>
+
+													{% for constant in constants %} {% if constant.name_eng in ['e_backpressure_enthalpy', 'e_backpressure_flow'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %}
+													<br> {% for constant in constants %} {% if constant.name_eng in ['e_gross_generation','e_hot_data','e_steam_extraction',
+													'e_steam_extraction_select', 'e_steam_water_loss', 'e_throttle_flow'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+
+												</div>
+											</div>
+
+											<!-- 组内功率计算及校核 -->
+											<div class="col-md-12 t-2 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-cubes" aria-hidden="true"></i>
+														<span class="margin-left15">组内功率计算及校核</span>
+														{% for constant in constants %} {% if constant.name_eng in ['i_turbine_efficiency'] %}
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+														{% endif %} {% endfor %}
+													</div>
+													{% for constant in constants %} {% if constant.name_eng in ['i_turbine_efficiency', 'i_mechanical_efficiency', 'i_generator_efficiency']
+													%}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+
+													<div class="second-title">主蒸汽</div>
+													{% for constant in constants %} {% if constant.name_eng in ['i_steam_pressure', 'i_steam_temperature', 'i_steam_flow', 'i_steam_entropy',
+													'i_steam_enthalpy'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% for pressure in sortPressure %}
+													{% if gpg_TurbineOfPTS.s_steam_type_test == 3 and pressure[8] == "抽汽点"%}
+														<div class="second-title">补汽点</div>
+													{% else %}
+														<div class="second-title">{{ pressure[8] }}</div>
+													{% endif %}
+													{% for constant in constants %} {% if constant.name_eng in pressure %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+                                                                {% if constant.symbol != "" %} {% if pressure.index(constant.name_eng) != 6 %}
+                                                                <div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+                                                                {% endif %} {% if pressure.index(constant.name_eng) == 6 %}
+                                                                <div class="col-md-3">{{ pressure[9] }}({{ constant.symbol }})</div>
+                                                                {% endif %} {% else %} {% if pressure.index(constant.name_eng) != 6 %}
+                                                                <div class="col-md-3">{{ constant.name }}</div>
+                                                                {% endif %} {% if pressure.index(constant.name_eng) == 6 %}
+                                                                <div class="col-md-3">{{ pressure[9] }}</div>
+                                                                {% endif %} {% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endfor %} {% if sortPressure|length > 1 %} {% if gpg_TurbineOfPTS.s_steam_type_test != 2 %}
+													<div class="second-title">乏汽</div>
+													{% else %}
+													<div class="second-title">背压</div>
+													{% endif %} {% for constant in constants %} {% if constant.name_eng in ['i_steam_exhaust_pressure', 'i_steam_exhaust_entropy',
+													'i_steam_exhaust_enthalpy','i_steam_exhaust_enthalpy_actual', 'i_steam_exhaust_enthalpy_steam', 'i_steam_exhaust_enthalpy_water',
+													'i_steam_exhaust_dry', 'i_steam_exhaust_flow', 'i_lh2_steam_power'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %} {% if constant.name_eng != "i_lh2_steam_power" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %} {% if gpg_TurbineOfPTS.s_steam_type_test != 2 %}
+																<div class="col-md-3">{{sortPressure[-1][7]}}至乏汽功率({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{sortPressure[-1][7]}}至背压功率({{ constant.symbol }})</div>
+																{% endif %} {% endif %} {% else %} {% if constant.name_eng != "i_lh2_steam_power" %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% else %} {% if gpg_TurbineOfPTS.s_steam_type_test != 2 %}
+																<div class="col-md-3">{{sortPressure[-1][7]}}至乏汽功率</div>
+																{% else %}
+																<div class="col-md-3">{{sortPressure[-1][7]}}至背压功率</div>
+																{% endif %} {% endif %} {% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %}
+
+													<br> {% for constant in constants %} {% if constant.name_eng in ['i_total_power', 'i_calculation_error'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+												</div>
+											</div>
+											<!-- 汽轮机回热系统计算 -->
+											<div class="col-md-12 t-3 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel  margin-right30">
+													<div class="first-title">
+														<i class="fa fa-circle-o" aria-hidden="true"></i>
+														<span class="margin-left15">汽轮机回热系统计算</span>
+														{% for constant in constants %} {% if constant.name_eng in ['h_temperature'] %}
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+														{% endif %} {% endfor %}
+													</div>
+                                                    <div class="second-title">化学补水</div>
+													{% for constant in constants %} {% if constant.name_eng in ['h_temperature', 'h_pressure', 'h_enthalpy', 'h_amount']
+													%}
+
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+
+													{% endif %} {% endfor %} {% if gpg_TurbineOfPTS.s_hh_grade >= 1 %}
+													<div class="second-title">1#GJ</div>
+													{% for constant in constants %} {% if constant.name_eng in ['hh1_water_temperature', 'hh1_water_enthalpy', 'hh1_top_difference',
+													'hh1_saturated_water_temperature', 'hh1_saturated_water_enthalpy', 'hh1_work_pressure', 'hh1_pressure_loss',
+													'hh1_extraction_pressure', 'hh1_extraction_enthalpy', 'hh1_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %} {% if gpg_TurbineOfPTS.s_hh_grade >= 2 %}
+													<div class="second-title">2#GJ</div>
+													{% for constant in constants %} {% if constant.name_eng in ['hh2_water_temperature', 'hh2_water_enthalpy', 'hh2_top_difference',
+													'hh2_saturated_water_temperature', 'hh2_saturated_water_enthalpy', 'hh2_work_pressure', 'hh2_pressure_loss',
+													'hh2_extraction_pressure', 'hh2_extraction_enthalpy', 'hh2_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %} {% if gpg_TurbineOfPTS.s_hh_grade >= 3 %}
+													<div class="second-title">3#GJ</div>
+													{% for constant in constants %} {% if constant.name_eng in ['hh3_water_temperature', 'hh3_water_enthalpy', 'hh3_top_difference',
+													'hh3_saturated_water_temperature', 'hh3_saturated_water_enthalpy', 'hh3_work_pressure', 'hh3_pressure_loss',
+													'hh3_extraction_pressure', 'hh3_extraction_enthalpy', 'hh3_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %}
+
+													<div class="second-title">CY</div>
+													{% for constant in constants %} {% if constant.name_eng in ['d_water_temperature', 'd_water_enthalpy', 'd_work_pressure',
+													'd_pressure_loss', 'd_extraction_pressure', 'd_extraction_enthalpy', 'd_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% if gpg_TurbineOfPTS.s_lh_grade >= 1 %}
+													<div class="second-title">1#DJ</div>
+													{% for constant in constants %} {% if constant.name_eng in ['lh1_water_temperature', 'lh1_water_enthalpy', 'lh1_top_difference',
+													'lh1_saturated_water_temperature', 'lh1_saturated_water_enthalpy', 'lh1_work_pressure', 'lh1_pressure_loss',
+													'lh1_extraction_pressure', 'lh1_extraction_enthalpy', 'lh1_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %} {% if gpg_TurbineOfPTS.s_lh_grade >= 2 %}
+													<div class="second-title">2#DJ</div>
+													{% for constant in constants %} {% if constant.name_eng in ['lh2_water_temperature', 'lh2_water_enthalpy', 'lh2_top_difference',
+													'lh2_saturated_water_temperature', 'lh2_saturated_water_enthalpy', 'lh2_work_pressure', 'lh2_pressure_loss',
+													'lh2_extraction_pressure', 'lh2_extraction_enthalpy', 'lh2_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %} {% if gpg_TurbineOfPTS.s_lh_grade >= 3 %}
+													<div class="second-title">3#DJ</div>
+													{% for constant in constants %} {% if constant.name_eng in ['lh3_water_temperature', 'lh3_water_enthalpy', 'lh3_top_difference',
+													'lh3_saturated_water_temperature', 'lh3_saturated_water_enthalpy', 'lh3_work_pressure', 'lh3_pressure_loss',
+													'lh3_extraction_pressure', 'lh3_extraction_enthalpy', 'lh3_extraction_amount'] %}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %} {% endif %}
+
+													<div class="second-title">C</div>
+													{% for constant in constants %} {% if constant.name_eng in ['c_water_temperature', 'c_water_enthalpy', 'c_work_pressure']
+													%}
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+													{% endif %} {% endfor %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>	
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

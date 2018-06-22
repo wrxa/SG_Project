@@ -1,0 +1,410 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/modernizr.custom.js') }}"></script>
+<script src="{{ url_for('static', filename='js/classie.js') }}"></script>
+<script src="{{ url_for('static', filename='js/GPG/GPG_TurbineAuxiliarySystem.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">燃气发电-汽机辅机系统</div> -->
+			</br></br></br>
+			<!--<div class="row">
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="page-title">汽机辅机系统</div>
+					</div>
+				</div>
+			</div>-->
+			
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle" >
+								<li><a class="pre" href="#" data-page="10">上一页</a></li>
+							<li><a id="gpg1" onclick="return false;" href="{{ url_for('gpg_view.GPG_Questionnaire',id=session.planId) }}">煤气发电需求调查表</a></li>
+							<li><a id="gpg2" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerOfPTS') }}">锅炉计算</a></li>
+							<li><a id="gpg3" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineOfPTS') }}">汽轮机计算</a></li>
+							<li><a id="gpg4" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerAuxiliaries') }}">锅炉辅机系统</a></li>
+							<li><a id="gpg5" onclick="return false;" href="{{ url_for('gpg_view.GPG_SmokeAirCalculate') }}">烟、风量计算</a></li> 
+							<li><a id="gpg6" onclick="return false;" href="{{ url_for('gpg_view.GPG_GasAirSystem') }}" >烟风系统</a></li>      
+							<!--<li><a href="{{ url_for('gpg_view.GPG_SmokeResistance') }}">烟阻力</a></li>
+							<li><a href="{{ url_for('gpg_view.GPG_WindResistance') }}">风阻力</a></li>-->
+							<li><a id="gpg7" onclick="return false;" href="{{ url_for('gpg_view.GPG_SteamWaterPipe') }}">汽水管道</a></li>
+							<li><a id="gpg8" onclick="return false;" href="{{ url_for('gpg_view.GPG_CirculatingWaterSystem') }}">循环水系统</a></li>
+							<li class="ableClick"><a id="gpg9" href="#">汽机辅机系统</a></li>
+							<li><a id="gpg10" onclick="return false;" href="{{ url_for('gpg_view.GPG_EconomicIndicators') }}">主要技术经济指标</a></li>
+							<li><a id="gpg11" onclick="return false;" href="{{ url_for('gpg_view.GPG_Image') }}">图纸一览</a></li> 
+							<li><a id="gpg12" onclick="return false;" href="{{ url_for('gpg_view.GPG_EquipmentList') }}">设备清单</a></li>
+							<li class="current"><a class="next" href="#">下一页</a></li>
+						</ol>
+					</div>
+					
+
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitTurbineAuxiliary" class="btn btn-success"><i class="fa fa-check-circle"></i>  计  算 </button>
+					</div>
+
+					
+
+				</div>
+				</br></br></br></br>
+			</div>
+
+			<form id="GPG_TurbineAuxiliarySystemForm">
+				<div class="row full-width-style">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">汽机辅机系统</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">凝结水泵</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-2">射水泵</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-3">射水箱冷却水泵</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-4">凝汽器计算</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div>
+														<div class="first-title">
+															<i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">凝结水泵</span>
+														</div>
+						
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['deaerator_work_pressure', 'deaerator_condensation_well_pressure_difference', 
+														'deaerator_condensation_spray_pressure', 'condenser_maximum_vacuum', 
+														'deaerator_condensation_well_pipe_resistance', 'condensate_pump_design_lift', 'condensate_pump_flow', 
+														'condensate_pump_efficiency', 'condensate_pump_transmission_efficiency',
+														'condensate_pump_motor_efficiency', 'condensate_pump_motor_spare_coefficient',
+														'condensate_pump_motor_power', 'condensate_pump_selected'] %}
+														<div class="row" style="text-align:center">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;	
+																		{% if constant.calculate != "" %}
+																		<i class="lnr lnr-pencil"  title="计算公式："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.calculate }}">
+																		</i>													
+																		{% endif %}											
+																	</div>
+																	
+																	<div class="col-md-9">
+																		{% if constant.name_eng == 'condensate_pump_selected' %}
+																		<input class="form-control" type="text" 
+																		id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+																		{% else %}
+																		<div class="input-group">
+																			<input type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"
+																			{% if constant.default_value != '' %} 
+																			value="{{ constant.default_value }}" class="form-control default-color" 
+																			{% else %} 
+																			class="form-control" 
+																			{% endif %} 
+																			{% if constant.disable=='T' %} 
+																			readonly="true" 
+																			{% endif %} />
+						
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			{% if constant.remark != "" %}
+																			<i class="fa fa-calculator"  title="参考值："  
+																			data-container="body" data-toggle="popover" data-placement="right" 
+																			data-content="{{ constant.remark }}">
+																			</i>
+																			{% endif %}
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+													</div>
+						
+												</div>
+											</div>
+
+											<div class="col-md-12 q-2 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div>
+														<div class="first-title">
+															<i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">射水泵</span>
+														</div>
+						
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['extractor_work_pressure', 'ejection_tank_work_pressure', 
+														'extractor_ejection_waterline_height_difference', 'jet_pump_pipe_loss', 'jet_pump_total_lift', 
+														'jet_pump_flow', 'jet_pump_efficiency', 'jet_pump_transmission_efficiency', 
+														'jet_pump_motor_efficiency', 'jet_pump_motor_spare_coefficient', 'jet_pump_motor_power',
+														'jet_pump_selected'] %}
+														<div class="row" style="text-align:center">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+																		{% if constant.calculate != "" %}
+																		<i class="lnr lnr-pencil"  title="计算公式："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.calculate }}">
+																		</i>													
+																		{% endif %}											
+																	</div>
+																	
+																	<div class="col-md-9">
+																		{% if constant.name_eng == 'jet_pump_selected' %}
+																		<input class="form-control" type="text" 
+																		id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+																		{% else %}
+																		<div class="input-group">
+																			<input type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"
+																			{% if constant.default_value != '' %} 
+																			value="{{ constant.default_value }}" class="form-control default-color" 
+																			{% else %} 
+																			class="form-control" 
+																			{% endif %} 
+																			{% if constant.disable=='T' %} 
+																			readonly="true" 
+																			{% endif %} />
+																			
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			{% if constant.remark != "" %}
+																			<i class="fa fa-calculator"  title="参考值："  
+																			data-container="body" data-toggle="popover" data-placement="right" 
+																			data-content="{{ constant.remark }}">
+																			</i>
+																			{% endif %}
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+													</div>
+						
+												</div>
+											</div>
+
+											<div class="col-md-12 q-3 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div>
+														<div class="first-title">
+															<i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">射水箱冷却水泵</span>
+														</div>
+						
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['cooling_ejection_tank_work_pressure',
+														'cooling_circulating_water_to_header_pressure', 
+														'cooling_extractor_ejection_waterline_height_difference', 'cooling_jet_pump_pipe_loss', 
+														'cooling_jet_pump_total_lift', 'cooling_jet_pump_flow','cooling_jet_pump_efficiency',
+														'cooling_jet_pump_transmission_efficiency','cooling_jet_pump_motor_efficiency',
+														'cooling_jet_pump_motor_spare_coefficient','cooling_jet_pump_motor_power','cooling_jet_pump_selected'] %}
+														<div class="row" style="text-align:center">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+																		{% if constant.calculate != "" %}
+																		<i class="lnr lnr-pencil"  title="计算公式："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.calculate }}">
+																		</i>													
+																		{% endif %}												
+																	</div>
+																	
+																	<div class="col-md-9">
+																		{% if constant.name_eng == 'cooling_jet_pump_selected' %}
+																		<input class="form-control" type="text" 
+																		id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+																		{% else %}
+																		<div class="input-group">
+																			<input type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"
+																			{% if constant.default_value != '' %} 
+																			value="{{ constant.default_value }}" class="form-control default-color" 
+																			{% else %} 
+																			class="form-control" 
+																			{% endif %} 
+																			{% if constant.disable=='T' %} 
+																			readonly="true" 
+																			{% endif %} />
+						
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			{% if constant.remark != "" %}
+																			<i class="fa fa-calculator"  title="参考值："  
+																			data-container="body" data-toggle="popover" data-placement="right" 
+																			data-content="{{ constant.remark }}">
+																			</i>
+																			{% endif %}
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+													</div>
+						
+												</div>
+											</div>
+
+											<div class="col-md-12 q-4 hide">
+												<div class="panel">
+													<div>
+														<div class="first-title">
+															<i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">凝汽器计算</span>
+														</div>
+						
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['condenser_flow_amount', 'condenser_pressure', 
+														'turbine_exhaust_enthalpy', 'cooling_water_inlet_temperature', 'saturation_temperature', 
+														'supercooling_degree', 'condensate_water_temperature', 'condensate_water_enthalpy',
+														'cooling_pipe_clean_coefficient','cooling_pipe_correct_coefficient','calculate_exponent',
+														'cooling_pipe_flow_velocity','cooling_pipe_diameter',
+														'condenser_steam_load_correct_coefficient','cooling_pipe_flow_velocity_correct_coefficient',
+														'cooling_water_inlet_temperature_correct_coefficient',
+														'cooling_water_pass_correct_coefficient','condenser_steam_load_change_correct_coefficient',
+														'total_heat_transfer_coefficient','condenser_heat_load','circulation_ratio',
+														'circulating_water_amount','cooling_water_temperature_rise','cooling_water_outlet_temperature',
+														'logarithmic_average_temperature_difference','cooling_area'] %}
+														<div class="row" style="text-align:center">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})&nbsp;
+																		{% if constant.calculate != "" %}
+																		<i class="lnr lnr-pencil"  title="计算公式："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.calculate }}">
+																		</i>													
+																		{% endif %}												
+																	</div>
+																	
+																	<div class="col-md-9">
+																		<div class="input-group">
+																			<input type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"
+																			{% if constant.default_value != '' %} 
+																			value="{{ constant.default_value }}" class="form-control default-color" 
+																			{% else %} 
+																			class="form-control" 
+																			{% endif %} 
+																			{% if constant.disable=='T' %} 
+																			readonly="true" 
+																			{% endif %} />
+						
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			{% if constant.remark != "" %}
+																			<i class="fa fa-calculator"  title="参考值："  
+																			data-container="body" data-toggle="popover" data-placement="right" 
+																			data-content="{{ constant.remark }}">
+																			</i>
+																			{% endif %}
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+													</div>
+						
+												</div>
+
+												<div class="panel">
+													<div>
+														<div class="first-title">
+															<i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">水环真空泵</span>
+														</div>
+						
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['vacuum_pump_condensate_flow_amount'] %}
+														<div class="row" style="text-align:center">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }}) &nbsp;
+																		{% if constant.calculate != "" %}
+																		<i class="lnr lnr-pencil"  title="计算公式："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.calculate }}">
+																		</i>													
+																		{% endif %}												
+																	</div>
+																	
+																	<div class="col-md-9">
+																		<div class="input-group">
+																			<input type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"
+																			{% if constant.default_value != '' %} 
+																			value="{{ constant.default_value }}" class="form-control default-color" 
+																			{% else %} 
+																			class="form-control" 
+																			{% endif %} 
+																			{% if constant.disable=='T' %} 
+																			readonly="true" 
+																			{% endif %} />
+						
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			{% if constant.remark != "" %}
+																			<i class="fa fa-calculator"  title="参考值："  
+																			data-container="body" data-toggle="popover" data-placement="right" 
+																			data-content="{{ constant.remark }}">
+																			</i>
+																			{% endif %}
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+													</div>
+						
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>				
+				</div>
+			</form>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+</div>
+	{% endblock %} {% endblock %}

@@ -1,0 +1,1989 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/energyisland/questionnaire.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energyisland/energyisland.css') }}">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}"> -->
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 51px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+	}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<br><br><br>
+			<div class="row" style="margin-top: -41px;">	
+				<div class="col-md-12 breadcrumb-fix show">	
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li><a class="pre" href="#" data-page="5">上一页</a></li>
+							<li class="current"><a id="energyisland1" href="#">能源互联岛需求调研表</a></li>
+							<li><a id="energyisland2"  onclick="return false;" href="{{ url_for('energy_island.energyisland_device_select', id=session.planId) }}">运行设备选择</a></li>
+							<li><a id="energyisland3"  onclick="return false;" href="{{ url_for('energy_island.energyisland_graph', id=session.planId) }}">运行曲线图</a></li>
+							<li><a id="energyisland4" onclick="return false;" href="{{ url_for('energy_island.energyisland_specification', id=session.planId) }}">指标</a></li>
+							<li><a class="next" href="#">下一页</a></li>
+						</ol>
+					</div>														
+					<div class="col-md-2 breadcrumb-submit" >
+						<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i>  保存 </button>
+					</div>
+					<!-- <div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="selectTemplate" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 选 择 报 告 模 板 </button>
+					</div> -->
+				</div>
+				<br><br><br><br>				
+			</div>
+
+			<form id="energyisland_questionnaireForm">
+				<div class="row full-width-style width-little">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;z-index: 33;">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">需求调查表</h2>
+										<ul style="height:480px;overflow:auto">
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">项目信息</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-2">运行信息</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-3">能源成本</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-4">现有情况-电力</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-5">现有情况-锅炉</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-6">现有情况-冷热设备</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-7">现有情况-风电</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-8">现有情况-光伏</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-9">现有情况-污水</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-10">现有情况-储能设备</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-11">现有情况-空压站</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-12">现有情况-其他</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-13">需求-热负荷</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-14">需求-冷负荷</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-15">需求-蒸汽需求</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-16">需求-电力需求</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-17">需求-热水需求</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-18">需求-供气需求</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:11%; width:89%">
+									<div class="module-content">
+										<div class="main clearfix">
+											<!-- 项目信息 -->
+											<div class="col-md-12 q-1">
+												<div class="panel">
+													<div class="first-title"><i class="fa fa-building" aria-hidden="true"></i><span class="margin-left15">项目信息</span></div>
+													<div class="panel-body">
+														<div class="col-md-10">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">项目名称</span>
+																<input class="form-control" type="text" id="plan_name" {% if session.planId %} readonly="true" {% endif %}>
+															</div>
+														</div>
+
+														<div class="col-md-10 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">单位名称</span>
+																<input class="form-control" type="text" id="company_name" {% if session.planId %} readonly="true" {% endif %}>
+															</div>
+														</div>
+
+													
+														<div class="col-md-10 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">项目类型</span>
+																<select class="form-control" id="eir_proj_type">
+																	<option value="-1">请选择类型</option>
+																	<option value="1">医院</option>
+																	<option value="2">学校</option>
+																	<option value="3">典型楼宇</option>
+																	<option value="4">数据中心</option>
+																	<option value="5">机场</option>
+																	<option value="6">企业</option>
+																	<option value="7">生活园区</option>
+																	<option value="8">工业园区</option>
+																	<option value="0">其它</option>
+																</select>
+															</div>
+														</div>
+
+														
+
+														<div class="col-md-10 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">光伏类型</span>
+																<input class="form-control" type="text" id="eir_proj_photovoltaic_type">
+															</div>
+														</div>
+														<div class="col-md-10 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">风电类型</span>
+																<input class="form-control" type="text" id="type_wind_power">
+															</div>
+														</div>
+														<div class="col-md-10 margin-top-20">
+																<div class="col-md-3">地热及干热岩类型</div>
+																<div class="col-md-9">
+																<select class="form-control" id="eir_proj_terrestrial_heat_hdr_type">
+																	<option value="-1">请选择类型</option>
+																	<option value="1">地源热泵</option>
+																	<option value="2">水源热泵</option>
+																	<option value="3">干热岩热泵</option>
+																	<option value="4">污水源热泵</option>
+																</select>
+															</div>
+														</div>
+														
+														<div class="col-md-10 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">气象条件</span>
+																<input class="form-control" type="text" id="eir_proj_weather_conditions">
+															</div>
+														</div>
+														<div class="col-md-10 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">水质条件</span>
+																<input class="form-control" type="text" id="eir_proj_water_quality_condition">
+															</div>
+														</div>
+														
+														<div class="col-md-10 margin-top-20">
+																<div class="input-group">
+																	<span class="input-group-addon show-primary width-size">项目所在地&#12288;</span>
+																	<input class="form-control" type="text" id="company_location" readonly="true" name="company_location">
+																</div>
+															</div>
+													</div>
+												</div>
+											</div>
+
+											<!-- 运行信息 -->
+											<div class="col-md-12 q-2 hide">
+												<div class="panel ">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">运行信息</span></div>
+													<div class="second-title"> 年检修计划</div>
+													{% for i in eir_work_list %} 
+													{% if i["unit"] %}
+														{% if loop.index <= 7  %}
+														<div class="panel-body">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i['unit'][0].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<br>
+														</div>
+														{% else  %}
+														<div class="panel-body">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i['unit'][0].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}开始时段</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_from_month">
+																		<span class="input-group-addon show-primary">{{ i['unit'][1].decode('utf8') }}</span>
+																
+																		<input class="form-control" type="text" id="{{ i.column }}_from_day">
+																		<span class="input-group-addon show-primary">{{ i['unit'][2].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}截止时段</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_to_month">
+																		<span class="input-group-addon show-primary">{{ i['unit'][1].decode('utf8') }}</span>
+																
+																		<input class="form-control" type="text" id="{{ i.column }}_to_day">
+																		<span class="input-group-addon show-primary">{{ i['unit'][2].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<br>
+														</div>
+														{% endif %}
+													{% endif %}
+													{% endfor %}
+
+
+													{% for i in eir_work_list %} 
+													{% if not i["unit"] %}
+													<div class="second-title"> 年检修计划文书</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-11">
+																	<textarea class="form-control" name="{{ i.column }}" id="{{ i.column }}" style="height: 340px"></textarea>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+						
+													</div>
+													{% endif %}
+													{% endfor %}
+												</div>
+											</div>
+
+											<!-- 能源成本 -->
+											<div class="col-md-12 q-3 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">能源成本</span></div>
+													{% for i in eir_cost_list %} 
+													{% if loop.index <= 4 %}
+													<div class="second-title">{{ i["name"].decode('utf8') }}</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-2">时段</div>
+                                                                <div class="col-md-9">
+                                                                    <input class="form-control" type="text" id="{{ i.column }}_duration" value="0:00~0:00">
+																</div>
+																<div class="col-md-1">
+                                                                    <i class="fa fa-question-circle-o" title="输入整点时间,时间段之间用/分隔,示例：7:00~10:00/17:00~21:00" data-container="body" data-toggle="popover" data-placement="right"
+																	data-content=""></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-2">数值</div>
+																<div class="col-md-9">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_value">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% elif loop.index <= 6 %}
+													<div class="second-title">{{ i["name"].decode('utf8') }}</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-2">时段</div>
+                                                                <div class="col-md-2">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_duration_start_month" value="1">
+																		<span class="input-group-addon show-primary">月</span>
+																	</div>
+																</div>
+																<div class="col-md-2">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_duration_start_day" value="1">
+																		<span class="input-group-addon show-primary">日</span>
+																	</div>
+																</div>
+																<div class="col-md-1">~</div>
+																<div class="col-md-2">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_duration_end_month" value="4">
+																		<span class="input-group-addon show-primary">月</span>
+																	</div>
+																</div>
+																<div class="col-md-2">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_duration_end_day" value="30">
+																		<span class="input-group-addon show-primary">日</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+                                                                    <i class="fa fa-question-circle-o" title="输入月日,示例：12.1~2.18" data-container="body" data-toggle="popover" data-placement="right"
+																	data-content=""></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-2">数值</div>
+																<div class="col-md-9">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}_value">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% else %}
+													<div class="second-title">{{ i["name"].decode('utf8') }}</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-2">数值</div>
+																<div class="col-md-9">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													{% endfor %}													
+												</div>
+											</div>
+
+											<!-- 现有情况 电力-->
+											<div class="col-md-12 q-4 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-电力</span></div>
+													{% for num in range(0, 3, 1) %}
+													{% set rowloop = loop %}
+														{% for i in eir_available_list|slice_arr(0 + num * 4, 0 + num * 4 + 2, 1) %}
+															{% if loop.index == 1 %}
+															<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+															{% endif %}
+															<div class="panel-body">
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{i["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值1">
+																				<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														{% endfor %}
+													{% endfor %}
+												</div>
+											</div>
+
+											<!-- 现有情况 锅炉 -->
+											<div class="col-md-12 q-5 hide">
+												<!-- 自有蒸汽锅炉 -->
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-锅炉</span></div>
+													{% for num in range(0, 1, 1) %}
+													{% set rowloop = loop %}
+														{% for i in eir_available_list|slice_arr(13 + num,27,3) %}
+														{% if loop.index == 1 %}
+														<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+														{% endif %}
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																			<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endfor %}
+													{% endfor %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ eir_available_list[28]["name"].decode('utf8') }}</div>
+																<div class="col-md-3">
+																<select class="form-control" id="{{ eir_available_list[27][0]['column'].decode('utf8') }}">
+																	<option value="-1">请选择数据1</option>
+																	{% for unit in eir_available_list[28]["unit"] %} 
+																	<option value="{{ unit['value'].decode('utf8') }}">{{ unit["name"].decode('utf8') }}</option>
+																	{% endfor %}
+																</select>
+																</div>
+																<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ eir_available_list[28].column }}" placeholder="数值1">
+																			<span class="input-group-addon show-primary">&&</span>
+																		</div>
+																	</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<!-- <div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list[29]["name"].decode('utf8') }}</div>
+																
+																<div class="col-md-3">
+																<select class="form-control" id="{{ eir_available_list[27][1]['column'].decode('utf8') }}">
+																	<option value="-1">请选择数据2</option>
+																	{% for unit in eir_available_list[29]["unit"] %} 
+																	<option value="{{ unit['value'].decode('utf8') }}">{{ unit["name"].decode('utf8') }}</option>
+																	{% endfor %}
+																</select>
+																</div>
+																<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ eir_available_list[29].column }}" placeholder="数值2">
+																			<span class="input-group-addon show-primary">&&</span>
+																		</div>
+																	</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div> -->
+														</div>
+													</div>
+													<!-- 外部汽源 -->
+													{% for i in eir_available_list|slice_arr(32,50,4) %}
+													{% if loop.index == 1 %}
+													<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+													{% endif %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值1">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<!-- <div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list[eir_available_list.index(i) + 1]["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_available_list[eir_available_list.index(i) + 1].column }}" placeholder="数值2">
+																		<span class="input-group-addon show-primary">{{ eir_available_list[eir_available_list.index(i) + 1]["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div> -->
+														</div>
+													</div>
+													{% endfor %}
+													<!-- 自有热水锅炉 -->
+													{% for i in eir_available_list|slice_arr(52,70,4) %}
+													{% if loop.index == 1 %}
+													<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+													{% endif %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值1">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<!-- <div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list[eir_available_list.index(i) + 1]["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_available_list[eir_available_list.index(i) + 1].column }}" placeholder="数值2">
+																		<span class="input-group-addon show-primary">{{ eir_available_list[eir_available_list.index(i) + 1]["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div> -->
+														</div>
+													</div>
+													{% endfor %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ eir_available_list[71]["name"].decode('utf8') }}</div>
+																<div class="col-md-4">
+																	<select class="form-control" id="{{ eir_available_list[70][0]['column'].decode('utf8') }}">
+																		<option value="-1">请选择数值1</option>
+																		{% for unit in eir_available_list[71]["unit"] %} 
+																		<option value="{{ unit['value'].decode('utf8') }}">{{ unit["name"].decode('utf8') }}</option>
+																		{% endfor %}
+																	</select>
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_available_list[71].column }}" placeholder="数值1">
+																		<span class="input-group-addon show-primary">&&</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<!-- <div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list[72]["name"].decode('utf8') }}</div>
+																<div class="col-md-4">
+																	<select class="form-control" id="{{ eir_available_list[70][1]['column'].decode('utf8') }}">
+																		<option value="-1">请选择数值2</option>
+																		{% for unit in eir_available_list[72]["unit"] %} 
+																		<option value="{{ unit['value'].decode('utf8') }}">{{ unit["name"].decode('utf8') }}</option>
+																		{% endfor %}
+																	</select>
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_available_list[72].column }}" placeholder="数值2">
+																		<span class="input-group-addon show-primary">&&</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div> -->
+														</div>
+													</div>
+												</div>
+											</div>
+												
+
+											<!-- 现有情况 冷热设备 -->
+											<div class="col-md-12 q-6 hide">
+												<!-- 外部供热设备 -->
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-冷热设备</span></div>
+													{% for num in range(0, 1, 1) %}
+														{% set rowloop = loop %}
+														{% for i in eir_available_list|slice_arr(75 + num,93,4) %}
+														{% if loop.index == 1 and rowloop.index == 1 %}
+														<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+														{% endif %}
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	<div class="col-md-8">
+																		{% if i.unit == '' %}
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		{% endif %}
+																		{% if i.unit != '' %}
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																			<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																		</div>
+																		{% endif %}
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endfor %}
+														<br/>
+													{% endfor %}
+
+													<!-- 现有制冷设备 -->
+													<div class="second-title">{{ eir_available_list_2[0]["type"].decode('utf8') }}</div>
+													{% for i in eir_available_list_2|slice_arr(0,1,1) %}
+													<div class="panel-body">
+														{% for i in eir_available_list_2|slice_arr(0 + loop.index - 1,18,3) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i.unit == '' %}
+																		<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ i.column | interval(32, 33) }}">
+																	{% endif %}
+																	{% if i.unit != '' %}
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ i.column | interval(32, 33) }}">
+																			<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																		</div>
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+													{% endfor %}
+													<!-- 供冷末端形式&供暖末端形式 -->
+													<div class="second-title">供冷末端形式</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">供冷末端形式</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="eir_available_cold_end_form">
+																		<option value=1>风机盘管+新风</option>
+																		<option value=2>全空气</option>
+																	</select>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="second-title">供暖末端形式</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">供暖末端形式</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="eir_available_heat_end_form">
+																		<option value=1>钢串片</option>
+																		<option value=2>辐射板散热器</option>
+																		<option value=3>风机盘管+新风</option>
+																		<option value=4>全空气</option>
+																	</select>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>	
+
+											<!-- 现有情况 风电 -->
+											<div class="col-md-12 q-7 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-风电</span></div>
+													<!-- 数值1~5 -->
+													{% for i in eir_available_list_2|slice_arr(18,23,1) %}
+													<div class="second-title">数值{{ loop.index }}</div>
+													<div class="panel-body">
+														{% for i in eir_available_list_2|slice_arr(18 + loop.index - 1,38,5) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i.unit == '' %}
+																	<input class="form-control" type="text" id="{{ i.column }}">
+																	{% endif %}
+																	{% if i.unit != '' %}
+																	<div class="input-group">
+																	  <input class="form-control" type="text" id="{{ i.column }}">
+																	  <span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+													{% endfor %}
+												</div>
+											</div>	
+
+											<!-- 现有情况 光伏 -->
+											<div class="col-md-12 q-8 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-光伏</span></div>
+													<div class="second-title">{{ eir_available_list_2[38]["type"].decode('utf8') }}</div>
+													{% for num in range(0, 1, 1) %}
+													{% set rowloop = loop %}
+													<div class="panel-body">
+														{% for i in eir_available_list_2|slice_arr(38 + num,58,5) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i.unit == '' %}
+																	<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																	{% endif %}
+																	{% if i.unit != '' %}
+																	<div class="input-group">
+																	  <input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																	  <span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+													{% endfor %}
+												</div>
+											</div>
+
+											<!-- 现有情况 污水 -->
+											<div class="col-md-12 q-9 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-污水</span></div>
+													<!-- 生活污水 -->
+													<div class="second-title">{{ eir_available_list_2[58]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														{% for i in eir_available_list_2|slice_arr(58,61,1) %} 
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i.unit == '' %}
+																	<input class="form-control" type="text" id="{{ i.column }}">
+																	{% endif %}
+																	{% if i.unit != '' %}
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+													<!-- 工业污水 -->
+													<div class="second-title">{{ eir_available_list_2[61]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														{% for i in eir_available_list_2|slice_arr(61,64,1) %} 
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i.unit == '' %}
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																	{% endif %}
+																	{% if i.unit != '' %}
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+												</div>
+												<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+											</div>
+
+											<!-- 现有情况 储能设备 -->
+											<div class="col-md-12 q-10 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-储能设备</span></div>
+													{% for i in eir_available_list_2 %} 
+													{% if loop.index <= 67 and loop.index > 64%}
+													{% if loop.index == 65 %}
+													<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+													{% endif %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													{% endfor %}
+												</div>
+												<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+												<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+											</div>
+
+											<!-- 现有情况 空压站 -->
+											<div class="col-md-12 q-11 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-空压站</span></div>
+													<!-- 空压站 -->
+													{% for i in eir_available_list_2|slice_arr(67,70,1) %}
+													{% if loop.index == 1 %}
+													<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+													{% endif %}
+													<div class="panel-body">
+														<!-- <div class="col-md-4 third-title-energyisland">数值{{ loop.index }}</div> -->
+														{% for j in eir_available_list_2|slice_arr(67 + loop.index - 1,76,3) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ j["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ j.column }}" placeholder="数值{{ j.column | interval(-1) }}">
+																		<span class="input-group-addon show-primary">{{ j["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+													{% endfor %}
+													<!-- 空压站余热利用 -->
+													{% for i in eir_available_list_2|slice_arr(76,80,2) %} 
+													{% if loop.index  == 1 %}
+													<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+													{% endif %}
+													<div class="panel-body">
+														<div class="row">
+															{% if loop.index  != 2 %}
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list_2[eir_available_list_2.index(i) + 1]["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_available_list_2[eir_available_list_2.index(i) + 1].column }}">
+																		<span class="input-group-addon show-primary">{{ eir_available_list_2[eir_available_list_2.index(i) + 1]["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+															</div>
+															{% endif %}
+															{% if loop.index  == 2 %}
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list_2[eir_available_list_2.index(i) + 1]["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<input class="form-control" type="text" id="{{ eir_available_list_2[eir_available_list_2.index(i) + 1].column }}">
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															{% endif %}
+														</div>
+													</div>
+													{% endfor %}
+												</div>
+											</div>
+
+											<!-- 现有情况 其他 -->
+											<div class="col-md-12 q-12 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-其他</span></div>
+													<!-- 固废处理&工业用水 -->
+													<div class="second-title">{{ eir_available_list_2[80]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ eir_available_list_2[80]["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_available_list_2[80].column }}">
+																		<span class="input-group-addon show-primary">t/d</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">{{ eir_available_list_2[81]["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<input class="form-control" type="text" id="{{ eir_available_list_2[81].column }}">
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														
+													</div>
+													<!-- 固废处理&工业用水 -->
+													<div class="second-title">{{ eir_available_list_2[82]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														{% for i in eir_available_list_2|slice_arr(82,85,1) %}
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}">
+																			<span class="input-group-addon show-primary">{{ i.unit }}</span>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+														{% endfor %}
+													</div>
+													<!-- 可利用的绿化面积 -->
+													{% for i in eir_available_list_2 %} 
+														{% if loop.index <= 90 and loop.index > 85%}
+														{% if loop.index  != 88 %}
+														<div class="second-title">{{ i["type"].decode('utf8') }}</div>
+														{% endif %}
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	{% if loop.index  == 88 %}
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}">
+																			<span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+																		</div>
+																	</div>
+																	{% endif %}
+																	{% if loop.index  != 88 %}
+																	<div class="col-md-8">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																	</div>
+																	{% endif %}
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+													{% endfor %}
+												</div>
+											</div>
+
+											<!-- 热负荷 -->
+											<div class="col-md-12 q-13 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-热负荷</span></div>
+													<!-- 数据1~数据5 -->
+													<div class="second-title">{{ eir_heat_list[0]["type"].decode('utf8') }}</div>
+													{% for j in range(0,5,1) %}
+														{% set rowloop = loop %}
+														<div class="panel-body">
+														{% for i in eir_heat_list|slice_arr(0 + j ,20,5) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i["unit"] %}
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																		<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																	{% else %}
+																	<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+														</div>
+													{% endfor %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">总计</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="eir_thermal_load_total" placeholder="热负荷总量">
+																		<span class="input-group-addon show-primary">kWh</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!-- 各个时间点的热负荷 -->
+													<div class="second-title">各个时间点的热负荷</div>
+
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">典型日</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="typicalDay" name="typicalDay" >
+																		<option value="-1">请选择典型日</option>
+																		<option value="1">典型日1</option>
+																		<option value="2">典型日2</option>
+																		<option value="3">典型日3</option>
+																		<option value="4">典型日4</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<!--{% for num in range(0, 4, 1) %}-->
+													<!-- <div class="third-title">典型日 "{{ num + 1 }}"</div> -->
+														<div class="panel-body hide" id="typicalSeason1">
+															<div class="row">
+																<div class="col-md-12 margin-top-20" >
+																	<div class="col-md-3">{{ eir_season_typical_day[0].name.decode('utf8') }} 对应季节</div>
+																	<div class="col-md-8">
+																	<select class="form-control" id="{{ eir_season_typical_day[0].column }}">
+																		<option value="-1">请选择类型</option>
+																		<option value="1">夏季</option>
+																		<option value="2">冬季</option>
+																	</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="panel-body hide"  id="typicalTime1">
+															{% for i in eir_heat_list|slice_arr(20 + 0 * 24,44 + 0 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_heat_list[eir_heat_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_heat_list[eir_heat_list.index(i) + j].column }}" placeholder="典型日 {{ 0 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_heat_list[eir_heat_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+
+														<div class="panel-body hide" id="typicalSeason2">
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	<div class="col-md-3">{{ eir_season_typical_day[1].name.decode('utf8') }} 对应季节</div>
+																	<div class="col-md-8">
+																	<select class="form-control" id="{{ eir_season_typical_day[1].column }}">
+																		<option value="-1">请选择类型</option>
+																		<option value="1">夏季</option>
+																		<option value="2">冬季</option>
+																	</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="panel-body hide" id="typicalTime2">
+															{% for i in eir_heat_list|slice_arr(20 + 1 * 24,44 + 1 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_heat_list[eir_heat_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_heat_list[eir_heat_list.index(i) + j].column }}" placeholder="典型日 {{ 1 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_heat_list[eir_heat_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+
+														<div class="panel-body hide" id="typicalSeason3">
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	<div class="col-md-3">{{ eir_season_typical_day[2].name.decode('utf8') }} 对应季节</div>
+																	<div class="col-md-8">
+																	<select class="form-control" id="{{ eir_season_typical_day[2].column }}">
+																		<option value="-1">请选择类型</option>
+																		<option value="1">夏季</option>
+																		<option value="2">冬季</option>
+																	</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="panel-body hide" id="typicalTime3">
+															{% for i in eir_heat_list|slice_arr(20 + 2 * 24,44 + 2 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_heat_list[eir_heat_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_heat_list[eir_heat_list.index(i) + j].column }}" placeholder="典型日 {{ 2 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_heat_list[eir_heat_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+
+														<div class="panel-body hide" id="typicalSeason4">
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	<div class="col-md-3">{{ eir_season_typical_day[3].name.decode('utf8') }} 对应季节</div>
+																	<div class="col-md-8">
+																	<select class="form-control" id="{{ eir_season_typical_day[3].column }}">
+																		<option value="-1">请选择类型</option>
+																		<option value="1">夏季</option>
+																		<option value="2">冬季</option>
+																	</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="panel-body hide" id="typicalTime4">
+															{% for i in eir_heat_list|slice_arr(20 + 3 * 24,44 + 3 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_heat_list[eir_heat_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_heat_list[eir_heat_list.index(i) + j].column }}" placeholder="典型日 {{ 3 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_heat_list[eir_heat_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+													<!--{% endfor %}-->
+												</div>
+											</div>
+
+											<!-- 冷负荷 -->
+											<div class="col-md-12 q-14 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-冷负荷</span></div>
+													<!-- 数据1~数据5 -->
+													<!-- <div class="second-title">{{ eir_cool_list[0]["type"].decode('utf8') }}</div> -->
+													{% for j in range(0,5,1) %}
+														{% set rowloop = loop %}
+														<div class="second-title">数据{{rowloop.index}}</div>
+														<div class="panel-body">
+														{% for i in eir_cool_list|slice_arr(0 + j ,20,5) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	{% if i["unit"] %}
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																		<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																	{% else %}
+																	<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																	{% endif %}
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+														</div>
+													{% endfor %}
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">总计</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="eir_cooling_load_total" placeholder="冷负荷总量">
+																		<span class="input-group-addon show-primary">kWh</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!-- 各个时间点的冷负荷 -->
+													<div class="second-title">各个时间点的冷负荷</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">典型日</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="coldTypicalDay" name="coldTypicalDay" >
+																		<option value="-1">请选择典型日</option>
+																		<option value="1">典型日1</option>
+																		<option value="2">典型日2</option>
+																		<option value="3">典型日3</option>
+																		<option value="4">典型日4</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!--{% for num in range(0, 4, 1) %}-->
+													<!-- <div class="third-title">典型日 "{{ num + 1 }}"</div> -->
+													<div class="panel-body hide" id="coldTypicalDay1">
+														{% for i in eir_cool_list|slice_arr(20 + 0 * 24,44 + 0 * 24,1) %}
+															{% for j in range(0, 3, 1) %}
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	{% if j == 0 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-工艺</div>
+																	{% elif j ==1 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-舒适性</div>
+																	{% else %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷负荷</div>
+																	{% endif %}
+																	<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_cool_list[eir_cool_list.index(i) + j * 96].column }}" placeholder="典型日 {{ 0 + 1 }} 数据">
+																		<span class="input-group-addon show-primary">{{ eir_cool_list[eir_cool_list.index(i) + j * 96].unit.decode('utf8') }}</span>
+																	</div>
+																	</div>
+																</div>
+															</div>
+															{% endfor %}
+														<br>
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="coldTypicalDay2">
+														{% for i in eir_cool_list|slice_arr(20 + 1 * 24,44 + 1 * 24,1) %}
+															{% for j in range(0, 3, 1) %}
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	{% if j == 0 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-工艺</div>
+																	{% elif j ==1 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-舒适性</div>
+																	{% else %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷负荷</div>
+																	{% endif %}
+																	<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_cool_list[eir_cool_list.index(i) + j * 96].column }}" placeholder="典型日 {{ 1 + 1 }} 数据">
+																		<span class="input-group-addon show-primary">{{ eir_cool_list[eir_cool_list.index(i) + j * 96].unit.decode('utf8') }}</span>
+																	</div>
+																	</div>
+																</div>
+															</div>
+															{% endfor %}
+														<br>
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="coldTypicalDay3">
+														{% for i in eir_cool_list|slice_arr(20 + 2 * 24,44 + 2 * 24,1) %}
+															{% for j in range(0, 3, 1) %}
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	{% if j == 0 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-工艺</div>
+																	{% elif j ==1 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-舒适性</div>
+																	{% else %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷负荷</div>
+																	{% endif %}
+																	<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_cool_list[eir_cool_list.index(i) + j * 96].column }}" placeholder="典型日 {{ 2 + 1 }} 数据">
+																		<span class="input-group-addon show-primary">{{ eir_cool_list[eir_cool_list.index(i) + j * 96].unit.decode('utf8') }}</span>
+																	</div>
+																	</div>
+																</div>
+															</div>
+															{% endfor %}
+														<br>
+														{% endfor %}
+													</div>
+													<div class="panel-body hide"  id="coldTypicalDay4">
+														{% for i in eir_cool_list|slice_arr(20 + 3 * 24,44 + 3 * 24,1) %}
+															{% for j in range(0, 3, 1) %}
+															<div class="row">
+																<div class="col-md-12 margin-top-20">
+																	{% if j == 0 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-工艺</div>
+																	{% elif j ==1 %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷指标-舒适性</div>
+																	{% else %}
+																	<div class="col-md-3">{{ eir_cool_list[eir_cool_list.index(i) + j * 96]["name"].decode('utf8') }}: 冷负荷</div>
+																	{% endif %}
+																	<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ eir_cool_list[eir_cool_list.index(i) + j * 96].column }}" placeholder="典型日 {{ 3 + 1 }} 数据">
+																		<span class="input-group-addon show-primary">{{ eir_cool_list[eir_cool_list.index(i) + j * 96].unit.decode('utf8') }}</span>
+																	</div>
+																	</div>
+																</div>
+															</div>
+															{% endfor %}
+														<br>
+														{% endfor %}
+													</div>
+													<!--{% endfor %}-->
+												</div>
+											</div>
+
+											<!-- 蒸汽需求 -->
+											<div class="col-md-12 q-15 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-蒸汽需求</span></div>
+													<!-- 数据1~数据5 -->
+													<!-- <div class="second-title">{{ eir_steam_list[0]["type"].decode('utf8') }}</div> -->
+													{% for j in range(0,5,1) %}
+													{% set rowloop = loop %}
+													<div class="second-title">数据{{rowloop.index}}</div>
+														<div class="panel-body">
+														{% for i in eir_steam_list|slice_arr(0 + j ,40,5) %}
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	<div class="col-md-8">
+																		{% if i["unit"] %}
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																			<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																		</div>
+																		{% else %}
+																		<input class="form-control" type="text" id="{{ i.column }}" placeholder="数值{{ rowloop.index }}">
+																		{% endif %}
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+															<br>
+														{% endfor %}
+														</div>
+													{% endfor %}
+													<!-- 各个时间点的蒸汽负荷 -->
+													<div class="second-title">各个时间点的蒸汽负荷</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">典型日</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="steamTypicalDay" name="steamTypicalDay" >
+																		<option value="-1">请选择典型日</option>
+																		<option value="1">典型日1</option>
+																		<option value="2">典型日2</option>
+																		<option value="3">典型日3</option>
+																		<option value="4">典型日4</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!--{% for num in range(0, 4, 1) %}-->
+													<!-- <div class="third-title">典型日 "{{ num + 1 }}"</div> -->
+														<div class="panel-body hide" id="steamTypicalDay1">
+															{% for i in eir_steam_list|slice_arr(40 + 0 * 24,64 + 0 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_steam_list[eir_steam_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_steam_list[eir_steam_list.index(i) + j].column }}" placeholder="典型日 {{ 0 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_steam_list[eir_steam_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+														<div class="panel-body hide" id="steamTypicalDay2">
+															{% for i in eir_steam_list|slice_arr(40 + 1 * 24,64 + 1 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_steam_list[eir_steam_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_steam_list[eir_steam_list.index(i) + j].column }}" placeholder="典型日 {{ 1 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_steam_list[eir_steam_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+														<div class="panel-body hide" id="steamTypicalDay3">
+															{% for i in eir_steam_list|slice_arr(40 + 2 * 24,64 + 2 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_steam_list[eir_steam_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_steam_list[eir_steam_list.index(i) + j].column }}" placeholder="典型日 {{ 2 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_steam_list[eir_steam_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+														<div class="panel-body hide" id="steamTypicalDay4">
+															{% for i in eir_steam_list|slice_arr(40 + 3 * 24,64 + 3 * 24,2) %}
+																{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_steam_list[eir_steam_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_steam_list[eir_steam_list.index(i) + j].column }}" placeholder="典型日 {{ 3 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_steam_list[eir_steam_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+																{% endfor %}
+															{% endfor %}
+														</div>
+													<!--{% endfor %}-->
+												</div>
+											</div>
+
+											<!-- 电力需求 -->
+											<div class="col-md-12 q-16 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-电力需求</span></div>
+													<!-- 数据1 -->
+													<div class="second-title">{{ eir_electric_list[0]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														{% for i in eir_electric_list|slice_arr(0,5,1) %}
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}">
+																			<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+															<br>
+														{% endfor %}
+													</div>
+													<!-- 各个时间点的电力需求 -->
+													<div class="second-title">各个时间点的电力需求</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">典型日</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="eleTypicalDay" name="eleTypicalDay" >
+																		<option value="-1">请选择典型日</option>
+																		<option value="1">典型日1</option>
+																		<option value="2">典型日2</option>
+																		<option value="3">典型日3</option>
+																		<option value="4">典型日4</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!--{% for num in range(0, 4, 1) %}-->
+													<!-- <div class="third-title">典型日 "{{ num + 1 }}"</div> -->
+													<div class="panel-body hide" id="eleTypicalDay1">
+														{% for i in eir_electric_list|slice_arr(5 + 0 * 24,29 + 0 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_electric_list[eir_electric_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_electric_list[eir_electric_list.index(i) + j].column }}" placeholder="典型日 {{ 0 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_electric_list[eir_electric_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="eleTypicalDay2">
+														{% for i in eir_electric_list|slice_arr(5 + 1 * 24,29 + 1 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_electric_list[eir_electric_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_electric_list[eir_electric_list.index(i) + j].column }}" placeholder="典型日 {{ 1 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_electric_list[eir_electric_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="eleTypicalDay3">
+														{% for i in eir_electric_list|slice_arr(5 + 2 * 24,29 + 2 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_electric_list[eir_electric_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_electric_list[eir_electric_list.index(i) + j].column }}" placeholder="典型日 {{ 2 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_electric_list[eir_electric_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="eleTypicalDay4">
+														{% for i in eir_electric_list|slice_arr(5 + 3 * 24,29 + 3 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_electric_list[eir_electric_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_electric_list[eir_electric_list.index(i) + j].column }}" placeholder="典型日 {{ 3 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_electric_list[eir_electric_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<!--{% endfor %}-->
+												</div>
+											</div>
+
+											<!-- 热水需求 -->
+											<div class="col-md-12 q-17 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-热水需求</span></div>
+													<!-- 数据1~数据5 -->
+													<div class="second-title">{{ eir_hot_water_list[0]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														{% for i in eir_hot_water_list|slice_arr(0,5,1) %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control" type="text" id="{{ i.column }}">
+																		<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																</div>
+															</div>
+														</div>
+														<br>
+														{% endfor %}
+													</div>
+													<!-- 各个时间点的热水需求 -->
+													<div class="second-title">各个时间点的热水需求</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">典型日</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="hotTypicalDay" name="hotTypicalDay" >
+																		<option value="-1">请选择典型日</option>
+																		<option value="1">典型日1</option>
+																		<option value="2">典型日2</option>
+																		<option value="3">典型日3</option>
+																		<option value="4">典型日4</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!--{% for num in range(0, 4, 1) %}-->
+													<!-- <div class="third-title">典型日 "{{ num + 1 }}"</div> -->
+													<div class="panel-body hide" id="hotTypicalDay1">
+														{% for i in eir_hot_water_list|slice_arr(5 + 0 * 24,29 + 0 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].column }}" placeholder="典型日 {{ 0 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="hotTypicalDay2">
+														{% for i in eir_hot_water_list|slice_arr(5 + 1 * 24,29 + 1 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].column }}" placeholder="典型日 {{ 1 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="hotTypicalDay3">
+														{% for i in eir_hot_water_list|slice_arr(5 + 2 * 24,29 + 2 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].column }}" placeholder="典型日 {{ 2 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="hotTypicalDay4">
+														{% for i in eir_hot_water_list|slice_arr(5 + 3 * 24,29 + 3 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].column }}" placeholder="典型日 {{ 3 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_hot_water_list[eir_hot_water_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<!--{% endfor %}-->
+												</div>
+											</div>
+
+											<!-- 供气需求 -->
+											<div class="col-md-12 q-18 hide">
+												<div class="panel margin-right30">
+													<div class="first-title"><i class="fa fa-paper-plane-o" aria-hidden="true"></i><span class="margin-left15">现有情况-供气需求</span></div>
+													<!-- 数据1~数据5 -->
+													<div class="second-title">{{ eir_air_supply_list[0]["type"].decode('utf8') }}</div>
+													<div class="panel-body">
+														{% for i in eir_air_supply_list|slice_arr(0,6,1) %}
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ i["name"].decode('utf8') }}</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<input class="form-control" type="text" id="{{ i.column }}">
+																			<span class="input-group-addon show-primary">{{ i.unit.decode('utf8') }}</span>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+															<br>
+														{% endfor %}
+													</div>
+													<!-- 各个时间点的供气需求 -->
+													<div class="second-title">各个时间点的供气需求</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 margin-top-20">
+																<div class="col-md-3">典型日</div>
+																<div class="col-md-8">
+																	<select class="form-control" id="airTypicalDay" name="airTypicalDay" >
+																		<option value="-1">请选择典型日</option>
+																		<option value="1">典型日1</option>
+																		<option value="2">典型日2</option>
+																		<option value="3">典型日3</option>
+																		<option value="4">典型日4</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!--{% for num in range(0, 4, 1) %}-->
+													<!-- <div class="third-title">典型日 "{{ num + 1 }}"</div> -->
+													<div class="panel-body hide" id="airTypicalDay1">
+														{% for i in eir_air_supply_list|slice_arr(6 + 0 * 24,30 + 0 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].column }}" placeholder="典型日 {{ 0 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="airTypicalDay2">
+														{% for i in eir_air_supply_list|slice_arr(6 + 1 * 24,30 + 1 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].column }}" placeholder="典型日 {{ 1 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="airTypicalDay3">
+														{% for i in eir_air_supply_list|slice_arr(6 + 2 * 24,30 + 2 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].column }}" placeholder="典型日 {{ 2 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<div class="panel-body hide" id="airTypicalDay4">
+														{% for i in eir_air_supply_list|slice_arr(6 + 3 * 24,30 + 3 * 24,2) %}
+															{% for j in range(0,2,1) %}
+																<div class="row">
+																	<div class="col-md-12 margin-top-20">
+																		<div class="col-md-3">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j]["name"].decode('utf8') }}</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<input class="form-control" type="text" id="{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].column }}" placeholder="典型日 {{ 3 + 1 }} 数据">
+																				<span class="input-group-addon show-primary">{{ eir_air_supply_list[eir_air_supply_list.index(i) + j].unit.decode('utf8') }}</span>
+																			</div>
+																		</div>
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" aria-hidden="true"></i>
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														{% endfor %}
+													</div>
+													<!--{% endfor %}-->
+												</div>
+											</div>
+											<!-- 需求结束 -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- CONTENT FLUID -->
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/biomassCHP/equipmentList.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+	}
+	.top-bread {
+    margin-top: -91px;
+}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			</br></br></br>
+			
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">	
+				<div class="col-md-12 breadcrumb-fix show">	
+					<div id="breadcrumbDiv" class="col-md-11 breadcrumb-div">
+						
+						<ol class="cd-breadcrumb triangle" >
+							<li>
+								<a class="pre" href="#" data-page="20">上一页</a>
+							</li>
+							<li>
+								<a id="biomass1" onclick="return false;" href="{{ url_for('biomassviews.biomassQuestionnaire', id=session.planId) }}">需求调研表</a>
+							</li>
+							<li>
+								<a id="biomass2" onclick="return false;" href="{{ url_for('biomassviews.biomassFurnace') }}">锅炉计算</a>
+							</li>
+							<li>
+								<a id="biomass3" onclick="return false;" href="{{ url_for('biomassviews.biomassFuelStorTran') }}">燃料存储及输送系统</a>
+							</li>
+							<li>
+								<a id="biomass4" onclick="return false;" href="{{ url_for('biomassviews.biomassSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li>
+								<a id="biomass5" onclick="return false;" href="{{ url_for('biomassviews.biomassDesulDenit') }}">脱硫脱硝系统</a>
+							</li>
+							<li>
+								<a id="biomass6" onclick="return false;" href="{{ url_for('biomassviews.biomassDASRemove') }}">除尘除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="biomass7" onclick="return false;" href="{{ url_for('biomassviews.biomassBoilerAuxiliaries') }}">锅炉辅机</a>
+							</li>
+							<li>
+								<a id="biomass8" onclick="return false;" href="{{ url_for('biomassviews.biomassChimney') }}">烟囱</a>
+							</li>
+							<li>
+								<a id="biomass9" onclick="return false;" href="{{ url_for('biomassviews.biomassTurbineAuxiliary') }}">汽机辅机</a>
+							</li>
+							<li>
+								<a id="biomass10" onclick="return false;" href="{{ url_for('biomassviews.biomassCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a id="biomass11" onclick="return false;" href="{{ url_for('biomassviews.biomassWaterTreatment') }}">化学水处理系统</a>
+							</li>
+							<li>
+								<a id="biomass12" onclick="return false;" href="{{ url_for('biomassviews.biomassOfficialProcess') }}">公用工程</a>
+							</li>
+							<li>
+								<a id="biomass13" onclick="return false;" href="{{ url_for('biomassviews.biomassHeatSupply') }}">采暖供热系统</a>
+							</li>
+							<li>
+								<a id="biomass14" onclick="return false;" href="{{ url_for('biomassviews.biomassEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="biomass15" onclick="return false;" href="{{ url_for('biomassviews.biomassImage') }}">出图</a>
+							</li>
+							<li class="ableClick">
+								<a id="biomass16" href="#">设备清单</a>
+							</li>
+							<li  class="current">
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>						
+					</div>	
+																				
+					<div class="col-md-1 breadcrumb-submit" >
+						<button id="saveEquipmentList" name="saveEquipmentList" type="button" class="btn show-success" style="margin-left:-30px">
+							<i class="fa fa-check-circle"></i> 保存 
+						</button>
+					</div>
+				</div>
+				</br></br></br></br>				
+			</div>
+
+			<form id="biomassEquipmentListForm">
+				<div class="row full-width-style width-little">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">设备清单</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">设备清单</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:10%; width:90%">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">设备清单</span>
+													</div>
+													<div class="panel-body">
+														<!-- <div class="col-md-12">
+															<div class="col-md-2">
+																<button id="getEquipmentList" name="getEquipmentList" type="button" class="btn show-primary">
+																	<i class="fa fa-check-circle"></i> 设备清单一览 
+																</button>
+															</div>
+														</div> -->
+
+														<!-- <input type="hidden" id="deviceID" value="" /> -->
+														<!-- <label name="deviceID" id="deviceID" style="display:none;"></label> -->
+														
+														<!-- 设备一览的Div -->																
+														<div id="EquipmentListDiv" class="col-md-12">
+															<div style="overflow-x:auto; overflow-y:auto">																	
+																<table id="equipment_list_table" class="table table-striped equipment_list">
+																	<thead>
+																		<tr>
+																			<th style="width:7%; text-align:center">序号</th>
+																			<th style="width:18%; text-align:center">名称</th>
+																			<th style="width:30%; text-align:center">型号及规格</th>
+																			<th style="width:7%; text-align:center">数量</th>
+																			<th style="width:7%; text-align:center">单位</th>
+																			<th style="width:17%; text-align:center">备注</th>
+																			<th style="width:10%; text-align:center">操作</th>
+																		</tr>
+																	</thead>
+
+																	<tbody>
+																	</tbody>
+																</table>
+															</div>
+														</div>																
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- CONTENT FLUID -->
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

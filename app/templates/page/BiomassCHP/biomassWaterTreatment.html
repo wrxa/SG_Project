@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/biomassCHP/waterTreatment.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+		.panel {
+			background-color: rgba(255, 255, 255, 0.3);
+			margin: 10px 0px 10px 15px;
+		}
+		.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+	</style>
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">生物质热电联产-化学水处理系统</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+								<li>
+										<a class="pre" href="#" data-page="15">上一页</a>
+								</li>
+							<li>
+								<a id="biomass1" onclick="return false;" href="{{ url_for('biomassviews.biomassQuestionnaire', id=session.planId) }}">需求调研表</a>
+							</li>
+							<li>
+								<a id="biomass2" onclick="return false;" href="{{ url_for('biomassviews.biomassFurnace') }}">锅炉计算</a>
+							</li>
+							<li>
+								<a id="biomass3" onclick="return false;" href="{{ url_for('biomassviews.biomassFuelStorTran') }}">燃料存储及输送系统</a>
+							</li>
+							<li>
+								<a id="biomass4" onclick="return false;" href="{{ url_for('biomassviews.biomassSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li>
+								<a id="biomass5" onclick="return false;" href="{{ url_for('biomassviews.biomassDesulDenit') }}">脱硫脱硝系统</a>
+							</li>
+							<li>
+								<a id="biomass6" onclick="return false;" href="{{ url_for('biomassviews.biomassDASRemove') }}">除尘除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="biomass7" onclick="return false;" href="{{ url_for('biomassviews.biomassBoilerAuxiliaries') }}">锅炉辅机</a>
+							</li>
+							<li>
+								<a id="biomass8" onclick="return false;" href="{{ url_for('biomassviews.biomassChimney') }}">烟囱</a>
+							</li>
+							<li>
+								<a id="biomass9" onclick="return false;" href="{{ url_for('biomassviews.biomassTurbineAuxiliary') }}">汽机辅机</a>
+							</li>
+							<li>
+								<a id="biomass10" onclick="return false;" href="{{ url_for('biomassviews.biomassCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li class="ableClick">
+								<a id="biomass11" href="#">化学水处理系统</a>
+							</li>
+							<li>
+								<a id="biomass12" onclick="return false;" href="{{ url_for('biomassviews.biomassOfficialProcess') }}">公用工程</a>
+							</li>
+							<li>
+								<a id="biomass13" onclick="return false;" href="{{ url_for('biomassviews.biomassHeatSupply') }}">采暖供热系统</a>
+							</li>
+							<li>
+								<a id="biomass14" onclick="return false;" href="{{ url_for('biomassviews.biomassEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="biomass15" onclick="return false;" href="{{ url_for('biomassviews.biomassImage') }}">出图</a>
+							</li>
+							<li>
+								<a id="biomass16" onclick="return false;" href="{{ url_for('biomassviews.biomassEquipmentList') }}">设备清单</a>
+							</li>
+							<li class="current">
+									<a class="next" href="#">下一页</a>
+								</li>
+						</ol>
+					</div>
+
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+			<form id="biomasschpWater">
+				<div class="row full-width-style">
+
+					<div class="st-content">
+
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">化学水处理</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="c-3">工艺路线选择</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="c-1">锅炉补给水系统</a>
+											</li>
+										</ul>
+									</nav>
+
+								</div>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<!-- 工艺路线选择 -->
+											<div class="col-md-12 c-3">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+														<span class="margin-left15">工艺路线选择</span>
+													</div>
+                                                    <div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">工艺路线</div>
+																<div class="col-md-8">
+																	<div>
+																		<select class="form-control" id="processRoute" name="o_process_route">
+																			<option value="0" selected></option>
+																			<option value="1">预处理 + 两级反渗透（两级RO）+ 填充床电渗析（EDI）处理</option>
+																			<option value="2">预处理 + 两级反渗透（两级RO）+ 混床处理</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br>
+													</div>
+												</div>
+											</div>
+											<!-- 锅炉补给水系统 -->
+											<div class="col-md-12 c-1 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-tint" aria-hidden="true"></i>
+														<span class="margin-left15">锅炉补给水系统（根据《秸秆发电厂设计规范》、《小型火力发电厂设计规范》）</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['o_steam_flow', 'o_loss_factory', 'o_boiler_blowdown_loss', 'o_start_accident_increase_loss',
+														'o_external_supply_loss', 'o_water_consumption', 'o_boiler_water_normal', 'o_boiler_water_max', 'o_boiler_water_system',
+														'o_salt_water_tank'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" readonly="true" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</form>
+			<!-- END MAIN CONTENT -->
+			</div>
+			<!-- END MAIN -->
+			{% endblock %} {% endblock %}

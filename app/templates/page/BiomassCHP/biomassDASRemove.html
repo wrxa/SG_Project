@@ -1,214 +1,303 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
-<script src="{{ url_for('static', filename='js/biomassCHP/biomassDASRemove.js') }}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/biomassCHP/questionnaire.css') }}">
+<script src="{{ url_for('static', filename='js/biomassCHP/dasRemove.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+		.panel {
+			background-color: rgba(255, 255, 255, 0.3);
+			margin: 10px 0px 10px 15px;
+		}
+		.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+	</style>
 <!-- MAIN -->
 <div class="main">
 	<!-- MAIN CONTENT -->
-	<div class="main-content width88">
+	<div class="main-content">
 		<div class="container-fluid">
-			<div class="page-title">生物质热电联产-除尘除灰除渣系统</div>
-			<div class="row">
+			<!-- <div class="page-title">生物质热电联产-除尘除灰除渣系统</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
 
-				<div class="col-md-12">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+								<li>
+										<a class="pre" href="#" data-page="10">上一页</a>
+								</li>
+							<li>
+								<a id="biomass1" onclick="return false;" href="{{ url_for('biomassviews.biomassQuestionnaire', id=session.planId) }}">需求调研表</a>
+							</li>
+							<li>
+								<a id="biomass2" onclick="return false;" href="{{ url_for('biomassviews.biomassFurnace') }}">锅炉计算</a>
+							</li>
+							<li>
+								<a id="biomass3" onclick="return false;" href="{{ url_for('biomassviews.biomassFuelStorTran') }}">燃料存储及输送系统</a>
+							</li>
+							<li>
+								<a id="biomass4" onclick="return false;" href="{{ url_for('biomassviews.biomassSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li>
+								<a id="biomass5" onclick="return false;" href="{{ url_for('biomassviews.biomassDesulDenit') }}">脱硫脱硝系统</a>
+							</li>
+							<li class="ableClick">
+								<a id="biomass6" href="#">除尘除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="biomass7" onclick="return false;" href="{{ url_for('biomassviews.biomassBoilerAuxiliaries') }}">锅炉辅机</a>
+							</li>
+							<li>
+								<a id="biomass8" onclick="return false;" href="{{ url_for('biomassviews.biomassChimney') }}">烟囱</a>
+							</li>
+							<li>
+								<a id="biomass9" onclick="return false;" href="{{ url_for('biomassviews.biomassTurbineAuxiliary') }}">汽机辅机</a>
+							</li>
+							<li>
+								<a id="biomass10" onclick="return false;" href="{{ url_for('biomassviews.biomassCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a id="biomass11" onclick="return false;" href="{{ url_for('biomassviews.biomassWaterTreatment') }}">化学水处理系统</a>
+							</li>
+							<li>
+								<a id="biomass12" onclick="return false;" href="{{ url_for('biomassviews.biomassOfficialProcess') }}">公用工程</a>
+							</li>
+							<li>
+								<a id="biomass13" onclick="return false;" href="{{ url_for('biomassviews.biomassHeatSupply') }}">采暖供热系统</a>
+							</li>
+							<li>
+								<a id="biomass14" onclick="return false;" href="{{ url_for('biomassviews.biomassEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="biomass15" onclick="return false;" href="{{ url_for('biomassviews.biomassImage') }}">出图</a>
+							</li>
+							<li>
+								<a id="biomass16" onclick="return false;" href="{{ url_for('biomassviews.biomassEquipmentList') }}">设备清单</a>
+							</li>
+							<li class="current">
+									<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
 
-					<div class="panel">
-						<div class="page-title">除尘除灰除渣系统</div>
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
 					</div>
 				</div>
+				</br>
+				</br>
+				</br>
+				</br>
 			</div>
-			<div class="row">
-				<div class="row col-md-6">	
-					<!-- 除尘器计算 -->
-					<div class="col-md-12">
-						<!-- INPUT GROUPS -->
-						<div class="panel">
-							<div class="first-title"><i class="fa fa-leaf" aria-hidden="true"></i><span class="margin-left15">除尘器计算</span></div>
-							<div class="panel-body">
-								{% for constant in constants %} 
-								{% if constant.name_eng in ['d_total_ash', 'd_flyash_fraction', 'd_entry_flyash', 'd_standard_smoke_flow', 'd_actual_smoke_flow', 'd_standard_smoke_concentration', 'd_actual_smoke_concentration', 'd_dust_remove_efficiency', 'd_exit_smoke_concentration', 'd_exit_smoke_flow', 'd_dust_wiper_flow', 'd_entry_smoke_volume', 'd_tun_exit_smoke_concentration', 'd_env_particulate'] %}
-								<div class="row">
-									<div class="col-md-12">
-										{% if constant.symbol != "" %}
-											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
-										{% else %}
-											<div class="col-md-3">{{ constant.name }}</div>
-										{% endif %}
-										<div class="col-md-8">
-											<div class="input-group">
-												{% if  constant.default_value != "" %}
-													<input class="form-control" value="{{ constant.default_value }}" type="text">
-												{% else %}
-													<input class="form-control" type="text">
-												{% endif %}
-												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-											</div>
-										</div>
-										{% if constant.calculate != "" %}
-											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
-										{% endif %}
-									</div>
-								</div>
-								<br>
-								{% endif %}
-								{% endfor %}
-							</div>
+			<form id="biomasschpDASRemove">
+				<div class="row full-width-style">
 
-						</div>
-					</div>
-					<!-- 除灰系统计算 -->
-					<div class="col-md-12">
-						<!-- INPUT GROUPS -->
-						<div class="panel">
-							<div class="first-title"><i class="fa fa-tint" aria-hidden="true"></i><span class="margin-left15">除灰系统计算--正压浓相气力输送</span>
-								{% for constant in constants %}
-								{% if constant.name_eng in ['a_remove_output'] %}
-									<i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
-								{% endif %}
-								{% endfor %}
-							</div>
-							<div class="panel-body">
-								{% for constant in constants %} 
-								{% if constant.name_eng in ['a_remove_output', 'a_bulk_density', 'a_fullness', 'a_storage_time', 'a_volumn', 'a_diameter', 'a_height'] %}
-								<div class="row">
-									<div class="col-md-12">
-										{% if constant.symbol != "" %}
-											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
-										{% else %}
-											<div class="col-md-3">{{ constant.name }}</div>
-										{% endif %}
-										<div class="col-md-8">
-											<div class="input-group">
-												{% if  constant.default_value != "" %}
-													<input class="form-control" value="{{ constant.default_value }}" type="text">
-												{% else %}
-													<input class="form-control" type="text">
-												{% endif %}
-												<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-											</div>
-										</div>
-										{% if constant.calculate != "" %}
-											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
-										{% endif %}
-									</div>
-								</div>
-								<br>
-								{% endif %}
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-				</div>
+					<div class="st-content">
 
-				<div class="col-md-6">
-					<div class="row">
-						<!-- 输灰系统耗气量计算 -->
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel  margin-right30">
-								<div class="first-title"><i class="fa fa-sun-o" aria-hidden="true"></i><span class="margin-left15">输灰系统耗气量计算---空压站</span></div>
-								<div class="panel-body">
-									{% for constant in constants %} 
-									{% if constant.name_eng in ['a_ratio', 'a_gas_consumption'] %}
-									<div class="row">
-										<div class="col-md-12">
-											<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
-											<div class="col-md-8">
-												<div class="input-group">
-													{% if  constant.default_value != "" %}
-														<input class="form-control" value="{{ constant.default_value }}" type="text">
-													{% else %}
-														<input class="form-control" type="text">
-													{% endif %}
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">除尘除灰除渣</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="r-1">除尘器计算</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="r-4">除灰系统计算</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="r-2">输灰系统耗气量计算</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="r-3">除渣系统计算</a>
+											</li>
+										</ul>
+									</nav>
+
+								</div>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<!-- 除尘器计算 -->
+											<div class="col-md-12 r-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-leaf" aria-hidden="true"></i>
+														<span class="margin-left15">除尘器计算</span>
+														{% for constant in constants %} {% if constant.name_eng in ['d_total_ash'] %}
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+														{% endif %} {% endfor %}
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['d_total_ash', 'd_flyash_fraction', 'd_entry_flyash', 'd_standard_smoke_flow',
+														'd_actual_smoke_flow', 'd_standard_smoke_concentration', 'd_actual_smoke_concentration', 'd_dust_remove_efficiency',
+														'd_exit_smoke_concentration', 'd_exit_smoke_flow', 'd_dust_wiper_flow', 'd_entry_smoke_volume', 'd_tun_exit_smoke_concentration',
+														'd_env_particulate'] %}
+														<div class="row">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+
 												</div>
 											</div>
-											{% if constant.calculate != "" %}
-												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
-											{% endif %}
-										</div>
-									</div>
-									<br>
-									{% endif %}
-									{% endfor %}
-								</div>
-							</div>
-						</div>
-
-						<!-- 除渣系统计算 -->
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel  margin-right30">
-								<div class="first-title"><i class="fa fa-send-o" aria-hidden="true"></i><span class="margin-left15">除渣系统计算--干式机械除渣（适用于CFB锅炉）</span>
-									{% for constant in constants %}
-									{% if constant.name_eng in ['s_slag_quantity'] %}
-										<i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
-									{% endif %}
-									{% endfor %}
-								</div>
-								<div class="panel-body">
-									{% for constant in constants %} 
-									{% if constant.name_eng in ['s_slag_quantity', 's_yns_output', 's_coolwater', 's_yns_number', 's_slag_output', 's_conveyor_output', 's_bulk_density', 's_fullness', 's_storage_time', 's_volumn', 's_diameter', 's_height'] %}
-									<div class="row">
-										<div class="col-md-12">
-											{% if constant.symbol != "" %}
-												<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
-											{% else %}
-												<div class="col-md-3">{{ constant.name }}</div>
-											{% endif %}
-											<div class="col-md-8">
-												<div class="input-group">
-													{% if  constant.default_value != "" %}
-														<input class="form-control" value="{{ constant.default_value }}" type="text">
-													{% else %}
-														<input class="form-control" type="text">
-													{% endif %}
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											<!-- 输灰系统耗气量计算 -->
+											<div class="col-md-12 r-2 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-sun-o" aria-hidden="true"></i>
+														<span class="margin-left15">输灰系统耗气量计算---空压站</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['a_ratio', 'a_gas_consumption'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
 												</div>
 											</div>
-											{% if constant.calculate != "" %}
-												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i></div>
-											{% endif %}
+											<!-- 除渣系统计算 -->
+											<div class="col-md-12 r-3 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-send-o" aria-hidden="true"></i>
+														<span class="margin-left15">除渣系统计算</span>
+														{% for constant in constants %} {% if constant.name_eng in ['s_slag_quantity'] %}
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+														{% endif %} {% endfor %}
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['s_slag_quantity', 's_yns_output', 's_coolwater', 's_yns_number',
+														's_slag_output', 's_conveyor_output', 's_bulk_density', 's_fullness', 's_storage_time', 's_volumn', 's_diameter',
+														's_height'] %}
+														<div class="row">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<!-- 除灰系统计算 -->
+											<div class="col-md-12 r-4 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-tint" aria-hidden="true"></i>
+														<span class="margin-left15">除灰系统计算</span>
+														{% for constant in constants %} {% if constant.name_eng in ['a_remove_output'] %}
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+														{% endif %} {% endfor %}
+														&nbsp;
+														<i class="fa fa-file-text-o" title="参考信息" id="info1" style="cursor: pointer;"></i>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['a_remove_output', 'a_bulk_density', 'a_fullness', 'a_storage_time',
+														'a_volumn', 'a_diameter', 'a_height'] %}
+														<div class="row">
+															<div class="col-md-12">
+																{% if constant.symbol != "" %}
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																{% else %}
+																<div class="col-md-3">{{ constant.name }}</div>
+																{% endif %}
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" value="{{ constant.default_value }}" readonly="true" id="{{ constant.name_eng }}" type="text"
+																		 name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" value="{{ constant.default_value }}" id="{{ constant.name_eng }}" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
-									<br>
-									{% endif %}
-									{% endfor %}
 								</div>
 							</div>
-						</div>
-						<!-- 参考信息 -->
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel  margin-right30">
-								<div class="first-title"><i class="fa fa-file" aria-hidden="true"></i><span class="margin-left15">参考信息</span></div>
-								<div class="panel-body">
-									<span class="second-title">国内生物质发电项目现行烟气排放标准：</span><br><br>
-									<span class="flow-text">颗粒物的排放浓度＜30mg/Nm3。</span><br><br>
-									<span class="second-title">除灰渣系统的工艺原则：灰渣分除、干湿分排方案。</span><br><br>
-									<span class="flow-text">1、除灰系统：省煤器和旋风除尘器＋布袋除尘器干灰采用正压浓相气力输送方式清除；</span><br>
-									<span class="flow-text">2、除渣系统：锅炉底渣采用干式机械除渣方式清除。</span>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel margin-right30">
-								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存页面信息</span></div>
-								<div class="row text-center">
-									<button type="button" id="submitData" class="btn btn-success btn-lg"><i class="fa fa-check-circle"></i>保存</button>
-									<button type="button" class="btn btn-danger  btn-lg"><i class="fa fa-trash-o"></i>清空</button>
-								</div>
-								<br> <br>
-							</div>
-
 						</div>
 					</div>
-				</div>
+			</form>
+			<!-- END MAIN CONTENT -->
 			</div>
 		</div>
-		<!-- END MAIN CONTENT -->
 	</div>
-	<!-- END MAIN -->
-	{% endblock %} {% endblock %}
+</div>
+			<!-- END MAIN -->
+			{% endblock %} {% endblock %}

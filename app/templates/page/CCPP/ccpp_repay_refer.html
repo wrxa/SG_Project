@@ -1,0 +1,264 @@
+{% extends "bootstrap/base.html" %} {% block title %}EnergyIsland{% endblock %} {% block head %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<!-- script -->
+<script src="{{ url_for('static', filename='assets/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery/bootstrap.min.js')}}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/chartist/js/chartist.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/scripts/klorofil-common.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/scripts/common.js') }}"></script>
+
+
+<!-- VENDOR CSS -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/font-awesome/css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/linearicons/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/chartist/css/chartist-custom.css') }}">
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
+<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/demo.css') }}">
+<!-- GOOGLE FONTS -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+<!-- ICONS -->
+<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/title.png') }}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='assets/img/title.png') }}"> {% endblock %} {% block content %} {% block page_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/component/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/component/normalize.css') }}">
+<script src="{{ url_for('static', filename='js/blower-loading.js') }}"></script>
+<!-- MAIN -->
+<style>
+	/* .divcss5-b{ margin-left:10px;overflow-y:scroll; overflow-x:scroll;}  */
+
+	/* css注释说明：设置第二个盒子与第一个盒子间距为10px，并设置了横纵滚动条样式 */
+
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: -81px 0px 10px 15px;
+	}
+
+	.panel2 {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+</style>
+<!-- style="cursor: pointer;margin-left:1140px;margin-top: 0px;" -->
+<div class="col-md-5" style="cursor: pointer;margin-left:15px;margin-top: 15px;">
+	<a type="button" class="btn btn-success" href="javascript:window.opener=null;window.open('','_self');window.close();">
+		<i class="fa fa-reply"></i>返回</a>
+</div>
+<div class="main" style="background-color:#DFDFDE;">
+	<!-- MAIN CONTENT -->
+
+	<div class="main-content">
+
+		<div class="container-fluid">
+			<!-- <h3 class="page-title">CCPP-方案列表</h3> -->
+			</br>
+			</br>
+			</br>
+			</br>
+			<div class="row full-width-style">
+				<div class="st-content">
+					<div class="st-content-inner">
+						<div class="col-md-12">
+							<!-- END INPUT GROUPS -->
+							<!-- ALERT MESSAGES -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="page-title">
+										还款计划参考信息
+									</h3>
+								</div>
+								<div class="" style="overflow-x:auto">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>
+													<div style="width:50px" align="center">项目</div>
+												</th>
+												<th>
+													<div style="width:110px" align="center">第1年</div>
+												</th>
+												<th>
+													<div style="width:80px" align="center">第2年</div>
+												</th>
+												<th>
+													<div style="width:140px" align="center">第3年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第4年</div>
+												</th>
+												<th>
+													<div style="width:165px" align="center">第5年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第6年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第7年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第8年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第9年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第10年</div>
+												</th>
+												<th>
+													<div style="width:180px" align="center">第11年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第12年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第13年</div>
+												</th>
+												<th>
+													<div style="width:130px" align="center">第14年</div>
+												</th>
+												<th>
+													<div style="width:130px" align="center">第15年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第16年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第17年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第18年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第19年</div>
+												</th>
+												<th>
+													<div style="width:120px" align="center">第20年</div>
+												</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">经营现金流</td>
+												<td align="center">{{ economicInputData.cash_flow_1 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_2 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_3 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_4 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_5 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_6 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_7 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_8 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_9 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_10 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_11 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_12 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_13 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_14 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_15 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_16 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_17 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_18 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_19 }}</td>
+												<td align="center">{{ economicInputData.cash_flow_20 }}</td>
+											</tr>
+
+
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">借款余额</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_1 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_2 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_3 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_4 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_5 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_6 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_7 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_8 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_9 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_10 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_11 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_12 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_13 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_14 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_15 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_16 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_17 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_18 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_19 }}</td>
+												<td align="center">{{ economicInputData.bank_loan_balance_20 }}</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+
+								</div>
+							</div>
+							<!-- END ALERT MESSAGES -->
+						</div>
+
+						<div class="col-md-12">
+							<div class="panel2">
+								<div class="">
+									<table class="table table-striped">
+										<thead>
+
+											<tr>
+
+												<th class="col-md-6">
+													<div  align="center">项目</div>
+												</th>
+												<th class="col-md-6">
+													<div  align="center">结果值</div>
+												</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">动态投资回收期-年(不含建设期)</td>
+												<td align="center">{{ economicInputData.dynamic_recovery_period }}</td>
+
+											</tr>
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">总投资收益率</td>
+												<td align="center">{{ economicInputData.total_return_investment }}</td>
+
+											</tr>
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">NPV-万元</td>
+												<td align="center">{{ economicInputData.npv }}</td>
+
+											</tr>
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">全投资内部收益率</td>
+												<td align="center">{{ economicInputData.irr }}</td>
+
+											</tr>
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">全投资收益率</td>
+												<td align="center">{{ economicInputData.full_investment_yield }}</td>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

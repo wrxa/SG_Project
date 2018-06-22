@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/GPG/GPG_EquipmentList.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+	}
+
+	/* 下面三行是css部分 */
+	.float-right {
+		width: 125px;
+		height: 170px;
+		background: #96c03d;
+		position: absolute;
+		left: 93%;
+		top: 220px;
+		/* margin-left: 500px; */
+		z-index: 800;
+		overflow: hidden;
+	}
+	.top-bread {
+    margin-top: -91px;
+}
+	.float-right a {
+		width: 96%;
+		margin: 0 2%;
+		height: 24px;
+		line-height: 24px;
+		text-align: center;
+		display: block;
+		border-bottom: 1px solid #fff;
+		font-size: 12px;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.float-right a:hover {
+		background: #87c00c;
+		transition: all 0.3s linear;
+		-webkit-transition: all 0.3s linear;
+		-mos-transition: all 0.3s linear;
+		-o-transition: all 0.3s linear;
+	}
+</style>
+
+<script>
+	var lanren = {
+		navFast: function () {
+			var defaultTop = (window.screen.height - $('.float-right').height()) / 2 - 100; //默认顶部保持上下居中，再往上去100像素
+			$(window).scroll(function () {
+				var offsetTop = defaultTop + $(window).scrollTop() + 'px';
+				$('.float-right').animate({ top: offsetTop },
+					{
+						duration: 600,	//滑动速度
+						queue: false    //此动画将不进入动画队列
+					});
+			});
+		}
+	};
+	lanren.navFast();
+</script>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			</br></br></br>
+			
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">	
+				<div class="col-md-12 breadcrumb-fix show">	
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						
+						<ol class="cd-breadcrumb triangle" >
+							<li><a class="pre" href="#" data-page="15">上一页</a></li>
+							<li><a id="gpg1" onclick="return false;" href="{{ url_for('gpg_view.GPG_Questionnaire',id=session.planId) }}">煤气发电需求调查表</a></li>
+							<li><a id="gpg2" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerOfPTS') }}">锅炉计算</a></li>
+							<li><a id="gpg3" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineOfPTS') }}">汽轮机计算</a></li>
+							<li><a id="gpg4" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerAuxiliaries') }}">锅炉辅机系统</a></li>
+							<li><a id="gpg5" onclick="return false;" href="{{ url_for('gpg_view.GPG_SmokeAirCalculate') }}">烟、风量计算</a></li> 
+							<li><a id="gpg6" onclick="return false;" href="{{ url_for('gpg_view.GPG_GasAirSystem') }}" >烟风系统</a></li>      
+							<!--<li><a href="{{ url_for('gpg_view.GPG_SmokeResistance') }}">烟阻力</a></li>
+							<li><a href="{{ url_for('gpg_view.GPG_WindResistance') }}">风阻力</a></li>-->
+							<li><a id="gpg7" onclick="return false;" href="{{ url_for('gpg_view.GPG_SteamWaterPipe') }}">汽水管道</a></li>
+							<li><a id="gpg8" onclick="return false;" href="{{ url_for('gpg_view.GPG_CirculatingWaterSystem') }}">循环水系统</a></li>
+							<li><a id="gpg9" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineAuxiliarySystem') }}">汽机辅机系统</a></li>
+							<li><a id="gpg10" href="{{ url_for('gpg_view.GPG_EconomicIndicators') }}">主要技术经济指标</a></li>
+							<li><a id="gpg11" onclick="return false;" href="{{ url_for('gpg_view.GPG_Image') }}">图纸一览</a></li>
+							<li class="ableClick"><a id="gpg12" onclick="return false;" href="#">设备清单</a></li>
+							<li><a class="next" href="#">下一页</a></li>
+						</ol>					
+					</div>	
+																				
+					<div class="col-md-1 breadcrumb-submit" >
+						<button id="saveEquipmentList" name="saveEquipmentList" type="button" class="btn show-success" style="margin-left:-30px">
+							<i class="fa fa-check-circle"></i> 保存 
+						</button>
+					</div>
+
+					<div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="selectTemplate" class="btn btn-success btn-sm">
+							选择模板
+						</button>
+					</div>
+
+				</div>
+				</br></br></br></br>				
+			</div>
+
+			<form id="GPG_EquipmentListForm">
+				<div class="row full-width-style width-little">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<!-- <div class="col-md-2" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">设备清单</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">设备清单</a>
+											</li>
+										</ul>
+									</nav>
+								</div> -->
+
+								<!-- <div class="col-md-12" style="left:6%; width:95%"> -->
+								<div class="col-md-12">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">设备清单</span>
+													</div>
+													<div class="panel-body">
+														<!-- <div class="col-md-12">
+															<div class="col-md-2">
+																<button id="getEquipmentList" name="getEquipmentList" type="button" class="btn show-primary">
+																	<i class="fa fa-check-circle"></i> 设备清单一览 
+																</button>
+															</div>
+														</div> -->
+
+														<!-- <input type="hidden" id="deviceID" value="" /> -->
+														<!-- <label name="deviceID" id="deviceID" style="display:none;"></label> -->
+														
+														<!-- 设备一览的Div -->																
+														<div id="EquipmentListDiv" class="col-md-12">
+															<div style="height:800px; overflow-x:auto; overflow-y:auto">																	
+																<table id="equipment_list_table" class="table table-striped equipment_list">
+																	<thead>
+																		<tr id="top">
+																			<th style="width:8%; text-align:center">序号</th>
+																			<th style="width:20%; text-align:center">名称</th>
+																			<th style="width:26%; text-align:center">型号及规格</th>
+																			<th style="width:8%; text-align:center">单位</th>
+																			<th style="width:8%; text-align:center">数量</th>
+																			<th style="width:22%; text-align:center">备注</th>
+																			<th style="width:8%; text-align:center">操作</th>
+																		</tr>
+																	</thead>
+
+																	<tbody>
+																	</tbody>
+																</table>
+															</div>
+														</div>																
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!--代码部分begin-->
+	<div class="float-right">
+		<a href="#title_1heat">热机部分</a>
+		<a href="#title_2elec">电气部分</a>
+		<a href="#title_3control">热控部分</a>
+		<a href="#title_cctv">工业电视监控系统</a>
+		<a href="#title_7water">水工部分</a>
+		<a href="#title_8chemistry-water">化学水系统</a>
+		<a href="#top">↑</a>
+	</div>
+</div>
+{% endblock %} {% endblock %}

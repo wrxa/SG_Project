@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/ccpp/ccppChimneyCalculate.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">CCPP-烟囱</div> --></br></br></br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+								<li>
+										<a class="pre" href="#" data-page="15">上一页</a>
+									</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp1" href="{{ url_for('ccppviews.toCcppQuestionnaire') }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp2" href="{{ url_for('ccppviews.toCcppParaResearch') }}">余热锅炉参数设置</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp3" href="{{ url_for('ccppviews.toCcppTurbineParaResearch') }}">汽轮机参数设置</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp4" href="{{ url_for('ccppviews.toSelectGasTurbine') }}">方案列表</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp5" href="{{ url_for('ccppviews.toCcppCalculate') }}">余热锅炉系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp6" href="{{ url_for('ccppviews.toCcppTurbine') }}">汽轮机系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp7" href="{{ url_for('ccppviews.biomassTurbineAuxiliary') }}">汽机辅机</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp8" href="{{ url_for('ccppviews.toCcppCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp9" href="{{ url_for('ccppviews.biomassWaterTreatment') }}">化学水系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp10" href="{{ url_for('ccppviews.allformschemes') }}">方案一览</a>
+							</li>
+							<li class="ableClick">
+								<a id="ccpp11" href="#">烟囱</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp12" href="{{ url_for('ccppviews.toCcppEconomic') }}">经济性分析</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp13" href="{{ url_for('ccppviews.toccppimg') }}">方案图</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp14" href="{{ url_for('ccppviews.toCcppEquipment') }}">设备列表</a>
+							</li>
+							<li class="current">
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success btn-sm">
+							<i class="fa fa-check-circle"></i> 保  存 </button>
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+
+			<form id="ccppChimneyCalculateForm">
+				<div class="row full-width-style">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">烟囱</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">烟囱计算</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">烟 囱</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-primary">冬季</span> -->
+																		<input class="form-control" type="text" id="{{ constant.name_eng }}"  value="{{ constant.defaultvalue }}" name="{{ constant.name_eng }}"
+																		{% if constant.permission != 'true' %} 
+																		readonly 
+																		{% endif %}
+																		>
+																		<span class="input-group-addon show-primary">{{ constant.unit }}</span>
+																	</div>
+					
+																</div>
+															</div>
+														</div>
+														</br>
+														{% endfor %}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+</div>
+	{% endblock %} {% endblock %}

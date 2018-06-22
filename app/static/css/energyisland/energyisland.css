@@ -1,0 +1,564 @@
+.panel {
+    background-color: #DFDFDE;
+}
+.page-title{
+    font-size: 21px;
+    text-align: center;
+    margin: 20px;
+    font-weight: bold;
+}
+
+.cen-head{
+    text-align: center;
+    padding-bottom: 0px;
+}
+
+.first-title{
+    font-size: 20px;
+    margin: 20px 0px 20px 22px
+}
+
+.second-title{
+    font-size: 17px;
+    margin: 0px 0px 8px 25px;
+    padding-left: 12px;
+    border-left: 4px solid #337ab7;
+    font-weight: bold;
+}
+
+.third-title{
+    font-size: 15px;
+    margin: 0px 0px 8px 25px;
+    padding-left: 12px;
+    font-weight: bold;
+}
+
+.third-title-center{
+    font-size: 16px;
+    margin: 10px 0px 18px 0px;
+    font-weight: bold;
+    padding-top: 0px;
+    text-align: center;
+}
+
+.margin-left15{
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.panel .panel-body{
+    /* padding-top: 40px; */
+     /* margin-left: 4%;
+    margin-right: 4%; */
+}
+
+.panel .margin-top-20{
+    margin-top: 20px;
+}
+
+.margin-right30{
+    margin-right: -30px;
+}
+
+.show-primary{
+    color: #fff;
+    background-color: #337ab7;
+}
+
+.show-success{
+    color: #fff;
+    background-color: #41B314;
+}
+
+.show-danger{
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.show-warning{
+    color: #fff;
+    background-color: #e4cb10;
+}
+
+.show-warning2{
+    color: rgb(14, 0, 0);
+    background-color: #e4cb10;
+}
+
+.show-info{
+    color: #fff;
+    background-color: #5bc0de;
+}
+
+.show-info2{
+    color: rgb(14, 2, 2);
+    background-color: #5bc0de;
+}
+
+.width-size{
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.width-size1{
+padding-left: 18px;
+padding-right: 19px;
+}
+
+.show-unit{
+    background-color: #BCBCBC;
+}
+
+/* .show-unit:hover{
+    width: 0px; 
+    background-color: rgb(188, 188, 188);
+} */
+
+[data-toggle='popover']{
+    cursor: pointer;
+    /* color: #337ab7; */
+}
+
+img{
+    cursor: pointer;  
+    transition: all 0.6s;  
+}
+
+.expand-img:hover{  
+    -webkit-transform:scale(1.3);
+    -moz-transform:scale(1.3);
+}
+
+.design-boder {
+    border: solid 0.18em #337ab7;
+}
+
+.check-boder {
+    border: solid 0.18em #41B314;
+}
+
+.unit-boder {
+    border: solid 0.18em #BCBCBC;
+}
+
+.design-color{
+    font-size: 15px;
+    font-weight: bold;
+    color: #337ab7;
+    margin-left: -15px;
+}
+
+.check-color{
+    font-size: 15px;
+    font-weight: bold;
+    color: #41B314;
+    margin-left: -5px;
+}
+
+.info-dc{
+    position: relative;
+    width: 200px;
+    left: 72%;
+    margin-top: -45px;
+    margin-bottom: 25px;
+}
+
+.asterisk-style{
+    font-size:5px;
+    margin-right:8px;
+    margin-left: 10px;
+}
+
+.square-design{
+    color:#337ab7;
+    font-weight:bold;
+    font-size:13px
+}
+
+.square-check{
+    color:#41B314;
+    font-weight:bold;
+    font-size:13px;
+    margin-left:8px;
+}
+
+
+
+/* 面包屑样式 */
+
+a {
+    color: #96c03d;
+    text-decoration: none;
+  }
+  
+  .cd-breadcrumb, .cd-multi-steps {
+    width: 100%;
+    padding: 0.5em 1em;
+    background-color: #edeff0;
+    border-radius: .25em;
+  }
+  .cd-breadcrumb:after, .cd-multi-steps:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .cd-breadcrumb li, .cd-multi-steps li {
+    display: inline-block;
+    float: left;
+    margin: 0.5em 0;
+  }
+  .cd-breadcrumb li::after, .cd-multi-steps li::after {
+    /* this is the separator between items */
+    display: inline-block;
+    content: '\00bb';
+    margin: 0 .6em;
+    color: #959fa5;
+  }
+  .cd-breadcrumb li:last-of-type::after, .cd-multi-steps li:last-of-type::after {
+    /* hide separator after the last item */
+    display: none;
+  }
+  .cd-breadcrumb li > *, .cd-multi-steps li > * {
+    /* single step */
+    display: inline-block;
+    font-size: 1.4rem;
+    color: #2c3f4c;
+  }
+  .cd-breadcrumb li.current > *, .cd-multi-steps li.current > * {
+    /* selected step */
+    color: #96c03d;
+  }
+  .no-touch .cd-breadcrumb a:hover, .no-touch .cd-multi-steps a:hover {
+    /* steps already visited */
+    color: #96c03d;
+  }
+  .cd-breadcrumb.custom-separator li::after, .cd-multi-steps.custom-separator li::after {
+    /* replace the default arrow separator with a custom icon */
+    content: '';
+    height: 16px;
+    width: 16px;
+    background: url(../img/cd-custom-separator.svg) no-repeat center center;
+    vertical-align: middle;
+  }
+  .cd-breadcrumb.custom-icons li > *::before, .cd-multi-steps.custom-icons li > *::before {
+    /* add a custom icon before each item */
+    content: '';
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin-right: .4em;
+    margin-top: -2px;
+    background: url(../img/cd-custom-icons-01.svg) no-repeat 0 0;
+    vertical-align: middle;
+  }
+  .cd-breadcrumb.custom-icons li:not(.current):nth-of-type(2) > *::before, .cd-multi-steps.custom-icons li:not(.current):nth-of-type(2) > *::before {
+    /* change custom icon using image sprites */
+    background-position: -20px 0;
+  }
+  .cd-breadcrumb.custom-icons li:not(.current):nth-of-type(3) > *::before, .cd-multi-steps.custom-icons li:not(.current):nth-of-type(3) > *::before {
+    background-position: -40px 0;
+  }
+  .cd-breadcrumb.custom-icons li:not(.current):nth-of-type(4) > *::before, .cd-multi-steps.custom-icons li:not(.current):nth-of-type(4) > *::before {
+    background-position: -60px 0;
+  }
+  .cd-breadcrumb.custom-icons li.current:first-of-type > *::before, .cd-multi-steps.custom-icons li.current:first-of-type > *::before {
+    /* change custom icon for the current item */
+    background-position: 0 -20px;
+  }
+  .cd-breadcrumb.custom-icons li.current:nth-of-type(2) > *::before, .cd-multi-steps.custom-icons li.current:nth-of-type(2) > *::before {
+    background-position: -20px -20px;
+  }
+  .cd-breadcrumb.custom-icons li.current:nth-of-type(3) > *::before, .cd-multi-steps.custom-icons li.current:nth-of-type(3) > *::before {
+    background-position: -40px -20px;
+  }
+  .cd-breadcrumb.custom-icons li.current:nth-of-type(4) > *::before, .cd-multi-steps.custom-icons li.current:nth-of-type(4) > *::before {
+    background-position: -60px -20px;
+  }
+  @media only screen and (min-width: 768px) {
+    .cd-breadcrumb, .cd-multi-steps {
+      padding: 0 1.2em;
+    }
+    .cd-breadcrumb li, .cd-multi-steps li {
+      margin: 1.2em 0;
+    }
+    .cd-breadcrumb li::after, .cd-multi-steps li::after {
+      margin: 0 1em;
+    }
+    .cd-breadcrumb li > *, .cd-multi-steps li > * {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .cd-breadcrumb.triangle {
+      /* reset basic style */
+      background-color: transparent;
+      padding: 0;
+    }
+    .cd-breadcrumb.triangle li {
+      position: relative;
+      padding: 0;
+      margin: 4px 4px 4px 0;
+    }
+    .cd-breadcrumb.triangle li:last-of-type {
+      margin-right: 0;
+    }
+    .cd-breadcrumb.triangle li > * {
+      position: relative;
+      padding: 0.7em .8em 0.7em 2.5em;
+      color: #2c3f4c;
+      background-color: #DFDFDE;
+      /* the border color is used to style its ::after pseudo-element */
+      border-color: #DFDFDE;
+    }
+    .cd-breadcrumb.triangle li.current > * {
+      /* selected step */
+      color: #ffffff;
+      background-color: #96c03d;
+      border-color: #96c03d;
+    }
+    .cd-breadcrumb.triangle li:first-of-type > * {
+      padding-left: 1.6em;
+      border-radius: .25em 0 0 .25em;
+    }
+    .cd-breadcrumb.triangle li:last-of-type > * {
+      padding-right: 1.6em;
+      border-radius: 0 .25em .25em 0;
+    }
+    .no-touch .cd-breadcrumb.triangle a:hover {
+      /* steps already visited */
+      color: #ffffff;
+      background-color: #2c3f4c;
+      border-color: #2c3f4c;
+    }
+    .cd-breadcrumb.triangle li::after, .cd-breadcrumb.triangle li > *::after {
+      /* 
+          li > *::after is the colored triangle after each item
+          li::after is the white separator between two items
+      */
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 100%;
+      content: '';
+      height: 0;
+      width: 0;
+      /* 48px is the height of the <a> element */
+      border: 17px solid transparent;
+      border-right-width: 0;
+      border-left-width: 17px;
+    }
+    .cd-breadcrumb.triangle li::after {
+      /* this is the white separator between two items */
+      z-index: 1;
+      -webkit-transform: translateX(4px);
+      -moz-transform: translateX(4px);
+      -ms-transform: translateX(4px);
+      -o-transform: translateX(4px);
+      transform: translateX(4px);
+      border-left-color: #ffffff;
+      /* reset style */
+      margin: 0;
+    }
+    .cd-breadcrumb.triangle li > *::after {
+      /* this is the colored triangle after each element */
+      z-index: 2;
+      border-left-color: inherit;
+    }
+    .cd-breadcrumb.triangle li:last-of-type::after, .cd-breadcrumb.triangle li:last-of-type > *::after {
+      /* hide the triangle after the last step */
+      display: none;
+    }
+    .cd-breadcrumb.triangle.custom-separator li::after {
+      /* reset style */
+      background-image: none;
+    }
+    .cd-breadcrumb.triangle.custom-icons li::after, .cd-breadcrumb.triangle.custom-icons li > *::after {
+      /* 50px is the height of the <a> element */
+      border-top-width: 25px;
+      border-bottom-width: 25px;
+    }
+  
+   
+  }
+  
+.breadcrumb-fix{
+    position:fixed;
+    z-index:999;
+    /* width: calc(100% - 230px); */
+    /* width：100%; */
+    background-color:#F3F5F8;
+    margin-top: 20px;
+}
+
+.breadcrumb-div{
+  margin-bottom: -10px;
+  margin-left: -15px;
+  margin-top: 13px;
+}
+
+.breadcrumb-submit{
+    margin-top:15px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.default-color{
+  color:indianred;
+}
+/* ----------------------------------------------------------- */
+.parentnode
+{
+    /* border: 1px solid #808080; */
+    width: 280px;
+    position: relative;
+    text-align: left;
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09); */
+    display: inline-block;
+    vertical-align: top;
+}
+ 
+.parentnode_noe
+{
+    width: 100%;
+    padding-left: 20px;
+}
+ 
+.parentnode_title
+{
+    width: 100%;
+    padding: 2px;
+}
+ 
+.parentnode_title_fix
+{
+    height: 18px;
+    width: 18px;
+    float: left;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-x: center;
+    background-position-y: center;
+}
+ 
+.parentnode_title_symbol
+{
+    background-image: url("../../static/img/minus.png");
+    /* margin-right: 10px; */
+}
+ 
+    .parentnode_title_symbol:hover
+    {
+        cursor: pointer;
+    }
+ 
+    .parentnode_title_symbol b
+    {
+        display: none;
+    }
+ 
+.parentnode_title_check
+{
+    background-image: url("../static/img/iconUncheckAll.gif");
+}
+ 
+    .parentnode_title_check:hover
+    {
+        cursor: pointer;
+    }
+ 
+    .parentnode_title_check b
+    {
+        display: none;
+    }
+ 
+.parentnode_title_picture
+{
+    width: 24px;
+    height: 24px;
+    background-image: url("../static/img/folderClosed.gif");
+}
+ 
+.parentnode_title_nochildnode_symbol
+{
+    width: 18px;
+}
+ 
+.parentnode_title_nochildnode_picture
+{
+    width: 24px;
+    height: 24px;
+    background-image: url("../static/img/leaf.png");
+}
+ 
+.parentnode_tow
+{
+    padding-left: 20px;
+}
+ 
+.parentnode_three
+{
+    padding-left: 20px;
+}
+
+.pre-read{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* .pre-read-right{
+    border-left: 2px solid #808080;
+} */
+
+
+/* 回到顶部样式 start */
+
+.cd-top {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background: #3287B2 url(../../static/img/cd-top-arrow.svg) no-repeat center 50%;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+    -moz-transition: opacity .3s 0s, visibility 0s .3s;
+    transition: opacity .3s 0s, visibility 0s .3s;
+}
+.cd-top.cd-is-visible {
+    visibility: visible;
+    opacity: 1;
+  }
+  .cd-top.cd-fade-out {
+    opacity: .5;
+  }
+
+  /* 回到顶部样式 end */
+.btn-margin{
+    cursor: pointer;
+    font-weight: bold;
+    color: #337ab7;
+}
+
+a {
+    cursor: pointer;
+}
+
+.device_list {
+    margin: 20px 0px 20px 22px;
+    border-collapse: collapse;
+    border: 1px solid #aaa;
+}
+
+table.device_list td {
+    vertical-align: text-top;
+    padding: 6px 15px 6px 6px;
+    border: 1px solid #aaa;
+}

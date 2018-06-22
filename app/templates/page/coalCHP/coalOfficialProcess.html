@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/official.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+		.panel {
+			background-color: rgba(255, 255, 255, 0.3);
+			margin: 10px 0px 10px 15px;
+		}
+		.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+	</style>
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">生物质热电联产-公用工程</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li>
+								<a class="pre" href="#" data-page="15">上一页</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp1"  onclick="return false;" href="{{ url_for('coalviews.coalQuestionnaire', id=session.planId) }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp2" onclick="return false;" href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp3" onclick="return false;" href="{{ url_for('coalviews.coalSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp4" onclick="return false;" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp5" onclick="return false;" href="{{ url_for('coalviews.coalTurbineAuxiliary') }}">汽机辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp6" onclick="return false;" href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp7" onclick="return false;" href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp8" onclick="return false;" href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp9" onclick="return false;" href="{{ url_for('coalviews.coalChimney') }}">烟囱</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp10" onclick="return false;" href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="coalchp11" onclick="return false;" href="{{ url_for('coalviews.coalChemicalWater') }}">化学水系统</a>
+							</li>
+							<li>
+								<a id="coalchp12"  onclick="return false;" href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li class="ableClick">
+								<a id="coalchp13" href="#">公用工程</a>
+							</li>
+							<li>
+								<a id="coalchp14"  onclick="return false;" href="{{ url_for('coalviews.coalHeatSupply') }}">采暖供热</a>
+							</li>
+							<li>
+								<a id="coalchp15" onclick="return false;" href="{{ url_for('coalviews.coalEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="coalchp16" onclick="return false;" href="{{ url_for('coalviews.outputImage') }}">出图</a>
+							</li>
+							<li>
+								<a id="coalchp17" href="{{ url_for('coalviews.coalEquipmentList') }}">设备参数</a>
+							</li>
+							<li class="current">
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
+
+					<div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+			<form id="coalchpOfficial">
+				<div class="row full-width-style">
+					<div class="st-content">
+
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">公用工程</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="o-1">锅炉点火系统</a>
+											</li>
+											<li>
+												<a class="left-select hide" href="#" id="o-2">循环流化床点火油系统</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="o-3">启动锅炉系统</a>
+											</li>
+										</ul>
+									</nav>
+
+								</div>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<!-- 锅炉点火系统 -->
+											<div class="col-md-12 o-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-free-code-camp" aria-hidden="true"></i>
+														<span class="margin-left15">锅炉点火系统</span>
+													</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">炉型</div>
+																<div class="col-md-8">
+																		<div>
+																				<input class="form-control" type="text" name="o_boiler_type">
+																			</div>
+																	<div>
+																		<!-- <select class="form-control" id="boilerType" name="o_boiler_type">
+																			<option value="0" selected></option>
+																			<option value="1">层燃炉（包括联合炉排炉、水冷振动炉排炉）</option>
+																			<option value="2">循环流化床锅炉（含差速床）</option>
+																		</select> -->
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">点火方式</div>
+																<div class="col-md-8">
+																	<div>
+																		<input class="form-control" type="text" id="fireWay" name="o_fire_way" value="0#轻柴油点火（一般为床下点火）">
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+												</div>
+												<div class="panel">
+														<div class="first-title">
+															<i class="fa fa-circle-o" aria-hidden="true"></i>
+															<span class="margin-left15">循环流化床（含差速床）点火油系统</span>
+														</div>
+														<div class="second-title">日用油罐</div>
+														<div class="panel-body">
+															{% for constant in constants %} {% if constant.name_eng in ['o_oil_can'] %}
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<input class="form-control" type="text" name="{{ constant.name_eng }}">
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<br> {% endif %} {% endfor %}
+														</div>
+														<div class="second-title">供油泵</div>
+														<div class="panel-body">
+															{% for constant in constants %} {% if constant.name_eng in ['o_oil_pump', 'o_oil_pump_pressure'] %}
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			{% if constant.disable == "T" %}
+																			<input class="form-control" type="text" readonly="true" name="{{ constant.name_eng }}"> {% else %}
+																			<input class="form-control" type="text" name="{{ constant.name_eng }}"> {% endif %}
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<br> {% endif %} {% endfor %}
+														</div>
+													</div>
+											</div>
+											<!-- 循环流化床（含差速床）点火油系统 -->
+											
+											<!-- 锅炉补给水系统 -->
+											<div class="col-md-12 o-3 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-send-o" aria-hidden="true"></i>
+														<span class="margin-left15">启动锅炉系统</span>
+														{% for constant in constants %} {% if constant.name_eng in ['o_steam_parameter'] %}
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+														{% endif %} {% endfor %}
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['o_steam_parameter', 'o_steam_volumn'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}</div>
+																<div class="col-md-8">
+																	<div>
+																		<input class="form-control" type="text" name="{{ constant.name_eng }}">
+																	</div>
+																</div>
+																{% if constant.remark != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">燃料类型</div>
+																<div class="col-md-8">
+																	<div>
+																		<select class="form-control" id="fuelType" name="o_fuel_type">
+																			<option value="0" selected></option>
+																			<option value="1">燃油/燃气</option>
+																			<option value="2">电加热 </option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br> {% for constant in constants %} {% if constant.name_eng in ['o_install_way'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}</div>
+																<div class="col-md-8">
+																	<div>
+																		<input class="form-control" type="text" value="快装式" name="{{ constant.name_eng }}">
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+
+											<!-- 参考信息 -->
+											<!--<div class="col-md-12">-->
+											<!-- INPUT GROUPS -->
+											<!--<div class="panel  margin-right30">
+								<div class="first-title"><i class="fa fa-file" aria-hidden="true"></i><span class="margin-left15">参考信息</span></div>
+								<div class="panel-body">
+									<span class="second-title">锅炉补给水系统工艺路线：</span><br><br>
+									<span class="flow-text">（1）预处理 + 两级反渗透（两级RO） + 填充床电渗析（EDI）处理；</span><br>
+									<span class="flow-text">（2）预处理 + 两级反渗透（两级RO） + 混床处理。</span>
+								</div>
+							</div>
+						</div>-->
+
+											<!--<div class="col-md-12">-->
+											<!-- INPUT GROUPS -->
+											<!--<div class="panel margin-right30">
+								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存页面信息</span></div>
+								<div class="row text-center">
+									<button type="button" id="submitData" class="btn btn-success btn-lg"><i class="fa fa-check-circle"></i>保存</button>
+									<button type="button" id="clearData" class="btn btn-danger  btn-lg"><i class="fa fa-trash-o"></i>清空</button>
+								</div>
+								<br> <br>
+							</div>
+
+						</div>-->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</form>
+			<!-- END MAIN CONTENT -->
+			</div>
+			<!-- END MAIN -->
+			{% endblock %} {% endblock %}

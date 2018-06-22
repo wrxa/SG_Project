@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/image.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+</style>
+<form id='imgOutput'></form>
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">主要技术经济指标</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li class="current">
+								<a class="pre" href="#" data-page="20">上一页</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp1"  href="{{ url_for('coalviews.coalQuestionnaire', id=session.planId) }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp2" href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp3" href="{{ url_for('coalviews.coalSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp4" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp5" href="{{ url_for('coalviews.coalTurbineAuxiliary') }}">汽机辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp6" href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp7" href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp8" href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp9" href="{{ url_for('coalviews.coalChimney') }}">烟囱</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp10" href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="coalchp11" href="{{ url_for('coalviews.coalChemicalWater') }}">化学水系统</a>
+							</li>
+							<li>
+								<a id="coalchp12"  href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a id="coalchp13" href="{{ url_for('coalviews.coalOfficialProcess') }}">公用工程</a>
+							</li>
+							<li>
+								<a id="coalchp14"  href="{{ url_for('coalviews.coalHeatSupply') }}">采暖供热</a>
+							</li>
+							<li>
+								<a id="coalchp15" href="{{ url_for('coalviews.coalEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li class="ableClick">
+								<a id="coalchp16" href="#">出图</a>
+							</li>
+							<li>
+								<a id="coalchp17" href="{{ url_for('coalviews.coalEquipmentList') }}">设备参数</a>
+							</li>
+							<li>
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
+
+					<div class="col-md-1 breadcrumb-submit">
+						
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+				<div class="row full-width-style">
+					<div class="st-content">
+						<div class="col-md-12" style="left:0%;">
+							<div class="module-content">
+								<br>
+								<div class="imglist">
+									<center>
+										{% for obj in imglist %}
+										<img src="{{obj["netPath"]}}" title="{{obj["chineseName"]}}{{loop.index}}" style="width:70%;">
+										<p><font size="4">{{obj.chineseName}}{{loop.index}}</font></p>
+										<br><br>
+										{% endfor %}
+									</center>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a title="回到顶部" href="#top" class="cd-top">Top</a>
+		{% endblock %} {% endblock %}

@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/energyisland/device_select.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energyisland/energyisland.css') }}">
+
+<style>
+    /* .divcss5-b{ margin-left:10px;overflow-y:scroll; overflow-x:scroll;}  */
+
+    /* css注释说明：设置第二个盒子与第一个盒子间距为10px，并设置了横纵滚动条样式 */
+
+    .checkboxlabel {
+        background-color: #DFDFDE;
+        border-color: #DFDFDE;
+    }
+</style>
+
+<!-- MAIN -->
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <br>
+            <br>
+            <br>
+            <div class="row" style="margin-top: -41px;">
+                <div class="col-md-12 breadcrumb-fix show">
+                    <div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+                        <ol class="cd-breadcrumb triangle">
+                            <li>
+                                <a class="pre" href="#" data-page="5">上一页</a>
+                            </li>
+                            <li>
+                                <a id="energyisland1" href="{{ url_for('energy_island.energyisland_questionnaire') }}">能源互联岛需求调研表</a>
+                            </li>
+                            <li class="current">
+                                <a id="energyisland2" href="#">运行设备选择</a>
+                            </li>
+                            <li>
+                                <a id="energyisland3" href="{{ url_for('energy_island.energyisland_graph', id=session.planId) }}">运行曲线图</a>
+                            </li>
+                            <li>
+                                <a id="energyisland4" href="{{ url_for('energy_island.energyisland_specification', id=session.planId) }}">指标</a>
+                            </li>
+                            <li>
+                                <a class="next" href="#">下一页</a>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-md-2 breadcrumb-submit">
+                        <button type="button" id="submitData" class="btn btn-success">
+                            <i class="fa fa-check-circle"></i> 保存 </button>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="page-title">选择设备列表</div>
+            <div class="row col-md-12">
+                <div class="first-title">
+                    <i class="fa fa-building" aria-hidden="true"></i>
+                    <span class="margin-left15">设备列表1</span>
+                </div>
+                <table class="device_list table table-striped" id="device_list">
+                    <thead>
+                        <tr>
+                            <td align="center">
+                                <div style="width:50px">序号</div>
+                            </td>
+                            <td align="center">
+                                <div style="width:100px">设备名称</div>
+                            </td>
+                            <td align="center">
+                                <div>设备参数</div>
+                            </td>
+                            <td align="center">
+                                <div style="width:50px">选择</div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for out_resource_detail in out_resource_detail_list %}
+                        <tr>
+                            <td align="center">{{ loop.index }}</td>
+                            <td align="center">{{ out_resource_detail['name'] }}</td>
+                            <td>{{ out_resource_detail['para'] }}</td>
+                            <td align="center">
+                                <label class="btn checkboxlabel">
+                                    <input type="checkbox" name="checkboxname" , value="{{ out_resource_detail['name'] }}" />
+                                </label>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="first-title">
+                    <i class="fa fa-building" aria-hidden="true"></i>
+                    <span class="margin-left15">设备列表2</span>
+                    <br/>
+                    <label class="btn checkboxlabel">
+                        溴化锂制冷
+                        <input type="checkbox" , name="checkboxname2" value="1" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        电制冷
+                        <input type="checkbox" , name="checkboxname2" value="2" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        热泵
+                        <input type="checkbox" , name="checkboxname2" value="3" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        燃气轮机
+                        <input type="checkbox" , name="checkboxname2" value="4" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        内燃机
+                        <input type="checkbox" , name="checkboxname2" value="5" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        光伏
+                        <input type="checkbox" , name="checkboxname2" value="6" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        空压站
+                        <input type="checkbox" , name="checkboxname2" value="7" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        锅炉
+                        <input type="checkbox" , name="checkboxname2" value="8" id="boilercheckbox"/>
+                    </label>
+                    <label class="btn checkboxlabel">
+                        电储能
+                        <input type="checkbox" , name="checkboxname2" value="9" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        市电
+                        <input type="checkbox" , name="checkboxname2" value="10" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        水蓄能、冰蓄能
+                        <input type="checkbox" , name="checkboxname2" value="11" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        风电
+                        <input type="checkbox" , name="checkboxname2" value="12" />
+                    </label>
+                    <label class="btn checkboxlabel">
+                        污水
+                        <input type="checkbox" , name="checkboxname2" value="13" />
+                    </label>
+                </div>
+
+                <div class="col-md-12" id="boilerdata">
+                    <div class="module-content">
+                        <div class="main clearfix">
+                            <div class="col-md-6 q-1">
+                                <div class="col-md-12 panel">
+                                    <div class="col-md-12 first-title">
+                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                        <span class="margin-left15">热水锅炉--燃气</span>
+                                        <label class="btn checkboxlabel">
+                                            选择<input type="checkbox" , name="checkboxname3" value="1" data-toggle="collapse" style="cursor: pointer;" data-target="#rsglrq"/>
+                                        </label>
+                                    </div>
+                                    <form id="rsglrqForm">
+                                        <div class="panel-body collapse" id="rsglrq">
+                                            {% for boilerdata in boilerlist11 %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-3">{{boilerdata['name']}}</div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <!-- <span class="input-group-addon show-primary">冬季</span> -->
+                                                            <input class="form-control" type="text" id="" name="{{boilerdata['name']}}" value="{{boilerdata['value']}}">
+                                                            <span class="input-group-addon show-primary">{{boilerdata['unit']}}</span>
+                                                        </div>
+                                                    </div>
+                                                    {% if boilerdata.remark != "" %}
+                                                    <div class="col-md-1">
+                                                        <i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="left" data-content="{{ boilerdata['remark'] }}"></i>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            </br>
+                                            {% endfor %}
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-12 panel">
+                                    <div class="col-md-12 first-title">
+                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                        <span class="margin-left15">燃气锅炉--蒸汽</span>
+                                        <label class="btn checkboxlabel">
+                                            选择<input type="checkbox" , name="checkboxname3" value="2"  data-toggle="collapse" style="cursor: pointer;" data-target="#rqglzq"/>
+                                        </label>
+                                    </div>
+                                    <form id="rqglzqForm">
+                                        <div class="panel-body collapse" id="rqglzq">
+                                            {% for boilerdata in boilerlist13 %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-3">{{boilerdata['name']}}</div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <!-- <span class="input-group-addon show-primary">冬季</span> -->
+                                                            <input class="form-control" type="text" id="" name="{{boilerdata['name']}}" value="{{boilerdata['value']}}">
+                                                            <span class="input-group-addon show-primary">{{boilerdata['unit']}}</span>
+                                                        </div>
+                                                    </div>
+                                                    {% if boilerdata.remark != "" %}
+                                                    <div class="col-md-1">
+                                                        <i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="left" data-content="{{ boilerdata['remark'] }}"></i>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            </br>
+                                            {% endfor %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 q-1">
+                                <div class="col-md-12 panel">
+                                    <div class="col-md-12 first-title">
+                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                        <span class="margin-left15">余热锅炉计算--热水锅炉</span>
+                                        <label class="btn checkboxlabel">
+                                            选择<input type="checkbox" , name="checkboxname3" value="3" data-toggle="collapse" style="cursor: pointer;" data-target="#yrglrsgl"/>
+                                        </label>
+                                    </div>
+                                    <form id="yrglrsglForm">
+                                        <div class="panel-body collapse" id="yrglrsgl">
+                                            {% for boilerdata in boilerlist14 %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-3">{{boilerdata['name']}}</div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <!-- <span class="input-group-addon show-primary">冬季</span> -->
+                                                            <input class="form-control" type="text" id="" name="{{boilerdata['name']}}" value="{{boilerdata['value']}}">
+                                                            <span class="input-group-addon show-primary">{{boilerdata['unit']}}</span>
+                                                        </div>
+                                                    </div>
+                                                    {% if boilerdata.remark != "" %}
+                                                    <div class="col-md-1">
+                                                        <i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="left" data-content="{{ boilerdata['remark'] }}"></i>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            </br>
+                                            {% endfor %}
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-12 panel">
+                                    <div class="col-md-12 first-title">
+                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                        <span class="margin-left15">余热锅炉计算--单压蒸汽锅炉</span>
+                                        <label class="btn checkboxlabel">
+                                            选择<input type="checkbox" , name="checkboxname3" value="4" data-toggle="collapse" style="cursor: pointer;" data-target="#yrgldyzqgl"/>
+                                        </label>
+                                    </div>
+                                    <form id="yrgldyzqglForm">
+                                        <div class="panel-body collapse" id="yrgldyzqgl">
+                                            {% for boilerdata in boilerlist15 %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-3">{{boilerdata['name']}}</div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group">
+                                                            <!-- <span class="input-group-addon show-primary">冬季</span> -->
+                                                            <input class="form-control" type="text" id="" name="{{boilerdata['name']}}" value="{{boilerdata['value']}}">
+                                                            <span class="input-group-addon show-primary">{{boilerdata['unit']}}</span>
+                                                        </div>
+                                                    </div>
+                                                    {% if boilerdata.remark != "" %}
+                                                    <div class="col-md-1">
+                                                        <i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="left" data-content="{{ boilerdata['remark'] }}"></i>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            </br>
+                                            {% endfor %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

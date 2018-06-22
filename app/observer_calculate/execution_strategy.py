@@ -4,12 +4,15 @@ from coalchp_furnace_calculation import FSteamEnthalpy, \
         FWaterEnthalpy, ASaturationPressure, FSaturatedWaterEnthalpy, \
         ASaturationPressureAfter
 from ..models import CoalCHPFurnaceCalculation
+
+'''
 from GPG_Calculation import GPG_Boiler_superheated_steam_enthalpy, \
     GPG_Boiler_feedwater_enthalpy, GPG_Boiler_air_enthalpy, \
     GPG_Boiler_saturation_water_temperature, \
-    GPG_Boiler_saturation_water_enthalpy
-
-
+    GPG_Boiler_saturation_water_enthalpy, \
+    GPG_TurbineAuxiliary_saturation_temperature,\
+    GPG_TurbineAuxiliary_condensate_water_enthalpy
+'''
 
 class Furnace_calculationBefore(ExecuteStrategy):
 
@@ -43,7 +46,37 @@ class NeedsAfter(ExecuteStrategy):
         self.creatSubscriber(furnace)
         CoalCHPFurnaceCalculation.insert_furnace_calculation(furnace)
 
+'''
+class GPG_TurbineAuxiliary_condensate_water_enthalpy_EXEC(ExecuteStrategy):
 
+    def creatSubscriber(self, val):
+        calculationObserver = CalculationObserver()
+        calculationObserver.register(GPG_TurbineAuxiliary_condensate_water_enthalpy())
+        calculationObserver.writeNewPost(val)
+
+    def specialCalculation(self, oldObj, form):
+        val = {
+            'condenser_pressure': form.get('condenser_pressure'),
+            'supercooling_degree': form.get('supercooling_degree'),
+            'dbResult': oldObj
+        }
+        self.creatSubscriber(val)
+        return val['dbResult']
+
+class GPG_TurbineAuxiliary_saturation_temperature_EXEC(ExecuteStrategy):
+
+    def creatSubscriber(self, val):
+        calculationObserver = CalculationObserver()
+        calculationObserver.register(GPG_TurbineAuxiliary_saturation_temperature())
+        calculationObserver.writeNewPost(val)
+
+    def specialCalculation(self, oldObj, form):
+        val = {
+            'condenser_pressure': form.get('condenser_pressure'),
+            'dbResult': oldObj
+        }
+        self.creatSubscriber(val)
+        return val['dbResult']
 
 class GPG_Boiler_superheated_steam_enthalpy_EXEC(ExecuteStrategy):
 
@@ -123,3 +156,4 @@ class GPG_Boiler_saturation_water_enthalpy_EXEC(ExecuteStrategy):
         }
         self.creatSubscriber(val)
         return val['dbResult']
+'''

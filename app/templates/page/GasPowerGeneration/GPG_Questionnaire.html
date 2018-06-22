@@ -1,503 +1,608 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
+<!-- 页面js -->
+<script src="{{ url_for('static', filename='js/modernizr.custom.js') }}"></script>
+<script src="{{ url_for('static', filename='js/classie.js') }}"></script>
 <script src="{{ url_for('static', filename='js/GPG/GPG_Questionnaire.js') }}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
 <!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+</style>
+
 <div class="main">
 	<!-- MAIN CONTENT -->
-	<div class="main-content width88">
+	<div class="main-content">
 		<div class="container-fluid">
-			<div class="page-title">煤气发电-需求调查表</div>
-			<div class="row">
+			<!-- <div class="page-title">煤气发电-需求调查表</div> -->
+			</br></br></br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show show">
 
-				<div class="col-md-12">
-
-					<div class="panel">
-						<div class="page-title">煤气发电需求调查表</div>
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle" >
+							<li><a class="pre" href="#" data-page="5">上一页</a></li>
+							<li class="ableClick"><a id="gpg1" href="#">煤气发电需求调查表</a></li>
+							<li><a id="gpg2" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerOfPTS') }}">锅炉计算</a></li>
+							<li><a id="gpg3" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineOfPTS') }}">汽轮机计算</a></li>
+							<li><a id="gpg4" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerAuxiliaries') }}">锅炉辅机系统</a></li>
+							<li><a id="gpg5" onclick="return false;" href="{{ url_for('gpg_view.GPG_SmokeAirCalculate') }}">烟、风量计算</a></li> 
+							<li><a id="gpg6" onclick="return false;" href="{{ url_for('gpg_view.GPG_GasAirSystem') }}" >烟风系统</a></li>      
+							<!--<li><a href="{{ url_for('gpg_view.GPG_SmokeResistance') }}">烟阻力</a></li>
+							<li><a href="{{ url_for('gpg_view.GPG_WindResistance') }}">风阻力</a></li>-->
+							<li><a id="gpg7" onclick="return false;" href="{{ url_for('gpg_view.GPG_SteamWaterPipe') }}">汽水管道</a></li>
+							<li><a id="gpg8" onclick="return false;" href="{{ url_for('gpg_view.GPG_CirculatingWaterSystem') }}">循环水系统</a></li>
+							<li><a id="gpg9" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineAuxiliarySystem') }}">汽机辅机系统</a></li>
+							<li><a id="gpg10" onclick="return false;" href="{{ url_for('gpg_view.GPG_EconomicIndicators') }}">主要技术经济指标</a></li> 
+							<li><a id="gpg11" onclick="return false;" href="{{ url_for('gpg_view.GPG_Image') }}">图纸一览</a></li>
+							<li><a id="gpg12" onclick="return false;" href="{{ url_for('gpg_view.GPG_EquipmentList') }}">设备清单</a></li>
+							<li class="current"><a class="next" href="#">下一页</a></li>
+						</ol>
 					</div>
+
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="GPG_SaveQuestionnaire" class="btn btn-success"><i class="fa fa-check-circle"></i>  保 存 </button>
+					</div>
+
 				</div>
+				</br></br></br></br>
 			</div>
 
 			<form id="GPG_questionnaire">
-			<div class="row">
-				<div class="row col-md-6">
-					<!-- 煤气参数 -->
-					<div class="col-md-12">
-						<!-- INPUT GROUPS -->
-						<div class="panel">
-							<div class="first-title"></div>
-							<div class="row">
-							</div>
+				<div class="row full-width-style">				
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">需求调查表</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">项目信息</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-2">蒸汽</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-3">煤气参数</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-4">元素成分</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-5">大气、地质条件</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-6">能源介质条件</a>
+											</li>
+											<!-- <li>
+												<a class="left-select" href="#" id="q-7">其他资料需求</a>
+											</li> -->
+										</ul>
+									</nav>
+								</div>
 
-							<div>
-								<div class="second-title"> 煤气参数</div>
-
-								{% for constant in constants %} 
-								{% if constant.name_eng in ['surplus_gas_bfg', 'bfg_gas_temperature', 'bfg_gas_pressure', 'bfg_gas_calorific_value', 
-								'surplus_gas_ldg', 'ldg_gas_temperature', 'ldg_gas_pressure', 'ldg_gas_calorific_value',
-								'surplus_gas_cog', 'cog_gas_temperature', 'cog_gas_pressure', 'cog_gas_calorific_value',
-								'provide_steam_amount', 'provide_steam_pressure'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-5">{{ constant.name }}</div>
-											<div class="col-md-6">
-												<div class="input-group">
-													<span class="input-group-addon show-primary">数值</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<div class="panel">
+													<div class="first-title"><i class="fa fa-building" aria-hidden="true"></i><span class="margin-left15">项目信息</span></div>
+													<div class="panel-body">
+														<div class="col-md-8">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">项目名称</span>
+																<input class="form-control" type="text" name="plan_name" {% if session.planId %} readonly="true" {% endif %}>
+															</div>
+														</div>
+														<div class="col-md-8 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size">单位名称</span>
+																<input class="form-control" type="text" readonly="true" name="company_name">
+															</div>
+														</div>
+														<div class="col-md-12 margin-top-20">
+															<div class="input-group">
+																<span class="input-group-addon show-primary width-size1">項目所在地</span>
+																<input class="form-control" type="text" readonly="true" name="company_location">
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
-											{% if constant.remark != "" %}
-											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
-												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}"></i></div>
-											{% endif %}
-										</div>
-									</div>
-								</div>
-								{% endif %}
-								{% endfor %}
 
-								{% for constant in constants %} 
-								{% if constant.name_eng in ['h2_content', 'co_content', 'ch4_content', 
-								'c2h4_content', 'c3h8_content', 'c4h10_content', 'n2_content', 
-								'o2_content', 'co2_content', 'h2s_content', 'cmhn_content'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-5">{{ constant.name }}</div>
-											<div class="col-md-6">
-												<div class="input-group">
-													<span class="input-group-addon show-primary">含量</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+											<div class="col-md-12 q-2 hide">
+												<div class="panel">
+													<div class="first-title"><i class="fa fa-steam" aria-hidden="true"></i><span class="margin-left15">蒸汽</span></div>
+													<div class="col-md-12 third-title-center"> 
+														<div class="col-md-3"> 蒸汽来源
+														</div>
+														<div class="col-md-3"> 流量（t/h） 										
+														</div>
+														<div class="col-md-3"> 压力（MPa）										
+														</div>
+														<div class="col-md-3"> 温度（℃） 										
+														</div>
+													</div> 
+						
+													{% for constant in constants %} 
+													{% if constant.name_eng in ['converter', 'heat_recovery', 'furnace', 'steam_other'] %}
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">{{ constant.name }} &nbsp;
+																{% if constant.calculate != "" %}
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="{{ constant.calculate }}">
+																</i>													
+																{% endif %}											
+															</div>
+															
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="{{ constant.name_eng }}_flow" name="{{ constant.name_eng }}_flow"/>
+																</div>
+															</div>
+						
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="{{ constant.name_eng }}_pressure" name="{{ constant.name_eng }}_pressure"/>
+																</div>
+															</div>
+						
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="{{ constant.name_eng }}_temperature" name="{{ constant.name_eng }}_temperature"/>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													{% endfor %}
+													<div class="panel-body third-title">
+														注：冬季采暖用汽约14.05t/h，冬夏季洗浴用蒸汽约4.5t/h。									
+													</div>
 												</div>
 											</div>
-											{% if constant.remark != "" %}
-											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
-												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.remark }}"></i></div>
-											{% endif %}
-										</div>
+
+											<div class="col-md-12 q-3 hide">						
+												<div class="panel">
+													<!--<div class="second-title"> 煤气参数</div>-->
+													<div class="first-title"><i class="fa fa-fire" aria-hidden="true"></i><span class="margin-left15">煤气参数</span></div>
+													<div class="col-md-12 third-title-center"> 
+														<div class="col-md-3"> 项目
+														</div>
+														<div class="col-md-3"> 额定										
+														</div>
+														<div class="col-md-3"> 最大										
+														</div>
+														<div class="col-md-3"> 最小 										
+														</div>
+													</div>
+						
+													{% for constant in constants %} 
+													{% if constant.name_eng in ['surplus_gas_bfg','surplus_gas_ldg','surplus_gas_cog',
+													'bfg_gas_temperature','ldg_gas_temperature','cog_gas_temperature',
+													'bfg_gas_pressure','ldg_gas_pressure','cog_gas_pressure',
+													'bfg_gas_calorific_value','ldg_gas_calorific_value','cog_gas_calorific_value',
+													'provide_steam_amount','provide_steam_pressure'] %}
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">
+																{% if constant.name_eng in ['provide_steam_amount','provide_steam_pressure'] %}
+																<i class="fa fa-question-circle-o"  title="备注"  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="无则不需要填写">
+																</i>													
+																{% endif %}	
+																{{ constant.name }} ({{ constant.unit }})										
+															</div>
+															
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+																</div>
+															</div>
+						
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="{{ constant.name_eng }}_max" name="{{ constant.name_eng }}_max"/>
+																</div>
+															</div>
+						
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="{{ constant.name_eng }}_min" name="{{ constant.name_eng }}_min"/>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													{% endfor %}
+													
+												</div>
+											</div>
+
+											<div class="col-md-12 q-4 hide">						
+												<div class="panel">
+													<div class="first-title"><i class="fa fa-pie-chart" aria-hidden="true"></i><span class="margin-left15">元素成分</span></div>				
+													<div class="col-md-12 third-title-center"> 
+														<div class="col-md-3"> 组分										
+														</div>
+														<div class="col-md-3"> 高炉煤气·含量										
+														</div>
+														<div class="col-md-3"> 转炉煤气·含量										
+														</div>
+														<div class="col-md-3"> 焦炉煤气·含量										
+														</div>
+													</div>
+						
+													{% for constant in constants %} 
+													{% if constant.name_eng in ['co_content', 'co2_content','ch4_content',
+													'n2_content','h2_content','o2_content',
+													'h2o_content','cmhn_content','h2s_content',
+													'low_heating','high_heating'] %}
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">{{ constant.name }}									
+															</div>
+															
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="furnace_{{ constant.name_eng }}" name="furnace_{{ constant.name_eng }}"/>
+																</div>
+															</div>
+						
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="converter_{{ constant.name_eng }}" name="converter_{{ constant.name_eng }}"/>
+																</div>
+															</div>
+						
+															<div class="col-md-3">
+																<div class="input-group">
+																	<input class="form-control" type="text" 
+																	id="coke_{{ constant.name_eng }}" name="coke_{{ constant.name_eng }}"/>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													{% endfor %}							
+												</div>
+											</div>
+
+											<div class="col-md-12 q-5 hide">
+												<div class="panel">
+													<div class="first-title"><i class="fa fa-map-marker" aria-hidden="true"></i><span class="margin-left15">大气、地质条件</span></div>
+													<div class="col-md-12 third-title-center"> 
+														<div class="col-md-3"> 项目							
+														</div>
+														<div class="col-md-2"> 大气温度 (℃)									
+														</div>
+														<div class="col-md-2"> 大气压力 (kPa)										
+														</div>
+														<div class="col-md-2"> 相对湿度(%)									
+														</div>
+														<div class="col-md-2"> 室外风速 (m/s)									
+														</div>
+													</div>
+													{% for constant in constants %} 
+													{% if constant.name_eng in ['a_summer', 'a_year','a_winter',
+													'a_cold','a_hot','extreme_h','extreme_l'] %}
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">{{ constant.name }}									
+															</div>
+															
+															<div class="col-md-2">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->
+																	<input class="form-control" type="text" 
+																	{% if constant.name_eng == 'a_year'%}
+																	id="atmosphere_temperature_a" name="atmosphere_temperature_a"
+																	{% else %}
+																	id="atmosphere_temperature_{{ constant.name_eng }}" name="atmosphere_temperature_{{ constant.name_eng }}"
+																	{% endif %}										
+																	/>
+																</div>
+															</div>
+							
+															<div class="col-md-2">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->
+																	<input class="form-control" type="text" 
+																	{% if constant.name_eng == 'a_year'%}
+																	id="atmosphere_pressure_a" name="atmosphere_pressure_a"
+																	{% else %}
+																	id="atmosphere_pressure_{{ constant.name_eng }}" name="atmosphere_pressure_{{ constant.name_eng }}"
+																	{% endif %}
+																	/>
+																</div>
+															</div>
+							
+															<div class="col-md-2">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->
+																	<input class="form-control" type="text" 
+																	{% if constant.name_eng == 'a_year'%}
+																	id="relative_humidity_a" name="relative_humidity_a"
+																	{% else %}
+																	id="relative_humidity_{{ constant.name_eng }}" name="relative_humidity_{{ constant.name_eng }}"
+																	{% endif %}
+																	/>
+																</div>
+															</div>
+							
+															<div class="col-md-2">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->
+																	<input class="form-control" type="text" 
+																	{% if constant.name_eng == 'a_year'%}
+																	id="outside_wind_speed_a" name="outside_wind_speed_a"
+																	{% else %}
+																	id="outside_wind_speed_{{ constant.name_eng }}" name="outside_wind_speed_{{ constant.name_eng }}"
+																	{% endif %}
+																	/>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endif %}
+													{% endfor %}
+							
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">
+																海拔高度
+															</div>
+															<div class="col-md-8">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->	
+																	<input class="form-control" type="text"
+																	id="above_sea_level" name="above_sea_level"
+																	/>
+																	<span class="input-group-addon show-unit">m</span>
+																</div>						
+															</div>
+														</div>
+													</div>
+							
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">
+																抗震设防烈度
+															</div>
+															<div class="col-md-8">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->	
+																	<input class="form-control" type="text"
+																	id="seismic_fortification_intensity_a" name="seismic_fortification_intensity_a"
+																	/>
+																	<span class="input-group-addon show-unit">度</span>
+																</div>						
+															</div>
+														</div>
+													</div>
+							
+													<div class="panel-body">
+														<div class="col-md-12" style="text-align:center">
+															<div class="col-md-3">
+																设计地震基本加速度
+															</div>
+															<div class="col-md-8">
+																<div class="input-group">
+																	<!--<span class="input-group-addon show-primary">数值</span>-->	
+																	<input class="form-control" type="text"
+																	id="design_earthquake_acceleration" name="design_earthquake_acceleration"
+																	/>
+																	<span class="input-group-addon show-unit">g</span>
+																</div>						
+															</div>
+														</div>
+													</div>
+							
+												</div>
+											</div>
+
+											<div class="col-md-12 q-6 hide">
+												<div class="panel">
+													<div class="first-title"></div>
+													<div class="row">
+													</div>
+						
+													<div>
+														<div class="first-title"><i class="fa fa-superpowers" aria-hidden="true"></i><span class="margin-left15">能源介质条件</span></div>
+						
+														<div class="second-title">冷却水</div>
+						
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['water_pressure', 'water_temperature', 'water_ph', 
+														'water_suspended_matter', 'water_cl'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-5">{{ constant.name }}</div>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<!--<span class="input-group-addon show-primary">数值</span>-->
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																	</div>
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.remark }}"></i></div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+						
+														<div class="second-title">氮气
+															<i class="fa fa-question-circle-o" title="要求：" data-container="body" 
+																data-toggle="popover" data-placement="right" data-content="无油、无水">
+															</i>
+														</div>
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['nitrogen_purity', 'nitrogen_pressure', 
+														'nitrogen_temperature'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-5">{{ constant.name }}</div>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<!--<span class="input-group-addon show-primary">数值</span>-->
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																	</div>
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.remark }}"></i></div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+						
+														<div class="second-title">压缩空气
+															<i class="fa fa-question-circle-o" title="要求：" data-container="body" 
+																data-toggle="popover" data-placement="right" data-content="无油、无水">
+															</i>
+														</div>
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['compressed_air_pressure', 'compressed_air_temperature'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-5">{{ constant.name }}</div>
+																	<div class="col-md-6">
+																		<div class="input-group">
+																			<!--<span class="input-group-addon show-primary">数值</span>-->
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																	</div>
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
+																		data-container="body" data-toggle="popover" data-placement="right" 
+																		data-content="{{ constant.remark }}"></i></div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+						
+														<div class="second-title">高压电源</div>
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['grid_voltage', 'max_short_circuit_capacity', 'voltage_other'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-5">{{ constant.name }}</div>
+																	<div class="col-md-6">
+																		{% if constant.name_eng == 'voltage_other' %}
+																		<input class="form-control" type="text" 
+																		id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" />
+																		{% else %}
+																		<div class="input-group">
+																			<!--<span class="input-group-addon show-primary">数值</span>-->
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"/>
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+														</div>
+														{% endif %}
+														{% endfor %}
+																							
+													</div>
+						
+												</div>
+											</div>
+
+											<!-- <div class="col-md-12 q-7 hide">
+												<div class="panel">
+													<div class="first-title"></div>
+													<div class="row">
+													</div>	
+													
+													<div class="first-title"><i class="fa fa-info-circle" aria-hidden="true"></i><span class="margin-left15">其他资料需求</span></div>						
+													<div class="panel-body">
+														<table class="table table-bordered">
+															<tbody>
+																<tr class="success">
+																	<td class="third-title">名称</td>
+																	<td class="third-title">备注</td>
+																</tr class="success">
+																{% for constant in constants %} 
+																{% if constant.name_eng in ['factory_location_elevation', 
+																'dielectric_position_height_caliber_route', 'water_quality_analysis_report',
+																'cooling_tower'] %}
+																<tr class="success">
+																	<td>{{ constant.name }}</td>
+																	<td>{{ constant.remark }}</td>
+																</tr>
+																{% endif %}
+						
+																{% if constant.name_eng in ['project_approval_eia'] %}
+																<tr class="success">
+																	<td>{{ constant.name }}</td>
+																	<td>
+																		<input type="hidden" id="project_approval_eia" name="project_approval_eia" />
+																		<label class="radio-inline">
+																			<input id="project_approval_eia_yes" type="radio">
+																			<span><i></i>有</span>
+																		</label>
+																		<label class="radio-inline">
+																			<input id="project_approval_eia_no" type="radio" checked>
+																			<span><i></i>无</span>
+																		</label>
+																	</td>
+																</tr>
+																{% endif %}
+																{% endfor %}
+															</tbody>
+														</table>
+													</div>							
+												</div>
+											</div> -->
+										</div>	
 									</div>
 								</div>
-								{% endif %}
-								{% endfor %}
-								
 							</div>
-
 						</div>
 					</div>
-
-					<!-- 其他资料需求 -->
-					<div class="col-md-12">
-						<!-- INPUT GROUPS -->
-						<div class="panel">
-							<div class="first-title"></div>
-							<div class="row">
-							</div>
-	
-							<div>
-								<div class="second-title"> 其他资料需求</div>
-									
-								<div class="panel-body">
-									<table class="table table-bordered">
-										<tbody>
-											<tr class="success">
-												<td class="third-title">名称</td>
-												<td class="third-title">备注</td>
-											</tr class="success">
-											{% for constant in constants %} 
-											{% if constant.name_eng in ['factory_location_elevation', 
-											'dielectric_position_height_caliber_route', 'water_quality_analysis_report',
-											'cooling_tower'] %}
-											<tr class="success">
-												<td>{{ constant.name }}</td>
-												<td>{{ constant.remark }}</td>
-											</tr>
-											{% endif %}
-
-											{% if constant.name_eng in ['project_approval_eia'] %}
-											<tr class="success">
-												<td>{{ constant.name }}</td>
-												<td>
-													<label class="radio-inline">
-														<input id="project_approval_eia_yes" name="project_approval_eia" type="radio">
-														<span><i></i>有</span>
-													</label>
-													<label class="radio-inline">
-														<input id="project_approval_eia_no" name="project_approval_eia" type="radio" checked>
-														<span><i></i>无</span>
-													</label>
-												</td>
-											</tr>
-											{% endif %}
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
-	
-						</div>
-					</div>
-
 				</div>
-
-				<div class="col-md-6">
-
-					<div class="row">
-
-						<div class="col-md-12">
-							<div class="panel">
-								<div class="first-title"><i class="fa fa-building" aria-hidden="true"></i><span class="margin-left15">单位信息</span></div>
-								<div class="panel-body">
-									<div class="col-md-6">
-										<div class="input-group">
-											<span class="input-group-addon show-primary width-size">单位名称</span>
-											<input class="form-control" type="text" name="company_name">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="input-group">
-											<span class="input-group-addon show-primary width-size">选择已有方案</span>
-											<select class="form-control" id="knownPlan">
-												{% for plan in plans %} 
-												{% for company in companys %} 
-												{% if plan.company_id==company.id and plan.module_id=='gasPowerGeneration' %}
-												<option value="{{ plan.id }}">{{ company.company_name }}</option>
-												{% endif %}
-												{% endfor %}
-												{% endfor %}
-												<option value="0" selected="selected">请选择</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-12 margin-top-20">
-										<div class="input-group">
-											<span class="input-group-addon show-primary width-size1">項目所在地</span>
-											<input class="form-control" type="text" name="company_location">
-										</div>
-									</div>
-	
-	
-								</div>
-							</div>
-						</div>
-
-						<!-- 大气、地质条件 -->
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel">
-								<!--<div class="first-title"><i class="fa fa-fire" aria-hidden="true"></i><span class="margin-left15">煤气参数</span></div>-->
-								<div class="first-title"></div>
-								<div class="row">
-								</div>
-	
-								<div>
-									<div class="second-title"> 大气、地质条件</div>
-	
-									<div class="third-title">大气温度</div>
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="atmosphere_temperature_h" name="atmosphere_temperature_h">
-														<span class="input-group-addon show-unit">℃</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="atmosphere_temperature_a" name="atmosphere_temperature_a">
-														<span class="input-group-addon show-unit">℃</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="atmosphere_temperature_l" name="atmosphere_temperature_l">
-														<span class="input-group-addon show-unit">℃</span>
-													</div>	
-												</div>
-											</div>
-										</div>
-									</div>
-	
-									<div class="third-title">大气压力</div>
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="atmosphere_pressure_h" name="atmosphere_pressure_h">
-														<span class="input-group-addon show-unit">kPa</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="atmosphere_pressure_a" name="atmosphere_pressure_a">
-														<span class="input-group-addon show-unit">kPa</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="atmosphere_pressure_l" name="atmosphere_pressure_l">
-														<span class="input-group-addon show-unit">kPa</span>
-													</div>	
-												</div>
-											</div>
-										</div>
-									</div>
-	
-									<div class="third-title">相对湿度</div>
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="relative_humidity_h" name="relative_humidity_h">
-														<span class="input-group-addon show-unit">%</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="relative_humidity_a" name="relative_humidity_a">
-														<span class="input-group-addon show-unit">%</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="relative_humidity_l" name="relative_humidity_l">
-														<span class="input-group-addon show-unit">%</span>
-													</div>	
-												</div>
-											</div>
-										</div>
-									</div>
-	
-									<div class="third-title">室外风速</div>
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" id="outside_wind_speed_h" name="outside_wind_speed_h">
-														<span class="input-group-addon show-unit">m/s</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" id="outside_wind_speed_a" name="outside_wind_speed_a">
-														<span class="input-group-addon show-unit">m/s</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" id="outside_wind_speed_l" name="outside_wind_speed_l">
-														<span class="input-group-addon show-unit">m/s</span>
-													</div>	
-												</div>
-											</div>
-										</div>
-									</div>
-	
-									<div class="third-title">抗震设防烈度</div>
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-danger">最高</span>
-														<input class="form-control" type="text" 
-														id="seismic_fortification_intensity_h" name="seismic_fortification_intensity_h">
-														<span class="input-group-addon show-unit">度</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">平均</span>
-														<input class="form-control" type="text" 
-														id="seismic_fortification_intensity_a" name="seismic_fortification_intensity_a">
-														<span class="input-group-addon show-unit"度</span>
-													</div>	
-												</div>
-												<div class="col-md-4">
-													<div class="input-group">
-														<span class="input-group-addon show-success">最低</span>
-														<input class="form-control" type="text" 
-														id="seismic_fortification_intensity_l" name="seismic_fortification_intensity_l">
-														<span class="input-group-addon show-unit">度</span>
-													</div>	
-												</div>
-											</div>
-										</div>
-									</div>									
-	
-								</div>
-	
-							</div>
-						</div>
-	
-						<!-- 能源介质条件 -->
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel">
-								<div class="first-title"></div>
-								<div class="row">
-								</div>
-	
-								<div>
-									<div class="second-title"> 能源介质条件</div>
-	
-									<div class="third-title">冷却水</div>
-	
-									{% for constant in constants %} 
-									{% if constant.name_eng in ['water_pressure', 'water_temperature', 'water_ph', 
-									'water_suspended_matter', 'water_cl'] %}
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-5">{{ constant.name }}</div>
-												<div class="col-md-6">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													</div>
-												</div>
-												{% if constant.remark != "" %}
-												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
-													data-container="body" data-toggle="popover" data-placement="right" 
-													data-content="{{ constant.remark }}"></i></div>
-												{% endif %}
-											</div>
-										</div>
-									</div>
-									{% endif %}
-									{% endfor %}
-	
-									<div class="third-title">氮气
-										<i class="fa fa-question-circle-o" title="要求：" data-container="body" 
-											data-toggle="popover" data-placement="right" data-content="无油、无水">
-										</i>
-									</div>
-									{% for constant in constants %} 
-									{% if constant.name_eng in ['nitrogen_purity', 'nitrogen_pressure', 
-									'nitrogen_temperature'] %}
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-5">{{ constant.name }}</div>
-												<div class="col-md-6">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													</div>
-												</div>
-												{% if constant.remark != "" %}
-												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
-													data-container="body" data-toggle="popover" data-placement="right" 
-													data-content="{{ constant.remark }}"></i></div>
-												{% endif %}
-											</div>
-										</div>
-									</div>
-									{% endif %}
-									{% endfor %}
-
-									<div class="third-title">压缩空气
-										<i class="fa fa-question-circle-o" title="要求：" data-container="body" 
-											data-toggle="popover" data-placement="right" data-content="无油、无水">
-										</i>
-									</div>
-									{% for constant in constants %} 
-									{% if constant.name_eng in ['compressed_air_pressure', 'compressed_air_temperature'] %}
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-5">{{ constant.name }}</div>
-												<div class="col-md-6">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													</div>
-												</div>
-												{% if constant.remark != "" %}
-												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
-													data-container="body" data-toggle="popover" data-placement="right" 
-													data-content="{{ constant.remark }}"></i></div>
-												{% endif %}
-											</div>
-										</div>
-									</div>
-									{% endif %}
-									{% endfor %}
-
-									<div class="third-title">高压电源</div>
-									{% for constant in constants %} 
-									{% if constant.name_eng in ['grid_voltage', 'max_short_circuit_capacity'] %}
-									<div class="row">
-										<div class="panel-body">
-											<div class="col-md-12">
-												<div class="col-md-5">{{ constant.name }}</div>
-												<div class="col-md-6">
-													<div class="input-group">
-														<span class="input-group-addon show-primary">数值</span>
-														<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
-														<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													</div>
-												</div>
-												{% if constant.remark != "" %}
-												<div class="col-md-1"><i class="fa fa-question-circle-o"  title="备注："  
-													data-container="body" data-toggle="popover" data-placement="right" 
-													data-content="{{ constant.remark }}"></i></div>
-												{% endif %}
-											</div>
-										</div>
-									</div>
-									{% endif %}
-									{% endfor %}
-																		
-								</div>
-	
-							</div>
-						</div>
-
-
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel margin-right30">
-								<div class="first-title"><i class="fa fa-floppy-o" aria-hidden="true"></i><span class="margin-left15">保存调查表信息</span></div>
-								<div class="row text-center">
-									<br><br>
-									<button type="button" class="btn btn-success" id="GPG_SaveQuestionnaire"><i class="fa fa-check-circle"></i>保存</button>
-
-									<!--<button type="button" class="btn btn-warning" disabled="disabled"><i class="fa fa-spinner fa-spin"></i> Loading...</button>-->
-								</div>
-								<br> <br>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
 			</form>
 		</div>
 		<!-- END MAIN CONTENT -->
 	</div>
 	<!-- END MAIN -->
-	{% endblock %} {% endblock %}
+</div>
+{% endblock %} {% endblock %}

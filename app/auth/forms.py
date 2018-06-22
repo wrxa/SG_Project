@@ -15,15 +15,23 @@ class LoginForm(Form):
     password 密码
     remember_me 是否记住密码
     '''
-    # 邮箱
-    email = StringField(
-        u'邮箱',
+    # # 邮箱
+    # email = StringField(
+    #     u'邮箱',
+    #     validators=[
+    #         Required(u'此输入框是必填项'), Regexp(
+    #             '^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$',
+    #             0, u'请输入正确邮箱')
+    #     ],
+    #     render_kw={"placeholder": u"邮箱"})
+    # 用户工号
+    user_eid = StringField(
+        u'工号（默认填：0001）',
         validators=[
-            Required(u'此输入框是必填项'), Regexp(
-                '^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$',
-                0, u'请输入正确邮箱')
+            Required(u'此输入框是必填项'), Regexp('^[0-9]{4,10}$', 0,
+                                          u'请输入4-10位数字')
         ],
-        render_kw={"placeholder": u"邮箱"})
+        render_kw={"placeholder": u"工号"})
     # 密码
     password = PasswordField(u'密码', validators=[Required(u'此输入框是必填项')])
     # 是否下次自动登录

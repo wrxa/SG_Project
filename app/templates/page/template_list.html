@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/templatelist.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<style>
+		tbody tr:nth-child(odd) {
+			background-color: #dff0d8!important;
+		}
+		/* tbody tr:nth-child(even) {
+			background-color: white;
+		} */
+	</style>
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">方案管理</div> -->
+		</br>
+			<div class="row">
+				<div class="col-md-12">
+					<input type="hidden" value="{{moduleName}}" id="moduleName">
+					<input type="hidden" value="{{pageFlag}}" id="pageFlag">
+					<input type="hidden" value="{{current_user.role_id}}" id="roleId">
+					<div class="panel-page" style="background-color:white">
+						<div class="page-title"></br>
+							{% if moduleName== "coalCHP" %}燃煤热电联产{% elif moduleName== "biomassCHP" %}生物质热电联产{% elif moduleName== "CCPP" %}燃气蒸汽联合循环{% elif moduleName== "gasPowerGeneration" %}煤气发电{% endif %}模板管理</div>
+						<div class="row">
+							<div class="col-md-12" style="padding: 30px;">
+								<div class="col-md-3">
+										<div class="input-group">
+											<span class="input-group-addon show-primary"><i class="fa fa-building-o"></i>&nbsp;&nbsp;模板名称</span>
+											<input class="form-control" type="text" id="findByTemplateName">
+											<!-- <select class="form-control" id="findByCompany">
+												{% for plan in plans %} {% for company in companys %} {% if plan.company_id ==company.id %}
+												<option value="{{company.id}}">{{company.company_name}}</option>
+												{% endif %} {% endfor %} {% endfor %}
+												<option value="-1" selected="selected">请选择</option>
+											</select> -->
+										</div>
+								</div>
+								<div class="col-md-3">
+									<div class="input-group">
+										<span class="input-group-addon show-primary"><i class="fa fa-user-o"></i>  创建人</span>
+										<input class="form-control" type="text" id="findByUser">
+										<!-- <select class="form-control" id="findByUser">
+											{% for plan in plans_distinct %} {% for user in users %} {% if plan.user_id ==user.id %}
+											<option value="{{user.id}}">{{user.user_name}}</option>
+											{% endif %} {% endfor %} {% endfor %}
+											<option value="-1" selected="selected">请选择</option>
+										</select> -->
+									</div>
+								</div>
+								<div class="col-md-3">
+									<a type="button" class="btn btn-primary" id="queryTemplate"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;检索模板</a>
+								</div>
+								<div class="col-md-3 text-right">	
+									<a type="button" class="btn btn-primary" href="#" id="templateAdd"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;添加</a>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="text-center" style="width:70%">
+									{% for message in get_flashed_messages(with_categories=True) %}
+									<div class="alert alert-{{ message[0] }}">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										{{ message[1] }}
+									</div>
+									{% endfor %}
+								</div>
+								<div style="padding: 30px;">
+									<table class="table table-striped template-list">
+										<thead>
+											<tr>
+												<th style="width:20%">模板名称</th>
+												<th style="width:20%">创建者</th>
+												<th style="width:20%">创建日</th>
+												<th style="width:20%">修改日</th>
+												<th style="width:20%">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for template in templates %}
+											<tr>
+												<td template-id="{{ template.id }}" id="tempId">{{ template.template_name }}</td>
+												{% for user in users %} {% if template.user_id == user.id %}
+												<td>{{ user.user_name }}</td>
+												{% endif %} {% endfor %}
+												<td>{{ template.template_create_date | dateformat("%Y-%m-%d") }}</td>
+												<td>{{ template.template_update_date | dateformat("%Y-%m-%d") }}</td>
+												<td>
+													<a type="button" href="{{ url_for('main.edittemplate', templateId=template.id) }}" title="编辑模板">
+														<i class="fa fa-pencil-square-o"></i> 
+													</a>
+													<a type="button" class="btn-margin" style="margin-left: 20px;" title="删除模板">
+														<i class="fa fa-trash-o"></i>
+													</a>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/heatSupply.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+		.panel {
+			background-color: rgba(255, 255, 255, 0.3);
+			margin: 10px 0px 10px 15px;
+		}
+		.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+	</style>
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li>
+								<a class="pre" href="#" data-page="15">上一页</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp1"  onclick="return false;" href="{{ url_for('coalviews.coalQuestionnaire', id=session.planId) }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp2" onclick="return false;" href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp3" onclick="return false;" href="{{ url_for('coalviews.coalSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp4" onclick="return false;" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp5" onclick="return false;" href="{{ url_for('coalviews.coalTurbineAuxiliary') }}">汽机辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp6" onclick="return false;" href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp7" onclick="return false;" href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp8" onclick="return false;" href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp9" onclick="return false;" href="{{ url_for('coalviews.coalChimney') }}">烟囱</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp10" onclick="return false;" href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="coalchp11" onclick="return false;" href="{{ url_for('coalviews.coalChemicalWater') }}">化学水系统</a>
+							</li>
+							<li>
+								<a id="coalchp12"  onclick="return false;" href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a id="coalchp13" onclick="return false;" href="{{ url_for('coalviews.coalOfficialProcess') }}">公用工程</a>
+							</li>
+							<li class="ableClick">
+								<a id="coalchp14" href="#">采暖供热</a>
+							</li>
+							<li>
+								<a id="coalchp15" onclick="return false;" href="{{ url_for('coalviews.coalEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="coalchp16" onclick="return false;" href="{{ url_for('coalviews.outputImage') }}">出图</a>
+							</li>
+							<li>
+								<a id="coalchp17" href="{{ url_for('coalviews.coalEquipmentList') }}">设备参数</a>
+							</li>
+							<li class="current">
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
+
+					<div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
+					</div>
+					
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+			<form id="coalchpHeat">
+				<div class="row full-width-style">
+					<div class="st-content">
+
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">采暖供热系统</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="h-1">民用采暖</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="h-2">工业供热</a>
+											</li>
+										</ul>
+									</nav>
+
+								</div>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<!-- 采暖 -->
+											<div class="col-md-12 h-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-circle-o" aria-hidden="true"></i>
+														<span class="margin-left15">民用采暖</span>&nbsp;&nbsp;&nbsp;
+															<i class="fa fa-file-image-o" title="参考信息" id="info1" style="cursor: pointer;"></i>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['heat_area', 'heat_hot_target', 'heat_hot_load', 'turbine_pressure',
+														'heat_turbine_flow'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" type="text" value="{{ constant.default_value }}" readonly="true" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" type="text" value="{{ constant.default_value }}" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<!-- 供热 -->
+											<div class="col-md-12 h-2 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-send-o" aria-hidden="true"></i>
+														<span class="margin-left15">工业供热</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['use_flow', 'steam_supply_rate', 'hot_loss', 'hot_turbine_flow']
+														%}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		{% if constant.disable == "T" %}
+																		<input class="form-control" type="text" value="{{ constant.default_value }}" readonly="true" name="{{ constant.name_eng }}"> {% else %}
+																		<input class="form-control" type="text" value="{{ constant.default_value }}" name="{{ constant.name_eng }}"> {% endif %}
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																{% if constant.calculate != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}"></i>
+																</div>
+																{% endif %}
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+			</form>
+			<!-- END MAIN CONTENT -->
+			</div>
+			<!-- END MAIN -->
+			{% endblock %} {% endblock %}

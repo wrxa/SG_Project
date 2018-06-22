@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/energyisland/addDevice.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 51px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+	}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			</br></br></br>
+			
+			<div class="row" style="margin-top: -41px;">	
+				<div class="col-md-12 breadcrumb-fix show">	
+					<div id="breadcrumbDiv" class="col-md-11 breadcrumb-div">
+						
+						<ol class="cd-breadcrumb triangle" >
+							<li>
+								<a class="pre" href="#" data-page="5">上一页</a>
+							</li>
+							<li class="current"><a id="energyisland2" href="#">能源互联岛-设备管理</a></li>
+							<li>
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+						
+					</div>																
+					<div class="col-md-1 breadcrumb-submit" >
+						<button id="addDeviceBtn" name="addDeviceBtn" type="button" class="btn show-success" style="margin-left:-30px" disabled="false">
+							<i class="fa fa-check-circle"></i> 提交 
+						</button>
+					</div>
+				</div>
+				</br></br></br></br>				
+			</div>
+
+			<form id="energyisland_addDeviceForm">
+				<div class="row full-width-style width-little">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">设备管理</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">设备管理</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:11%; width:90%">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">设备种别</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12">
+															<div class="col-md-2">
+																请选择设备种类
+															</div>
+
+															<div class="col-md-2">
+																<div class="input-group">
+																	<select class="form-control" id="device_class" name="device_class">
+																		<option value="1" selected="selected">溴化锂制冷</option>
+																		<option value="2">电制冷</option>
+																		<option value="3">热泵</option>
+																		<option value="4">燃气轮机</option>
+																		<option value="5">内燃机</option>
+																		<option value="6">光伏</option>
+																		<option value="7">空压站</option>
+																		<option value="9">电储能</option>
+																		<option value="12">风电</option>
+																		<option value="13">污水</option>
+																	</select>
+																</div>
+															</div>	
+															
+															<div class="col-md-2">
+																请选择设备系列
+															</div>
+
+															<div class="col-md-4">
+																<div class="input-group">
+																	<select class="form-control" id="device_type" name="device_type">
+																		<option value='1' selected="selected">蒸汽型溴化锂机组</option>
+																		<option value='2'>高温水大温差型  HDC系列</option>
+																		<option value='3'>低温水大温差型  LCC-**DH系列</option>
+																		<option value='4'>低温水型  LCC系列</option>
+																		<option value='5'>高温水型  HCC系列</option>
+																		<option value='6'>烟气热水补燃型溴化锂吸收式冷温水机</option>
+																		<option value='7'>烟气热水型溴化锂吸收式冷温水机</option>
+																		<option value='8'>烟气双效型溴化锂吸收式冷温水机</option>
+																		<option value='9'>烟气补燃型溴化锂吸收式冷温水机</option>
+																		<option value='10'>溴化锂吸收式直燃三用机</option>
+																	</select>
+																</div>
+															</div>
+
+															<div class="col-md-2">
+																<button id="displayDevice" name="displayDevice" type="button" class="btn show-primary">
+																	<i class="fa fa-check-circle"></i> 设备一览 
+																</button>
+															</div>
+														</div>
+
+														<br/>
+														<br/>
+														<br/>
+
+														<div class="col-md-12">
+															<!-- <div class="col-md-3">
+																请选择设备系列
+															</div> -->
+
+															<!-- <div class="col-md-8">
+																<div class="input-group">
+																	<select class="form-control" id="device_type" name="device_type">
+																		<option value='1' selected="selected">蒸汽型溴化锂机组</option>
+																		<option value='2'>高温水大温差型  HDC系列</option>
+																		<option value='3'>低温水大温差型  LCC-**DH系列</option>
+																		<option value='4'>低温水型  LCC系列</option>
+																		<option value='5'>高温水型  HCC系列</option>
+																		<option value='6'>烟气热水补燃型溴化锂吸收式冷温水机</option>
+																		<option value='7'>烟气热水型溴化锂吸收式冷温水机</option>
+																		<option value='8'>烟气双效型溴化锂吸收式冷温水机</option>
+																		<option value='9'>烟气补燃型溴化锂吸收式冷温水机</option>
+																		<option value='10'>溴化锂吸收式直燃三用机</option>
+																	</select>
+																</div>
+															</div> -->
+
+															<div style="float:right" class="col-md-2">
+																<button id="confirmDeviceType" name="confirmDeviceType" type="button" class="btn show-primary">
+																	<i class="fa fa-check-circle"></i> 添加新设备 
+																</button>
+															</div>
+															
+															<div style="float:right" class="col-md-1">
+															</div>
+															<br/>
+															<br/>
+														</div>
+
+														<!-- <input type="hidden" id="deviceID" value="" /> -->
+														<label name="deviceID" id="deviceID" style="display:none;"></label>
+
+														<!-- 增加新设备的Div -->
+														<div id="addDeviceDiv" class="col-md-12" style="display:none;">
+															<div style="padding: 30px;">
+																<table class="table device_property">
+																	<thead>
+																		<tr>
+																			<th style="width:30%; text-align:center">属性</th>
+																			<th style="width:70%; text-align:center">数值</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														
+														<!-- 设备一览的Div -->																
+														<div id="deviceListDiv" class="col-md-12" style="display:none;">
+															<div class="panel">
+																<div style="height:600px; overflow-x:auto; overflow-y:auto">																	
+																	<table class="table table-striped device_list">
+																		<thead>
+																		</thead>
+
+																		<tbody>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>																
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- CONTENT FLUID -->
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

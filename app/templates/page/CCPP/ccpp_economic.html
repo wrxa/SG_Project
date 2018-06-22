@@ -1,0 +1,2132 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/ccpp/ccppeconomic.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">CCPP-需求调查表</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+								<li>
+										<a class="pre" href="#" data-page="15">上一页</a>
+									</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp1" href="{{ url_for('ccppviews.toCcppQuestionnaire') }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp2" href="{{ url_for('ccppviews.toCcppParaResearch') }}">余热锅炉参数设置</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp3" href="{{ url_for('ccppviews.toCcppTurbineParaResearch') }}">汽轮机参数设置</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp4" href="{{ url_for('ccppviews.toSelectGasTurbine') }}">方案列表</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp5" href="{{ url_for('ccppviews.toCcppCalculate') }}">余热锅炉系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp6" href="{{ url_for('ccppviews.toCcppTurbine') }}">汽轮机系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp7" href="{{ url_for('ccppviews.biomassTurbineAuxiliary') }}">汽机辅机</a>
+							</li>
+							
+							<li class="hide">
+								<a onclick="return false;" id="ccpp8" href="{{ url_for('ccppviews.toCcppCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp9" href="{{ url_for('ccppviews.biomassWaterTreatment') }}">化学水系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp10" href="{{ url_for('ccppviews.allformschemes') }}">方案一览</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp11" href="{{ url_for('ccppviews.toCcppChimneyCalculate') }}">烟囱</a>
+							</li>
+							<li class="ableClick">
+								<a id="ccpp12" href="#">经济性分析</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp13" href="{{ url_for('ccppviews.toccppimg') }}">方案图</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp14" href="{{ url_for('ccppviews.toCcppEquipment') }}">设备列表</a>
+							</li>
+							<li>
+								<a class="next" href="#">下一页</a>
+							</li>
+							
+							
+						</ol>
+					</div>
+					<div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success btn-sm">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
+					</div>
+					<div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="selectTemplate" class="btn btn-success btn-sm">
+							<i class="fa fa-check-circle"></i> 选择模板 </button>
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+
+			<form id="ccppEconomic">
+				<div class="row full-width-style">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">经济性分析</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">能源及供能价格</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-3">收入</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-4">成本</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-5">经济性指标</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-6">投资收益指标</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel margin-right30">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">能源及供能价格</span>
+													</div>
+													<div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#nyprice"> 能源价格</div>
+														<div id="nyprice" class="collapse in">
+														{% for constant in constants %} {% if constant.minmodelid in ['1'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<!-- <span class="input-group-addon show-primary">设计</span> -->
+																			{% if constant.permission == "false" %}
+																			<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+
+																	</div>
+
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																	</div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %} {% endfor %}
+														</div>
+													</div>
+													<div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#gnprice"> 供能价格</div>
+														<div id="gnprice" class="collapse in">
+														{% for constant in constants %} {% if constant.minmodelid in ['2'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+																			<!-- <span class="input-group-addon show-primary">设计</span> -->
+																			{% if constant.permission == "false" %}
+																			<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+
+																	</div>
+
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																	</div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %} {% endfor %}
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 q-2 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel margin-right30">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">税率利率</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.minmodelid in ['3'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																<div class="col-md-8">
+																	<div class="input-group">
+																		<input class="form-control tax-rate" type="text" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}">
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+
+																</div>
+																{% if constant.remark != "" %}
+																<div class="col-md-1">
+																	<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																</div>
+																{% endif %}
+
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 q-3 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title" style="cursor: pointer;" data-toggle="collapse" data-target="#income">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">收入</span>
+													</div>
+													<div id="income" class="collapse in">
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle1"> 第一年</div>
+
+														<div id="incomeyeartitle1" class="collapse in">
+															{% for constant in constants %} {% if constant.minmodelid in ['41'] %}
+		
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> 
+																				{% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> 
+																				{% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle2"> 第二年</div>
+														<div id="incomeyeartitle2" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['42'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle3"> 第三年</div>
+														<div id="incomeyeartitle3" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['43'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle4"> 第四年</div>
+														<div id="incomeyeartitle4" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['44'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle5"> 第五年</div>
+														<div id="incomeyeartitle5" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['45'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle6"> 第六年</div>
+														<div id="incomeyeartitle6" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['46'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle7"> 第七年</div>
+														<div id="incomeyeartitle7" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['47'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle8"> 第八年</div>
+														<div id="incomeyeartitle8" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['48'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle9"> 第九年</div>
+														<div id="incomeyeartitle9" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['49'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle10"> 第十年</div>
+														<div id="incomeyeartitle10" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['410'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle11"> 第十一年</div>
+														<div id="incomeyeartitle11" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['411'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle12"> 第十二年</div>
+														<div id="incomeyeartitle12" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['412'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle13"> 第十三年</div>
+														<div id="incomeyeartitle13" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['413'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle14"> 第十四年</div>
+														<div id="incomeyeartitle14" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['414'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle15"> 第十五年</div>
+														<div id="incomeyeartitle15" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['415'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle16"> 第十六年</div>
+														<div id="incomeyeartitle16" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['416'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle17"> 第十七年</div>
+														<div id="incomeyeartitle17" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['417'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle18"> 第十八年</div>
+														<div id="incomeyeartitle18" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['418'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle19"> 第十九年</div>
+														<div id="incomeyeartitle19" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['419'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#incomeyeartitle20"> 第二十年</div>
+														<div id="incomeyeartitle20" class="collapse">
+															{% for constant in constants %} {% if constant.minmodelid in ['420'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control incomeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 q-4 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title" data-toggle="collapse" style="cursor: pointer;" data-target="#cost">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">成本</span>
+													</div>
+
+													<dev id="cost" class="collapse in">
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle1"> 第一年</div>
+														<div id="costyeartitle1" class="collapse in">
+															{% for constant in constants %} {% if constant.minmodelid in ['51'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle2"> 第二年</div>
+														<div class="collapse" id="costyeartitle2">
+															{% for constant in constants %} {% if constant.minmodelid in ['52'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle3"> 第三年</div>
+														<div class="collapse" id="costyeartitle3">
+															{% for constant in constants %} {% if constant.minmodelid in ['53'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle4"> 第四年</div>
+														<div class="collapse" id="costyeartitle4">
+															{% for constant in constants %} {% if constant.minmodelid in ['54'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle5"> 第五年</div>
+														<div class="collapse" id="costyeartitle5">
+															{% for constant in constants %} {% if constant.minmodelid in ['55'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle6"> 第六年</div>
+														<div class="collapse" id="costyeartitle6">
+															{% for constant in constants %} {% if constant.minmodelid in ['56'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle7"> 第七年</div>
+														<div class="collapse" id="costyeartitle7">
+															{% for constant in constants %} {% if constant.minmodelid in ['57'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle8"> 第八年</div>
+														<div class="collapse" id="costyeartitle8">
+															{% for constant in constants %} {% if constant.minmodelid in ['58'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle9"> 第九年</div>
+														<div class="collapse" id="costyeartitle9">
+															{% for constant in constants %} {% if constant.minmodelid in ['59'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle10"> 第十年</div>
+														<div class="collapse" id="costyeartitle10">
+															{% for constant in constants %} {% if constant.minmodelid in ['510'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle11"> 第十一年</div>
+														<div class="collapse" id="costyeartitle11">
+															{% for constant in constants %} {% if constant.minmodelid in ['511'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle12"> 第十二年</div>
+														<div class="collapse" id="costyeartitle12">
+															{% for constant in constants %} {% if constant.minmodelid in ['512'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle13"> 第十三年</div>
+														<div class="collapse" id="costyeartitle13">
+															{% for constant in constants %} {% if constant.minmodelid in ['513'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle14"> 第十四年</div>
+														<div class="collapse" id="costyeartitle14">
+															{% for constant in constants %} {% if constant.minmodelid in ['514'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle15"> 第十五年</div>
+														<div class="collapse" id="costyeartitle15">
+															{% for constant in constants %} {% if constant.minmodelid in ['515'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle16"> 第十六年</div>
+														<div class="collapse" id="costyeartitle16">
+															{% for constant in constants %} {% if constant.minmodelid in ['516'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle17"> 第十七年</div>
+														<div class="collapse" id="costyeartitle17">
+															{% for constant in constants %} {% if constant.minmodelid in ['517'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle18"> 第十八年</div>
+														<div class="collapse" id="costyeartitle18">
+															{% for constant in constants %} {% if constant.minmodelid in ['518'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle19"> 第十九年</div>
+														<div class="collapse" id="costyeartitle19">
+															{% for constant in constants %} {% if constant.minmodelid in ['519'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#costyeartitle20"> 第二十年</div>
+														<div class="collapse" id="costyeartitle20">
+															{% for constant in constants %} {% if constant.minmodelid in ['520'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control costyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+													</dev>
+												</div>
+											</div>
+											<div class="col-md-12 q-5 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title" data-toggle="collapse" style="cursor: pointer;" data-target="#hkplan">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">还款计划</span>
+													</div>
+													<div class="second-title"></div>
+													<div id="hkplan" class="collapse in">
+														{% for constant in constants %} {% if constant.minmodelid in ['7'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+
+																			{% if constant.permission == "false" %}
+																			<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+
+																	</div>
+
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																	</div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 q-5 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title" data-toggle="collapse" style="cursor: pointer;" data-target="#target">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">经济性指标</span>
+													</div>
+													<dev id="target" class="collapse in">
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle1"> 第一年</div>
+														<div id="targetyeartitle1" class="collapse in">
+															{% for constant in constants %} {% if constant.minmodelid in ['61', '6'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																			{% if constant.name_eng in ['repayment_plan_1'] %}
+																			<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据" ></i>
+																			{% endif %}
+																		</div>
+																		
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle2"> 第二年</div>
+														<div class="collapse" aria-hidden="true" id="targetyeartitle2">
+															{% for constant in constants %} {% if constant.minmodelid in ['62'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																		
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_2'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+
+
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle3"> 第三年</div>
+														<div class="collapse" id="targetyeartitle3">
+															{% for constant in constants %} {% if constant.minmodelid in ['63'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_3'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle4"> 第四年</div>
+														<div class="collapse" id="targetyeartitle4">
+															{% for constant in constants %} {% if constant.minmodelid in ['64'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_4'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle5"> 第五年</div>
+														<div class="collapse" id="targetyeartitle5">
+															{% for constant in constants %} {% if constant.minmodelid in ['65'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_5'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle6"> 第六年</div>
+														<div class="collapse" id="targetyeartitle6">
+															{% for constant in constants %} {% if constant.minmodelid in ['66'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_6'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle7"> 第七年</div>
+														<div class="collapse" id="targetyeartitle7">
+															{% for constant in constants %} {% if constant.minmodelid in ['67'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_7'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle8"> 第八年</div>
+														<div class="collapse" id="targetyeartitle8">
+															{% for constant in constants %} {% if constant.minmodelid in ['68'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_8'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle9"> 第九年</div>
+														<div class="collapse" id="targetyeartitle9">
+															{% for constant in constants %} {% if constant.minmodelid in ['69'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_9'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle10"> 第十年</div>
+														<div class="collapse" id="targetyeartitle10">
+															{% for constant in constants %} {% if constant.minmodelid in ['610'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_10'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle11"> 第十一年</div>
+														<div class="collapse" id="targetyeartitle11">
+															{% for constant in constants %} {% if constant.minmodelid in ['611'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_11'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle12"> 第十二年</div>
+														<div class="collapse" id="targetyeartitle12">
+															{% for constant in constants %} {% if constant.minmodelid in ['612'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_12'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle13"> 第十三年</div>
+														<div class="collapse" id="targetyeartitle13">
+															{% for constant in constants %} {% if constant.minmodelid in ['613'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_13'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle14"> 第十四年</div>
+														<div class="collapse" id="targetyeartitle14">
+															{% for constant in constants %} {% if constant.minmodelid in ['614'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_14'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle15"> 第十五年</div>
+														<div class="collapse" id="targetyeartitle15">
+															{% for constant in constants %} {% if constant.minmodelid in ['615'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_15'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle16"> 第十六年</div>
+														<div class="collapse" id="targetyeartitle16">
+															{% for constant in constants %} {% if constant.minmodelid in ['616'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_16'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle17"> 第十七年</div>
+														<div class="collapse" id="targetyeartitle17">
+															{% for constant in constants %} {% if constant.minmodelid in ['617'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_17'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle18"> 第十八年</div>
+														<div class="collapse" id="targetyeartitle18">
+															{% for constant in constants %} {% if constant.minmodelid in ['618'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_18'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle19"> 第十九年</div>
+														<div class="collapse" id="targetyeartitle19">
+															{% for constant in constants %} {% if constant.minmodelid in ['619'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_19'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+														<div class="second-title" data-toggle="collapse" style="cursor: pointer;" data-target="#targetyeartitle20"> 第二十年</div>
+														<div class="collapse" id="targetyeartitle20">
+															{% for constant in constants %} {% if constant.minmodelid in ['620'] %}
+															<div class="row">
+																<div class="panel-body">
+																	<div class="col-md-12">
+																			<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																					{% if constant.name_eng in ['repayment_plan_20'] %}
+																					<i class="glyphicon glyphicon-eye-close repayment_plan_refer" title="参考数据"></i>
+																					{% endif %}
+																				</div>
+																		<div class="col-md-8">
+																			<div class="input-group">
+																				<!-- <span class="input-group-addon show-primary">设计</span> -->
+																				{% if constant.permission == "false" %}
+																				<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																				<input class="form-control targeyear" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																				<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																			</div>
+
+																		</div>
+
+																		{% if constant.remark != "" %}
+																		<div class="col-md-1">
+																			<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																		</div>
+																		{% endif %}
+																	</div>
+																</div>
+															</div>
+															{% endif %} {% endfor %}
+														</div>
+													</dev>
+												</div>
+											</div>
+											<div class="col-md-12 q-6 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-fire" aria-hidden="true"></i>
+														<span class="margin-left15">投资收益指标&nbsp;&nbsp;&nbsp;
+															<a class="glyphicon glyphicon-download-alt" title="导出excle" href="{{ url_for('ccppviews.excleanddownload') }}" style="cursor: pointer;"></a></span>
+													</div>
+													<div class="second-title"></div>
+													<div>
+														{% for constant in constants %} {% if constant.minmodelid in ['8'] %}
+														<div class="row">
+															<div class="panel-body">
+																<div class="col-md-12">
+																	<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})</div>
+																	<div class="col-md-8">
+																		<div class="input-group">
+
+																			{% if constant.permission == "false" %}
+																			<input class="form-control" readonly="true" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}"> {% else %}
+																			<input class="form-control" type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" value="{{ constant.defaultvalue }}"> {% endif %}
+																			<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																		</div>
+
+																	</div>
+
+																	{% if constant.remark != "" %}
+																	<div class="col-md-1">
+																		<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}"></i>
+																	</div>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		</form>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+</div>
+<a title="回到顶部" href="#top" class="cd-top">Top</a>
+{% endblock %} {% endblock %}

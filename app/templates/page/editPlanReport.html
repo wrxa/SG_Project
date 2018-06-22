@@ -1,0 +1,102 @@
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='assets/vendor/markdown/markdown.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery/jquery-form.js') }}"></script>
+<script src="{{ url_for('static', filename='js/editPlanReport.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editPlanReport.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<div class="main">
+
+	<style>
+		#flask-pagedown-body-preview img {
+			width: 12%;
+			text-align: center;
+		}
+	</style>
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="page-title">方案报告</div>
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="panel" style="background-color:#DFDFDE">
+						<input type="hidden" value="{{plan.module_id}}" id="moduleName">
+						<input type="hidden" id="editPlanId" value="{{plan.id}}" />
+						<div class="page-title">
+							编辑{% if plan.module_id == "coalCHP" %}燃煤热电联产{% elif plan.module_id == "biomassCHP" %} 生物质热电联产 {% elif plan.module_id == "燃气蒸汽联合循环"
+							%} CCPP {% elif plan.module_id == "gasPowerGeneration" %} 煤气发电 {% endif %}方案报告
+							<div class="second-explain" style="font-size: 16px;">
+								{% for company in companys %} {% if plan.company_id == company.id %} ---- {{ company.company_name }} {% endif %} {% endfor
+								%}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<form action="../upload_file" method="post" enctype=multipart/form-data id="headimageform">
+									<div class="col-md-6">
+
+									</div>
+									<div class="col-md-6" style="padding-left: 30px;">
+										<div class="col-md-12">
+												<div class="col-md-7">
+											<label class="control-label" for="file" title="添加图片">
+												<i class="fa fa-image" style="cursor: pointer;"></i>
+											</label>
+											<input id="file" name="file" required="" type="file" class="uploadImage">
+										<i title="保存" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-save" id="saveMD"></i>
+									</div>
+										<div class="col-md-5">
+											<a class="btn btn-success pull-right" type="button" id="save" style="float:right">
+												<i class="fa fa-list"></i> 生成在线文档</a>
+											</div></div>
+
+										<!-- <div class="col-md-4">
+												<label class="control-label" for="file" title="添加图片">
+													<img src="{{ url_for('static', filename='assets/img/photo_icon.png') }}" style="width:30%;cursor: pointer;" title="添加图片">
+												</label>
+												<input id="file" name="file" required="" type="file" class="uploadImage">
+											</div>
+											<div class="col-md-4">
+												<a id="saveMD">
+													<img src="{{ url_for('static', filename='assets/img/save_icon.png') }}" style="width:29%;cursor: pointer;" title="保存">
+												</a>
+											</div>
+											<div class="col-md-4">
+												<a class="btn btn-success pull-right" type="button" id="save" style="float:right">
+													<i class="fa fa-list"></i> 生成在线文档</a>
+											</div> -->
+									</div>
+
+									<div class="col-md-12 form-group required">
+
+
+										<input id="csrf_token" name="csrf_token" type="hidden" value="Ijg1Yjc1OTVhYTQ2NWQ5Y2RkYzk0OWFiYWZiYjc4NTAzMTk1MGE4YzQi.DO2WXQ.W_upIRMZblJWgq9N3_Ol5bsQ3gM">
+
+										<div class="col-md-12" style="margin-top: 20px">
+											<!-- <label class="control-label" for="body"></label> -->
+											<div class="col-md-6 flask-pagedown-preview" id="flask-pagedown-body-preview" style="position:absolute; height:1188px; overflow:auto;width:48%;background-color: #F3F5F8;"></div>
+											<div class="col-md-6 flask-pagedown" style="right: 0%; padding: 0px;margin-left: -15px;float: right;">
+												<textarea class="form-control flask-pagedown-input" id="flask-pagedown-body" name="body" required="" oninput="this.editor.update()"
+												 style="background:white;border-style:none;">{{plan.plan_report_content}}</textarea>
+
+											</div>
+										</div>
+								</form>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+{% endblock %} {% endblock %} {% block scripts %}
+ {% endblock %}

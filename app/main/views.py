@@ -1,27 +1,43 @@
 # -*- coding: utf-8 -*-
+import os
+import threading
+import json
 from datetime import datetime
+import time
 from flask import render_template, redirect, url_for, flash,\
-    abort, jsonify, request, session
+    abort, jsonify, request, session, send_from_directory
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, ChangePasswordForm,\
     ChangeEmailForm, UpdateUserForm, RegistrationForm
 from .. import db
-from ..models import User, CoalCHPComponent, CoalCHPConstant,\
-    CoalCHPNeedsQuestionnaire, Plan, Company, CoalCHPFurnaceCalculation,\
-    BiomassCHPconstant, BiomassCHPBeltWidth,\
-    BiomassCHPNeedsQuestionnaire, BiomassCHPBoilerCalculation
+from ..models import User, Company, Plan, Module, ReportTemplate, Role, MyException
 from ..decorators import admin_required
-from coalService import ToCoalCHP
-from biomassService import ToBiomassCHP
-from ..gasPowerGeneration_models import GasPowerGenerationConstant, \
-    GasPowerGenerationNeedsQuestionnaire, GPGBoilerOfPTS, GPGFlueGasAirSystem, \
-    GPGSmokeResistance, GPGWindResistance, GPGCirculatingWaterSystem, \
-    GPGSmokeAirCalculate
-from gasPowerGeneration_Service import ToGPG
-from app.observer_calculate.execution_strategy import GPG_Boiler_superheated_steam_enthalpy_EXEC, \
-    GPG_Boiler_feedwater_enthalpy_EXEC, GPG_Boiler_air_enthalpy_EXEC, \
-    GPG_Boiler_saturation_water_temperature_EXEC, GPG_Boiler_saturation_water_enthalpy_EXEC
+from app.coal_chp.model.coalchpModels import CoalCHPComponent, CoalCHPConstant
+from app.ccpp.service.ccpp_questionService import QuestionService
+from app.ccpp.service.ccpp_ccppService import CcppCalculateService
+from app.main.service.mainService import MainService
+from app.main.service.templateAnalyzeService import TemplateDealwithService
+from app.main.service.parseMD import ganMenu, addAnchorMark, convertdel,\
+     tempFile, createMD
+from app.coal_chp.service.coalService import ToCoalCHP
+from app.biomass_chp.service.biomassService import ToBiomassCHP
+from app.biomass_chp.models.modelsBiomass import BiomassCHPconstant, BiomassCHPFuelComponent
+from app.gpg.model.gasPowerGeneration_models import GasPowerGenerationConstant
+from app.gpg.service.gasPowerGeneration_Service import ToGPG
+from app.energy_island.energyisland_service import EnergyIslandService
+from werkzeug.utils import secure_filename
+import copy
+from config import config
+from util.get_all_path import GetPath
+from flask import current_app
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 
 # 显示主页
 # 必要条件：用户需先登录
@@ -29,8 +45,24 @@ from app.observer_calculate.execution_strategy import GPG_Boiler_superheated_ste
 @main.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    # return render_template('index.html')
-    return render_template('index.html', menuSelect='collapsed index')
+    session['menuSelect'] = "collapsed index"
+    count = Plan.search_checkedCount(current_user.role_id)
+    # 更新每条方案的主要设备参数字段
+    plans = Plan.search_plan_all()
+    for plan in plans:
+        if plan.main_equipment_para is None:
+            if plan.module_id == Module.coalCHP:
+                plan.main_equipment_para = ToCoalCHP().getMainEquipmentPara(plan.id)
+            if plan.module_id == Module.biomassCHP:
+                plan.main_equipment_para = ToBiomassCHP().getMainEquipmentPara(plan.id)
+            if plan.module_id == Module.CCPP:
+                plan.main_equipment_para = CcppCalculateService().getMainEquipmentPara(plan.id)
+            if plan.module_id == Module.gasPowerGeneration:
+                plan.main_equipment_para = ToGPG().getMainEquipmentPara(plan.id)
+            Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+    session['checkedPlanCount'] = count
+    return render_template('index.html')
 
 
 # 显示用户主页
@@ -141,6 +173,7 @@ def change_email():
             current_user.update_dateTime = datetime.now()
             db.session.add(current_user)
             flash(u'邮箱已更改', 'success')
+            current_app.logger.warning(u'操作者：%d,当前用户邮箱已更改', current_user.id)
             return redirect(
                 url_for('main.index', username=current_user.user_name))
         else:
@@ -154,7 +187,8 @@ def change_email():
 @admin_required
 def list_user():
     users = User.select_all()
-    return render_template('page/manage_user.html', users=users)
+    roles = Role.search_plan_all()
+    return render_template('page/manage_user.html', users=users, roles=roles)
 
 
 # delete_user
@@ -165,6 +199,7 @@ def delete_user(id):
     user = User.query.filter_by(id=id).first()
     User.delete_user(user)
     flash(u'用户删除成功', 'success')
+    current_app.logger.warning(u'操作者：%d,用户删除成功%d', current_user.id, user.id)
     return redirect(url_for('main.list_user'))
 
 
@@ -179,15 +214,16 @@ def edit_user(id):
         user.update_dateTime = datetime.now()
         db.session.add(current_user)
         flash(u'用户信息已更改成功', 'success')
+        current_app.logger.warning(u'操作者：%d,用户信息已更改成功%d', current_user.id, user.id)
         return redirect(url_for('main.list_user'))
     user_name = user.user_name
-    user_email = user.user_email
+    user_eid = user.user_eid
     form.role_id.data = user.role_id
     return render_template(
         "page/admin_edit_user.html",
         form=form,
         name=user_name,
-        email=user_email)
+        eid=user_eid)
 
 
 @main.route('/register', methods=['GET', 'POST'])
@@ -206,14 +242,16 @@ def register():
     if form.validate_on_submit():
         # 添加用户到数据库
         user = User(
+            user_eid=form.user_eid.data,
             user_email=form.user_email.data,
             user_name=form.user_name.data,
             hash_password=form.password.data,
             company_id=1,
             role_id=form.role_id.data,
             reg_dateTime=datetime.now(),
+
             update_dateTime=datetime.now()
-            )
+        )
         db.session.add(user)
         db.session.commit()
         flash(u'添加新用户成功', 'success')
@@ -221,638 +259,872 @@ def register():
     return render_template('page/add_user.html', form=form)
 
 
-# ######################燃煤热电联产例子 start ####################
-@main.route('/coalQuestionnaire')
+# #####################################方案管理共通开始#############################################################
+# 所有方案管理頁面
+@main.route('/planList/<moduleName>')
 @login_required
-def coalQuestionnaire():
-    coalCHPComponent = CoalCHPComponent.search_coalCHPComponent()
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_questionnaire")
-    # 查询已有方案
-    plans = Plan.search_plan(current_user.id)
+def planList(moduleName):
+    # 清空当前session中的方案ID信息
+    session['planId'] = None
+    plans = Plan.search_by_module(moduleName)
+    plans_distinct = Plan.search_distinct_user()
     companys = Company.search_company()
-    session['coalCHPPlanId'] = None
+    users = User.select_all()
+    if moduleName == Module.coalCHP:
+        # 更新燃煤热电联产中每条方案的主要设备参数字段
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = ToCoalCHP().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "coalCHPplanList"
+    elif moduleName == Module.biomassCHP:
+        # 更新生物质中每条方案的主要设备参数字段
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = ToBiomassCHP().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "biomassplanList"
+    elif moduleName == Module.CCPP:
+        # 更新ccpp中每条方案的主要设备参数字段
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = CcppCalculateService().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "ccppplanList"
+    elif moduleName == Module.gasPowerGeneration:
+        # 更新汽机中每条方案的主要设备参数字段
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = ToGPG().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "gpgplanList"
+    elif moduleName == Module.energyIsland:
+        session['menuSelect'] = "energyIslandplanList"
+
+    session['moduleName'] = moduleName
+    # plans = Plan.search_by_module(moduleName)
+
     return render_template(
-        'page/coalCHP/coalQuestionnaire.html',
-        menuSelect='coalQuestionnaire',
-        coalsort=coalCHPComponent,
-        constants=coalCHPConstant,
+        'page/planList.html',
         plans=plans,
-        companys=companys)
+        companys=companys,
+        users=users,
+        plans_distinct=plans_distinct,
+        moduleName=moduleName,
+        pageFlag="planList")
 
 
-@main.route('/coalSort', methods=['POST'])
+# 获取公司和用户名称的补全
+@main.route('/getAutoComplete', methods=['GET'])
 @login_required
-def coalSort():
-    id = request.values.get('id')
-    datas = ToCoalCHP.to_coalCHPComponentJson(id)
+def getAutoComplete():
+    companysComplete, usersComplete, templateComplete = MainService.getPlanComplete()
+    return jsonify({
+        'companysComplete': companysComplete,
+        'usersComplete': usersComplete,
+        'templateComplete': templateComplete
+    })
 
-    return jsonify({'coalSort': datas})
 
-
-@main.route('/formData', methods=['POST'])
+# 根据id查询主要设备参数字段
+@main.route('/getmainequipemntpara', methods=['POST'])
 @login_required
-def formData():
-    companyName = request.form.get('company_name')
-    companyLocation = request.form.get('company_location')
-
-    plan_id = ToCoalCHP.create_plan(companyName, companyLocation)
-
-    questionnaire = ToCoalCHP.to_questionnaire(request.form, plan_id)
-
-    CoalCHPNeedsQuestionnaire.insert_questionnaire(questionnaire)
-    session['coalCHPPlanId'] = plan_id
-    return jsonify({'planId': plan_id})
-
-
-@main.route('/initFurnace', methods=['POST'])
-@login_required
-def initFurnace():
-    furnace = CoalCHPFurnaceCalculation.search_furnace_calculation(
-        session.get('coalCHPPlanId'))
-    furnaceData = ToCoalCHP.to_furnaceJson(furnace)
-    return jsonify({'furnace': furnaceData})
-
-
-@main.route('/formDataFurnace', methods=['POST'])
-@login_required
-def formDataFurnace():
-
-    furnaceData = ToCoalCHP.to_furnace(request.form,
-                                       session.get('coalCHPPlanId'))
-
-    CoalCHPFurnaceCalculation.insert_furnace_calculation(furnaceData)
-
-    datas = {}
-    datas['flag'] = "success"
-
-    return jsonify({'coalSort': datas})
-
-
-@main.route('/findPlan', methods=['POST'])
-@login_required
-def findPlan():
+def getmainequipemntpara():
     planId = request.values.get('planId')
-    questionnaire = CoalCHPNeedsQuestionnaire.search_questionnaire(planId)
-    questionnaireData = ToCoalCHP.to_questionnaireJson(questionnaire)
-    session['coalCHPPlanId'] = planId
-    return jsonify({'questionnaire': questionnaireData})
+    plan = Plan.search_planById(planId)
+    return jsonify({
+        'main_equipment_para': plan.main_equipment_para
+    })
 
 
-@main.route('/coalFurnace')
+# 更新主要设备参数
+@main.route('/updatamainequipemntpara', methods=['POST'])
 @login_required
-def coalFurnace():
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_furnaceCalculation")
-    return render_template(
-        'page/coalCHP/coalFurnace.html',
-        menuSelect='coalFurnace',
-        constants=coalCHPConstant)
-
-
-@main.route('/coalSteamTurbine')
-@login_required
-def coalSteamTurbine():
-    return render_template(
-        'page/coalCHP/coalSteamTurbine.html', menuSelect='coalSteamTurbine')
-
-
-# 脱硫脱硝Desulfurization and denitrification
-@main.route('/coalDesulfurization')
-@login_required
-def coalDesulfurization():
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_furnaceCalculation")
-    return render_template(
-        'page/coalCHP/coalDesulfurization.html',
-        menuSelect='coalDesulfurization',
-        constants=coalCHPConstant)
-
-
-@main.route('/coalHandingSystem')
-@login_required
-def coalHandingSystem():
-    coalHandingSystemConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_CoalHandingSystem")
-    return render_template(
-        'page/coalCHP/coalHandingSystem.html',
-        menuSelect='coalHandingSystem',
-        constants=coalHandingSystemConstant)
-
-
-@main.route('/coalBoilerAuxiliaries')
-@login_required
-def coalBoilerAuxiliaries():
-    coalHandingSystemConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_boilerAuxiliaries")
-    return render_template(
-        'page/coalCHP/coalBoilerAuxiliaries.html',
-        menuSelect='coalBoilerAuxiliaries',
-        constants=coalHandingSystemConstant)
-
-
-@main.route('/coalRemovalAshSlag')
-@login_required
-def coalRemovalAshSlag():
-    coalHandingSystemConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_coalRemovalAshSlag")
-    return render_template(
-        'page/coalCHP/coalRemovalAshSlag.html',
-        menuSelect='coalRemovalAshSlag',
-        constants=coalHandingSystemConstant)
-
-
-@main.route('/coalCirculatingWater')
-@login_required
-def coalCirculatingWater():
-    coalHandingSystemConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_coalCirculatingWater")
-    return render_template(
-        'page/coalCHP/coalCirculatingWater.html',
-        menuSelect='coalCirculatingWater',
-        constants=coalHandingSystemConstant)
-
-
-@main.route('/coalSmokeAirSystem')
-@login_required
-def coalSmokeAirSystem():
-    coalHandingSystemConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_coalSmokeAirSystem")
-    return render_template(
-        'page/coalCHP/coalSmokeAirSystem.html',
-        menuSelect='coalSmokeAirSystem',
-        constants=coalHandingSystemConstant)
-# ##################燃煤热电联产 end##################
-
-
-# ##############生物质热电联产 start###############
-# 需求调查表
-@main.route('/biomassQuestionnaire')
-@login_required
-def biomassQuestionnaire():
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "biomassCHP_questionnaire")
-    # 查询已有方案
-    plans = Plan.search_plan(current_user.id)
-    companys = Company.search_company()
-    return render_template(
-        'page/BiomassCHP/biomassQuestionnaire.html',
-        menuSelect='biomassQuestionnaire',
-        constants=biomassCHPConstant,
-        plans=plans,
-        companys=companys)
-
-
-# 保存页面所有表单数据
-@main.route('/biomassFormData', methods=['POST'])
-@login_required
-def biomassFormData():
-    companyName = request.form.get('company_name')
-    companyLocation = request.form.get('company_location')
-    plan_id = ToBiomassCHP.create_plan(companyName, companyLocation)
-    questionnaire = ToBiomassCHP.to_questionnaire(request.form, plan_id)
-    BiomassCHPNeedsQuestionnaire.insert_questionnaire(questionnaire)
-    # datas = {}
-    # datas['flag'] = "success"
-
-    # return jsonify({'coalSort': datas})
-    session['biomassCHPPlanId'] = plan_id
-    return jsonify({'planId': plan_id})
-
-
-# 初期化锅炉页面
-@main.route('/biomassInitFurnace', methods=['POST'])
-@login_required
-def biomassInitFurnace():
+def updatamainequipemntpara():
     planId = request.values.get('planId')
-    furnace = BiomassCHPBoilerCalculation.search_furnace_calculation(planId)
-    furnaceData = ToBiomassCHP.to_furnaceJson(furnace)
-    return jsonify({'furnace': furnaceData})
-
-
-# 保存锅炉页面信息
-@main.route('/biomassFormDataFurnace', methods=['POST'])
-@login_required
-def biomassFormDataFurnace():
-    furnaceData = ToBiomassCHP.to_furnace(request.form,
-                                          session.get('biomassCHPPlanId'))
-    BiomassCHPBoilerCalculation.insert_furnace_calculation(furnaceData)
-
-    datas = {}
-    datas['flag'] = "success"
-
-    return jsonify({'coalSort': datas})
-
-
-# 查找已知方案
-@main.route('/biomassFindPlan', methods=['POST'])
-@login_required
-def biomassFindPlan():
-    planId = request.values.get('planId')
-    if(planId == '0'):
-        questionnaireData = {}
-        return jsonify({'questionnaire': questionnaireData})
+    main_equipment_para = request.values.get('main_equipment_para')
+    moduleName = session.get('moduleName')
+    plan = Plan.search_planById(planId)
+    if main_equipment_para is not None and main_equipment_para == '' or main_equipment_para == '\n':
+        # 更新成数据库原始数据
+        if moduleName == Module.coalCHP:
+            plan.main_equipment_para = ToCoalCHP().getMainEquipmentPara(planId)
+        elif moduleName == Module.biomassCHP:
+            # 更新生物质中每条方案的主要设备参数字段
+            plan.main_equipment_para = ToBiomassCHP().getMainEquipmentPara(planId)
+        elif moduleName == Module.CCPP:
+            # 更新ccpp中每条方案的主要设备参数字段
+            plan.main_equipment_para = CcppCalculateService().getMainEquipmentPara(plan.id)
+        elif moduleName == Module.gasPowerGeneration:
+            # 更新汽机中每条方案的主要设备参数字段
+            plan.main_equipment_para = ToGPG().getMainEquipmentPara(plan.id)
+        elif moduleName == Module.energyIsland:
+            # 更新能源互联岛中每条方案的主要设备参数字段
+            plan.main_equipment_para = ""
     else:
-        questionnaire = BiomassCHPNeedsQuestionnaire.search_questionnaire(
-            planId)
-        questionnaireData = ToBiomassCHP.to_questionnaireJson(questionnaire)
-        session['biomassCHPPlanId'] = planId
-        return jsonify({'questionnaire': questionnaireData})
+        plan.main_equipment_para = main_equipment_para
+    Plan.insert_plan(plan)
+    current_app.logger.warning(u'操作者：%d,更新主要设备参数', current_user.id)
+    return jsonify({
+        'state': 'success'
+    })
 
 
-# 燃料存储及输送
-@main.route('/biomassFuelStorTran')
+# 按查询条件检索方案
+@main.route('/queryPlans', methods=['POST'])
 @login_required
-def biomassFuelStorTran():
-    biomassCHPBeltWidth = BiomassCHPBeltWidth.search_biomassCHPBeltWidth()
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "fuel_ST")
-    return render_template(
-        'page/BiomassCHP/biomassFuelStorTran.html',
-        menuSelect='biomassFuelStorTran',
-        beltsort=biomassCHPBeltWidth,
-        constants=biomassCHPConstant)
-
-
-# 匹配断面系数
-@main.route('/beltSort', methods=['POST'])
-@login_required
-def beltSort():
-    id = request.values.get('id')
-    datas = {}
-    biomassCHPBeltWidth = BiomassCHPBeltWidth.search_biomassCHPSort(id)
-    datas['width'] = biomassCHPBeltWidth.width
-    datas['coefficient'] = biomassCHPBeltWidth.coefficient
-
-    return jsonify({'beltSort': datas})
-
-
-# 脱硫脱硝系统
-@main.route('/biomassDesulDenit')
-@login_required
-def biomassDesulDenit():
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "desulfurization_denitrification")
-    return render_template(
-        'page/BiomassCHP/biomassDesulDenit.html',
-        menuSelect='biomassDesulDenit',
-        constants=biomassCHPConstant)
-
-
-# 除尘除灰除渣系统
-@main.route('/biomassDASRemove')
-@login_required
-def biomassDASRemove():
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "das_remove")
-    return render_template(
-        'page/BiomassCHP/biomassDASRemove.html',
-        menuSelect='biomassDASRemove',
-        constants=biomassCHPConstant)
-
-
-@main.route('/biomassSteamTurbine')
-@login_required
-def biomassSteamTurbine():
-    return render_template(
-        'page/BiomassCHP/biomassSteamTurbine.html',
-        menuSelect='biomassSteamTurbine')
-
-
-# 锅炉计算
-@main.route('/biomassFurnace')
-@login_required
-def biomassFurnace():
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "boiler_calculation")
-    return render_template(
-        'page/BiomassCHP/biomassFurnace.html',
-        menuSelect='biomassFurnace',
-        constants=biomassCHPConstant)
-
-
-# 锅炉辅机
-@main.route('/biomassBoilerAuxiliaries')
-@login_required
-def biomassBoilerAuxiliaries():
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "boiler_auxiliaries")
-    return render_template(
-        'page/BiomassCHP/biomassBoilerAuxiliaries.html',
-        menuSelect='biomassBoilerAuxiliaries',
-        constants=biomassCHPConstant)
-
-
-# 公用工程
-@main.route('/biomassOfficialProcess')
-@login_required
-def biomassOfficialProcess():
-    biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant(
-        "official_process")
-    return render_template(
-        'page/BiomassCHP/biomassOfficialProcess.html',
-        menuSelect='biomassOfficialProcess',
-        constants=biomassCHPConstant)
-
-# ########################生物质热电联产 end#################################
-
-
-# ##############ccpp例子 start###############
-@main.route('/ccppQuestionnaire')
-@login_required
-def ccppQuestionnaire():
-    coalCHPComponent = CoalCHPComponent.search_coalCHPComponent()
-    coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
-        "coalCHP_questionnaire")
-    return render_template(
-        'page/CCPP/ccppQuestionnaire.html',
-        menuSelect='ccppQuestionnaire',
-        coalsort=coalCHPComponent,
-        constants=coalCHPConstant)
-
-
-@main.route('/ccppFurnace')
-@login_required
-def ccppFurnace():
-    return render_template(
-        'page/CCPP/ccppFurnace.html', menuSelect='ccppFurnace')
-
-
-@main.route('/ccppSteamTurbine')
-@login_required
-def ccppSteamTurbine():
-    return render_template(
-        'page/CCPP/ccppSteamTurbine.html', menuSelect='ccppSteamTurbine')
-
-# ########################ccpp end#################################
-
-# ###################### 煤气发电 start ####################
-@main.route('/GPG_SaveQuestionnaire', methods=['POST'])
-@login_required
-def GPG_SaveQuestionnaire():
-    companyName = request.form.get('company_name')
-    companyLocation = request.form.get('company_location')
-    # projectApprovalEia = request.form.get('project_approval_eia')
-    plan_id = ToGPG.create_plan(companyName, companyLocation)
-    questionnaire = ToGPG.to_questionnaire(request.form, plan_id)
-    GasPowerGenerationNeedsQuestionnaire.insert_questionnaire(questionnaire)
-    session['GPGPlanId'] = plan_id
-    return jsonify({'planId': plan_id})
-
-@main.route('/GPG_SaveBoilerOfPTS', methods=['POST'])
-@login_required
-def GPG_SaveBoilerOfPTS():
-    plan_id = session.get('GPGPlanId')
-    boiler = ToGPG.to_BoilerOfPTS(request.form, plan_id)
-
-    GPG_Boiler_superheated_steam_enthalpy_EXEC().specialCalculation(boiler, request.form)
-    GPG_Boiler_feedwater_enthalpy_EXEC().specialCalculation(boiler, request.form)
-    GPG_Boiler_saturation_water_temperature_EXEC().specialCalculation(boiler, request.form)
-    GPG_Boiler_saturation_water_enthalpy_EXEC().specialCalculation(boiler, request.form)
-
-    '''以下公式有问题'''
-    #GPG_Boiler_air_enthalpy_EXEC().specialCalculation(boiler, request.form)
-
-    GPGBoilerOfPTS.insert_BoilerOfPTS(boiler)
-    session['GPGPlanId'] = plan_id
-    datas = {}
-    datas['flag'] = "success"
-    return jsonify({'result': datas})
-
-@main.route('/GPG_SaveGasAirData', methods=['POST'])
-@login_required
-def GPG_SaveGasAirData():
-    plan_id = session.get('GPGPlanId')
-    GasAirData = ToGPG.to_GasAirData(request.form, plan_id)
-
-    GPGFlueGasAirSystem.insert_FlueGasAirSystem(GasAirData)
-    session['GPGPlanId'] = plan_id
-    datas = {}
-    datas['flag'] = "success"
-    return jsonify({'result': datas})
-
-@main.route('/GPG_SaveSmokeResistanceData', methods=['POST'])
-@login_required
-def GPG_SaveSmokeResistanceData():
-    plan_id = session.get('GPGPlanId')
-    SmokeResistanceData = ToGPG.to_SmokeResistanceData(request.form, plan_id)
-
-    GPGSmokeResistance.insert_SmokeResistance(SmokeResistanceData)
-    session['GPGPlanId'] = plan_id
-    datas = {}
-    datas['flag'] = "success"
-    return jsonify({'result': datas})
-
-@main.route('/GPG_SaveWindResistanceData', methods=['POST'])
-@login_required
-def GPG_SaveWindResistanceData():
-    plan_id = session.get('GPGPlanId')
-    WindResistanceData = ToGPG.to_WindResistanceData(request.form, plan_id)
-    GPGWindResistance.insert_WindResistance(WindResistanceData)
-    session['GPGPlanId'] = plan_id
-    datas = {}
-    datas['flag'] = "success"
-    return jsonify({'result': datas})
-
-@main.route('/GPG_SaveCirculatingWaterData', methods=['POST'])
-@login_required
-def GPG_SaveCirculatingWaterData():
-    plan_id = session.get('GPGPlanId')
-    CirculatingWaterData = ToGPG.to_CirculatingWaterData(request.form, plan_id)
-    GPGCirculatingWaterSystem.insert_CirculatingWater(CirculatingWaterData)
-    session['GPGPlanId'] = plan_id
-    datas = {}
-    datas['flag'] = "success"
-    return jsonify({'result': datas})
-
-@main.route('/GPG_SaveSmokeAirCalculateData', methods=['POST'])
-@login_required
-def GPG_SaveSmokeAirCalculateData():
-    plan_id = session.get('GPGPlanId')
-    SmokeAirCalculateData = ToGPG.to_SmokeAirCalculateData(request.form, plan_id)
-    GPGSmokeAirCalculate.insert_SmokeAirCalculate(SmokeAirCalculateData)
-    session['GPGPlanId'] = plan_id
-    datas = {}
-    datas['flag'] = "success"
-    return jsonify({'result': datas})
-
-@main.route('/getBoilerByPlanId', methods=['POST'])
-@login_required
-def getBoilerByPlanId():
-    planId = request.values.get('planId')
-    gpg_BoilerOfPTS = GPGBoilerOfPTS.search_BoilerOfPTS(planId)
-    BoilerJson = ToGPG.to_BoilerJson(gpg_BoilerOfPTS)
-    return jsonify({'BoilerJson': BoilerJson})
-
-@main.route('/getGasAirDataByPlanId', methods=['POST'])
-@login_required
-def getGasAirDataByPlanId():
-    planId = request.values.get('planId')
-    gpg_GasAirData = GPGFlueGasAirSystem.search_FlueGasAirSystem(planId)
-    GasAirJson = ToGPG.to_GasAirJson(gpg_GasAirData)
-    return jsonify({'GasAirJson': GasAirJson})
-
-@main.route('/getSmokeResistanceByPlanId', methods=['POST'])
-@login_required
-def getSmokeResistanceByPlanId():
-    planId = request.values.get('planId')
-    gpg_SmokeResistanceData = GPGSmokeResistance.search_SmokeResistance(planId)
-    SmokeResistanceJson = ToGPG.to_SmokeResistanceJson(gpg_SmokeResistanceData)
-    return jsonify({'SmokeResistanceJson': SmokeResistanceJson})
-
-@main.route('/getWindResistanceByPlanId', methods=['POST'])
-@login_required
-def getWindResistanceByPlanId():
-    planId = request.values.get('planId')
-    gpg_WindResistanceData = GPGWindResistance.search_WindResistance(planId)
-    WindResistanceJson = ToGPG.to_WindResistanceJson(gpg_WindResistanceData)
-    return jsonify({'WindResistanceJson': WindResistanceJson})
-
-@main.route('/getCirculatingWaterDataByPlanId', methods=['POST'])
-@login_required
-def getCirculatingWaterDataByPlanId():
-    planId = request.values.get('planId')
-    gpg_CirculatingWaterData = GPGCirculatingWaterSystem.search_CirculatingWater(planId)
-    CirculatingWaterJson = ToGPG.to_CirculatingWaterJson(gpg_CirculatingWaterData)
-    return jsonify({'CirculatingWaterJson': CirculatingWaterJson})
-
-@main.route('/getSmokeAirCalculateDataByPlanId', methods=['POST'])
-@login_required
-def getSmokeAirCalculateDataByPlanId():
-    planId = request.values.get('planId')
-    gpg_SmokeAirCalculateData = GPGSmokeAirCalculate.search_SmokeAirCalculate(planId)
-    SmokeAirCalculateJson = ToGPG.to_SmokeAirCalculateJson(gpg_SmokeAirCalculateData)
-    return jsonify({'SmokeAirCalculateJson': SmokeAirCalculateJson})
-
-@main.route('/selectPlan', methods=['POST'])
-@login_required
-def selectPlan():
-    planId = request.values.get('planId')
-    questionnaire = GasPowerGenerationNeedsQuestionnaire.search_questionnaire(
-        planId)
-    questionnaireData = ToGPG.to_questionnaireJson(questionnaire)
-    session['GPGPlanId'] = planId
-    return jsonify({'questionnaire': questionnaireData})
-
-@main.route('/GPG_Questionnaire')
-@login_required
-def GPG_Questionnaire():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_questionnaire")
-    plans = Plan.search_plan(current_user.id)
+def queryPlans():
+    company_id = request.values.get('company_id')
+    user_id = request.values.get('user_id')
+    moduleName = request.values.get('moduleName')
+    plans = Plan.search_planByParams(company_id, user_id, moduleName)
     companys = Company.search_company()
+    users = User.select_all()
+    plansJson = MainService.to_planJson(plans)
+    companyJson = MainService.to_companyJson(companys)
+    userJson = MainService.to_userJson(users)
+    return jsonify({
+        'newPlans': plansJson,
+        'companys': companyJson,
+        'users': userJson
+    })
+
+
+# 删除方案
+@main.route('/deletePlan', methods=['POST'])
+@login_required
+def deletePlan():
+    planId = request.values.get('planId')
+    company_id = request.values.get('company_id')
+    user_id = request.values.get('user_id')
+    moduleName = request.values.get('moduleName')
+    companys = Company.search_company()
+    companyJson = MainService.to_companyJson(companys)
+    users = User.select_all()
+    userJson = MainService.to_userJson(users)
+    if moduleName == Module.coalCHP:
+        MainService.drop_plan_coalchp(planId)
+    elif moduleName == Module.biomassCHP:
+        MainService.drop_plan_biomass(planId)
+    elif moduleName == Module.CCPP:
+        MainService.drop_plan_ccpp(planId, current_user.id)
+    elif moduleName == Module.gasPowerGeneration:
+        MainService.drop_plan_gpg(planId)
+    elif moduleName == Module.energyIsland:
+        MainService.drop_plan_energyIsland(planId)
+    plans = Plan.search_planByParams(company_id, user_id, moduleName)
+    plansJson = MainService.to_planJson(plans)
+    MainService.deleteFile(planId, current_user.id)
+    current_app.logger.warning(u'操作者：%d,删除方案%s', current_user.id, planId)
+    return jsonify({
+        'newPlans': plansJson,
+        'companys': companyJson,
+        'users': userJson
+    })
+
+
+# 新增或修改方案进入
+# 各个模块入口
+@main.route('/editPlan/<int:planId><moduleName>')
+@login_required
+def editPlan(planId, moduleName):
+    session['moduleName'] = moduleName
+    # 燃煤热电联产
+    if moduleName == Module.coalCHP:
+        coalCHPComponent = CoalCHPComponent.search_coalCHPComponent()
+        coalCHPConstant = CoalCHPConstant.search_coalCHPConstant(
+            "coalCHP_questionnaire")
+        # 查询已有方案
+        plans = Plan.search_plan(current_user.id)
+        companys = Company.search_company()
+        # 如果是修改（id>0修改，id=0新增）
+        if planId > 0:
+            session['planId'] = planId
+        return render_template(
+            'page/coalCHP/coalQuestionnaire.html',
+            coalsort=coalCHPComponent,
+            constants=coalCHPConstant,
+            plans=plans,
+            companys=companys)
+    if moduleName == Module.CCPP:
+        if planId > 0:
+            # 点击的是修改
+            session['planId'] = planId
+        ccppConstant, plans, companys = QuestionService.getQuestionnaireConstant()
+        return render_template(
+            'page/ccpp/ccpp_questionnaire.html',
+            constants=ccppConstant,
+            plans=plans,
+            companys=companys)
+    # 生物质热电
+    if moduleName == Module.biomassCHP:
+        biomassCHPConstant = BiomassCHPconstant.search_biomassCHPconstant("biomassCHP_questionnaire")
+        biomassCHPComponent = BiomassCHPFuelComponent.search_biomassCHPComponent()
+        # 查询已有方案
+        plans = Plan.search_plan(current_user.id)
+        companys = Company.search_company()
+        if planId > 0:
+            session['planId'] = planId
+        elif not session['planId']:
+            session['planId'] = None
+        return render_template(
+            'page/BiomassCHP/biomassQuestionnaire.html',
+            fuelsort=biomassCHPComponent,
+            constants=biomassCHPConstant,
+            plans=plans,
+            companys=companys)
+    # 煤气发电
+    if moduleName == Module.gasPowerGeneration:
+        GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant("GPG_questionnaire")
+        plans = Plan.search_plan(current_user.id)
+        companys = Company.search_company()
+        if planId > 0:
+            session['planId'] = planId
+        elif not session['planId']:
+            session['planId'] = None
+        return render_template(
+            'page/GasPowerGeneration/GPG_Questionnaire.html',
+            menuSelect='GPG_Questionnaire',
+            constants=GPGConstant,
+            plans=plans,
+            companys=companys)
+
+    # 能源互联
+    if moduleName == Module.energyIsland:
+        eir_work_list = EnergyIslandService().get_list_eir_work()
+        eir_cost_list = EnergyIslandService().get_list_eir_cost()
+        eir_available_list = EnergyIslandService().get_list_eir_available()
+        eir_available_list_2 = EnergyIslandService().get_list_eir_available_2()
+        eir_heat_list = EnergyIslandService().get_list_eir_heat()
+        eir_cool_list = EnergyIslandService().get_list_eir_cool()
+        eir_steam_list = EnergyIslandService().get_list_eir_steam()
+        eir_electric_list = EnergyIslandService().get_list_eir_electric()
+        eir_hot_water_list = EnergyIslandService().get_list_eir_hot_water()
+        eir_air_supply_list = EnergyIslandService().get_list_eir_air_supply()
+        eir_season_typical_day = EnergyIslandService().get_list_eir_season_typical_day()
+        time_list = EnergyIslandService().get_list_time()
+        month_list = EnergyIslandService().get_list_month()
+        companys = Company.search_company()
+        plans = Plan.search_plan(current_user.id)
+        if planId > 0:
+            session['planId'] = planId
+        elif not session['planId']:
+            session['planId'] = None
+        session['menuSelect'] = "energyIslandplanList"
+        return render_template(
+            'page/energyisland/energyisland_questionnaire.html',
+            eir_work_list=eir_work_list,
+            eir_cost_list=eir_cost_list,
+            eir_available_list=eir_available_list,
+            eir_available_list_2=eir_available_list_2,
+            eir_heat_list=eir_heat_list,
+            eir_cool_list=eir_cool_list,
+            eir_steam_list=eir_steam_list,
+            eir_electric_list=eir_electric_list,
+            eir_hot_water_list=eir_hot_water_list,
+            eir_air_supply_list=eir_air_supply_list,
+            eir_season_typical_day=eir_season_typical_day,
+            time_list=time_list,
+            month_list=month_list,
+            plans=plans,
+            companys=companys)
+
+# #####################################方案管理共通结束#############################################################
+# 专家修改审核状态
+
+
+@main.route('/planState', methods=['POST'])
+@login_required
+def planState():
+    if current_user.role_id not in [1, 2, 4, 5, 6, 7]:
+        return jsonify({'state': 0})
+    planId = request.form.get('planId')
+    planState = request.form.get('planState')
+    plan = Plan.search_planById(planId)
+    plan.plan_state = int(planState)
+    plan.approve_time = datetime.now()
+    plan.approver_id = current_user.id
+    Plan.insert_plan(plan)
+    current_app.logger.warning(u'操作者：%d,专家修改审核状态%s', current_user.id, planId)
+    count = Plan.search_checkedCount(current_user.role_id)
+    session['checkedPlanCount'] = count
+    return jsonify({'state': 1})
+
+
+@main.route('/report/<moduleName>')
+@login_required
+def report(moduleName):
+    session['planId'] = None
+    plans = Plan.search_by_module(moduleName)
+    plans_distinct = Plan.search_distinct_user()
+    companys = Company.search_company()
+    users = User.select_all()
+    if moduleName == Module.coalCHP:
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = ToCoalCHP().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "coalCHPreport"
+    elif moduleName == Module.biomassCHP:
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = ToBiomassCHP().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "biomassreport"
+    elif moduleName == Module.CCPP:
+        # 更新ccpp中每条方案的主要设备参数字段
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = CcppCalculateService().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "ccppreport"
+    elif moduleName == Module.gasPowerGeneration:
+        for plan in plans:
+            if plan.main_equipment_para is None:
+                plan.main_equipment_para = ToGPG().getMainEquipmentPara(plan.id)
+                Plan.autoupdata_plan(plan)
+            plan.main_equipment_para_list = MainService.splitStringToList(plan.main_equipment_para, '\n')
+        session['menuSelect'] = "gpgreport"
+    elif moduleName == Module.energyIsland:
+        session['menuSelect'] = "energyIslandreport"
+    session['moduleName'] = moduleName
+    
     return render_template(
-        'page/GasPowerGeneration/GPG_Questionnaire.html',
-        menuSelect='GPG_Questionnaire',
-        constants=GPGConstant,
+        'page/reportList.html',
         plans=plans,
+        companys=companys,
+        users=users,
+        plans_distinct=plans_distinct,
+        moduleName=moduleName,
+        pageFlag="report")
+
+
+@main.route('/prepreviewdealwith', methods=['POST'])
+@login_required
+def prepreviewdealwith():
+    planId = request.form.get('planId')
+    try:
+        reportTemplate = TemplateDealwithService().templateDealwithMian(planId, current_user.id)
+    except UnicodeDecodeError as e:
+        current_app.logger.error(u'操作者：%d,预览解析模板编码出现问题啦，快找服务器管理员。!%s', current_user.id, e.message)
+        return jsonify({'mdcontent': None, 'exceptionInfo': u"编码出现问题啦，快找服务器管理员。"})
+    except MyException as e:
+        current_app.logger.error(u'操作者：%d, %s, %s', (current_user.id, e.exceptioninfoforself, e.message))
+        print(e.exceptionName, e.exceptioninfoforself)
+        return jsonify({'mdcontent': None, 'exceptionInfo': e.exceptioninfoforkh})
+    else:
+        return jsonify({'mdcontent': reportTemplate, 'exceptionInfo': None})
+
+
+@main.route('/gethtmlandmd', methods=['POST'])
+@login_required
+def gethtmlandmd():
+    planId = request.form.get('planId')
+    plan = Plan.search_planById(planId)
+    htmlcontent = request.form.get('htmlcontent')
+    mdcontent = request.form.get('mdcontent')
+    plan.plan_report_content = mdcontent
+    plan.plan_report_html = htmlcontent
+    Plan.insert_plan(plan)
+    return jsonify({'state': 1})
+
+
+# 编辑方案内容页面按下预览按钮打开预览页面
+@main.route('/converMD/<planId>')
+@login_required
+def converMD(planId):
+    plan = Plan.search_planById(planId)
+    return render_template(
+        'page/converttToc.html', menuSelect='ccppFurnace', plan=plan)
+
+
+# 编辑方案内容页面按下预览按钮打开预览页面初始化加载页面数据
+@main.route('/initializeMD', methods=['POST'])
+@login_required
+def initializeMD():
+    planId = request.form.get('planId')
+    plan = Plan.search_planById(planId)
+    tempFile(plan.plan_report_content.encode("utf-8"),
+             plan.plan_report_html.encode("utf-8"),
+             planId, current_user.id)
+    titles = ganMenu(planId, current_user.id)
+    data = {}
+    data['tbFuncDic'] = titles
+    anchorMarkHtml = addAnchorMark(titles, planId, current_user.id)
+    return jsonify({'data': data, "html": anchorMarkHtml})
+
+
+# ###################  模板管理template_report.html  ########################################
+@main.route('/getTemplateByModule', methods=['POST'])
+@login_required
+def getTemplateByModule():
+    moduleName = session.get('moduleName')
+    # plan = Plan.search_planById(planId)
+    # moduleName = plan.module_id
+    reportTemplatelist = ReportTemplate.search_by_module(moduleName)
+    reportTemplateJson = []
+    for retemplate in reportTemplatelist:
+        data_format = {
+            "template_id": retemplate.id,
+            "template_name": retemplate.template_name
+        }
+        reportTemplateJson.append(data_format)
+    return jsonify({'reportTemplateJson': reportTemplateJson})
+
+
+@main.route('/setPlanReportTemplate', methods=['POST'])
+@login_required
+def setPlanReportTemplate():
+    planId = session.get('planId')
+    template_id = request.values.get('template_id')
+    # template_name = request.values.get('template_name')
+    plan = Plan.search_planById(planId)
+    plan.template_id = template_id
+    plan.plan_state = 0
+    Plan.insert_plan(plan)
+    count = Plan.search_checkedCount(current_user.role_id)
+    session['checkedPlanCount'] = count
+    return jsonify({'message': '成功选择方案模板!'})
+
+
+@main.route('/getColumnNameByTable', methods=['POST'])
+@login_required
+def getColumnNameByTable():
+    tableName = request.values.get('tableName')
+    # print(tableName)
+    columnNameJson = {}
+    columnNameJson = MainService.toColumnNameJson(tableName)
+    print(columnNameJson)
+    return jsonify({'columnNameJson': columnNameJson})
+
+
+@main.route('/getTableNameByModule', methods=['POST'])
+@login_required
+def getTableNameByModule():
+    moduleName = session.get('moduleName')
+    tableNameJson = []
+    tableNameJson = MainService.toTableNameJson(moduleName)
+    return jsonify({'tableNameJson': tableNameJson})
+
+
+@main.route('/getLogicByModule', methods=['POST'])
+@login_required
+def getLogicByModule():
+    moduleName = session.get('moduleName')
+    logicJson = []
+    logicJson = MainService.getlogicJson(moduleName)
+    return jsonify({'logicJson': logicJson})
+
+
+# 进入模板管理(列表)
+@main.route('/templatelist/<moduleName>')
+@login_required
+def templatelist(moduleName):
+    templates = ReportTemplate.search_by_module_userid(moduleName)
+    if moduleName == Module.coalCHP:
+        session['menuSelect'] = "coalCHPreporttemplateList"
+    elif moduleName == Module.biomassCHP:
+        session['menuSelect'] = "biomassreporttemplateList"
+    elif moduleName == Module.CCPP:
+        session['menuSelect'] = "ccppreporttemplateList"
+    elif moduleName == Module.gasPowerGeneration:
+        session['menuSelect'] = "gpgreporttemplateList"
+    elif moduleName == Module.energyIsland:
+        session['menuSelect'] = "energyIslandtemplateList"
+
+    session['moduleName'] = moduleName
+    users = User.select_all()
+    return render_template(
+        'page/template_list.html',
+        templates=templates,
+        moduleName=moduleName,
+        users=users,
+        pageFlag="template")
+
+
+# 创建模板
+@main.route('/creattemplate', methods=['GET'])
+@login_required
+def creattemplate():
+    moduleName = session.get('moduleName')
+    session['action'] = 'add'
+    return render_template(
+        'page/edit_template_report.html',
+        moduleName=moduleName,
+        pageFlag="creattemplate")
+
+
+# 编辑模板
+@main.route('/edittemplate/<templateId>')
+@login_required
+def edittemplate(templateId):
+    session['action'] = 'edit'
+    moduleName = session.get('moduleName')
+    if moduleName:
+        return render_template(
+            'page/edit_template_report.html',
+            templateId=templateId,
+            pageFlag="edittemplate")
+    return redirect(url_for("main.index"))
+
+
+# copy模板
+@main.route('/copytemplate/<templateId>')
+@login_required
+def copytemplate(templateId):
+    session['action'] = 'add'
+    moduleName = session.get('moduleName')
+    if moduleName:
+        return render_template(
+            'page/edit_template_report.html',
+            templateId=templateId,
+            pageFlag="edittemplate")
+    return redirect(url_for("main.index"))
+
+
+# 初始化编辑模板页面数据
+@main.route('/initTemplate', methods=['POST'])
+@login_required
+def initTemplate():
+    templateId = request.form.get('templateId')
+    reportTemplate = ReportTemplate.search_templateById(
+        int(templateId) if templateId != '' and templateId is not None else 0)
+    if reportTemplate:
+        menu = json.loads(reportTemplate.template__left_menu, strict=False)
+        template_name = reportTemplate.template_name
+        contents = json.loads(reportTemplate.template_left_content, strict=False)
+        return jsonify({
+            'state': '1',
+            "menu": menu,
+            "template_name": template_name,
+            "contents": contents
+        })
+    return jsonify({'state': '0'})
+
+
+# 保存模板
+@main.route('/savetemplate', methods=['POST'])
+@login_required
+def savetemplate():
+    if request.method == 'POST':
+        templateName = request.form.get('template_name')
+        templateId = request.form.get('templateId')
+        moduleName = session.get('moduleName')
+        teportTemplatelist = ReportTemplate.search_templateNamelist(templateName)
+        templateIdList = []
+        for trp in teportTemplatelist:
+            templateIdList.append(str(trp.id))
+        userid = current_user.id
+        action = session.get('action')
+        if action == 'add':
+            if len(templateIdList) != 0:
+                return jsonify({'state': '3'})
+            else:
+                templateId = None
+        else:
+            if templateId in templateIdList and len(templateIdList) == 1 or len(templateIdList) == 0:
+                pass
+            else:
+                return jsonify({'state': '3'})
+        session['action'] = 'edit'
+        contents = request.form.get('content')
+        menu = request.form.get('menu')
+        md = createMD(json.loads(menu), json.loads(contents))
+        reportTemplate = ReportTemplate.search_templateById(
+            int(templateId) if templateId != '' and templateId is not None else 0)
+        if reportTemplate is None:
+            reportTemplate = ReportTemplate.search_templateByNameAndUserId(templateName, userid, moduleName)
+        # 模板名称
+        reportTemplate.template_name = templateName
+        # md内容
+        reportTemplate.template_content = md
+        # meun
+        reportTemplate.template__left_menu = menu
+        # meun内容
+        reportTemplate.template_left_content = contents
+        # 所属模块
+        reportTemplate.module_id = session.get('moduleName')
+        # 创建者
+        reportTemplate.user_id = current_user.id
+        ReportTemplate.insert_template(reportTemplate)
+        template = ReportTemplate.search_templateName(templateName)
+        return jsonify({'state': '1', 'md': md, 'templateId': template.id})
+    return jsonify({'state': '0'})
+
+
+@main.route('/deleteTemplate', methods=['POST'])
+@login_required
+def deleteTemplate():
+    templateId = request.values.get('templateId')
+    moduleName = request.values.get('moduleName')
+    template = ReportTemplate.search_templateById(templateId)
+    if template is not None:
+        # if User.search_userById(template.user_id).id != current_user.id:
+        #     return jsonify({'state': '1', 'massage': u'不能删除别人创建的模板！'})
+        planlist = Plan.search_planBytemplateId(templateId)
+        if len(planlist) != 0:
+            return jsonify({'state': '1', 'massage': u'该模板正在被使用，无法删除！'})
+        else:
+            ReportTemplate.delete_Template(templateId)
+            users = User.select_all()
+            userJson = MainService.to_userJson(users)
+            templateList = ReportTemplate.search_by_module_userid(moduleName)
+            templateListJson = MainService.to_templateJson(templateList)
+            current_app.logger.warning(u'操作者：%d,deleteTemplate%s', current_user.id, templateId)
+            return jsonify({
+                'templateListJson': templateListJson,
+                'users': userJson,
+                'state': '0', 'massage': u'模板删除成功！'
+            })
+    else:
+        return jsonify({'state': '-1', 'massage': u'模板已被删除，尝试刷新页面！'})
+
+
+@main.route('/queryTemplate', methods=['POST'])
+@login_required
+def queryTemplate():
+    template_name = request.values.get('template_name')
+    user_name = request.values.get('user_name')
+    moduleName = request.values.get('moduleName')
+    templates = ReportTemplate.search_templateByNameAndUser(template_name, user_name, moduleName)
+    templateListJson = MainService.to_templateJson(templates)
+    users = User.select_all()
+    userJson = MainService.to_userJson(users)
+    return jsonify({
+        'templateListJson': templateListJson,
+        'users': userJson
+    })
+# ###################  markdown-docx  ########################################
+
+
+@main.route('/editPlanReport/<int:planId>')
+@login_required
+def editPlanReport(planId):
+    plan = Plan.search_planById(planId)
+    planCopy = copy.deepcopy(plan)
+    moduleName = planCopy.module_id
+    companys = Company.search_company()
+    if planCopy.plan_report_content is None:
+        if moduleName is not None:
+            planCopy.plan_report_content = MainService.findMDTemplate(moduleName, planId)
+        else:
+            planCopy.plan_report_content = u"未找到模板"
+    return render_template(
+        'page/editPlanReport.html',
+        plan=planCopy,
         companys=companys)
 
 
-@main.route('/GPG_BoilerOfPTS')
+# 文件上传
+@main.route('/upload_file', methods=['POST'])
 @login_required
-def GPG_BoilerOfPTS():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_BoilerOfPTS")
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(os.getcwd(), config['imgConfig'].MAIN_IMG_PATH, filename))
+            return jsonify({'data': GetPath.getImgMainNet(filename), 'state': '0', 'message': '上传成功!'})
+        return jsonify({'data': GetPath.getImgMainNet(filename), 'state': '1', 'message': '上传失败!'})
 
-    gpg_BoilerOfPTS = GPGBoilerOfPTS.search_BoilerOfPTS(session.get('GPGPlanId'))
 
+# 文件下载
+@main.route("/download_file/<planId>", methods=['GET'])
+@login_required
+def download_file(planId):
+    # 需要知道2个参数, 第1个参数是本地目录的path, 第2个参数是文件名(带扩展名)
+    dirpath = os.path.join(os.getcwd(), config['markToDocx'].MAIN_OUTFILE_FOR_DOWNLOAD_DOCX_PATH)
+    # 这里是下在目录，从工程的根目录写起，比如你要下载static/js里面的js文件，这里就要写“static/js”
+    filename = GetPath.getDocxTemplateResultFilename(planId, current_user.id)
+    return send_from_directory(dirpath, filename, as_attachment=True)
+    # as_attachment=True 一定要写，不然会变成打开，而不是下载
+
+
+# 文件预览
+@main.route('/uploaded_file/<filename>', methods=['GET'])
+def uploaded_file(filename):
+    return send_from_directory(
+        os.path.join(os.getcwd(), config['imgConfig'].MAIN_IMG_PATH, ""), filename)
+
+
+# 文件转换调用，开启线程
+@main.route('/convertHtmltoDocx', methods=['POST'])
+def convertHtmltoDocx():
+    planId = request.form.get('planId')
+    current_app.logger.warning(u'操作者：%d,文件转换调用，为方案%s开启线程', current_user.id, planId)
+    # 恢复文件
+    plan = Plan.search_planById(planId)
+    thr = threading.Thread(
+        target=convertdel, args=[planId, current_user.id, plan.plan_report_content.encode("utf-8"), plan.plan_report_html.encode("utf-8")])
+    thrname = str(int(round(time.time() * 1000)))
+    session['convertHtmltoDocxstate'] = thrname
+    thr.setName(thrname)
+    thr.start()
+    return jsonify({'filename': '1.docx', 'state': '0', 'message': '转换成功!'})
+
+
+# 文本保存
+@main.route('/saveMd', methods=['POST'])
+@login_required
+def saveMd():
+    if request.method == 'POST':
+        textarea = request.form.get('flask-pagedown-body')
+        htmldata = request.form.get('htmldata')
+        planId = request.form.get('planId')
+        plan = Plan.search_planById(planId)
+        if plan is not None:
+            plan.plan_report_content = textarea
+            plan.plan_report_html = htmldata
+            Plan.insert_plan(plan)
+            return jsonify({'state': '1', 'message': '保存成功!'})
+    return jsonify({'state': '0', 'message': '保存失败!'})
+
+
+# 只保存左侧md内容
+@main.route('/saveContent', methods=['POST'])
+@login_required
+def saveContent():
+    if request.method == 'POST':
+        textarea = request.form.get('flask-pagedown-body')
+        planId = request.form.get('planId')
+        plan = Plan.search_planById(planId)
+        if plan is not None:
+            plan.plan_report_content = textarea
+            Plan.insert_plan(plan)
+            return jsonify({'state': '1'})
+    return jsonify({'state': '0'})
+
+
+# 从首页地图创建新方案
+# 必要条件： 用户需先登录
+@main.route('/new_project', methods=['POST'])
+@login_required
+def new_project():
+    state = 1
+    module_name = request.values.get('module_name')
+    planName = request.values.get('plan_name')
+    if planName is not None:
+        planName = planName.strip()
+    companyName = request.values.get('company_name')
+    if companyName is not None:
+        companyName = companyName.strip()
+    companyLocation = request.values.get('company_location')
+    if companyLocation is not None:
+        companyLocation = companyLocation.strip()
+    company_lnglat = request.values.get('company_lnglat')
+    planId = None
+    # 判断数据库中是否有相同的方案名的方案
+    plan = Plan.search_planByParams(companyName, '', module_name)
+    # 数据库存在则不做操作直接给用户提示
+    # 避免取到重名覆盖掉原来的数据
+    if plan:
+        state = "0"
+    else:
+        if module_name == Module.coalCHP:
+            planId = ToCoalCHP.create_plan(companyName, planName, companyLocation, company_lnglat)
+            MainService.getEquipmentTemplate(planId, module_name)
+        elif module_name == Module.biomassCHP:
+            planId = ToBiomassCHP.create_plan(companyName, planName, companyLocation, company_lnglat)
+            MainService.getEquipmentTemplate(planId, module_name)
+        elif module_name == Module.CCPP:
+            questionnaire = QuestionService().submitQuestionnaire(None, companyName, planName, companyLocation, None, company_lnglat)
+            planId = questionnaire.plan_id
+            MainService.getEquipmentTemplate(planId, module_name)
+        elif module_name == Module.gasPowerGeneration:
+            planId = ToGPG.create_plan(companyName, planName, companyLocation, company_lnglat)
+            MainService.getEquipmentTemplate(planId, module_name)
+        elif module_name == Module.energyIsland:
+            planId = EnergyIslandService().create_plan(companyName, planName, companyLocation, company_lnglat)
+            
+        session['planId'] = planId
+        session['moduleName'] = module_name
+    return jsonify({'state': state})
+
+
+# 从首页地图获取所有方案的经纬度
+# 必要条件： 用户需先登录
+@main.route('/planLngLats', methods=['GET'])
+@login_required
+def planLngLats():
+    plans = Plan.search_plan_all()
+    lngLats = MainService.getLngLats(plans)
+    autoComplete = MainService.getComplete()
+    return jsonify({'lngLats': lngLats, 'autoCompletes': autoComplete})
+
+
+# 从首页地图关键字查询符合的结果
+# 必要条件： 用户需先登录
+@main.route('/getKeyResult', methods=['POST'])
+@login_required
+def getKeyResult():
+    keywords = request.values.get('keywords')
+    keywordResults = MainService.getKeywordResults(keywords)
+    return jsonify({'keywordResults': keywordResults})
+
+
+# 获得转换word状态
+@main.route('/getConvertHtmltoDocxState', methods=['POST'])
+@login_required
+def getConvertHtmltoDocxState():
+    for thread in threading.enumerate():
+        if thread.getName() == session.get('convertHtmltoDocxstate') and thread.isAlive():
+            current_app.logger.warning(u'操作者：%d,获得转换word状态%d', current_user.id, 1)
+            return jsonify({'convertHtmltoDocxSate': "1"})
+    ccppresult_path = GetPath.getDocxTemplateResult(request.values.get('planId'), current_user.id)
+    current_app.logger.warning(ccppresult_path)
+    if os.path.exists(ccppresult_path):
+        current_app.logger.warning(u'操作者：%d,获得转换word状态%d', current_user.id, 0)
+        return jsonify({'convertHtmltoDocxSate': "0"})
+    else:
+        current_app.logger.warning(u'操作者：%d,获得转换word状态%d但是文件没有生成！！！！！！', current_user.id, 1)
+        return jsonify({'convertHtmltoDocxSate': "1"})
+
+
+# 燃料维护
+@main.route('/biomassFuelMaintain')
+@login_required
+def biomassFuelMaintain():
+    biomassCHPComponent = BiomassCHPFuelComponent.search_biomassCHPComponent()
+    session['menuSelect'] = "biomassFuelMaintain"
     return render_template(
-        'page/GasPowerGeneration/GPG_Boiler_of_PTS.html',
-        menuSelect='GPG_BoilerOfPTS',
-        constants=GPGConstant,
-        gpg_BoilerOfPTS=gpg_BoilerOfPTS)
+        'page/fuelMaintain.html',
+        fuelsort=biomassCHPComponent)
 
-@main.route('/GPG_SmokeAirCalculate')
+
+# 选择燃料
+@main.route('/fuelSort', methods=['POST'])
 @login_required
-def GPG_SmokeAirCalculate():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_SmokeAirCalculate")
-    return render_template(
-        'page/GasPowerGeneration/GPG_SmokeAirCalculate.html',
-        menuSelect='GPG_SmokeAirCalculate',
-        constants=GPGConstant)
+def fuelSort():
+    id = request.values.get('id')
+    datas = ToBiomassCHP.to_fuelCHPComponentJson2(id)
+    return jsonify({'fuelSort': datas})
 
-@main.route('/GPG_GasAirSystem')
+
+# 保存新增或修改后的燃料数据
+@main.route('/biomassFuelMaintainSave', methods=['POST'])
 @login_required
-def GPG_GasAirSystem():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_GasAirSystem")
+def biomassFuelMaintainSave():
+    fuelData = ToBiomassCHP.to_fuel(request.form)
+    BiomassCHPFuelComponent.insert_biomassCHPComponent(fuelData)
+    datas = {}
+    datas['flag'] = "success"
 
-    gpg_FlueGasAirSystem = GPGFlueGasAirSystem.search_FlueGasAirSystem(session.get('GPGPlanId'))
-
-    return render_template(
-        'page/GasPowerGeneration/GPG_Gas_Air_System.html',
-        menuSelect='GPG_GasAirSystem',
-        constants=GPGConstant,
-        gpg_FlueGasAirSystem=gpg_FlueGasAirSystem)
+    return jsonify({'coalSort': datas})
 
 
-@main.route('/GPG_SmokeResistance')
+# 保存后刷新数据
+@main.route('/initFuel', methods=['POST'])
 @login_required
-def GPG_SmokeResistance():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_SmokeResistance")
-    return render_template(
-        'page/GasPowerGeneration/GPG_SmokeResistance.html',
-        menuSelect='GPG_SmokeResistance',
-        constants=GPGConstant)
+def initFuel():
+    # initData = BiomassCHPFuelComponent.search_biomassCHPSort("1")
 
+    initData = ToBiomassCHP.to_fuelCHPComponentJson2("1")
 
-@main.route('/GPG_WindResistance')
-@login_required
-def GPG_WindResistance():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_WindResistance")
-    return render_template(
-        'page/GasPowerGeneration/GPG_WindResistance.html',
-        menuSelect='GPG_WindResistance',
-        constants=GPGConstant)
-
-@main.route('/GPG_CirculatingWaterSystem')
-@login_required
-def GPG_CirculatingWaterSystem():
-    GPGConstant = GasPowerGenerationConstant.search_gasPowerGenerationConstant(
-        "GPG_CirculatingWaterSystem")
-
-    return render_template(
-        'page/GasPowerGeneration/GPG_CirculatingWaterSystem.html',
-        menuSelect='GPG_CirculatingWaterSystem',
-        constants=GPGConstant)
-
-# ###################### 煤气发电 end ####################
-
-@main.route('/subPages3')
-@login_required
-def subPages3():
-    return render_template('page/elements.3.html', menuSelect='elements3')
-
-
-@main.route('/elements')
-@login_required
-def elements():
-    return render_template('page/elements.html', menuSelect='elements')
-
-
-@main.route('/charts')
-@login_required
-def charts():
-    return render_template('page/charts.html', menuSelect='charts')
-
-
-@main.route('/tables')
-@login_required
-def tables():
-    return render_template('page/tables.html', menuSelect='tables')
-
-
-@main.route('/typography')
-@login_required
-def typography():
-    return render_template('page/typography.html', menuSelect='typography')
-
-
-@main.route('/icons')
-@login_required
-def icons():
-    return render_template('page/icons.html', menuSelect='icons')
+    return jsonify({'fuelInit': initData})    

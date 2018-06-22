@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    unlockMenuGPG();
-
     getSmokeResistanceDataByPlanId();
 
     $('#submitSmokeResistance').bind('click', submitSmokeResistance);

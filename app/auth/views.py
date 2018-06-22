@@ -16,12 +16,13 @@ def login():
     '''
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(user_email=form.email.data).first()
+        # user = User.query.filter_by(user_email=form.email.data).first()
+        user = User.query.filter_by(user_eid=form.user_eid.data).first()
         # 如果信息对称则登录用户
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
             return redirect(request.args.get('next') or url_for('main.index'))
-        flash(u'邮箱或密码不正确', 'danger')
+        flash(u'工号或密码不正确', 'danger')
     return render_template('auth/page-login.html', form=form)
 
 
@@ -37,6 +38,3 @@ def logout():
     logout_user()
     flash(u'您已登出', 'info')
     return redirect(url_for('main.index'))
-
-
-

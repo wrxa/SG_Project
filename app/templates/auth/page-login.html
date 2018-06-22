@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!-- VENDOR CSS -->
-	<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="/static/assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/assets/vendor/linearicons/style.css">
 	<!-- MAIN CSS -->
@@ -18,11 +18,11 @@
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
-	<link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/apple-icon.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/static/assets/img/favicon.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/title.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/static/assets/img/title.png">
 </head>
 
-<body>
+<body class="layout-fullwidth">
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<div class="vertical-align-wrap">
@@ -31,7 +31,7 @@
 					<div class="left">
 						<div class="content">
 							<div class="header">
-								<div class="logo text-center"><img src="/static/assets/img/sgdl.jpg" alt="Klorofil Logo"></div>
+								<div class="logo text-center"><img src="/static/assets/img/sgjt.jpg" alt="shaanxi blower (group) CO.,LTD. Logo"></div>
 								<p class="lead">用户登录</p>
 							</div>
 							<!-- <form class="form-auth-small" action="index.php">
@@ -60,7 +60,7 @@
 					<div class="right">
 						<div class="overlay"></div>
 						<div class="content text">
-							<h1 class="heading">分布式能源互联岛系统平台</h1>
+							<h1 class="heading">(DESOP)分布式能源系统优化平台</h1>
 							<div class="bottom">
 									{% for message in get_flashed_messages(with_categories=True) %}
 									<div class="alert alert-{{ message[0] }}">

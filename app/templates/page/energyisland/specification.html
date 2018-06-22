@@ -1,0 +1,1286 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/modernizr.custom.js') }}"></script>
+<script src="{{ url_for('static', filename='js/classie.js') }}"></script>
+<script src="{{ url_for('static', filename='js/energyisland/specification.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<br><br><br>
+			<div class="row" style="margin-top: -41px;">	
+				<div class="col-md-12 breadcrumb-fix show">	
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li><a class="pre" href="#" data-page="5">上一页</a></li>
+							<li><a id="energyisland1" href="{{ url_for('energy_island.energyisland_questionnaire') }}">能源互联岛需求调研表</a></li>
+							<li><a id="energyisland2" href="{{ url_for('energy_island.energyisland_device_select', id=session.planId) }}">运行设备选择</a></li>
+							<li><a id="energyisland3" href="{{ url_for('energy_island.energyisland_graph', id=session.planId) }}">运行曲线图</a></li>
+							<li class="current"><a id="energyisland1" href="#">指标</a></li>
+							<li><a class="next" href="#">下一页</a></li>
+						</ol>
+					</div>														
+					<div class="col-md-2 breadcrumb-submit" >
+						<button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i>  保存 </button>
+					</div>
+				</div>
+				<br><br><br><br>				
+			</div>
+			<!-- <div class="row" style="margin-top: -41px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div class="col-md-2 breadcrumb-submit" style="float:right">
+						<button type="button" id="submitSpecification" class="btn btn-success" >
+							<i class="fa fa-check-circle"></i>  保 存 
+						</button>
+					</div>
+				</div>
+				</br></br></br>
+			</div> -->
+
+			<form id="energyisland_specification_form">
+				<div class="row full-width-style">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu" style="width:220px">
+										<h2 class="icon icon-lab">指标</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">1、年平均能源综合利用率</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-2">2、冬季供热工况节能率</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-3">3、夏季供冷工况节能率（余热吸收式制冷+发电厂电制冷）</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-4">4、夏季供冷工况节能率（余热吸收式制冷+自发电制冷）</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-5">5、一次能源综合利用率</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-6">6、热电比</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-7">7、减排量</a>
+											</li>											
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-10" style="left:14%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<div class="panel">
+													<div class="first-title">									
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">年平均能源综合利用率 </span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															1、年净输出电量：燃机或者内燃机发出的电量减去自身耗电量，燃机功率乘以发电效率后减去自身耗电量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															2、年有效供热利用余热总量：燃机排烟余热，内燃机缸套水热量+烟气余热能够被溴化锂机组有效利用部分										
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															3、年有效供冷利用余热总量：燃机排烟余热，内燃机缸套水热量+烟气余热能够被溴化锂机组有效利用制冷部分										
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															4、整个三联供项目每年需要的总的天然气耗量 										
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															5、天然气低位发热值是固定值，可查阅	
+															<br/><br/>							
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+															年净输出电量（W）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="1_output_power" name="1_output_power" class="form-control" />
+																	<span class="input-group-addon show-unit">kWh</span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																年有效供热利用余热总量（Q1）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="1_q1" name="1_q1" class="form-control" />
+																	<span class="input-group-addon show-unit"> MJ </span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																年有效供冷利用余热总量（Q2）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="1_q2" name="1_q2" class="form-control" />
+																	<span class="input-group-addon show-unit"> MJ </span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																年天然气消耗总量（B）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="1_gas_amount" name="1_gas_amount" class="form-control" />
+																	<span class="input-group-addon show-unit"> m³ </span>
+																</div>															
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																天然气低位发热值（QL）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="1_gas_ql" name="1_gas_ql" class="form-control" />
+																	<span class="input-group-addon show-unit"> MJ/m³ </span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																年平均能源综合利用率（ν）
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="ν=(3.6*W+Q1+Q2)/(B*QL)">
+																</i>
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="1_annual_utilization_rate" name="1_annual_utilization_rate" class="form-control" readonly="true"/>
+																</div>
+															</div>
+
+															<div class="col-md-12 breadcrumb-submit" >
+																<button type="button" id="1_calculate_button" class="btn btn-success" >
+																	<i class="fa fa-check-circle"></i>计算 
+																</button>
+															</div>
+														</div>														
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-2 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">冬季供热工况节能率</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															1、电力用户耗电量：燃机或者内燃机输出的电量，与原有的市政电功率相同
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															2、燃气轮机发电效率：燃气轮机发电效率，每家燃机，每个型号的燃机各不相同										
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															3、热用户供热量：能够利用的燃机或者内燃机烟气余热										
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															4、锅炉供热效率：余热锅炉（燃机或者内燃机烟气及内燃机缸套水余热）效率 
+															<br/><br/>										
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电力用户耗电量（Pe）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="2_use_power" name="2_use_power" class="form-control" />
+																	<span class="input-group-addon show-unit">MJ</span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																燃气发电机发电效率（ηe）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="2_power_efficiency" name="2_power_efficiency" class="form-control" />
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																热用户供热量（Qh）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="2_qh" name="2_qh" class="form-control" />
+																	<span class="input-group-addon show-unit"> MJ </span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网输配效率
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="2_net_trans_efficiency" name="2_net_trans_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网发电效率																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="2_net_gen_efficiency" name="2_net_gen_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																锅炉供热效率（ηb）																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="2_boiler_efficiency" name="2_boiler_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																节能率
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="节能率= 1-(Pe/ηe)/(Pe/ηce+Qh/ηb);  其中，ηce=电网输配效率*电网发电效率">
+																</i>
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="2_save_efficiency" name="2_save_efficiency" class="form-control" readonly="true"/>
+																</div>
+															</div>
+
+															<div class="col-md-12 breadcrumb-submit" >
+																<button type="button" id="2_calculate_button" class="btn btn-success" >
+																	<i class="fa fa-check-circle"></i>计算 
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-3 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">夏季供冷工况节能率（余热吸收式制冷+发电厂电制冷）</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															1、分布式能源系统余热制冷量：燃机或者内燃机烟气及内燃机缸套水余热用过溴化锂集中产生的冷量总和
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															2、电制冷机的制冷COP：市政电制冷系统的效率									
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电力用户耗电量（Pe）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="3_use_power" name="3_use_power" class="form-control" />
+																	<span class="input-group-addon show-unit">MJ</span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																燃气发电机发电效率（ηe）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="3_gen_efficiency" name="3_gen_efficiency" class="form-control" />
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																分布式能源系统余热制冷量（Qc）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="3_qc" name="3_qc" class="form-control" />
+																	<span class="input-group-addon show-unit"> MJ </span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网输配效率
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="3_net_trans_efficiency" name="3_net_trans_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网发电效率																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="3_net_gen_efficiency" name="3_net_gen_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电制冷机的制冷（COPe）																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="3_cope" name="3_cope" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																节能率
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="节能率=1-Pe/ηe/(Pe/ηce+Qc/(COPe*ηce)); 其中，ηce=电网输配效率*电网发电效率,COPe:电制冷机的制冷COP，Qc:用户用冷量">
+																</i>
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="3_save_efficiency" name="3_save_efficiency" class="form-control" readonly="true"/>
+																</div>
+															</div>
+
+															<div class="col-md-12 breadcrumb-submit" >
+																<button type="button" id="3_calculate_button" class="btn btn-success" >
+																	<i class="fa fa-check-circle"></i>计算 
+																</button>
+															</div>
+															<br/><br/><br/>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-4 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">夏季供冷工况节能率（余热吸收式制冷+自发电制冷）</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															电制冷机的制冷COP：燃机或者内燃机自己所发电量通过制冷剂系统产生的冷量的效率。
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电力用户耗电量（Pe）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="4_use_power" name="4_use_power" class="form-control" />
+																	<span class="input-group-addon show-unit">MJ</span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																燃气发电机发电效率（ηe）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_gen_efficiency" name="4_gen_efficiency" class="form-control" />
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																分布式能源系统余热制冷量（Qc）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="4_qc" name="4_qc" class="form-control" />
+																	<span class="input-group-addon show-unit"> MJ </span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网输配效率
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_net_trans_efficiency" name="4_net_trans_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网发电效率																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_net_gen_efficiency" name="4_net_gen_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电制冷机的制冷COP（COPe）																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_cope" name="4_cope" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																余热利用效率（ηh）																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_nh" name="4_nh" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																吸收式制冷剂制冷（COPa）																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_copa" name="4_copa" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																节能率
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="节能率=1-(Pe/ηe+(（Qc-Pe*ηh*COPa/ηe)/(COPe*ηce))/(Pe/ηce+Qc/(COPe*ηce)）其中，ηce=电网输配效率*电网发电效率,COPe:电制冷机的制冷COP，Qc:用户用冷量,COPa:吸收式制冷机制冷COP；ηh:分布式能源系统余热利用效率">
+																</i>
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="4_save_efficiency" name="4_save_efficiency" class="form-control" readonly="true"/>
+																</div>
+															</div>
+
+															<div class="col-md-12 breadcrumb-submit" >
+																<button type="button" id="4_calculate_button" class="btn btn-success" >
+																	<i class="fa fa-check-circle"></i>计算 
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-5 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">一次能源综合利用率</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															1、供热量：三联供项目中，燃机和内燃气烟气余热，再加上内燃气缸套水余热经过溴化锂机组产生的热量，再加上电制热量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															2、供冷量：三联供项目中，燃机和内燃气烟气余热，再加上内燃气缸套水余热经过溴化锂机组产生的冷量，再加上电制冷量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															3、供电量：燃机或者内燃机能够提供的电量，燃机和内燃机功率乘以发电功率后再乘以机组运行时间，再加上外界购买的电量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															4、燃料总的消耗量：整个系统消耗的总的天然气量+燃煤量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															5、购电量：外购的市政电量
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																供热量
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="5_heat" name="5_heat" class="form-control" />
+																	<span class="input-group-addon show-unit">kJ</span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																供冷量
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="5_cold" name="5_cold" class="form-control" />
+																	<span class="input-group-addon show-unit">kJ</span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																供电量（kWh）
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="5_power" name="5_power" class="form-control" />
+																	<span class="input-group-addon show-unit">kWh</span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																燃料总消耗量
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="5_consume" name="5_consume" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																单位燃料低位发热值																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="5_ql" name="5_ql" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																购电量																
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="5_power_purchase" name="5_power_purchase" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																电网供电效率（ηce）	
+																<i class="fa fa-question-circle-o"  title="备注："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="注意:煤电ηce取0.315，燃气—蒸汽联合循环的电网电力，供电效率ηce取0.45">
+																</i>															
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="5_net_supply_efficiency" name="5_net_supply_efficiency" class="form-control" />
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																一次能源利用效率
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="一次能源利用效率=(供热量+供冷量+供电量*3600)/((燃料总消耗量*单位燃料低位发热值+(购电量*3600/ηce))">
+																</i>
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="5_use_efficiency" name="5_use_efficiency" class="form-control" readonly="true"/>
+																</div>
+															</div>
+															<div class="col-md-12 breadcrumb-submit" >
+																<button type="button" id="5_calculate_button" class="btn btn-success" >
+																	<i class="fa fa-check-circle"></i>计算 
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+				
+											<div class="col-md-12 q-6 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">热电比</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															1、燃机或者内燃机能够利用的烟气余热量+内燃机缸套水的热量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															2、燃机和内燃机总的供电量
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																供热量
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="6_heat" name="6_heat" class="form-control" />
+																	<span class="input-group-addon show-unit">kJ</span>
+																</div>
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																供电量
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group">
+																	<input type="text" id="6_power_amount" name="6_power_amount" class="form-control" />
+																	<span class="input-group-addon show-unit">kWh</span>
+																</div>																
+															</div>
+															<br/><br/><br/>
+														</div>
+
+														<div class="col-md-12" >
+															<div class="col-md-4 row third-title" style="text-align:center;">
+																热电比
+																<i class="lnr lnr-pencil"  title="计算公式："  
+																data-container="body" data-toggle="popover" data-placement="right" 
+																data-content="公式：热电比=系统供热总量/(系统供电量*3600)*100%">
+																</i>
+															</div>
+
+															<div class="col-md-8 row" style="text-align:center;">
+																<div class="input-group" style="width:100%">
+																	<input type="text" id="6_heat_power_rate" name="6_heat_power_rate" class="form-control" readonly="true"/>
+																</div>
+															</div>
+
+															<div class="col-md-12 breadcrumb-submit" >
+																<button type="button" id="6_calculate_button" class="btn btn-success" >
+																	<i class="fa fa-check-circle"></i>计算 
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+				
+											<div class="col-md-12 q-7 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">减排量</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															1、基准系统电力消耗：整个厂区原有的、常规系统电力总消耗量（一般是市政电）
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															2、基准系统天然气消耗：整个厂区原有的、常规系统，热电分供状态时，天然气的耗量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															3、基准系统原煤消耗量：整个厂区原有的、常规系统的发电、供热、制冷时原煤的消耗量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															4、分布式能源系统电力消耗：三联供系统中，燃机或者内燃机提供满足厂区电力需求的电量，燃机或者内燃机发电量减去系统自耗电
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															5、分布式能源系统燃气消耗：三联供系统中，燃机或者内燃机及锅炉消耗的总的天然气的量
+														</div>
+														<div class="col-md-12 third-title-center" style="text-align:left;color:red;"> 
+															6、分布式能源系统原煤消耗量：三联供系统中，燃机或者内燃机及锅炉消耗的总的原煤量
+															<br/><br/>
+														</div>													
+
+														<div class="col-md-4">
+															<div class="col-md-12 second-title">CO2减排量</div>
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统电力消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="co2_b_use_power" name="co2_b_use_power" class="form-control" />
+																		<span class="input-group-addon show-unit">万kwh</span>
+																	</div>
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统天然气消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="co2_b_use_gas" name="co2_b_use_gas" class="form-control" />
+																		<span class="input-group-addon show-unit">万m³</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统原煤消耗量
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="co2_b_use_coal" name="co2_b_use_coal" class="form-control" />
+																		<span class="input-group-addon show-unit">万t</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统电力消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="co2_d_use_power" name="co2_d_use_power" class="form-control" />
+																		<span class="input-group-addon show-unit">万kwh</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统天然气消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="co2_d_use_gas" name="co2_d_use_gas" class="form-control" />
+																		<span class="input-group-addon show-unit">万m³</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统原煤消耗量
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="co2_d_use_coal" name="co2_d_use_coal" class="form-control" />
+																		<span class="input-group-addon show-unit">万t</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	电力折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="co2_power_coefficient" name="co2_power_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	天然气折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="co2_gas_coefficient" name="co2_gas_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	原煤折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="co2_coal_coefficient" name="co2_coal_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	一次能源利用效率
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="公式=（基准系统电力消耗-分布式能源电力消耗）*电力折标煤系数+（基准系统天然气消耗-分布式能源系统天然气消耗）*天然气折标煤系数+（基准系统原煤消耗量-分布式能源系统原煤消耗量）*原煤折算标煤系数">
+																	</i>
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="co2_use_efficiency" name="co2_use_efficiency" class="form-control" readonly="true"/>
+																	</div>
+																</div>
+																<div class="col-md-12 breadcrumb-submit">
+																	<button type="button" id="co2_calculate_button" class="btn btn-success" >
+																		<i class="fa fa-check-circle"></i>计算 
+																	</button>
+																</div>
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div class="col-md-12 second-title">SO2减排量</div>
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统电力消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="so2_b_use_power" name="so2_b_use_power" class="form-control" />
+																		<span class="input-group-addon show-unit">万kwh</span>
+																	</div>
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统天然气消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="so2_b_use_gas" name="so2_b_use_gas" class="form-control" />
+																		<span class="input-group-addon show-unit">万m³</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统原煤消耗量
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="so2_b_use_coal" name="so2_b_use_coal" class="form-control" />
+																		<span class="input-group-addon show-unit">万t</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统电力消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="so2_d_use_power" name="so2_d_use_power" class="form-control" />
+																		<span class="input-group-addon show-unit">万kwh</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统天然气消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="so2_d_use_gas" name="so2_d_use_gas" class="form-control" />
+																		<span class="input-group-addon show-unit">万m³</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统原煤消耗量
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="so2_d_use_coal" name="so2_d_use_coal" class="form-control" />
+																		<span class="input-group-addon show-unit">万t</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	电力折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="so2_power_coefficient" name="so2_power_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	天然气折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="so2_gas_coefficient" name="so2_gas_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	原煤折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="so2_coal_coefficient" name="so2_coal_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	一次能源利用效率
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="公式=（基准系统电力消耗-分布式能源电力消耗）*电力折标煤系数+（基准系统天然气消耗-分布式能源系统天然气消耗）*天然气折标煤系数+（基准系统原煤消耗量-分布式能源系统原煤消耗量）*原煤折算标煤系数">
+																	</i>
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="so2_use_efficiency" name="so2_use_efficiency" class="form-control" readonly="true"/>
+																	</div>
+																</div>
+																<div class="col-md-12 breadcrumb-submit">
+																	<button type="button" id="so2_calculate_button" class="btn btn-success" >
+																		<i class="fa fa-check-circle"></i>计算 
+																	</button>
+																</div>
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div class="col-md-12 second-title">NOx减排量</div>
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统电力消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="nox_b_use_power" name="nox_b_use_power" class="form-control" />
+																		<span class="input-group-addon show-unit">万kwh</span>
+																	</div>
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统天然气消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="nox_b_use_gas" name="nox_b_use_gas" class="form-control" />
+																		<span class="input-group-addon show-unit">万m³</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	基准系统原煤消耗量
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="nox_b_use_coal" name="nox_b_use_coal" class="form-control" />
+																		<span class="input-group-addon show-unit">万t</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统电力消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="nox_d_use_power" name="nox_d_use_power" class="form-control" />
+																		<span class="input-group-addon show-unit">万kwh</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统天然气消耗
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="nox_d_use_gas" name="nox_d_use_gas" class="form-control" />
+																		<span class="input-group-addon show-unit">万m³</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	分布式能源系统原煤消耗量
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group">
+																		<input type="text" id="nox_d_use_coal" name="nox_d_use_coal" class="form-control" />
+																		<span class="input-group-addon show-unit">万t</span>
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	电力折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="nox_power_coefficient" name="nox_power_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	天然气折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="nox_gas_coefficient" name="nox_gas_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	原煤折标煤系数
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="nox_coal_coefficient" name="nox_coal_coefficient" class="form-control" />
+																	</div>																
+																</div>
+																<br/><br/><br/>
+															</div>
+
+															<div class="col-md-12" >
+																<div class="col-md-4 row third-title" style="text-align:center;">
+																	一次能源利用效率
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="公式=（基准系统电力消耗-分布式能源电力消耗）*电力折标煤系数+（基准系统天然气消耗-分布式能源系统天然气消耗）*天然气折标煤系数+（基准系统原煤消耗量-分布式能源系统原煤消耗量）*原煤折算标煤系数">
+																	</i>
+																</div>
+
+																<div class="col-md-8 row" style="text-align:center;">
+																	<div class="input-group" style="width:100%">
+																		<input type="text" id="nox_use_efficiency" name="nox_use_efficiency" class="form-control" readonly="true"/>
+																	</div>
+																</div>
+																<div class="col-md-12 breadcrumb-submit">
+																	<button type="button" id="nox_calculate_button" class="btn btn-success" >
+																		<i class="fa fa-check-circle"></i>计算 
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+</div>
+	{% endblock %} {% endblock %}

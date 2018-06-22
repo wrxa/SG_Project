@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+<!doctype html>
+{% block content %}
+{% block page_content %}
+<script src="{{ url_for('static', filename='js/ccpp/ccppccpp.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	/* .divcss5-b{ margin-left:10px;overflow-y:scroll; overflow-x:scroll;}  */
+	/* css注释说明：设置第二个盒子与第一个盒子间距为10px，并设置了横纵滚动条样式 */ 
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <h3 class="page-title">CCPP-方案列表</h3> -->
+			</br></br></br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">	
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+								<li>
+										<a class="pre" href="#" data-page="5">上一页</a>
+									</li>
+							<li>
+								<a onclick="return false;" id="ccpp1"  href="{{ url_for('ccppviews.toCcppQuestionnaire') }}">需求调查表</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp2"  href="{{ url_for('ccppviews.toCcppParaResearch') }}">余热锅炉参数设置</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp3"  href="{{ url_for('ccppviews.toCcppTurbineParaResearch') }}">汽轮机参数设置</a>
+							</li>
+							<li class="ableClick">
+								<a onclick="return false;" id="ccpp4" href="#">方案列表</a>
+							</li>
+							<li>
+								<a onclick="return false;" id="ccpp5"  href="{{ url_for('ccppviews.toCcppCalculate') }}">余热锅炉系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp6"  href="{{ url_for('ccppviews.toCcppTurbine') }}">汽轮机系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp7" href="{{ url_for('ccppviews.biomassTurbineAuxiliary') }}">汽机辅机</a>
+							</li>
+							
+							<li class="hide">
+								<a onclick="return false;" id="ccpp8"  href="{{ url_for('ccppviews.toCcppCirculatingWater') }}">循环水系统</a>
+							</li>
+							
+							<li class="hide">
+								<a onclick="return false;" id="ccpp9" href="{{ url_for('ccppviews.biomassWaterTreatment') }}">化学水系统</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp10" href="{{ url_for('ccppviews.allformschemes') }}">方案一览</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp11" href="{{ url_for('ccppviews.toCcppChimneyCalculate') }}">烟囱</a>
+							</li>
+
+							<li class="hide">
+								<a onclick="return false;" id="ccpp12" href="{{ url_for('ccppviews.toCcppEconomic') }}">经济性分析</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp13" href="{{ url_for('ccppviews.toccppimg') }}">方案图</a>
+							</li>
+							<li class="hide">
+								<a onclick="return false;" id="ccpp14" href="{{ url_for('ccppviews.toCcppEquipment') }}">设备列表</a>
+							</li>
+							<li class="current">
+									<a class="next" href="#">下一页</a>
+								</li>
+						</ol>
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+
+			<div class="row full-width-style">
+				<div class="st-content">
+					<div class="st-content-inner">
+						<div class="col-md-12">
+							<!-- END INPUT GROUPS -->
+							<!-- ALERT MESSAGES -->
+							<div class="panel">
+								{% if count != 0 and countturbine != 0 %}
+								<div class="panel-heading">
+									<h3 class="page-title">
+										需求功率{{need_engine_demand_power}}KW的可供选择燃机和方案
+									</h3>
+								</div>
+								<div class="" style="overflow-x:auto">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th ><div style="width:50px" align="center">序号</div></th>
+												<th ><div style="width:110px" align="center">燃机型号</div></th>
+												<th ><div style="width:80px" align="center">燃机数量</div></th>
+												<th ><div style="width:140px" align="center">单台燃机出力(KW)</div></th>
+												<th ><div style="width:120px" align="center">燃机总出力(KW)</div></th>
+												<th ><div style="width:165px" align="center">燃机总耗气量(kJ/kWh)</div></th>
+												<th ><div style="width:120px" align="center">燃机排烟温度(℃)</div></th>
+		
+												<th ><div style="width:120px" align="center">补燃量(Nm3/h)</div></th>
+												<th ><div style="width:120px" align="center">补燃后温度(℃)</div></th>
+		
+												{% if ccppmodellist[0].boiler_single_or_dula_pressure_design == 'singlepot' %}
+													<th ><div style="width:120px" align="center">锅炉形式</div></th>
+													<th ><div style="width:120px" align="center">主蒸汽温度(℃)</div></th>
+													<th ><div style="width:140px" align="center">主蒸汽压力(MPa)</div></th>
+													<th ><div style="width:140px" align="center">主蒸汽产气量(t/h)</div></th>
+												{% endif %}
+		
+												
+												{% if ccppmodellist[0].boiler_single_or_dula_pressure_design == 'doublepot' %}
+													<th ><div style="width:120px" align="center">锅炉形式</div></th>
+													<th ><div style="width:120px" align="center">低压蒸汽温度(℃)</div></th>
+													<th ><div style="width:180px" align="center">低压蒸汽压力(MPa)</div></th>
+													<th ><div style="width:120px" align="center">低压产气量(t/h)</div></th>
+													<th ><div style="width:120px" align="center">主蒸汽温度(℃)</div></th>
+													<th ><div style="width:130px" align="center">主蒸汽压力(MPa)</div></th>
+													<th ><div style="width:130px" align="center">主蒸汽产气量(t/h)</div></th>
+												{% endif %}
+												
+												<!-- 汽轮机 -->
+												<!-- 抽凝式 -->
+												{% if ccppturbinelist[0].s_steam_type_test == 1 %}
+													<th ><div style="width:120px" align="center">汽轮机形式</div></th>
+													<th ><div style="width:120px" align="center">进气温度(℃)</div></th>
+													<th ><div style="width:120px" align="center">进气压力(MPa)</div></th>
+													<th ><div style="width:120px" align="center">进气流量(t/h)</div></th>
+													<th ><div style="width:120px" align="center">抽气温度(℃)</div></th>
+													<th ><div style="width:120px" align="center">抽气压力(MPa)</div></th>
+													<th ><div style="width:120px" align="center">抽气流量(t/h)</div></th>
+													<th ><div style="width:130px" align="center">汽轮机发电量(kW)</div></th>
+												{% endif %}
+		
+												<!-- 背压式 -->
+												{% if ccppturbinelist[0].s_steam_type_test == 2 %}
+													<th ><div style="width:120px" align="center">汽轮机形式</div></th>
+													<th ><div style="width:120px" align="center">进气温度(℃)</div></th>
+													<th ><div style="width:120px" align="center">进气压力(MPa)</div></th>
+													<th ><div style="width:120px" align="center">进气流量(t/h)</div></th>
+													<th ><div style="width:120px" align="center">背压压力(MPa)</div></th>
+													<th ><div style="width:120px" align="center">背压温度(t/h)</div></th>
+													<th ><div style="width:130px" align="center">汽轮机发电量(kW)</div></th>
+												{% endif %}
+
+												<!-- 补凝式 -->
+												{% if ccppturbinelist[0].s_steam_type_test == 3 %}
+												<th ><div style="width:120px" align="center">汽轮机形式</div></th>
+												<th ><div style="width:120px" align="center">进气温度(℃)</div></th>
+												<th ><div style="width:120px" align="center">进气压力(MPa)</div></th>
+												<th ><div style="width:120px" align="center">进气流量(t/h)</div></th>
+												<th ><div style="width:120px" align="center">补气点压力(MPa)</div></th>
+												<th ><div style="width:120px" align="center">补气点温度(t/h)</div></th>
+												<th ><div style="width:130px" align="center">汽轮机发电量(kW)</div></th>
+												{% endif %}
+												<!-- <th ><div style="width:120px" align="center">凝气压力(MPa)</div></th> -->
+												
+												<th ><div style="width:70px" align="center">操作</div></th>
+											</tr>
+										</thead>
+											
+										<tbody>		
+									{% for ccpp_ccpp in ccppmodellist %}
+											<tr class="alert alert-success alert-dismissible" role="alert">
+												<td align="center">{{ loop.index }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].engine_model_design }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].engine_power_design }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].engine_power_design * ccpp_ccpp.engine_num_design }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].individual_gas_consumption_design * ccpp_ccpp.engine_num_design }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].engine_exhuast_gas_temperature_design }}</td>
+		
+		
+												<td align="center">{{ ccppmodellist[loop.index - 1].boiler_afterburning_amount_design }}</td>
+												<td align="center">{{ ccppmodellist[loop.index - 1].boiler_afterburning_exhuast_temperature_design }}</td>
+		
+												
+												{% if ccppmodellist[loop.index - 1].boiler_single_or_dula_pressure_design == 'singlepot' %}
+													<td align="center">单压余热锅炉</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].sp_steam_temperature_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].sp_steam_pressure_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].sp_low_gas_production_design }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												{% endif %}
+		
+												{% if ccppmodellist[loop.index - 1].boiler_single_or_dula_pressure_design == 'doublepot' %}
+													<td align="center">双压余热锅炉</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].low_evaporat_temperature_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].low_drum_pressure_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].low_gas_production_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].high_steam_temperature_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].high_steam_pressure_design }}</td>
+													<td align="center">{{ ccppmodellist[loop.index - 1].high_gas_production_design }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												{% endif %}
+		
+												<!-- 汽轮机 -->
+												<!-- 抽凝式 -->
+												{% if ccppturbinelist[loop.index - 1].s_steam_type_test == 1 %}
+													<td align="center">抽凝式</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_temperature }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_pressure }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_flow }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_exhaust_point_temperature }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_exhaust_point_pressure }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_exhaust_point_flow }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_gross_generation }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												{% endif %}
+												<!-- 背压式 -->
+												{% if ccppturbinelist[loop.index - 1].s_steam_type_test == 2 %}
+													<td align="center">背压式</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_temperature }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_pressure }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_flow }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_backpressure_pressure }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_backpressure_temperature }}</td>
+													<td align="center">{{ ccppturbinelist[loop.index - 1].e_gross_generation }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												{% endif %}
+												<!-- 补凝式 -->
+												{% if ccppturbinelist[loop.index - 1].s_steam_type_test == 3 %}
+												<td align="center">补凝式</td>
+												<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_temperature }}</td>
+												<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_pressure }}</td>
+												<td align="center">{{ ccppturbinelist[loop.index - 1].e_steam_flow }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												<td align="center">{{ ccppturbinelist[loop.index - 1].e_exhaust_point_pressure }}</td>
+												<td align="center">{{ ccppturbinelist[loop.index - 1].e_exhaust_point_temperature }}</td>
+												<td align="center">{{ ccppturbinelist[loop.index - 1].e_gross_generation }}ｘ{{ ccppmodellist[loop.index - 1].engine_num_design }}</td>
+												{% endif %}
+												<!-- <td align="center">凝气压力</td> -->
+												
+												<td align="center">
+													<div style="width:54px" align="center">
+													<button class="btn-adopt btn-primary" attrnum="{{ ccpp_ccpp.engine_num_design }}" attrid="{{ ccpp_ccpp.engine_id_design }}">采纳方案</button>
+													</div>
+												</td>
+											</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+								{% endif %}
+								{% if count == 0 %}
+								<div class="text" style=" text-align:center;">没有其他可供选的方案</div>
+								{% endif %}
+								</div>
+							</div>
+							<!-- END ALERT MESSAGES -->
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %}
+{% endblock %}

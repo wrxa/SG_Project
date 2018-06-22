@@ -1,9 +1,34 @@
-$(document).ready(function () {
-    unlockMenuGPG();
+var oldFormData;
 
+$(document).ready(function () {
+    init();
+    
     getBoilerDataByPlanId();
 
     $('#submitBoiler').bind('click', submitBoiler);
+
+    // 点击选择模块
+    $('.left-select').bind('click', function(){
+        // 当前页面所有模块list
+        listModule = ["q-1", "q-2", "q-3", "q-4", "q-5", "q-6", "q-7"];
+        var moduleName = $(this).attr("id");
+        // 切换页面右侧内容
+        changeModule(listModule, moduleName);
+    });
+    // 定义面包屑个数
+    var breakCount = 12;
+    // 定义面包屑上id的模块类型
+    var moduleName = "gpg";
+    initPreNext(moduleName, breakCount);
+    // 上一页
+    $('.pre').bind('click', function(){
+        clickPre(breakCount, moduleName);
+    });
+    // 下一页
+    $('.next').bind('click', function(){
+        clickNext(breakCount, moduleName);
+    });
+    createLabelBind("GPG_BoilerForm", oldFormData);
 });
 
 function getBoilerDataByPlanId() {
@@ -15,10 +40,12 @@ function getBoilerDataByPlanId() {
         data: { "planId": planId },
         async: false,
         error: function (request) {
-            alert("Connection error");
+            messageToast('error', '发生异常！',3000);
         },
         success: function (data) {
-            assignmentForm(data.BoilerJson);
+            assignmentForm(data.BoilerJson, "GPG_BoilerForm");
+            var dataformInit = $("#GPG_BoilerForm").serializeArray();  
+            oldFormData = JSON.stringify({ dataform: dataformInit });
         }
     });
 }
@@ -32,36 +59,21 @@ function submitBoiler() {
         data: $('#GPG_BoilerForm').serialize(),
         async: false,
         error: function (request) {
-            alert("Connection error");
+            messageToast('error', '发生异常，保存失败！',2000);
         },
         success: function (data) {
-            alert("成功！！！");
+            if(data.newDatas == null){
+                messageToast('error', '输入数据有误，转换发生异常!', 2000);
+            }else if(data.newDatas == "-1"){
+                messageToast('error', '输入数据有误，出现除0情况!', 2000);
+            }else{
+                assignmentForm(data.newDatas, "GPG_BoilerForm");
+                var dataformInit = $("#GPG_BoilerForm").serializeArray();  
+                oldFormData = JSON.stringify({ dataform: dataformInit });       
+                createLabelBind("GPG_BoilerForm", oldFormData);
+                messageToast('success', '煤气发电-锅炉计算数据保存成功！',2000);
+            }
+            
         }
     });
-}
-
-
-// 给页面中所有表单赋值
-function assignmentForm(datas) {
-    var elements = getElements();
-    var tempInput;
-    for (var i = 0; i < elements.length; i++) {
-        tempInput = elements[i];
-        if(datas[tempInput] != "") {
-            $("input[name='" + tempInput + "']").val(datas[tempInput]);
-        }
-    }
-    //$("#boilerType").val(datas['boiler_type']);
-    //$("#pressureType").val(datas['pressure_temperature']);
-}
-
-
-//获取form中的所有的<input>对象
-function getElements() {
-    var tagElements = $("#GPG_BoilerForm input");
-    var elements = new Array();
-    for (var j = 0; j < tagElements.length; j++) {
-        elements.push(tagElements[j].name);
-    }
-    return elements;
 }

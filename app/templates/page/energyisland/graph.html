@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/energyisland/echarts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/energyisland/graph.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energyisland/energyisland.css') }}">
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+        <div class="container-fluid">
+            <br><br><br>
+            <div class="row" style="margin-top: -41px;">	
+                <div class="col-md-12 breadcrumb-fix show">	
+                    <div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+                        <ol class="cd-breadcrumb triangle">
+                            <li><a class="pre" href="#" data-page="5">上一页</a></li>
+                            <li><a id="energyisland1" href="{{ url_for('energy_island.energyisland_questionnaire') }}">能源互联岛需求调研表</a></li>
+                            <li><a id="energyisland2" href="{{ url_for('energy_island.energyisland_device_select', id=session.planId) }}">运行设备选择</a></li>
+                            <li class="current"><a id="energyisland13" href="#">运行曲线图</a></li>
+                            <li><a id="energyisland4" href="{{ url_for('energy_island.energyisland_specification', id=session.planId) }}">指标</a></li>
+                            <li><a class="next" href="#">下一页</a></li>
+                        </ol>
+                    </div>														
+                    <div class="col-md-2 breadcrumb-submit" >
+                        <button type="button" id="submitData" class="btn btn-success"><i class="fa fa-check-circle"></i>  保存 </button>
+                    </div>
+                    <!-- <div class="col-md-1 breadcrumb-submit">
+                        <button type="button" id="selectTemplate" class="btn btn-success">
+                            <i class="fa fa-check-circle"></i> 选 择 报 告 模 板 </button>
+                    </div> -->
+                </div>
+                <br><br><br><br>				
+            </div>
+            <div class="page-title">能源互联岛需求运行曲线</div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">选择典型日</div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="typical_day">
+                            <option value=1 id="day_1">典型日1</option>
+                            <option value=2 disabled="" id="day_2">典型日2</option>
+                            <option value=3 disabled="" id="day_3">典型日3</option>
+                            <option value=4 disabled="" id="day_4">典型日4</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">选择设备组合</div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="running_plan"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="first-title"><i class="fa fa-building" aria-hidden="true"></i><span class="margin-left15">设备列表</span></div>
+                <table class="device_list" id="device_list">
+                </table>
+            </div>
+            <div class="row col-md-12">
+                <!-- <div class="row col-md-12">
+                    <div id="cost_income_graph" class="col-md-12 data-graph"></div>
+                </div> -->
+                <div class="row col-md-8">
+                    <div class="row col-md-12">
+                        <div id="electric_graph" class="col-md-12 data-graph"></div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div id="steam_graph" class="col-md-12 data-graph"></div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div id="cool_graph" class="col-md-12 data-graph"></div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div id="heat_graph" class="col-md-12 data-graph"></div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div id="hot_water_graph" class="col-md-12 data-graph"></div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div id="air_graph" class="col-md-12 data-graph"></div>
+                    </div>
+                </div>
+                <div class="row col-md-4">
+                    <form id="running_param_form">
+                        <div class="row col-md-12" id="running_param">
+                            {% for i in list_column_eir_running_param %}
+                                {% if loop.index == 1 %}
+                                <div class="second-title">测算基准输入</div>
+                                {% endif %}
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">{{i["name"].decode('utf8') }}</div>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="{{ i.column.decode('utf8') }}" name="{{ i.column.decode('utf8') }}" value="{{ i.value }}" placeholder="请输入数据">
+                                                    <span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                    <form id="running_income_form">
+                        <div class="row col-md-12" id="running_income">
+                            <div class="second-title">收入计算</div>
+                            {% for i in list_column_eir_running_income %}
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">{{i["name"].decode('utf8') }}</div>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="{{ i.column.decode('utf8') }}" name="{{ i.column.decode('utf8') }}" placeholder="请输入数据">
+                                                    <span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                    <form id="running_cost_form">
+                        <div class="row col-md-12" id="running_cost">
+                            <div class="second-title">运行成本计算</div>
+                            {% for i in list_column_eir_running_cost %}
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">{{i["name"].decode('utf8') }}</div>
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="{{ i.column.decode('utf8') }}" name="{{ i.column.decode('utf8') }}" placeholder="请输入数据">
+                                                    <span class="input-group-addon show-primary">{{ i["unit"].decode('utf8') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

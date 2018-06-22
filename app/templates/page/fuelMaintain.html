@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+
+<script src="{{ url_for('static', filename='js/fuelMaintain.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+		</br>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel-page">
+						<form id="fuelMaintain">
+								<div class="col-md-10" style="left:8%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12">
+												<!-- INPUT GROUPS -->
+												<div class="panel" style="margin-top:2%;">
+													<br>
+													<div class="second-title"> 修改燃料</div>
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																	
+																<div class="col-md-4">
+																	选择燃料名称：
+																</div>
+																<div class="col-md-5">
+																	<div class="input-group col-md-12">
+																		<select class="form-control " id="fuelDesign" name="s_fuel_design">
+																			{% for sort in fuelsort %}
+																			<option value="{{ sort.id }}">{{ sort.name }}</option>
+																			{% endfor %}
+																		</select>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+													<div class="second-title"> 新增燃料</div>
+													<div class="row">
+														<div class="panel-body">
+															<div class="col-md-12">
+																	
+																<div class="col-md-4">
+																	输入燃料名称：
+																</div>
+																<div class="col-md-5">
+																	<div class="input-group  col-md-12">
+																		<input class="form-control" type="text" id="fuelNew" name="s_fuel_new">	
+																	</div>
+																</div>	
+															</div>
+														</div>
+													</div>
+													<div>
+														<div class="second-title"> 燃料收到基的元素分析及工业分析</div>
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基碳含量(Car)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="carbon" name="carbon">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基氢含量(Har)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="hydrogen" name="hydrogen">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基氧含量(Oar)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="oxygen" name="oxygen">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基氮含量(Nar)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="nitrogen" name="nitrogen">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基硫含量(Sar)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="sulfur" name="sulfur">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基水份含量(Mar)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="water" name="water">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">干燥无灰基挥发分(Var)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="daf" name="daf">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基灰份(Aar)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="grey" name="grey">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">固定碳(FCar)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="grindability" name="grindability">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="panel-body">
+															<div class="col-md-12">
+																	
+																	<div class="col-md-4">收到基低位发热量(Qnet，ar，q)</div>
+																	<div class="col-md-5">
+																		<div class="input-group">
+																			<input class="form-control" type="text" value="" id="low" name="low">
+																			<span class="input-group-addon show-primary">%</span>
+																		</div>
+																	</div>
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												<br>
+												</div>
+												<div class="col-md-12">
+													<div class="col-md-5"></div>
+													<div class="col-md-7">
+														<button type="button" id="submitData" class="btn btn-success">
+														<i class="fa fa-check-circle"></i> 保 存 </button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+						</form>		
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

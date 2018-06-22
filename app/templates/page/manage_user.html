@@ -4,15 +4,15 @@
 {% block page_content %}
 		<div class="main">
 			<!-- MAIN CONTENT -->
-			<div class="main-content width88">
+		</br></br></br>
+			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Tables</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<!-- BORDERED TABLE -->
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">用户权限管理列表</h3>
+									<h3 class="panel-title text-center" style="font-size: 24px;margin: 20px;font-weight: bold;">用户权限管理列表</h3>
 								</div>
 								<div class="panel-body">
 										{% for message in get_flashed_messages(with_categories=True) %}
@@ -24,9 +24,10 @@
 
 										<div class="col-md-12 col-md-offset-9"><a type="button" class="btn btn-info" href="{{ url_for('main.register') }}">添加新用户</a></div>
 										<br/><br/><br/>
-									<table class="table table-bordered manage-user">
+									<table class="table table-striped manage-user">
 										<thead>
 											<tr>
+												<th>工号</th>
 												<th>用户名</th>
 												<th>邮箱</th>
 												<th>注册时间</th>
@@ -36,26 +37,25 @@
 										</thead>
 										<tbody>
 												{% for user in users %}
+												{% if user.id != 1 %}
 											<tr>
+												<td>{{user.user_eid}}</td>
 												<td>{{user.user_name}}</td>
 												<td>{{user.user_email}}</td>
-												<td>{{user.reg_dateTime}}</td>
+												<td>{{user.reg_dateTime | dateformat("%Y-%m-%d") }}</td>
 												<td>
-													{% if user.role_id==1 %}
-													管理员
+													{% for role in roles %}
+													{% if user.role_id==role.id %}
+													{{role.name}}
 													{% endif %}
-													{% if user.role_id==2 %}
-													专家
-													{% endif %}
-													{% if user.role_id==3 %}
-													用户
-													{% endif %}
+													{% endfor %}
 												</td>
 												<td>
-													<a type="button" class="btn btn-success" href="{{ url_for('main.edit_user', id=user.id) }}"><i class="fa fa-pencil-square-o"></i> 修改权限</a>
-													<a type="button" class="btn btn-danger" href="{{ url_for('main.delete_user', id=user.id) }}"><i class="fa fa-trash-o"></i> 删除用户</a>
+													<a type="button" style="cursor: pointer;font-weight: bold;color: #41B314;" href="{{ url_for('main.edit_user', id=user.id) }}"><i class="fa fa-pencil-square-o" title="修改权限"></i></a>
+													<a type="button" style="cursor: pointer;font-weight: bold;color: #d9534f;margin-left: 20px;" href="{{ url_for('main.delete_user', id=user.id) }}"><i class="fa fa-trash-o" title="删除用户"></i></a>
 												</td>
 											</tr>
+											{% endif%}
 											{% endfor %}
 
 										</tbody>

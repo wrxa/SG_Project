@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/coalCHP/device.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+
+	.cd-breadcrumb.triangle li.ableClick>* {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+
+	.top-bread {
+    margin-top: -91px;
+}
+	/* 下面三行是css部分 */
+
+	.float-right {
+		width: 21px;
+		height: 239px;
+		background: #96c03d;
+		position: absolute;
+		left: 97%;
+		top: 220px;
+		/* margin-left: 500px; */
+		z-index: 800;
+		overflow: hidden;
+	}
+
+	.float-right a {
+		width: 96%;
+		margin: 0 2%;
+		height: 24px;
+		line-height: 24px;
+		text-align: center;
+		display: block;
+		border-bottom: 1px solid #fff;
+		font-size: 12px;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.float-right a:hover {
+		background: #87c00c;
+		transition: all 0.3s linear;
+		-webkit-transition: all 0.3s linear;
+		-mos-transition: all 0.3s linear;
+		-o-transition: all 0.3s linear;
+	}
+</style>
+
+<script>
+	var lanren = {
+		navFast: function () {
+			var defaultTop = (window.screen.height - $('.float-right').height()) / 2 - 100; //默认顶部保持上下居中，再往上去100像素
+			$(window).scroll(function () {
+				var offsetTop = defaultTop + $(window).scrollTop() + 'px';
+				$('.float-right').animate({ top: offsetTop },
+					{
+						duration: 600,	//滑动速度
+						queue: false    //此动画将不进入动画队列
+					});
+			});
+		}
+	};
+	lanren.navFast();
+</script>
+<form id='imgOutput'></form>
+<!-- MAIN -->
+<div id="title0" class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">主要技术经济指标</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li class="current">
+								<a class="pre" href="#" data-page="20">上一页</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp1" href="{{ url_for('coalviews.coalQuestionnaire', id=session.planId) }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp2" href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp3" href="{{ url_for('coalviews.coalSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp4" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp5" href="{{ url_for('coalviews.coalTurbineAuxiliary') }}">汽机辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp6" href="{{ url_for('coalviews.coalHandingSystem') }}">输煤系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp7" href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp8" href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp9" href="{{ url_for('coalviews.coalChimney') }}">烟囱</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp10" href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li>
+								<a id="coalchp11" href="{{ url_for('coalviews.coalChemicalWater') }}">化学水系统</a>
+							</li>
+							<li>
+								<a id="coalchp12" href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li>
+								<a id="coalchp13" href="{{ url_for('coalviews.coalOfficialProcess') }}">公用工程</a>
+							</li>
+							<li>
+								<a id="coalchp14" href="{{ url_for('coalviews.coalHeatSupply') }}">采暖供热</a>
+							</li>
+							<li>
+								<a id="coalchp15" href="{{ url_for('coalviews.coalEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="coalchp16" href="{{ url_for('coalviews.outputImage') }}">出图</a>
+							</li>
+							<li class="ableClick">
+								<a id="coalchp17" href="#">设备参数</a>
+							</li>
+							<li>
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
+
+					<div class="col-md-1 breadcrumb-submit">
+						<button id="saveEquipmentList" name="saveEquipmentList" type="button" class="btn show-success" style="margin-left:-30px">
+							<i class="fa fa-check-circle"></i> 保存
+						</button>
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+			</div>
+
+			<form id="coalequipmentListForm">
+				<div class="row full-width-style width-little">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+
+
+								<div id="EquipmentListDiv" class="col-md-12">
+									<div style="overflow-x:auto; overflow-y:auto">
+										<table id="equipment_list_table" class="table table-striped equipment_list">
+											<thead>
+												<tr>
+													<th style="width:7%; text-align:center">序号</th>
+													<th style="width:18%; text-align:center">名称</th>
+													<th style="width:30%; text-align:center">型号及规格</th>
+													<th style="width:7%; text-align:center">数量</th>
+													<th style="width:7%; text-align:center">单位</th>
+													<th style="width:17%; text-align:center">备注</th>
+													<th style="width:10%; text-align:center">操作</th>
+												</tr>
+											</thead>
+
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+</form>
+</div>
+<!-- CONTENT FLUID -->
+</div>
+<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+<!--代码部分begin-->
+<div class="float-right">
+	<a href="#title1">一</a>
+	<a href="#title2">二</a>
+	<a href="#title3">三</a>
+	<a href="#title4">四</a>
+	<a href="#title5">五</a>
+	<a href="#title6">六</a>
+	<a href="#title7">七</a>
+	<a href="#title8">八</a>
+	<a href="#title9">九</a>
+	<a href="#title0">↑</a>
+</div>
+{% endblock %} {% endblock %}

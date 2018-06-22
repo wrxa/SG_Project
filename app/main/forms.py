@@ -106,8 +106,7 @@ class UpdateUserForm(FlaskForm):
     '''
     role_id = SelectField(
         u'角色',
-        # choices=[(1, u'管理员'), (2, u'专家'), (3, u'用户')],
-        choices=[(1, u'管理员'), (3, u'用户')],
+        choices=[(1, u'超级管理员'), (2, u'全能专家'), (3, u'用户'), (4, u'燃煤专家'), (5, u'生物质专家'), (6, u'煤气专家'), (7, u'燃蒸专家'), (8, u'能源岛专家')],
         coerce=int)
 
     submit = SubmitField(u'修改用户信息')
@@ -117,11 +116,19 @@ class UpdateUserForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     '''
     用户登录页面的表单
+    user_eid 工号
     user_email 邮箱
     user_name 用户名
     password 密码
     password2 确认密码
     '''
+    # 用户工号
+    user_eid = StringField(
+        u'工号',
+        validators=[
+            Required(u'此输入框是必填项'), Regexp('^[0-9]{4,10}$', 0,
+                                          u'请输入4-10位数字')
+        ])
     # 邮箱
     user_email = StringField(
         u'邮箱',
@@ -150,10 +157,9 @@ class RegistrationForm(FlaskForm):
 
     role_id = SelectField(
         u'角色',
-        # choices=[(1, u'管理员'), (2, u'专家'), (3, u'用户')],
-        choices=[(1, u'管理员'), (3, u'用户')],
+        choices=[(1, u'超级管理员'), (2, u'全能专家'), (3, u'用户'), (4, u'燃煤专家'), (5, u'生物质专家'), (6, u'煤气专家'), (7, u'燃蒸专家'), (8, u'能源岛专家')],
         coerce=int)
- 
+
     # user_tel = StringField(
     #     u'电话',
     #     validators=[Required(u'此输入框是必填项'), Regexp('^[0-9]{8,11}$', 0, u'请输入8到11位电话')])
@@ -170,6 +176,14 @@ class RegistrationForm(FlaskForm):
         '''
         if User.query.filter_by(user_email=field.data).first():
             raise ValidationError(u'此邮箱已被注册')
+
+    # 验证用户工号
+    def validate_user_eid(self, field):
+        '''
+        验证用用户工号是否被注册
+        '''
+        if User.query.filter_by(user_eid=field.data).first():
+            raise ValidationError(u'此用户工号已被注册')
 
     # 验证用户名
     def validate_user_name(self, field):

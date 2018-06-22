@@ -1,18 +1,24 @@
-{% extends "bootstrap/base.html" %} {% block title %}EnergyIsland{% endblock %} {% block head %} {{ super() }}
+{% extends "bootstrap/base.html" %} {% block title %}EnergyIsland{% endblock %} {% block head %}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+{% block scripts %}
+<!-- <script src="{{ url_for('static', filename='assets/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery/bootstrap.min.js')}}"></script> -->
+{% endblock scripts %}
 <!-- script -->
 <script src="{{ url_for('static', filename='assets/vendor/jquery/jquery.min.js') }}"></script>
-<!-- <script src="static/assets/vendor/bootstrap/js/bootstrap.min.js"></script> -->
+<script src="{{ url_for('static', filename='assets/vendor/jquery/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery/bootstrap.min.js')}}"></script>
 <script src="{{ url_for('static', filename='assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/vendor/chartist/js/chartist.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/scripts/klorofil-common.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/scripts/common.js') }}"></script>
+
 <!-- VENDOR CSS -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/font-awesome/css/font-awesome.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/linearicons/style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/chartist/css/chartist-custom.css') }}">
@@ -21,80 +27,133 @@
 <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/demo.css') }}">
 <!-- GOOGLE FONTS -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet"> -->
+<!-- 页面样式 -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/component/demo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/component/component.css') }}">
 <!-- ICONS -->
-<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/apple-icon.png') }}">
-<link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='assets/img/favicon.png') }}"> {% endblock %} {% block navbar %}
+<link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/title.png') }}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='assets/img/title.png') }}">
+<title>DESOP</title> {% endblock %} {% block navbar %}
+<body class="layout-fullwidth">
 <div id="wrapper">
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top" style="height:60px">
         <div class="brand">
-            <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='assets/img/sgdl.jpg') }}" alt="Klorofil Logo" class="img-responsive logo"></a>
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='assets/img/sgjt.jpg') }}" alt="陕鼓" class="img-responsive logo">
+            </a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
-                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                <button type="button" class="btn-toggle-fullwidth">
+                    <i class="lnr lnr-arrow-left-circle"></i>
+                </button>
             </div>
-            <form class="navbar-form navbar-left">
-                <div class="input-group">
-                    <input type="text" value="" class="form-control" placeholder="数据查询...">
-                    <span class="input-group-btn"><button type="button" class="btn btn-primary">搜索</button></span>
-                </div>
-            </form>
+
             <div class="navbar-btn navbar-btn-right">
-                <a class="btn btn-success update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro"
-                    title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>升级版本</span></a>
             </div>
             <div id="navbar-menu">
                 <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.role_id != 3 %}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                             <i class="lnr lnr-alarm"></i>
-                            <span class="badge bg-danger">5</span>
+                            <span class="badge bg-danger">{{session.checkedPlanCount}}</span>
                         </a>
                         <ul class="dropdown-menu notifications">
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>系统空间已满</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>你有9个待完成任务</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>您有可获取的月报</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>1小时每周例会</a></li>
-                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>您的请求已通过</a></li>
-                            <li><a href="#" class="more">查看所有事项</a></li>
+                            <li>
+                                <a 
+                                {% if current_user.role_id == 4 %}
+                                href="{{ url_for('main.report',moduleName='coalCHP') }}" 
+                                {% elif current_user.role_id == 5 %}
+                                href="{{ url_for('main.report',moduleName='biomassCHP') }}" 
+                                {% elif current_user.role_id == 6 %}
+                                href="{{ url_for('main.report',moduleName='gasPowerGeneration') }}" 
+                                {% elif current_user.role_id == 7 %}
+                                href="{{ url_for('main.report',moduleName='CCPP') }}" 
+                                {% else %}
+                                
+                                {% endif%}
+
+                                class="notification-item">
+                                    <span class="dot bg-warning"></span>你有{{session.checkedPlanCount}}个待审核报告</a>
+                            </li>
                         </ul>
                     </li>
+                    {% endif %}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>帮助</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="lnr lnr-question-circle"></i>
+                            <span>帮助</span>
+                            <i class="icon-submenu lnr lnr-chevron-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">基本用法</a></li>
-                            <li><a href="#">工作数据</a></li>
-                            <li><a href="#">安全</a></li>
-                            <li><a href="#">故障排除</a></li>
+                            <li>
+                                <a href="#">基本用法</a>
+                            </li>
+                            <li>
+                                <a href="#">帮助文档</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                                {% if current_user.is_admin() %}
-                                <img src="{{ url_for('static', filename='assets/img/admin.png') }}" class="img-circle" alt="Avatar">
-                                {% else %}
-                                <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle" alt="Avatar">
-                                {% endif %}
+                            {% if current_user.role_id == 1 %}
+                            <img src="{{ url_for('static', filename='assets/img/admin.png') }}" class="img-circle" alt="管理员"> {% elif current_user.role_id in [2,4,5,6,7,8] %}
+                            <img src="{{ url_for('static', filename='assets/img/expert.png') }}" class="img-circle" title="专家"> {% else%}
+                            <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle" alt="用户"> {% endif %}
 
-                            <span>{{ current_user.user_name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <span>{{ current_user.user_name }}</span>
+                            <i class="icon-submenu lnr lnr-chevron-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             {% if current_user.is_admin() %}
-                            <li><a href="{{ url_for('main.register') }}"><i class="lnr lnr-plus-circle"></i> <span>添加用户</span></a></li>
-                            <li><a href="{{ url_for('main.list_user') }}"><i class="lnr lnr-user"></i> <span>管理用户权限</span></a></li>
+                            <li>
+                                <a href="{{ url_for('main.register') }}">
+                                    <i class="lnr lnr-plus-circle"></i>
+                                    <span>添加用户</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('main.list_user') }}">
+                                    <i class="lnr lnr-user"></i>
+                                    <span>管理用户权限</span>
+                                </a>
+                            </li>
                             {% endif %}
-                            <li><a href="{{ url_for('main.change_email') }}"><i class="lnr lnr-envelope"></i> <span>修改邮箱</span></a></li>
-                            <li><a href="{{ url_for('main.change_password') }}"><i class="lnr lnr-cog"></i> <span>修改密码</span></a></li>
-                            <li><a href="{{ url_for('auth.logout') }}"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
-
+                            <li>
+                                <a href="{{ url_for('main.change_email') }}">
+                                    <i class="lnr lnr-envelope"></i>
+                                    <span>修改邮箱</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('main.change_password') }}">
+                                    <i class="lnr lnr-cog"></i>
+                                    <span>修改密码</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" id="changeSkin" data-skin="blue">
+                                    <i class="lnr lnr-sync"></i>
+                                    <span>切换皮肤</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('auth.logout') }}">
+                                    <i class="lnr lnr-exit"></i>
+                                    <span>注销</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-                    <!-- <li>
-                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
-                    </li> -->
                 </ul>
             </div>
+        </div>
+        <div class="breadcrumb-switch hide" id="breadcrumbSwitch" data-flag="0">
+            <i class="fa fa-eye eye-hide" style="color:#fff;padding-left: 8px;padding-top: 4px;"></i>
+            <i class="fa fa-eye-slash eye hide" style="color:#fff;padding-left: 8px;padding-top: 4px;"></i>
         </div>
     </nav>
 
@@ -102,103 +161,473 @@
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav">
-                     <li><a href="{{ url_for('main.index') }}" class=""><i class="lnr lnr-home"></i> <span>主页</span></a></li>
+                    <!-- <li><a class="collapsed index" href="{{ url_for('main.index') }}" data-toggle="collapse"><i class="lnr lnr-home"></i> <span>主页</span></a></li> -->
                     <li>
-                        <a href="#coal" id="coalMean" data-toggle="collapse" class="collapsed index"><i class="fa fa-fire"></i> <span>燃煤热电联产</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <a href="#coal" id="coalMean" data-toggle="collapse" class="collapsed index">
+                            <i class="fa fa-fire"></i>
+                            <span>燃煤热电联产</span>
+                            <i class="icon-submenu lnr lnr-chevron-left"></i>
+                        </a>
                         <div id="coal" class="collapse ">
                             <ul class="nav">
-                                <li><a class="coalQuestionnaire" href="{{ url_for('main.coalQuestionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="coalFurnace unselect" onclick="return false;" href="{{ url_for('main.coalFurnace') }}" class="">锅炉计算</a></li>
-                                <li><a class="coalHandingSystem unselect" onclick="return false;" href="{{ url_for('main.coalHandingSystem') }}" class="">输煤系统</a></li>
-                                <!-- <li><a class="coalDesulfurization unselect" onclick="return false;" href="{{ url_for('main.coalDesulfurization') }}" class="">脱硫脱硝</a></li>
-                                <li><a class="coalBoilerAuxiliaries unselect" onclick="return false;" href="{{ url_for('main.coalBoilerAuxiliaries') }}" class="">锅炉辅机系统</a></li>
-                                <li><a class="coalRemovalAshSlag unselect" onclick="return false;" href="{{ url_for('main.coalRemovalAshSlag') }}" class="">除灰除渣系统</a></li>
-                                <li><a class="coalCirculatingWater unselect" onclick="return false;" href="{{ url_for('main.coalCirculatingWater') }}" class="">循环水系统</a></li>
-                                <li><a class="coalSmokeAirSystem unselect" onclick="return false;" href="{{ url_for('main.coalSmokeAirSystem') }}" class="">烟风系统</a></li>
-                             -->
-                                
-                                
-                                
-                                <!-- <li><a class="coalSteamTurbine unselect" onclick="return false;" href="{{ url_for('main.coalSteamTurbine') }}" class="">汽轮机计算</a></li> -->
+                                <li>
+                                    <a id="coalCHPplanList" class="coalCHPplanList" href="{{ url_for('main.planList',moduleName='coalCHP') }}"
+                                        class="">方案管理</a>
+                                </li>
+                                <li>
+                                    <a id="coalCHPreport" class="coalCHPreport" href="{{ url_for('main.report',moduleName='coalCHP') }}"
+                                        class="">报告管理</a>
+                                </li>
+                                <li>
+                                    <a id="coalCHPreporttemplateList" class="coalCHPreporttemplateList" href="{{ url_for('main.templatelist',moduleName='coalCHP') }}"
+                                        class="">模板管理</a>
+                                </li>
+                                <li>
+                                    <a id="coalCHPequipmentList" class="coalCHPequipmentList" href="{{ url_for('coalviews.toCoalCHPEquipment') }}"
+                                        class="">设备管理</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
 
                     <li>
-                        <a href="#biomass" data-toggle="collapse" id="biomassMean" class="collapsed index"><i class="fa fa-tree"></i> <span>生物质热电联产</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <a href="#biomass" data-toggle="collapse" id="biomassMean" class="collapsed index">
+                            <i class="fa fa-tree"></i>
+                            <span>生物质热电联产</span>
+                            <i class="icon-submenu lnr lnr-chevron-left"></i>
+                        </a>
                         <div id="biomass" class="collapse ">
                             <ul class="nav">
-                                <li><a class="biomassQuestionnaire" href="{{ url_for('main.biomassQuestionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="biomassFurnace unselect"  href="{{ url_for('main.biomassFurnace') }}" class="">锅炉计算</a></li>
-                                <li><a class="biomassFuelStorTran unselect"  href="{{ url_for('main.biomassFuelStorTran') }}" class="">燃料存储及输送系统</a></li>
-                                <!-- <li><a class="biomassSteamTurbine" href="{{ url_for('main.biomassSteamTurbine') }}" class="">汽轮机计算</a></li> -->
-                                <li><a class="biomassDesulDenit unselect"  href="{{ url_for('main.biomassDesulDenit') }}" class="">脱硫脱硝系统</a></li>
-                                <li><a class="biomassDASRemove unselect"  href="{{ url_for('main.biomassDASRemove') }}" class="">除尘除灰除渣系统</a></li>
-                                <li><a class="biomassBoilerAuxiliaries unselect"  href="{{ url_for('main.biomassBoilerAuxiliaries') }}" class="">锅炉辅机</a></li>
-                                <li><a class="biomassOfficialProcess unselect"  href="{{ url_for('main.biomassOfficialProcess') }}" class="">公用工程</a></li>
+                                <li>
+                                    <a id="biomassplanList" class="biomassplanList" href="{{ url_for('main.planList',moduleName='biomassCHP') }}"
+                                        class="">方案管理</a>
+                                </li>
+                                <li>
+                                    <a id="biomassreport" class="biomassreport" href="{{ url_for('main.report',moduleName='biomassCHP') }}"
+                                        class="">报告管理</a>
+                                </li>
+                                <li>
+                                    <a id="biomassreporttemplateList" class="biomassreporttemplateList" href="{{ url_for('main.templatelist',moduleName='biomassCHP') }}"
+                                        class="">模板管理</a>
+                                </li>
+                                <li>
+                                    <a id="biomassFuelMaintain" class="biomassFuelMaintain" href="{{ url_for('main.biomassFuelMaintain') }}"
+                                        class="">燃料管理</a>
+                                </li>
+                                <li>
+                                    <a id="biomassEquipmentTemplate" class="biomassEquipmentTemplate" href="{{ url_for('biomassviews.biomassEquipmentTemplate') }}"
+                                        class="">设备管理</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
                     <li>
-                        <a href="#ccpp" data-toggle="collapse" id="ccppMean" class="collapsed index"><i class="fa fa-steam"></i> <span>CCPP</span></a>
-                        
-                        <!-- <a href="#ccpp" data-toggle="collapse" id="ccppMean" class="collapsed index"><i class="fa fa-steam"></i> <span>CCPP</span><i class="icon-submenu lnr lnr-chevron-left"></i></a> -->
-                        <!-- <div id="ccpp" class="collapse ">
+                        <a href="#ccpp" data-toggle="collapse" id="ccppMean" class="collapsed index">
+                            <i class="fa fa-steam"></i>
+                            <span>燃气蒸汽联合循环</span>
+                            <i class="icon-submenu lnr lnr-chevron-left"></i>
+                        </a>
+                        <div id="ccpp" class="collapse ">
                             <ul class="nav">
-                                <li><a class="ccppQuestionnaire" href="{{ url_for('main.ccppQuestionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="ccppFurnace" href="{{ url_for('main.ccppFurnace') }}" class="">锅炉计算</a></li>
-                                <li><a class="ccppSteamTurbine" href="{{ url_for('main.ccppSteamTurbine') }}" class="">汽轮机计算</a></li>
+                                <li>
+                                    <a id="ccppplanList" class="ccppplanList" href="{{ url_for('main.planList',moduleName='CCPP') }}"
+                                        class="">方案管理</a>
+                                </li>
+                                <li>
+                                    <a id="ccppreport" class="ccppreport" href="{{ url_for('main.report',moduleName='CCPP') }}"
+                                        class="">报告管理</a>
+                                </li>
+                                <li>
+                                    <a id="ccppreporttemplateList" class="ccppreporttemplateList" href="{{ url_for('main.templatelist',moduleName='CCPP') }}"
+                                        class="">模板管理</a>
+                                </li>
+                                <li>
+                                    <a id="ccppequipmenttemplateList" class="ccppequipmenttemplateList" href="{{ url_for('ccppviews.toCcppEquipmenttemplate') }}"
+                                        class="">设备管理</a>
+                                </li>
                             </ul>
-                        </div> -->
+                        </div>
                     </li>
 
                     <li>
-                        <a href="#gaspower" id="gaspowerMean" data-toggle="collapse" class="collapsed index"><i class="fa fa-flash"></i> <span>煤气发电</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <a href="#gaspower" data-toggle="collapse" id="gaspowerMean" class="collapsed index">
+                            <i class="fa fa-flash"></i>
+                            <span>煤气发电</span>
+                            <i class="icon-submenu lnr lnr-chevron-left"></i>
+                        </a>
                         <div id="gaspower" class="collapse ">
                             <ul class="nav">
-                                <li><a class="GPG_Questionnaire" href="{{ url_for('main.GPG_Questionnaire') }}" class="">需求调查表</a></li>
-                                <li><a class="GPG_BoilerOfPTS unselect" onclick="return false;" href="{{ url_for('main.GPG_BoilerOfPTS') }}" class="">原则性热力系统锅炉部分</a></li>
-                                <li><a class="GPG_SmokeAirCalculate unselect" onclick="return false;" href="{{ url_for('main.GPG_SmokeAirCalculate') }}" class="">烟、风量计算</a></li> 
-                                <li><a class="GPG_GasAirSystem unselect" onclick="return false;" href="{{ url_for('main.GPG_GasAirSystem') }}" class="">烟风系统</a></li>      
-                                <li><a class="GPG_SmokeResistance unselect" onclick="return false;" href="{{ url_for('main.GPG_SmokeResistance') }}" class="">烟阻力</a></li>
-                                <li><a class="GPG_WindResistance unselect" onclick="return false;" href="{{ url_for('main.GPG_WindResistance') }}" class="">风阻力</a></li>
-                                <li><a class="GPG_CirculatingWaterSystem unselect" onclick="return false;" href="{{ url_for('main.GPG_CirculatingWaterSystem') }}" class="">循环水系统</a></li>                     
+                                <li>
+                                    <a id="gpgplanList" class="gpgplanList" href="{{ url_for('main.planList',moduleName='gasPowerGeneration') }}"
+                                        class="">方案管理</a>
+                                </li>
+                                <li>
+                                    <a id="gpgreport" class="gpgreport" href="{{ url_for('main.report',moduleName='gasPowerGeneration') }}"
+                                        class="">报告管理</a>
+                                </li>
+                                <li>
+                                    <a id="gpgreporttemplateList" class="gpgreporttemplateList" href="{{ url_for('main.templatelist',moduleName='gasPowerGeneration') }}"
+                                        class="">报告模板管理</a>
+                                </li>
+                                <li>
+                                    <a id="gpgequipmenttemplate" class="gpgequipmenttemplate" href="{{ url_for('gpg_view.GPG_EquipmentTemplate',moduleName='gasPowerGeneration') }}"
+                                        class="">设备清单模板管理</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
-                    <!-- <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>Elements</span></a></li> -->
-                    <!-- <li><a href="{{ url_for('main.elements') }}" class="elements"><i class="lnr lnr-code"></i> <span>元素</span></a></li> -->
-                    <!-- <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li> -->
-                    <!-- <li><a href="{{ url_for('main.charts') }}" class="charts"><i class="lnr lnr-chart-bars"></i> <span>图标</span></a></li> -->
-                    <!-- <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li> -->
-                    <!-- <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li> -->
-                    <!-- <li>
-                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Pages</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                        <div id="subPages" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="page-profile.html" class="">Profile</a></li>
-                                <li><a href="page-login.html" class="">Login</a></li>
-                                <li><a href="page-lockscreen.html" class="">Lockscreen</a></li>
-                            </ul>
-                        </div>
-                    </li> -->
-                    <!-- <li><a href="{{ url_for('main.tables') }}" class="tables"><i class="lnr lnr-dice"></i> <span>表格</span></a></li>
-                    <li><a href="{{ url_for('main.typography') }}" class="typography"><i class="lnr lnr-text-format"></i> <span>排版</span></a></li>
-                    <li><a href="{{ url_for('main.icons') }}" class="icons"><i class="lnr lnr-linearicons"></i> <span>小图标</span></a></li> -->
+                    <li>
+                        <a href="#energyisland" data-toggle="collapse" id="energyislandMean" class="collapsed index">
+                            <i class="fa fa-object-ungroup"></i>
+                            <span>能源互联岛</span>
+                            <i class="icon-submenu lnr lnr-chevron-left"></i>
+                        </a>
+                        <div id="energyisland" class="collapse ">
+
+                                <ul class="nav">
+                                    <li>
+                                        <a id="energyIslandplanList" class="energyIslandplanList" href="{{ url_for('main.planList',moduleName='energyIsland') }}"
+                                                class="">方案管理</a>
+                                    </li>
+                                    <!-- <li>
+                                        <a id="energyIslandreport" class="energyIslandreport" href="{{ url_for('main.report',moduleName='energyIsland') }}"
+                                            class="">报告管理</a>
+                                    </li>
+                                    <li>
+                                        <a id="energyIslandtemplateList" class="energyIslandtemplateList" href="{{ url_for('main.templatelist',moduleName='energyIsland') }}"
+                                            class="">模板管理</a>
+                                    </li> -->
+                                    <li>
+                                        <a id="energyisland_addDevice" class="energyisland_addDevice" href="{{ url_for('energy_island.energyisland_addDevice') }}" class="">
+                                            设备管理</a>
+                                        </li>                            
+                                    <li>
+                                        <a id="energyisland_graph" class="energyisland_graph" href="{{ url_for('energy_island.energyisland_graph') }}" class="">
+                                            运行曲线图</a>
+                                    </li>
+                                    <li>
+                                        <a id="energyisland_specification" class="energyisland_specification" href="{{ url_for('energy_island.energyisland_specification') }}" class="">
+                                            指标</a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                    </li>
+
+
                 </ul>
             </nav>
         </div>
     </div>
 
-    <input type="hidden" id="menuSelect" value="{{menuSelect}}" />
-    <input type="hidden" value="{{session.coalCHPPlanId}}" id="coalCHPCurrentPlanId">
-    <input type="hidden" value="{{session.biomassCHPPlanId}}" id="biomassCHPCurrentPlanId">
-    <input type="hidden" value="{{session.GPGPlanId}}" id="GPGCurrentPlanId">
+    <input type="hidden" id="menuSelect" value="{{session.menuSelect}}" />
+    <input type="hidden" value="{{session.planId}}" id="planId">
+    <input type="hidden" value="{{session.quantityDesign}}" id="quantity_design">
+    <input type="hidden" value="{{session.quantityCheck}}" id="quantity_check">
+
     <div class="clearfix"></div>
     <footer>
         <div class="container-fluid">
-            <p class="copyright">Copyright &copy; 2018.xi'an shaangu power All rights reserved.</p>
+            <p class="copyright">Copyright &copy; 2018. shaanxi blower (group) CO.,LTD. All rights reserved.</p>
         </div>
     </footer>
 </div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="alertInfo" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="true" style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 165px;margin-left: -15px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myInfo">提示</h4>
+            </div>
+            <div class="modal-body" id="alertContent">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmBtn">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<!-- 编辑方案的主要设备参数字段 -->
+<div class="modal fade" id="alterparaInfo" tabindex="-1" role="dialog" aria-labelledby="myalterparaInfo" aria-hidden="true" style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 165px;margin-left: -15px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">主要设备参数</h4>
+            </div>
+            
+            <div class="modal-body">
+                <textarea class="form-control" id="alertparaContent" style="height: 200px">主要设备参数</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeBtn" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="paraconfirmBtn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="selectData" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="selectDataInfo">请选择数据表</h4>
+            </div>
+            <div class="modal-body" style="height:600px; overflow:scroll;">
+                <table id="table_content" class="table table-striped plan-list">
+                    <thead>
+                        <tr id="ptable_title">
+                            <th id="table_title" style="width:100%">数据表名</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                <button type="button" class="btn btn-default" id="closeSelectDataBtn">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="selectTemplatemodal" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="selectTemplateInfo">请选择模板</h4>
+            </div>
+            <div class="modal-body">
+                <table id="template_content" class="table table-striped plan-list">
+                    <thead>
+                        <tr>
+                            <th id="template_title" style="width:100%">模板名</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                <button type="button" class="btn btn-default" id="closeSelectTemplateBtn">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="selectCopyTemplate" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="selectCopyTemplateInfo">请选择数据表</h4>
+            </div>
+            <div class="modal-body">
+                <table id="copyTemplate_content" class="table table-striped plan-list">
+                    <thead>
+                        <tr>
+                            <th id="copyTemplate_title" style="width:100%">数据表名</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                <button type="button" class="btn btn-default" id="closeSelectCopyTemplateBtn">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="alertInfoCopyTemplate" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="true"
+    style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 165px;margin-left: -15px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myInfoCopyTemplate">提示</h4>
+            </div>
+            <div class="modal-body" id="alertContentCopyTemplate">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeBtnCopyTemplate" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmBtnCopyTemplate">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="alertInfoselecttemplate" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="true"
+    style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 165px;margin-left: -15px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myInfoselecttemplate">提示</h4>
+            </div>
+            <div class="modal-body" id="alertContentselecttemplate">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeBtnselecttemplate" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmBtnselecttemplate">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="alertInfologic" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="true" style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 165px;margin-left: -15px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myInfologic">提示</h4>
+            </div>
+            <div class="modal-body" id="alertContentlogic">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeBtnlogic" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmBtnlogic">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="selectDatalogic" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="selectDataInfologic">请选择逻辑</h4>
+            </div>
+            <div class="modal-body" style="height:600px; overflow:scroll;">
+                <table id="table_contentlogic" class="table table-striped plan-list">
+                    <thead>
+                        <tr>
+                            <th id="table_titlelogic" style="width:100%">逻辑关系列表</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                <button type="button" class="btn btn-default" id="closeSelectDataBtnlogic">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="createProject" tabindex="-1" role="dialog" aria-labelledby="myproject" aria-hidden="true" style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center" id="myproject" style="font-weight: bold;">创建项目详细信息</h4>
+            </div>
+            <div class="modal-body" style="padding-left: 30px; padding-right: 30px;">
+                <label for="plan_name">项目名称</label>
+                <input class="form-control" type="text" name="index_plan_name" style="width:60%;">
+                </br>
+                <label for="company_name">公司名称</label>
+                <input class="form-control" type="text" name="index_company_name" style="width:60%;">
+                </br>
+                <label for="company_location">项目地址</label>
+                <input class="form-control" type="text" name="index_company_location" style="width:60%;" readonly="true">
+                </br>
+                <label>选择创建模块</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="index_module_name" id="coalCHP" value="coalCHP" checked> 燃煤热电联产
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="index_module_name" id="biomassCHP" value="biomassCHP"> 生物质热电联产
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="index_module_name" id="CCPP" value="CCPP"> 燃气蒸汽联合循环
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="index_module_name" id="gasPowerGeneration" value="gasPowerGeneration"> 煤气发电
+                    </label>
+                </div>
+                <div class="radio">
+                        <label>
+                            <input type="radio" name="index_module_name" id="energyIsland" value="energyIsland"> 能源互联
+                        </label>
+                    </div>
+                <input type="hidden" name="company_lnglat" id="company_lnglat" value="">
+                <!-- <div class="radio">
+                        <label>
+                            <input type="radio" name="index_module_name" id="energyisland" value="energyisland"> 能源互联岛
+                        </label>
+                    </div> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeproBtn" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="confirmCreBtn">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="showInfo" tabindex="-1" role="dialog" aria-labelledby="myInfo" aria-hidden="true" style="z-index:10000">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-left: -15px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myInfo">参考信息</h4>
+            </div>
+            <div class="modal-body" id="infoContent">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <!-- <button type="button" class="btn btn-primary" id="confirmBtn">确定</button> -->
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+</body>
 {% endblock %}

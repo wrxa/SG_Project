@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+
+<script src="{{ url_for('static', filename='js/planList.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+
+<!-- MAIN -->
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">方案管理</div> -->
+		</br>
+			<div class="row">
+
+				<div class="col-md-12">
+				<input type="hidden" value="{{moduleName}}" id="moduleName">
+				<input type="hidden" value="{{pageFlag}}" id="pageFlag">
+					<div class="panel-page" style="background-color:white">
+						<div class="page-title"></br>
+							{% if moduleName== "coalCHP" %}燃煤热电联产{% elif moduleName== "biomassCHP" %}生物质热电联产{% elif moduleName== "CCPP" %}燃气蒸汽联合循环{% elif moduleName== "gasPowerGeneration" %}煤气发电{% elif moduleName== "energyIsland" %}能源互联岛{% endif %}方案管理</div>
+						<div class="row">
+							<div class="col-md-12" style="padding: 30px;">
+
+								<div class="col-md-3">
+									<div class="input-group">
+										<span class="input-group-addon show-primary"><i class="fa fa-user-o"></i>  创建人</span>
+										<input class="form-control" type="text" id="findByUser">
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="input-group">
+										<span class="input-group-addon show-primary"><i class="fa fa-building-o"></i>&nbsp;&nbsp;公司</span>
+										<input class="form-control" type="text" id="findByCompany">
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<a type="button" class="btn btn-primary" id="queryPlans"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;检索方案</a>
+								</div>
+								<div class="col-md-3 text-right">
+
+									<a type="button" class="btn btn-primary" href="{{ url_for('main.index') }}"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;添加</a>
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								<div class="text-center" style="width:70%">
+									{% for message in get_flashed_messages(with_categories=True) %}
+									<div class="alert alert-{{ message[0] }}">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										{{ message[1] }}
+									</div>
+									{% endfor %}
+
+								</div>
+								<div style="padding: 30px;">
+									<table class="table table-striped plan-list">
+										<thead>
+											<tr>
+												<th style="width:8%">项目名称</th>
+												<th style="width:8%">单位名称</th>
+												<th style="width:20%">項目所在地</th>
+												<th style="width:24%">主要设备参数</th>
+												<th style="width:8%">设计人</th>
+												<th style="width:8%">设计日</th>
+												<!-- <th style="width:8%">最近修改日</th> -->
+												<th style="width:8%">审核人</th>
+												<th style="width:8%">审核日</th>
+												<th style="width:8%">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for plan in plans %}
+											<tr>
+												<td data-id="{{ plan.id }}" id="tempId">{{ plan.plan_name }}</td>
+
+												{% for company in companys %} {% if plan.company_id == company.id %}
+												<td>{{ company.company_name }}</td>
+												{% endif %} {% endfor %}
+
+												<td>{{ plan.company_location }}</td>
+
+												<!-- <td title="{{ plan.main_equipment_para }}" style="cursor: pointer;">{{ plan.main_equipment_para | interval(0,21) }}...</td> -->
+												<td style="cursor: pointer;">	
+													{% for para in plan.main_equipment_para_list %}
+													<div>● {{para}}</div>
+													{% endfor %}	
+												</td>
+
+												{% for user in users %} {% if plan.user_id == user.id %}
+												<td>{{ user.user_name }}</td>
+												{% endif %} {% endfor %}
+
+												<td>{{ plan.plan_create_date | dateformat("%Y-%m-%d") }}</td>
+
+												<!-- <td>{{ plan.plan_update_date | dateformat("%Y-%m-%d") }}</td> -->
+
+
+												{% if not plan.approver_id %}
+												<td><span class="label label-info">未审核</span></td>
+												<td><span class="label label-info">未审核</span></td>
+												{% else %}
+
+												{% for user in users %} {% if plan.approver_id == user.id %}
+												<td>{{ user.user_name }}</td>
+												{% endif %} {% endfor %}
+
+												<td>{{ plan.approve_time | dateformat("%Y-%m-%d") }}</td>
+												
+												{% endif %}
+												
+
+												<td>
+													<a type="button" href="{{ url_for('main.editPlan', planId=plan.id, moduleName=moduleName) }}" title="编辑方案" class="btn-margin">
+														<i class="fa fa-pencil-square-o"></i> </a>
+													<a type="button" class="btn-margin" style="margin-left: 20px;" title="删除方案">
+														<i class="fa fa-trash-o"></i> </a>
+												</td>
+											</tr>
+											{% endfor %}
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN CONTENT -->
+</div>
+<!-- END MAIN -->
+{% endblock %} {% endblock %}

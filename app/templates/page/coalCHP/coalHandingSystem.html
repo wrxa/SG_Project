@@ -1,384 +1,567 @@
 {% extends "base.html" %}
 <!doctype html> {% block content %} {% block page_content %}
 <script src="{{ url_for('static', filename='js/coalCHP/coalHandingSystem.js') }}"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/coalCHP/questionnaire.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<style>
+		.panel {
+			background-color: rgba(255, 255, 255, 0.3);
+			margin: 10px 0px 10px 15px;
+		}
+		.cd-breadcrumb.triangle li.ableClick > * {
+    color: #ffffff;
+    background-color: #337ab7!important;
+    border-color: #337ab7 !important;
+}
+	</style>
 <!-- MAIN -->
 <div class="main">
 	<!-- MAIN CONTENT -->
-	<div class="main-content width88">
+	<div class="main-content">
 		<div class="container-fluid">
-			<div class="page-title">燃煤热电联产-输煤系统</div>
-			<div class="row">
+			<!-- <div class="page-title">燃煤热电联产-输煤系统</div> -->
+			</br>
+			</br>
+			</br>
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
 
-				<div class="col-md-12">
-
-					<div class="panel">
-						<div class="page-title">输煤系统</div>
+				<div class="col-md-12 breadcrumb-fix show">
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle">
+							<li>
+								<a class="pre" href="#" data-page="10">上一页</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp1"  onclick="return false;" href="{{ url_for('coalviews.coalQuestionnaire', id=session.planId) }}">需求调查表</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp2" onclick="return false;" href="{{ url_for('coalviews.coalFurnace') }}">锅炉计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp3" onclick="return false;" href="{{ url_for('coalviews.coalSteamTurbine') }}">汽轮机计算</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp4" onclick="return false;" href="{{ url_for('coalviews.coalBoilerAuxiliaries') }}">锅炉辅机系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp5" onclick="return false;" href="{{ url_for('coalviews.coalTurbineAuxiliary') }}">汽机辅机系统</a>
+							</li>
+							<li class="ableClick">
+								<a id="coalchp6" href="#">输煤系统</a>
+							</li>
+							<li>
+								<a id="coalchp7" onclick="return false;" href="{{ url_for('coalviews.coalSmokeAirSystem') }}">烟风系统</a>
+							</li>
+							<li>
+								<a id="coalchp8" onclick="return false;" href="{{ url_for('coalviews.coalDesulfurization') }}">脱硫脱硝系统</a>
+							</li>
+							<li>
+								<a id="coalchp9" onclick="return false;" href="{{ url_for('coalviews.coalChimney') }}">烟囱</a>
+							</li>
+							<li>
+								<a id="coalchp10" onclick="return false;" href="{{ url_for('coalviews.coalRemovalAshSlag') }}">除灰除渣系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp11" onclick="return false;" href="{{ url_for('coalviews.coalChemicalWater') }}">化学水系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp12"  onclick="return false;" href="{{ url_for('coalviews.coalCirculatingWater') }}">循环水系统</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp13" onclick="return false;" href="{{ url_for('coalviews.coalOfficialProcess') }}">公用工程</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp14"  onclick="return false;" href="{{ url_for('coalviews.coalHeatSupply') }}">采暖供热</a>
+							</li>
+							<li class="hide">
+								<a id="coalchp15" onclick="return false;" href="{{ url_for('coalviews.coalEconomicIndicators') }}">主要技术经济指标</a>
+							</li>
+							<li>
+								<a id="coalchp16" onclick="return false;" href="{{ url_for('coalviews.outputImage') }}">出图</a>
+							</li>
+							<li>
+								<a id="coalchp17" href="{{ url_for('coalviews.coalEquipmentList') }}">设备参数</a>
+							</li>
+							<li class="current">
+								<a class="next" href="#">下一页</a>
+							</li>
+						</ol>
+					</div>
+					<div class="col-md-1 breadcrumb-submit">
+						<button type="button" id="submitData" class="btn btn-success">
+							<i class="fa fa-check-circle"></i> 保 存 </button>
 					</div>
 				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+
 			</div>
-			<div class="row">
-				<div class="row col-md-7">
-					<div class="col-md-12">
-						<!-- INPUT GROUPS -->
-						<div class="panel">
-							<div>
-								<div class="second-title"> 锅炉耗煤量
-									<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="除铁器设置在采光间">
-									</i>
+			<form id="coalchpHandingSystem">
+				<div class="row full-width-style">
+					<div class="st-content">
+
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">输煤系统</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="h-1">锅炉耗煤量</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="h-2">炉前煤仓有效容积</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="h-3">煤场（干煤棚）面积</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="h-4">燃煤运输量</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="h-5">输煤系统出力</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="h-6">炉前给煤机</a>
+											</li>
+											<!-- <li>
+												<a class="left-select" href="#" id="h-7">参考信息</a>
+											</li> -->
+										</ul>
+									</nav>
+
 								</div>
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 h-1">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">锅炉耗煤量</span>
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right"
+														 data-content="除铁器设置在采光间">
+														</i>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['b_boiler_rated_coal_capacity', 'b_boiler_daily_utilization_hours',
+														'b_coal_daily_consumption', 'b_boiler_annual_utilization_hours', 'b_coal_annual_consumption', 'b_daily_coal_unbalanced_coefficient',
+														'b_daily_rail_coal_amount', 'b_daily_vehicle_coal_amount'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
 
-								{% for constant in constants %} {% if constant.name_eng in ['boiler_rated_coal_capacity', 'boiler_daily_utilization_hours',
-								'coal_daily_consumption', 'boiler_annual_utilization_hours', 'coal_annual_consumption', 'daily_coal_unbalanced_coefficient',
-								'daily_rail_coal_amount', 'daily_vehicle_coal_amount'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-4">{{ constant.name }}({{ constant.symbol }}) {% if constant.calculate != "" %}
-												<i class="lnr lnr-pencil" title="计算公式：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
-												</i>
-												{% endif %}
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-primary">设计</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"
+																		 {% if constant.name_eng in [ 'b_boiler_rated_coal_capacity', 'b_coal_daily_consumption',
+																		 'b_coal_annual_consumption', 'b_daily_rail_coal_amount', 'b_daily_vehicle_coal_amount'] %} readonly="true" {% endif %} />
+																		<span class="input-group-addon show-primary">{{ constant.unit }}</span>
+																	</div>
 
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-success">校核</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check"
+																		 {% if constant.name_eng in [ 'b_boiler_rated_coal_capacity', 'b_coal_daily_consumption',
+																		 'b_coal_annual_consumption', 'b_daily_rail_coal_amount', 'b_daily_vehicle_coal_amount'] %} readonly="true" {% endif %} />
+																		<span class="input-group-addon show-success">{{ constant.unit }}</span>
+																	</div>
+																</div>
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+																<!--{% if constant.calculate != "" %}
+																<div class="col-md-1"><i class="fa fa-question-circle-o"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}"></i></div>
+																{% endif %}-->
+															</div>
+														</div>
+														</br>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
 											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" {% if constant.name_eng in [
-													 'boiler_rated_coal_capacity', 'coal_daily_consumption', 'coal_annual_consumption', 'daily_rail_coal_amount',
-													 'daily_vehicle_coal_amount'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
+											<div class="col-md-12 h-3 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">煤场（干煤棚）面积&nbsp;&nbsp;&nbsp;
+																<i class="fa fa-file-image-o" title="参考信息" id="info4" style="cursor: pointer;"></i>
+	</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['c_boiler_hour_coal_capacity', 'c_boiler_daily_working_hours',
+														'c_coal_store_days', 'c_coalyard_store_amount', 'c_coal_channel_occupy_coefficient', 'c_coal_shape_coefficient',
+														'c_coal_height', 'c_coal_bulk_density', 'c_coalyard_area', 'c_height', 'c_width'] %}
+														<div class="row">
+
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-primary">设计</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"
+																		 {% if constant.name_eng in [ 'c_boiler_hour_coal_capacity', 'c_coalyard_store_amount',
+																		 'c_coalyard_area', 'c_width'] %} readonly="true" {% endif %} />
+																		<span class="input-group-addon show-primary">{{ constant.unit }}</span>
+
+																	</div>
+
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-success">校核</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check"
+																		 {% if constant.name_eng in [ 'c_boiler_hour_coal_capacity', 'c_coalyard_store_amount',
+																		 'c_coalyard_area', 'c_width'] %} readonly="true" {% endif %} />
+																		<span class="input-group-addon show-success">{{ constant.unit }}</span>
+
+																	</div>
+																</div>
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														</br>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 h-4 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">燃煤运输量</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['b_boiler_rated_coal_capacity', 't_transport_unbalanced_coefficient',
+														't_transportsystem_effective_working_hours', 't_transportsystem_amount', 't_vehicle_capacity_tonnage', 't_daily_working_hours',
+														't_daily_received_coal_amount', 't_vehicle_daily_incoming_times', 't_vehicle_perhour_incoming_times'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-primary">设计</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"
+																		 {% if constant.name_eng in [ 'b_boiler_rated_coal_capacity', 't_transportsystem_amount',
+																		 't_daily_received_coal_amount', 't_vehicle_daily_incoming_times', 't_vehicle_perhour_incoming_times'] %} readonly="true" {% endif %}
+																		/>
+																		<span class="input-group-addon show-primary">{{ constant.unit }}</span>
+
+																	</div>
+
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-success">校核</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check"
+																		 {% if constant.name_eng in [ 'b_boiler_rated_coal_capacity', 't_transportsystem_amount',
+																		 't_daily_received_coal_amount', 't_vehicle_daily_incoming_times', 't_vehicle_perhour_incoming_times'] %} readonly="true" {% endif %}
+																		/>
+																		<span class="input-group-addon show-success">{{ constant.unit }}</span>
+
+																	</div>
+																</div>
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														</br>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 h-5 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">输煤系统出力</span>
+														<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right"
+														 data-html="true" data-content="1.总耗煤量＜60t/h，采用单路，三班，每路出力≥200%的总耗煤量，两班≥300%<br/>
+													   2.总耗煤量≥60t/h，采用双路，三班每路出力≥150%的总耗煤量，两班≥200%<br/>
+													   3.三班＜16h；两班＜11h">
+														</i>
+														&nbsp;&nbsp;&nbsp;
+														<i class="fa fa-file-image-o" title="参考信息" id="info5" style="cursor: pointer;"></i>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['b_boiler_rated_coal_capacity', 's_mutil_boiler_rated_coal_capacity',
+														's_mutil_boiler_rated_coal_amount', 's_transportsystem_output', 's_transportsystem_working_hours', 's_shift_working_hours',
+														's_section_coefficient', 's_belt_speed', 's_material_bulk_density', 's_belt_max_transport_capacity']
+														%}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-4">{{ constant.name }}({{ constant.symbol }})
+																
+																</div>
+																<div class="col-md-7">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-success">结果</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"
+																		 {% if constant.name_eng in [ 's_b_boiler_rated_coal_capacity', 's_mutil_boiler_rated_coal_amount',
+																		 's_transportsystem_working_hours', 's_shift_working_hours', 's_b_belt_max_transport_capacity'] %} readonly="true" {% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+
+															</div>
+														</div>
+														</br>
+														{% endif %}
+														{% if constant.name_eng in ['s_belt_width'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-4">{{ constant.name }}({{ constant.symbol }})
+																
+																</div>
+																<div class="col-md-7">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-success">结果</span> -->
+																		<!-- <input type="text"  class="form-control" id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"  /> -->
+																		<select class="form-control" id="{{ constant.name_eng }}_design" name="s_belt_width_design">
+																			<option value="500">500</option>
+																			<option value="650">650</option>
+																			<option value="800">800</option>
+																			<option value="1000">1000</option>
+																			<option value="1200">1200</option>
+																			<option value="1400">1400</option>
+																			<option value="1600">1600</option>
+																			<option value="1800">1800</option>
+																			<option value="2000">2000</option>
+																			<option value="" selected="selected"></option>
+																		</select>
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+
+															</div>
+														</div>
+														</br>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 h-6 hide">
+												<div class="panel">
+													<!-- <div class="second-title"> 炉前给煤机
+															<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="全封闭带电子称重皮带式给煤机">
+															</i>
+														</div> -->
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">炉前给煤机</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['b_boiler_rated_coal_capacity', 'g_equipment_sets', 'g_surplus',
+														'g_single_coal_feeder_output'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-4">{{ constant.name }}({{ constant.symbol }})
+																</div>
+
+																<div class="col-md-7">
+																	<div class="input-group">
+																		<span class="input-group-addon show-success">结果</span>
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"
+																		 {% if constant.name_eng in [ 'b_boiler_rated_coal_capacity', 'g_single_coal_feeder_output'] %} readonly="true"
+																		 {% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+
+
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														</br>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+
+
+											<div class="col-md-12 h-2 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-map-marker" aria-hidden="true"></i>
+														<span class="margin-left15">炉前煤仓有效容积</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['e_effective_cubage_calculated', 'e_coal_bunker_counts', 'e_effective_cubage_selected',
+														'e_backstep_consumption_hours'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-3">{{ constant.name }}({{ constant.symbol }})
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-primary">设计</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_design" name="{{ constant.name_eng }}_design"
+																		 {% if constant.name_eng in [ 'e_effective_cubage_calculated', 'e_backstep_consumption_hours'] %} readonly="true"
+																		 {% endif %} />
+																		<span class="input-group-addon show-primary">{{ constant.unit }}</span>
+
+																	</div>
+
+																</div>
+																<div class="col-md-4">
+																	<div class="input-group">
+																		<!-- <span class="input-group-addon show-success">校核</span> -->
+																		<input type="text" {% if constant.default_value !='' %} value="{{ constant.default_value }}" class="form-control default-color"
+																		 {% else %} class="form-control" {% endif %} id="{{ constant.name_eng }}_check" name="{{ constant.name_eng }}_check"
+																		 {% if constant.name_eng in [ 'e_effective_cubage_calculated', 'e_backstep_consumption_hours'] %} readonly="true"
+																		 {% endif %} />
+																		<span class="input-group-addon show-success">{{ constant.unit }}</span>
+
+																	</div>
+																</div>
+
+																<div class="col-md-1">
+
+																	{% if constant.calculate!= "" %}
+																	<i class="fa fa-question-circle-o" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
+																	</i>
+																	{% endif %}
+																</div>
+															</div>
+														</div>
+														</br>
+														{% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+											<!-- <div class="col-md-12 h-7 hide">
+												<div class="panel margin-right30">
+													<div class="first-title">
+														<i class="fa fa-building" aria-hidden="true"></i>
+														<span class="margin-left15">参考信息</span>
+													</div>
+													<div class="panel-body">
+														<div class="col-md-12">
+															<div>
+																<i class="fa fa-asterisk asterisk-style" aria-hidden="true"></i>
+																<i class="fa fa-square square-design" aria-hidden="true"></i> ：设计值
+																<i class="fa fa-square square-check" aria-hidden="true"></i> ：校核值
+																</br>
+																</br>
+																<i class="fa fa-asterisk asterisk-style" aria-hidden="true"></i>
+																输入框红色数字为默认值，点击【保存】后默认值才会被保存到数据库。
+															</div>
+														</div>
+													</div>
+													<div class="panel-body">
+														<div class="second-title"> 表1-13</div>
+														<div class="col-md-12 margin-top-20">
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/1-13.png') }}"
+															/>
+															</br>
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/ck2.png') }}"
+															/>
+														</div>
+													</div>
+
+													<div class="panel-body">
+														<div class="second-title"> 表10-9</div>
+														<div class="col-md-12 margin-top-20">
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/10-9.png') }}"
+															/>
+														</div>
+													</div>
+
+													<div class="panel-body">
+														<div class="second-title"> 表10.2.1</div>
+														<div class="col-md-12 margin-top-20">
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/10.2.1.png') }}"
+															/>
+														</div>
+													</div>
+
+													<div class="panel-body">
+														<div class="second-title"> 表10.2.4</div>
+														<div class="col-md-12 margin-top-20">
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/10.2.4.png') }}"
+															/>
+														</div>
+													</div>
+
+													<div class="panel-body">
+														<div class="second-title"> 表12.0.2</div>
+														<div class="col-md-12 margin-top-20">
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/12.0.2.png') }}"
+															/>
+														</div>
+													</div>
+
+													<div class="panel-body">
+														<div class="second-title"> 表12.0.2续</div>
+														<div class="col-md-12 margin-top-20">
+															<img class="img-responsive center-block expand-img" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/12.0.2-2.png') }}"
+															/>
+														</div>
+													</div>
+
 												</div>
 
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" {% if constant.name_eng in [
-													 'boiler_rated_coal_capacity', 'coal_daily_consumption', 'coal_annual_consumption', 'daily_rail_coal_amount',
-													 'daily_vehicle_coal_amount'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-											</div>
-											<!--{% if constant.calculate != "" %}
-											<div class="col-md-1"><i class="fa fa-question-circle-o"  title="计算公式："  
-												data-container="body" data-toggle="popover" data-placement="right" 
-												data-content="{{ constant.calculate }}"></i></div>
-											{% endif %}-->
+											</div> -->
 										</div>
 									</div>
 								</div>
-								{% endif %} {% endfor %}
-							</div>
-
-							<div>
-								<div class="second-title"> 煤场（干煤棚）面积</div>
-
-								{% for constant in constants %} {% if constant.name_eng in ['boiler_perhour_coal_max_capacity', 'boiler_daily_working_hours',
-								'coal_store_days', 'coalyard_store_amount', 'coal_channel_occupy_coefficient', 'coal_shape_coefficient', 'coal_height',
-								'coal_bulk_density', 'coalyard_area', 'height', 'width'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-4">{{ constant.name }}({{ constant.symbol }}) {% if constant.calculate != "" %}
-												<i class="lnr lnr-pencil" title="计算公式：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
-												</i>
-												{% endif %}
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" {% if constant.name_eng in [
-													 'boiler_perhour_coal_max_capacity', 'coalyard_store_amount', 'coalyard_area', 'width'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" {% if constant.name_eng in [
-													 'boiler_perhour_coal_max_capacity', 'coalyard_store_amount', 'coalyard_area', 'width'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								{% endif %} {% endfor %}
-							</div>
-
-							<div>
-								<div class="second-title"> 炉前煤仓有效容积</div>
-
-								{% for constant in constants %} {% if constant.name_eng in ['effective_cubage_calculated', 'coal_bunker_counts', 'effective_cubage_selected',
-								'backstep_consumption_hours'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-4">{{ constant.name }}({{ constant.symbol }}) {% if constant.calculate != "" %}
-												<i class="lnr lnr-pencil" title="计算公式：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
-												</i>
-												{% endif %}
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" {% if constant.name_eng in [
-													 'effective_cubage_calculated', 'backstep_consumption_hours'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" {% if constant.name_eng in [
-													 'effective_cubage_calculated', 'backstep_consumption_hours'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								{% endif %} {% endfor %}
-							</div>
-
-							<div>
-								<div class="second-title"> 燃煤运输量</div>
-
-								{% for constant in constants %} {% if constant.name_eng in ['boiler_rated_coal_capacity', 'transport_unbalanced_coefficient',
-								'transportsystem_effective_working_hours', 'transportsystem_amount', 'vehicle_capacity_tonnage', 'daily_working_hours',
-								'daily_received_coal_amount', 'vehicle_daily_incoming_times', 'vehicle_perhour_incoming_times'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-4">{{ constant.name }}({{ constant.symbol }}) {% if constant.calculate != "" %}
-												<i class="lnr lnr-pencil" title="计算公式：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
-												</i>
-												{% endif %}
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-primary">设计</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_design" {% if constant.name_eng in [
-													 'boiler_rated_coal_capacity', 'transportsystem_amount', 'daily_received_coal_amount', 'vehicle_daily_incoming_times',
-													 'vehicle_perhour_incoming_times'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-
-											</div>
-											<div class="col-md-4">
-												<div class="input-group">
-													<span class="input-group-addon show-success">校核</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" {% if constant.name_eng in [
-													 'boiler_rated_coal_capacity', 'transportsystem_amount', 'daily_received_coal_amount', 'vehicle_daily_incoming_times',
-													 'vehicle_perhour_incoming_times'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								{% endif %} {% endfor %}
-							</div>
-
-							<div>
-								<div class="second-title"> 输煤系统出力
-									<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-html="true"
-									 data-content="1.总耗煤量＜60t/h，采用单路，三班，每路出力≥200%的总耗煤量，两班≥300%<br/>
-										2.总耗煤量≥60t/h，采用双路，三班每路出力≥150%的总耗煤量，两班≥200%<br/>
-										3.三班＜16h；两班＜11h">
-									</i>
-								</div>
-
-								{% for constant in constants %} {% if constant.name_eng in ['boiler_rated_coal_capacity', 'mutil_boiler_rated_coal_capacity',
-								'mutil_boiler_rated_coal_amount', 'transportsystem_output', 'transportsystem_working_hours', 'shift_working_hours',
-								'belt_width', 'section_coefficient', 'belt_speed', 'material_bulk_density', 'belt_max_transport_capacity'] %}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-4">{{ constant.name }}({{ constant.symbol }}) {% if constant.calculate != "" %}
-												<i class="lnr lnr-pencil" title="计算公式：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
-												</i>
-												{% endif %}
-											</div>
-											<div class="col-md-8">
-												<div class="input-group">
-													<span class="input-group-addon show-success">结果</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" {% if constant.name_eng in [
-													 'boiler_rated_coal_capacity', 'mutil_boiler_rated_coal_amount', 'transportsystem_working_hours', 'shift_working_hours',
-													 'belt_max_transport_capacity'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								{% endif %} {% endfor %}
-							</div>
-
-							<div>
-								<div class="second-title"> 炉前给煤机
-									<i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-content="全封闭带电子称重皮带式给煤机">
-									</i>
-								</div>
-
-								{% for constant in constants %} {% if constant.name_eng in ['boiler_rated_coal_capacity', 'equipment_sets', 'surplus', 'single_coal_feeder_output']
-								%}
-								<div class="row">
-									<div class="panel-body">
-										<div class="col-md-12">
-											<div class="col-md-4">{{ constant.name }}({{ constant.symbol }}) {% if constant.calculate != "" %}
-												<i class="lnr lnr-pencil" title="计算公式：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.calculate }}">
-												</i>
-												{% endif %}
-											</div>
-
-											<div class="col-md-8">
-												<div class="input-group">
-													<span class="input-group-addon show-success">结果</span>
-													<input class="form-control" type="text" id="{{ constant.name_eng }}_check" {% if constant.name_eng in [
-													 'boiler_rated_coal_capacity', 'single_coal_feeder_output'] %} readonly="true" {% endif %} />
-													<span class="input-group-addon show-unit">{{ constant.unit }}</span>
-													{% if constant.remark != "" %}
-													<i class="fa fa-calculator" title="参考值：" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ constant.remark }}">
-													</i>
-													{% endif %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								{% endif %} {% endfor %}
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-5">
-
-					<div class="row">
-						<div class="col-md-12">
-							<div class="panel margin-right30">
-								<div class="first-title">
-									<i class="fa fa-building" aria-hidden="true"></i>
-									<span class="margin-left15">参考信息</span>
-								</div>
-								<div class="panel-body">
-									<div class="second-title"> 表1-13</div>
-									<div class="col-md-12 margin-top-20">
-										<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/1-13.png') }}"/>
-										<img class="img-responsive left-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/ck2.png') }}"/>
-									</div>
-								</div>
-
-								<div class="panel-body">
-									<div class="second-title"> 表10-9</div>
-									<div class="col-md-12 margin-top-20">
-										<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/10-9.png') }}"
-										/>
-									</div>
-								</div>
-
-								<div class="panel-body">
-									<div class="second-title"> 表10.2.1</div>
-									<div class="col-md-12 margin-top-20">
-										<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/10.2.1.png') }}"
-										/>
-									</div>
-								</div>
-
-								<div class="panel-body">
-									<div class="second-title"> 表10.2.4</div>
-									<div class="col-md-12 margin-top-20">
-										<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/10.2.4.png') }}"
-										/>
-									</div>
-								</div>
-
-								<div class="panel-body">
-									<div class="second-title"> 表12.0.2</div>
-									<div class="col-md-12 margin-top-20">
-										<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/12.0.2.png') }}"
-										/>
-									</div>
-								</div>
-
-								<div class="panel-body">
-									<div class="second-title"> 表12.0.2续</div>
-									<div class="col-md-12 margin-top-20">
-										<img class="img-responsive center-block" src="{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/12.0.2-2.png') }}"
-										/>
-									</div>
-								</div>
-
-							</div>
-
-						</div>
-
-
-						<div class="col-md-12">
-							<!-- INPUT GROUPS -->
-							<div class="panel margin-right30">
-								<div class="first-title">
-									<i class="fa fa-floppy-o" aria-hidden="true"></i>
-									<span class="margin-left15">保存输煤系统信息</span>
-								</div>
-								<div class="row text-center">
-									<br>
-									<br>
-									<button type="button" class="btn btn-success">
-										<i class="fa fa-check-circle"></i> Success</button>
-
-									<button type="button" class="btn btn-warning" disabled="disabled">
-										<i class="fa fa-spinner fa-spin"></i> Loading...</button>
-								</div>
-								<br>
-								<br>
-							</div>
-
-						</div>
-					</div>
-				</div>
+								<!-- END MAIN CONTENT -->
+			</form>
 			</div>
-		</div>
-		<!-- END MAIN CONTENT -->
-	</div>
-	<!-- END MAIN -->
-	{% endblock %} {% endblock %}
+			<!-- END MAIN -->
+			{% endblock %} {% endblock %}

@@ -1,0 +1,58 @@
+
+
+textarea.form-control {
+height: 470px;
+width: 100%;
+}
+.ace_print_margin {
+background: #555651;
+}
+.mahua-spliter {
+width: 3px;
+position: absolute;
+left: 50%;
+height: 100%;
+z-index: 10000;
+border: 2px dashed #CCC;
+cursor: ew-resize;
+}
+.ace_sb {
+position: absolute;
+overflow-x: hidden;
+overflow-y: scroll;
+right: 908px;
+}
+
+
+
+table {
+font-family: verdana,arial,sans-serif;
+font-size:11px;
+color:#333333;
+border-width: 1px;
+border-color: #666666;
+border-collapse: collapse;
+}
+table th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+table td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
+.uploadImage{
+    width: 0.1px; 
+    height: 0.1px; 
+    opacity: 0; 
+    overflow: hidden; 
+    position: absolute; 
+    z-index: -1;
+}

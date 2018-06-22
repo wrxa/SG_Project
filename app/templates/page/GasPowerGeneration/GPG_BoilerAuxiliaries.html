@@ -1,0 +1,524 @@
+{% extends "base.html" %}
+<!doctype html> {% block content %} {% block page_content %}
+<script src="{{ url_for('static', filename='js/modernizr.custom.js') }}"></script>
+<script src="{{ url_for('static', filename='js/classie.js') }}"></script>
+<script src="{{ url_for('static', filename='js/GPG/GPG_BoilerAuxiliaries.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<!-- MAIN -->
+<style>
+	.panel {
+		background-color: rgba(255, 255, 255, 0.3);
+		margin: 10px 0px 10px 15px;
+	}
+	.cd-breadcrumb.triangle li.ableClick > * {
+		color: #ffffff;
+		background-color: #337ab7!important;
+		border-color: #337ab7 !important;
+	}
+</style>
+
+<div class="main">
+	<!-- MAIN CONTENT -->
+	<div class="main-content">
+		<div class="container-fluid"></br></br></br>
+			<!-- <div class="page-title">煤气发电-锅炉辅机系统</div> -->
+			<!--<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+
+				<div class="col-md-12">					
+					<div class="panel">
+						<div class="page-title">锅炉辅机系统</div>
+					</div>
+				</div>
+			</div>-->
+
+			<div class="row" style="margin-top: -23px;margin-bottom: -28px;">
+				<div class="col-md-12 breadcrumb-fix show">
+
+					<div id="breadcrumbDiv" class="col-md-10 breadcrumb-div">
+						<ol class="cd-breadcrumb triangle" >
+								<li><a class="pre" href="#" data-page="5">上一页</a></li>
+							<li><a id="gpg1" onclick="return false;" href="{{ url_for('gpg_view.GPG_Questionnaire',id=session.planId) }}">煤气发电需求调查表</a></li>
+							<li><a id="gpg2" onclick="return false;" href="{{ url_for('gpg_view.GPG_BoilerOfPTS') }}">锅炉计算</a></li>
+							<li><a id="gpg3" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineOfPTS') }}">汽轮机计算</a></li>
+							<li class="ableClick"><a id="gpg4" onclick="return false;" href="#">锅炉辅机系统</a></li>
+							<li><a id="gpg5" onclick="return false;" href="{{ url_for('gpg_view.GPG_SmokeAirCalculate') }}">烟、风量计算</a></li> 
+							<li><a id="gpg6" onclick="return false;" href="{{ url_for('gpg_view.GPG_GasAirSystem') }}" >烟风系统</a></li>      
+							<!--<li><a href="{{ url_for('gpg_view.GPG_SmokeResistance') }}">烟阻力</a></li>
+							<li><a href="{{ url_for('gpg_view.GPG_WindResistance') }}">风阻力</a></li>-->
+							<li><a id="gpg7" onclick="return false;" href="{{ url_for('gpg_view.GPG_SteamWaterPipe') }}">汽水管道</a></li>
+							<li><a id="gpg8" onclick="return false;" href="{{ url_for('gpg_view.GPG_CirculatingWaterSystem') }}">循环水系统</a></li>
+							<li><a id="gpg9" onclick="return false;" href="{{ url_for('gpg_view.GPG_TurbineAuxiliarySystem') }}">汽机辅机系统</a></li>
+							<li><a id="gpg10" onclick="return false;" href="{{ url_for('gpg_view.GPG_EconomicIndicators') }}">主要技术经济指标</a></li>
+							<li><a id="gpg11" onclick="return false;" href="{{ url_for('gpg_view.GPG_Image') }}">图纸一览</a></li>
+							<li><a id="gpg12" onclick="return false;" href="{{ url_for('gpg_view.GPG_EquipmentList') }}">设备清单</a></li>
+							<li class="current"><a class="next" href="#">下一页</a></li>
+						</ol>
+					</div>
+
+					<div class="col-md-2 breadcrumb-submit">
+						<button type="button" id="submitBoilerAuxiliaries" class="btn btn-success"><i class="fa fa-check-circle"></i>  保 存 </button>
+					</div>
+
+				</div>
+				</br></br></br></br>
+			</div>
+
+			<form id="GPG_BoilerAuxiliariesForm">
+				<div class="row full-width-style">
+					<div class="st-content">
+						<div class="st-content-inner">
+							<div class="col-md-12">
+								<div class="col-md-3" style="position:fixed;height:100%">
+									<nav class="st-menu">
+										<h2 class="icon icon-lab">锅炉辅机系统</h2>
+										<ul>
+											<li>
+												<a class="left-select left-hover" href="#" id="q-1">定期排污扩容器</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-2">连续排污扩容器</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-3">磷酸盐加药装置</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-4">给水泵</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-5">锅炉补给水处理能力</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-6">除氧水箱/凝结水箱-共用</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-7">除氧器安装高度核算</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-8">减温减压器</a>
+											</li>
+											<li>
+												<a class="left-select" href="#" id="q-9">蓄热器</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+
+								<div class="col-md-9" style="left:19%;">
+									<div class="module-content">
+										<div class="main clearfix">
+											<div class="col-md-12 q-1">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">									
+														<i class="fa fa-gears" aria-hidden="true"></i>
+														<span class="margin-left15">1.定期排污扩容器 
+															<!-- <i class="fa fa-question-circle-o" title="备注：" data-container="body" data-toggle="popover" data-placement="right" data-html="<img class='img-responsive center-block' src='{{ url_for('static', filename='img/CoalCHP/coalHandingSystem/12.0.2-2.png') }}/>'"></i> -->
+														</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['r_boiler_evaporation', 'r_emission_time', 'r_emission_rate',
+														'r_sewage_quantity', 'r_drum_pressure', 'r_drum_aturatedwater_enthalpy', 'r_work_pressure', 'r_work_aturatedwater_enthalpy',
+														'r_work_steam_special_volume', 'r_work_latentheat_vaporization', 'r_work_steam_dryness', 'r_ultimate_strength',
+														'r_vaporization_capacity', 'r_affluence_coefficient', 'r_steam_volume', 'r_volume', 'r_specifications']
+														%}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" {% endif %}
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+					
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-2 hide">
+												<!-- INPUT GROUPS -->
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">2.连续排污扩容器</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['c_boiler_evaporation', 'c_emission_rate', 'c_sewage_quantity',
+														'c_drum_pressure', 'c_drum_aturatedwater_enthalpy', 'c_work_pressure', 'c_work_aturatedwater_enthalpy', 'c_work_steam_pecificvolume',
+														'c_work_latentheat_vaporization', 'c_steam_dryness', 'c_ultimate_strength', 'c_vaporization_capacity', 'c_affluence_coefficient',
+														'c_steam_volume', 'c_volume', 'c_specifications'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-3 hide">
+												<div class="panel">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15">3.磷酸盐加药装置</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['d_boiler_watersystem_volume', 'd_phosphate_content', 'd_water_hardness',
+														'd_purity', 'd_boiler_dosage_startup', 'd_boiler_water_supply', 'd_boiler_sewage_quantity', 'd_boiler_dosage_run',
+														'd_na3po4_concentration', 'd_na3po4_density', 'd_solution_quantity_run'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+					
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-4 hide">
+												<div class="panel margin-right30">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15"> 4.给水泵</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['p_boiler_design_pressure',
+														'p_inlet_pressure', 'p_deaerator_pressure', 'p_water_supply_resistance', 'p_water_inlet_resistance', 
+														'p_center_altitude_difference', 'p_deaerator_altitude_difference',
+														'p_feedpump_total_head', 'p_flow', 'p_pump_efficiency', 'p_transmission_efficiency', 'p_motor_efficiency', 'p_motor_reserve_factor',
+														'p_auxiliary_motor_power', 'p_specifications'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+				
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-5 hide">
+												<div class="panel margin-right30">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15"> 5.锅炉补给水处理能力</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['m_boiler_evaporation', 'm_makeup_steam', 'm_steamwater_cycle_loss',
+														'm_pollution_loss', 'm_condensing_capacity', 'm_condensate_loss', 'm_boiler_normal_watersupply', 'm_boiler_desalted_water_rate',
+														'm_boiler_desalted_work_cycle', 'm_increase_loss', 'm_boiler_desalted_rebirth_time',
+														'm_boiler_max_watersupply', 'm_boiler_watersupply_all', 'm_boiler_watersupply_specifications',
+														'desalted_water_tech_type'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	{% if constant.name_eng =='desalted_water_tech_type' %}
+																	<div class="input-group">
+																		<select class="form-control" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}">
+																			<option value="1" selected="selected">多介质过滤器+超滤装置+两级反渗透装置+EDI处理</option>
+																			<option value="2">多介质过滤器+反渗透装置+混床处理</option>
+																		</select>
+																	</div>
+																	{% else %}
+																	<div class="input-group">
+																		<input type="text" id="{{ constant.name_eng }}" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %}
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+																	{% endif %}					
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+				
+											<div class="col-md-12 q-6 hide">
+												<div class="panel  margin-right30">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15"> 6.除氧水箱/凝结水箱-共用</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} {% if constant.name_eng in ['s_boiler_evaporation', 's_storage_time', 's_volume', 's_size_length',
+														's_size_diameter'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+				
+																</div>
+															</div>
+														</div>
+														<br> {% endif %} {% endfor %}
+													</div>
+												</div>
+											</div>
+				
+											<div class="col-md-12 q-7 hide">
+												<div class="panel  margin-right30">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15"> 7.除氧器安装高度核算</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['s_max_feedwater_amount', 's_de_ox_pressure', 's_local_atmosphere', 
+														's_local_atmosphere_density', 's_design_flux', 's_net_positive_suction_head',
+														's_total_resistance', 's_inlet_speed', 's_added_height', 's_pump_install_height'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>
+				
+																</div>
+															</div>
+														</div>
+														<br> 
+														{% endif %} 
+														{% endfor %}
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-12 q-8 hide">
+												<div class="panel  margin-right30">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15"> 8.减温减压器</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['new_steam_temperature', 'new_steam_pressure', 'new_steam_enthalpy', 
+														'new_steam_flux', 'desuperheater_water_temperature', 'desuperheater_water_pressure',
+														'desuperheater_water_enthalpy', 'desuperheater_water_flux', 'desuperheater_steam_temperature', 
+														'desuperheater_steam_pressure', 'desuperheater_steam_enthalpy', 'saturation_water_enthalpy',
+														'no_vaporized_percent', 'de_press_temp_device_flux'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>				
+																</div>
+															</div>
+														</div>
+														<br> 
+														{% endif %} 
+														{% endfor %}
+													</div>
+												</div>
+
+											</div>
+
+											<div class="col-md-12 q-9 hide">
+												<div class="panel  margin-right30">
+													<div class="first-title">
+														<i class="fa fa-gears" aria-hidden="true"></i><span class="margin-left15"> 9.蓄热器</span>
+													</div>
+													<div class="panel-body">
+														{% for constant in constants %} 
+														{% if constant.name_eng in ['charging_pressure', 'exothermic_pressure', 'charging_saturation_water_enthalpy', 
+														'exothermic_saturation_water_enthalpy', 'charging_saturation_steam_enthalpy', 'exothermic_saturation_steam_enthalpy',
+														'p2_steam_amount', 'charging_water_specific_volume', 'unit_water_heat_amount', 
+														'regenerarot_efficiency', 'water_fill_coefficient', 'regenerarot_heat_amount',
+														'regenerarot_volume', 'regenerarot_top_steam_volume', 'boiler_max_load',
+														'boiler_average_load', 'regenerarot_max_bleed', 'evaporation_capacity',
+														'exothermic_evaporation_capacity', 'charging_volume', 
+														'exothermic_water_specific_volume', 'exothermic_water_volume'] %}
+														<div class="row">
+															<div class="col-md-12">
+																<div class="col-md-5">{{ constant.name }}({{ constant.symbol }})
+																	{% if constant.calculate != "" %}
+																	<i class="lnr lnr-pencil"  title="计算公式："  
+																	data-container="body" data-toggle="popover" data-placement="right" 
+																	data-content="{{ constant.calculate }}">
+																	</i>													
+																	{% endif %}
+																</div>
+																<div class="col-md-6">
+																	<div class="input-group">
+																		<input type="text" name="{{ constant.name_eng }}" 
+																		{% if constant.default_value != '' %} 
+																		value="{{ constant.default_value }}" class="form-control default-color" 
+																		{% else %} 
+																		class="form-control" 
+																		{% endif %} 
+																		{% if constant.disable=='T' %} 
+																		readonly="true" 
+																		{% endif %} />
+																		<span class="input-group-addon show-unit">{{ constant.unit }}</span>
+																	</div>				
+																</div>
+															</div>
+														</div>
+														<br> 
+														{% endif %} 
+														{% endfor %}
+													</div>
+												</div>
+
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- END MAIN CONTENT -->
+	</div>
+	<!-- END MAIN -->
+</div>
+	{% endblock %} {% endblock %}

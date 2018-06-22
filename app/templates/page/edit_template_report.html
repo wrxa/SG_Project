@@ -1,0 +1,120 @@
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %}
+<!doctype html> {% block content %} {% block page_content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='dist/themes/default/style.min.css') }}">
+<script src="{{ url_for('static', filename='dist/jstree.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/vendor/markdown/markdown.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/vendor/jquery/jquery-form.js') }}"></script>
+<script src="{{ url_for('static', filename='js/templatereport.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editPlanReport.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/questionnaire.css') }}">
+<div class="main">
+	<style>
+		#flask-pagedown-body-preview img {
+			width: 12%;
+			text-align: center;
+		}
+	</style>
+	<div class="main-content">
+		<div class="container-fluid">
+			<!-- <div class="page-title">方案模板</div> -->
+		</br></br>
+			<div class="row">
+
+				<div class="col-md-12">
+					<input type="hidden" id="templateId" value="{{templateId}}" />
+					<input type="hidden" value="{{moduleName}}" id="moduleName">
+					<div class="panel" style="background-color:#DFDFDE">
+
+						<div class="page-title">
+							{% if moduleName == "coalCHP" %}燃煤热电联产{% elif moduleName == "biomassCHP" %} 生物质热电联产 {% elif moduleName == "CCPP" %} 燃气蒸汽联合循环
+							{% elif moduleName == "gasPowerGeneration" %} 煤气发电 {% endif %}方案模板
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<form action="../upload_file" method="post" enctype=multipart/form-data id="headimageform">
+									<div class="col-md-12">
+									<div class="col-md-6">
+										<div class="col-md-12">
+											<div class="col-md-7">
+												<i title="添加子标题" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-plus" onclick="menu_create();"></i>
+												<i title="删除" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-trash-o" onclick="menu_delete();"></i>
+												<i title="重命名" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-edit" onclick="menu_rename();"></i>
+												<i title="切换预览方式" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-exchange" onclick="exchange_preview();"></i>
+											</div>
+											<div class="col-md-5">
+												<input type="text" id="search-menu" placeholder="检索" value="" class="input" style="margin:0em auto 1em auto; display:block; padding:4px; border-radius:4px; border:1px solid silver;">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6" style="padding-left: 0px;">
+										<div class="col-md-12">
+											<div class="col-md-6">
+												<div class="input-group">
+													<span class="input-group-addon show-primary width-size">模板名称</span>
+													<input class="form-control" type="text" name="template_name" style="height: 30px;">
+												</div>	
+											</div>
+											<div class="col-md-6">
+												<label class="control-label" for="file" title="添加图片">
+													<i class="fa fa-image" style="cursor: pointer;"></i>
+												</label>
+												<input id="file" name="file" required="" type="file" class="uploadImage">
+												<i title="添加新段落" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-level-down" id="newLine"></i>
+												<i title="添加表格" style="cursor: pointer;margin-left:15px;margin-top: 15px;" id="popoverTable" data-toggle="popover" data-html="true" data-placement="bottom" data-content='<input type="text" id="table-cols" placeholder="列" value="" class="input" style="margin:0em auto 1em auto; width:100px; display:block; padding:4px; border-radius:4px; border:1px solid silver;"><input type="text" id="table-rows" placeholder="行" value="" class="input" style="margin:0em auto 1em auto; display:block; padding:4px; width:100px; border-radius:4px; border:1px solid silver;"><a class="btn btn-success" onclick="selectTable();" style="float:right;height: 30px;margin-bottom:1em;font-size: 8px;">确定</a>' class="fa fa-table"></i>
+												<i title="添加数据" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-database" id="test_SelectDB"></i>
+												<i title="添加逻辑" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-ravelry" id="addlogic"></i>
+												<i title="保存" style="cursor: pointer;margin-left:15px;margin-top: 15px;" class="fa fa-save" id="saveMD"></i>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-12 form-group required">
+
+
+										<input id="csrf_token" name="csrf_token" type="hidden" value="Ijg1Yjc1OTVhYTQ2NWQ5Y2RkYzk0OWFiYWZiYjc4NTAzMTk1MGE4YzQi.DO2WXQ.W_upIRMZblJWgq9N3_Ol5bsQ3gM">
+
+										<div class="col-md-12" style="margin-top: 20px">
+											<!-- <div class="col-md-6 flask-pagedown-preview" id="flask-pagedown-body-preview" style="position:absolute; height:1188px; overflow:auto;width:48%;background-color: #F3F5F8;"></div>
+											<div class="col-md-6 flask-pagedown" style="right: 0%; padding: 0px;margin-left: -15px;float: right;">
+												<textarea class="form-control flask-pagedown-input" id="flask-pagedown-body" name="body" required="" oninput="this.editor.update()"
+												 style="background:white;border-style:none;"></textarea>
+
+											</div> -->
+											<!-- start -->
+
+											<div class="col-md-6 preview hide" style="position:absolute; height: 500px;overflow:auto;width:47%;background-color: #F3F5F8;">
+												<h4 style="font-weight:bold;color:#337ab7;">预览内容</h4>
+												<div id="flask-pagedown-body-preview">预览</div>
+
+											</div>
+
+											<div class="col-md-6 construct" style="position:absolute; height: 500px;overflow:auto;width:47%;background-color: #F3F5F8;">
+												<h4 style="font-weight:bold;color:#337ab7;">模板结构</h4>
+												<div id="left-menu"></div>
+
+											</div>
+											<div class="col-md-6" style="right: 0%; padding: 0px;margin-left: -15px;float: right;">
+												<p id="right-menu"></p>
+												<textarea id="right-content" class="form-control" style="background:white;border-style:none;" oninput="this.editor.update()"></textarea>
+											</div>
+											<!-- end -->
+										</div>
+								</form>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+{% endblock %} {% endblock %} {% block scripts %} {% endblock %}
